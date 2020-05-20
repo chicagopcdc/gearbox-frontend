@@ -11,12 +11,12 @@ import Trials from './Pages/Trials'
 import Navbar from './Components/Navbar'
 
 const routes = [
-  { component: Home, name: 'Home', path: '/', exact: true },
-  { component: About, name: 'About', path: '/about' },
-  { component: Guide, name: 'Guide', path: '/guide' },
-  { component: Login, name: 'Login', path: '/login' },
-  { component: Results, name: 'Results', path: '/results' },
-  { component: Trials, name: 'Trials', path: '/trials' },
+  { component: Home, name: 'Home', path: '/', exact: true, nav: false },
+  { component: About, name: 'About', path: '/about', nav: true },
+  { component: Guide, name: 'Guide', path: '/guide', nav: true },
+  { component: Login, name: 'Login', path: '/login', nav: false },
+  { component: Results, name: 'Results', path: '/results', nav: false },
+  { component: Trials, name: 'Trials', path: '/trials', nav: true },
 ]
 
 function App() {
@@ -29,9 +29,11 @@ function App() {
               <img src="https://picsum.photos/300/150" alt="logo" />
             </Link>
           }
-          items={routes.map(({ path, name }) => (
-            <Link to={path}>{name}</Link>
-          ))}
+          items={routes
+            .filter(({ nav }) => nav)
+            .map(({ path, name }) => (
+              <Link to={path}>{name}</Link>
+            ))}
         />
       </header>
 
