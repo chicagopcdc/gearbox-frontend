@@ -1,0 +1,16 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 2px solid black;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
