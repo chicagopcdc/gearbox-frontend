@@ -19,22 +19,22 @@ const routes = [
   { component: About, name: 'About GEARBOx', path: '/about', nav: true },
 ]
 
+const navbarProps = {
+  logo: (
+    <Link to="/">
+      <img src="https://picsum.photos/300/150" alt="logo" />
+    </Link>
+  ),
+  items: routes
+    .filter(({ nav }) => nav)
+    .map(({ path, name }) => <Link to={path}>{name}</Link>),
+}
+
 function App() {
   return (
     <Router>
       <header>
-        <Navbar
-          logo={
-            <Link to="/">
-              <img src="https://picsum.photos/300/150" alt="logo" />
-            </Link>
-          }
-          items={routes
-            .filter(({ nav }) => nav)
-            .map(({ path, name }) => (
-              <Link to={path}>{name}</Link>
-            ))}
-        />
+        <Navbar {...navbarProps} />
       </header>
 
       <main>
