@@ -9,8 +9,12 @@ import Results from './Pages/Results'
 import Trials from './Pages/Trials'
 
 import Navbar from './Components/Navbar'
+import Footer from './Components/Footer'
 
 import gearboxLogo from './assets/gearbox-logo.png'
+import uchicagoBSDlogo from './assets/uchicago-BSD-logo.jpg'
+import volchenboumLabLogo from './assets/volchenboum-lab-logo.png'
+import pedalLogo from './assets/pedal-logo.png'
 
 const routes = [
   { component: Home, name: 'Home', path: '/', exact: true, nav: false },
@@ -32,6 +36,14 @@ const navbarProps = {
     .map(({ path, name }) => <Link to={path}>{name}</Link>),
 }
 
+const footerProps = {
+  children: [
+    <img src={uchicagoBSDlogo} alt="logo" height="100" />,
+    <img src={volchenboumLabLogo} alt="logo" height="100" />,
+    <img src={pedalLogo} alt="logo" height="100" />,
+  ],
+}
+
 function App() {
   return (
     <Router>
@@ -48,6 +60,8 @@ function App() {
           ))}
         </Switch>
       </main>
+
+      <Footer {...footerProps} />
     </Router>
   )
 }
