@@ -8,6 +8,8 @@ import Login from './Pages/Login'
 import Results from './Pages/Results'
 import Trials from './Pages/Trials'
 
+import Navbar from './Components/Navbar'
+
 const routes = [
   { component: Home, name: 'Home', path: '/', exact: true },
   { component: About, name: 'About', path: '/about' },
@@ -21,15 +23,16 @@ function App() {
   return (
     <Router>
       <header>
-        <nav>
-          <ul>
-            {routes.map(({ path, name }) => (
-              <li>
-                <Link to={path}>{name}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <Navbar
+          logo={
+            <Link to="/">
+              <img src="https://picsum.photos/300/150" alt="logo" />
+            </Link>
+          }
+          items={routes.map(({ path, name }) => (
+            <Link to={path}>{name}</Link>
+          ))}
+        />
       </header>
 
       <main>
