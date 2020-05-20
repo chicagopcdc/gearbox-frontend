@@ -10,6 +10,8 @@ import Trials from './Pages/Trials'
 
 import Navbar from './Components/Navbar'
 
+import gearboxLogo from './assets/gearbox-logo.png'
+
 const routes = [
   { component: Home, name: 'Home', path: '/', exact: true, nav: false },
   { component: Results, name: 'Results', path: '/results', nav: false },
@@ -22,7 +24,7 @@ const routes = [
 const navbarProps = {
   logo: (
     <Link to="/">
-      <img src="https://picsum.photos/300/150" alt="logo" />
+      <img src={gearboxLogo} alt="logo" height="100" />
     </Link>
   ),
   items: routes
