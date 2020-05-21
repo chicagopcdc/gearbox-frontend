@@ -63,7 +63,9 @@ function App() {
         </Switch>
       </main>
 
-      <Footer {...footerProps} />
+      <footer>
+        <Footer {...footerProps} />
+      </footer>
     </Router>
   )
 }

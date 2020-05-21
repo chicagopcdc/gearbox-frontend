@@ -2,11 +2,7 @@ import React from 'react'
 import './Footer.css'
 
 const Footer = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <footer className="footer">
-      <div className="footer__content">{children}</div>
-    </footer>
-  )
+  return <div className="footer__content">{children}</div>
 }
 
 export default Footer
