@@ -20,7 +20,7 @@
   "scripts": {
     "prestart": "postcss src/tailwind.css -o src/index.css",
     "start": "react-scripts start",
-    "prebuild": "postcss src/tailwind.css -o src/index.css",
+    "prebuild": "postcss src/tailwind.css -o src/index.css --env production",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
