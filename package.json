@@ -40,6 +40,9 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.0.5"
+    "autoprefixer": "^9.8.0",
+    "postcss-cli": "^7.1.1",
+    "prettier": "^2.0.5",
+    "tailwindcss": "^1.4.6"
   }
 }
