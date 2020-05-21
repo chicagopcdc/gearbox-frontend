@@ -28,7 +28,7 @@ const routes = [
 const navbarProps = {
   logo: (
     <Link to="/">
-      <img src={gearboxLogo} alt="logo" height="100" />
+      <img src={gearboxLogo} alt="logo" style={{ height: '100px' }} />
     </Link>
   ),
   items: routes
@@ -38,9 +38,9 @@ const navbarProps = {
 
 const footerProps = {
   children: [
-    <img src={uchicagoBSDlogo} alt="logo" height="100" />,
-    <img src={volchenboumLabLogo} alt="logo" height="100" />,
-    <img src={pedalLogo} alt="logo" height="100" />,
+    <img src={uchicagoBSDlogo} alt="logo" style={{ height: '100px' }} />,
+    <img src={volchenboumLabLogo} alt="logo" style={{ height: '100px' }} />,
+    <img src={pedalLogo} alt="logo" style={{ height: '100px' }} />,
   ],
 }
 
