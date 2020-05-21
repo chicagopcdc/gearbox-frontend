@@ -16,7 +16,10 @@ import uchicagoBSDlogo from './assets/uchicago-BSD-logo.jpg'
 import volchenboumLabLogo from './assets/volchenboum-lab-logo.png'
 import pedalLogo from './assets/pedal-logo.png'
 
-import './App.css'
+const styles = {
+  main: 'flex-1',
+  footer: 'flex-shrink-0',
+}
 
 const routes = [
   { component: Home, name: 'Home', path: '/', exact: true, nav: false },
@@ -53,7 +56,7 @@ function App() {
         <Navbar {...navbarProps} />
       </header>
 
-      <main>
+      <main className={styles.main}>
         <Switch>
           {routes.map(({ exact, path, component }) => (
             <Route exact={exact} path={path}>
@@ -63,7 +66,7 @@ function App() {
         </Switch>
       </main>
 
-      <footer>
+      <footer className={styles.footer}>
         <Footer {...footerProps} />
       </footer>
     </Router>
