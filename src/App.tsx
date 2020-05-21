@@ -16,6 +16,8 @@ import uchicagoBSDlogo from './assets/uchicago-BSD-logo.jpg'
 import volchenboumLabLogo from './assets/volchenboum-lab-logo.png'
 import pedalLogo from './assets/pedal-logo.png'
 
+import './App.css'
+
 const routes = [
   { component: Home, name: 'Home', path: '/', exact: true, nav: false },
   { component: Results, name: 'Results', path: '/results', nav: false },
