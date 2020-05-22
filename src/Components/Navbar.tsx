@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const styles = {
   navbar:
@@ -10,16 +11,21 @@ const styles = {
 
 type NavbarProps = {
   logo: React.ReactElement
-  items: React.ReactElement[]
+  items: { name: string; path: string }[]
 }
 
 const Navbar = ({ logo, items }: NavbarProps) => {
   return (
     <nav className={styles.navbar}>
-      <div className={styles.navbarLogo}>{logo}</div>
+      <div className={styles.navbarLogo}>
+        <Link to="/">{logo}</Link>
+      </div>
+
       <ul className={styles.navbarItems}>
-        {items.map((item) => (
-          <li className={styles.navbarItem}>{item}</li>
+        {items.map(({ path, name }) => (
+          <li className={styles.navbarItem}>
+            <Link to={path}>{name}</Link>
+          </li>
         ))}
       </ul>
     </nav>

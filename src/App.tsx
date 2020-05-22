@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Home from './Pages/Home'
 import About from './Pages/About'
@@ -31,14 +31,8 @@ const routes = [
 ]
 
 const navbarProps = {
-  logo: (
-    <Link to="/">
-      <img src={gearboxLogo} alt="logo" style={{ height: '100px' }} />
-    </Link>
-  ),
-  items: routes
-    .filter(({ nav }) => nav)
-    .map(({ path, name }) => <Link to={path}>{name}</Link>),
+  logo: <img src={gearboxLogo} alt="logo" style={{ height: '100px' }} />,
+  items: routes.filter(({ nav }) => nav),
 }
 
 const footerProps = {
