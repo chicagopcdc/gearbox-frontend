@@ -17,7 +17,7 @@ import volchenboumLabLogo from './assets/volchenboum-lab-logo.png'
 import pedalLogo from './assets/pedal-logo.png'
 
 const styles = {
-  main: 'flex-1',
+  main: 'flex-1 max-w-screen-lg w-full mx-auto my-8',
   footer: 'flex-shrink-0',
 }
 
