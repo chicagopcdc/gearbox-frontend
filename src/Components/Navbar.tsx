@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const styles = {
   navbar:
@@ -18,13 +18,15 @@ const Navbar = ({ logo, items }: NavbarProps) => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarLogo}>
-        <Link to="/">{logo}</Link>
+        <NavLink to="/">{logo}</NavLink>
       </div>
 
       <ul className={styles.navbarItems}>
         {items.map(({ path, name }) => (
           <li className={styles.navbarItem}>
-            <Link to={path}>{name}</Link>
+            <NavLink to={path} activeClassName="text-red-500">
+              {name}
+            </NavLink>
           </li>
         ))}
       </ul>
