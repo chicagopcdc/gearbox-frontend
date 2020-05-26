@@ -1,5 +1,9 @@
 import React from 'react'
+
 import pcdcLogo from '../assets/pcdc-logo.png'
+import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
+import volchenboumLabLogo from '../assets/volchenboum-lab-logo.png'
+import pedalLogo from '../assets/pedal-logo.png'
 
 const styles = {
   footerContent:
@@ -16,16 +20,15 @@ const ExtraFooter = () => (
   </div>
 )
 
-type FooterProps = {
-  children: React.ReactNode
-  showExtra: boolean
-}
-
-const Footer = ({ children, showExtra = false }: FooterProps) => {
+const Footer = ({ showExtra = false }) => {
   return (
     <>
       {showExtra && <ExtraFooter />}
-      <div className={styles.footerContent}>{children}</div>
+      <div className={styles.footerContent}>
+        <img src={uchicagoBSDlogo} alt="logo" style={{ height: '100px' }} />
+        <img src={volchenboumLabLogo} alt="logo" style={{ height: '100px' }} />
+        <img src={pedalLogo} alt="logo" style={{ height: '100px' }} />
+      </div>
     </>
   )
 }

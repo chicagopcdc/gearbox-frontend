@@ -11,11 +11,6 @@ import Trials from './Pages/Trials'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 
-import gearboxLogo from './assets/gearbox-logo.png'
-import uchicagoBSDlogo from './assets/uchicago-BSD-logo.jpg'
-import volchenboumLabLogo from './assets/volchenboum-lab-logo.png'
-import pedalLogo from './assets/pedal-logo.png'
-
 const styles = {
   main: 'flex-1 max-w-screen-lg w-full mx-auto my-8',
   footer: 'flex-shrink-0',
@@ -30,25 +25,14 @@ const routes = [
   { component: About, name: 'About GEARBOx', path: '/about', nav: true },
 ]
 
-const navbarProps = {
-  logo: <img src={gearboxLogo} alt="logo" style={{ height: '100px' }} />,
-  items: routes.filter(({ nav }) => nav),
-}
-
-const footerProps = {
-  children: [
-    <img src={uchicagoBSDlogo} alt="logo" style={{ height: '100px' }} />,
-    <img src={volchenboumLabLogo} alt="logo" style={{ height: '100px' }} />,
-    <img src={pedalLogo} alt="logo" style={{ height: '100px' }} />,
-  ],
-}
-
 function App() {
   const isLogin = window.location.pathname === '/login'
 
   return (
     <Router>
-      <header>{!isLogin && <Navbar {...navbarProps} />}</header>
+      <header>
+        {!isLogin && <Navbar items={routes.filter(({ nav }) => nav)} />}
+      </header>
 
       <main className={styles.main}>
         <Switch>
@@ -61,7 +45,7 @@ function App() {
       </main>
 
       <footer className={styles.footer}>
-        <Footer showExtra={isLogin} {...footerProps} />
+        <Footer showExtra={isLogin} />
       </footer>
     </Router>
   )
