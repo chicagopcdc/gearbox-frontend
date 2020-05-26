@@ -44,11 +44,11 @@ const footerProps = {
 }
 
 function App() {
+  const isLogin = window.location.pathname === '/login'
+
   return (
     <Router>
-      <header>
-        <Navbar {...navbarProps} />
-      </header>
+      <header>{!isLogin && <Navbar {...navbarProps} />}</header>
 
       <main className={styles.main}>
         <Switch>
@@ -61,7 +61,7 @@ function App() {
       </main>
 
       <footer className={styles.footer}>
-        <Footer {...footerProps} />
+        <Footer showExtra={isLogin} {...footerProps} />
       </footer>
     </Router>
   )
