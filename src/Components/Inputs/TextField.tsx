@@ -1,9 +1,5 @@
 import React from 'react'
-
-const styles = {
-  label: 'mr-4',
-  input: 'border border-solid border-black p-1',
-}
+import Label from './Label'
 
 type TextFieldProps = {
   label?: string
@@ -28,13 +24,9 @@ const TextField = ({
 }: TextFieldProps) => {
   return (
     <>
-      {label !== '' && (
-        <label className={styles.label} htmlFor={name}>
-          {label}
-        </label>
-      )}
+      {label && <Label text={label} htmlFor={name} />}
       <input
-        className={styles.input}
+        className="border border-solid border-black p-1"
         id={name}
         name={name}
         type={type}
