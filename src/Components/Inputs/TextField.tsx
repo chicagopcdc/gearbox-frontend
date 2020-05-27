@@ -1,6 +1,11 @@
 import React from 'react'
 import Label from './Label'
 
+const styles = {
+  label: 'mr-4',
+  input: 'border border-solid border-black p-1',
+}
+
 type TextFieldProps = {
   label?: string
   name?: string
@@ -28,9 +33,9 @@ const TextField = ({
 }: TextFieldProps) => {
   return (
     <>
-      {label && <Label text={label} htmlFor={name} />}
+      {label && <Label className={styles.label} text={label} htmlFor={name} />}
       <input
-        className="border border-solid border-black p-1"
+        className={styles.input}
         id={name}
         name={name}
         type={type}
