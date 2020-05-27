@@ -1,7 +1,13 @@
 import React from 'react'
 
-const Label = ({ text, htmlFor }: { text: string; htmlFor: string }) => (
-  <label className="mr-4" htmlFor={htmlFor}>
+type LabelProps = {
+  className?: string
+  text: string
+  htmlFor: string
+}
+
+const Label = ({ className, text, htmlFor }: LabelProps) => (
+  <label className={className} htmlFor={htmlFor}>
     {text}
   </label>
 )
