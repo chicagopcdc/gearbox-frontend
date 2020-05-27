@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from '../Components/Box'
-import Button from '../Components/Button'
+import Button from '../Components/Inputs/Button'
 import LoginForm from '../Components/LoginForm'
 
 import gearboxLogo from '../assets/gearbox-logo.png'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik'
-import Button from './Button'
-import TextField from './TextField'
+import Button from './Inputs/Button'
+import TextField from './Inputs/TextField'
 
 const styles = {
   field: 'my-4 mx-8 text-center',
