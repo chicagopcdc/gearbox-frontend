@@ -8,8 +8,13 @@ const styles = {
 type TextFieldProps = {
   label?: string
   name?: string
-  type?: 'text' | 'password'
+  type?: 'text' | 'password' | 'number'
   value?: string | number
+  numberAttrs?: {
+    max?: number
+    min?: number
+    step?: number
+  }
   onChange?: React.ChangeEventHandler
 }
 
@@ -18,6 +23,7 @@ const TextField = ({
   name = '',
   type = 'text',
   value,
+  numberAttrs,
   onChange,
 }: TextFieldProps) => {
   return (
@@ -34,6 +40,7 @@ const TextField = ({
         type={type}
         onChange={onChange}
         value={value}
+        {...(type === 'number' && numberAttrs)}
       />
     </>
   )
