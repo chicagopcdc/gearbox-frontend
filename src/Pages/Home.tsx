@@ -9,8 +9,10 @@ const paragraphs = [
 const Home = () => {
   return (
     <>
-      {paragraphs.map((p) => (
-        <p className="mb-4">{p}</p>
+      {paragraphs.map((p, i) => (
+        <p className="mb-4" key={i}>
+          {p}
+        </p>
       ))}
 
       <div className="mt-16">

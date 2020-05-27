@@ -37,7 +37,7 @@ function App() {
       <main className={styles.main}>
         <Switch>
           {routes.map(({ exact, path, component }) => (
-            <Route exact={exact} path={path}>
+            <Route exact={exact} path={path} key={path}>
               {component}
             </Route>
           ))}

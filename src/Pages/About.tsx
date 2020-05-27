@@ -14,7 +14,9 @@ const About = () => {
       <div className="mx-8">
         <ol className="list-decimal mt-8 mb-16">
           {steps.map((step) => (
-            <li className="mb-4">{step}</li>
+            <li className="mb-4" key={step}>
+              {step}
+            </li>
           ))}
         </ol>
 

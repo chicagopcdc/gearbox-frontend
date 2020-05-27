@@ -22,7 +22,7 @@ const Navbar = ({ items }: { items: { name: string; path: string }[] }) => {
 
       <ul className={styles.navbarItems}>
         {items.map(({ path, name }) => (
-          <li className={styles.navbarItem}>
+          <li className={styles.navbarItem} key={path}>
             <NavLink to={path} activeClassName="text-red-500">
               {name}
             </NavLink>
