@@ -1,13 +1,10 @@
 import React from 'react'
 import { useFormik } from 'formik'
 import Button from './Button'
+import TextField from './TextField'
 
 const styles = {
-  field: {
-    wrapper: 'my-4 mx-8 text-center',
-    label: 'mr-4',
-    input: 'border border-solid border-black p-1',
-  },
+  field: 'my-4 mx-8 text-center',
 }
 
 const LoginForm = () => {
@@ -22,27 +19,18 @@ const LoginForm = () => {
   })
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className={styles.field.wrapper}>
-        <label className={styles.field.label} htmlFor="username">
-          Username
-        </label>
-        <input
-          className={styles.field.input}
-          id="username"
+      <div className={styles.field}>
+        <TextField
+          label="Username"
           name="username"
-          type="text"
           onChange={formik.handleChange}
           value={formik.values.username}
         />
       </div>
 
-      <div className={styles.field.wrapper}>
-        <label className={styles.field.label} htmlFor="password">
-          Password
-        </label>
-        <input
-          className={styles.field.input}
-          id="password"
+      <div className={styles.field}>
+        <TextField
+          label="Password"
           name="password"
           type="password"
           onChange={formik.handleChange}
