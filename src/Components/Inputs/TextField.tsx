@@ -5,6 +5,7 @@ type TextFieldProps = {
   label?: string
   name?: string
   type?: 'text' | 'password' | 'number'
+  placeholder?: string
   value?: string | number
   numberAttrs?: {
     max?: number
@@ -18,6 +19,7 @@ const TextField = ({
   label = '',
   name = '',
   type = 'text',
+  placeholder,
   value,
   numberAttrs,
   onChange,
@@ -30,8 +32,9 @@ const TextField = ({
         id={name}
         name={name}
         type={type}
-        onChange={onChange}
+        placeholder={placeholder}
         value={value}
+        onChange={onChange}
         {...(type === 'number' && numberAttrs)}
       />
     </>
