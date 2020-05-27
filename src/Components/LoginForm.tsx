@@ -23,6 +23,7 @@ const LoginForm = () => {
         <TextField
           label="Username"
           name="username"
+          required
           onChange={formik.handleChange}
           value={formik.values.username}
         />
@@ -33,6 +34,7 @@ const LoginForm = () => {
           label="Password"
           name="password"
           type="password"
+          required
           onChange={formik.handleChange}
           value={formik.values.password}
         />
