@@ -3,7 +3,7 @@ import React from 'react'
 type ButtonProps = {
   children: React.ReactNode
   type?: 'button' | 'submit' | 'reset' | undefined
-  onclick?: React.MouseEventHandler
+  onclick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const Button = ({ children, type, onclick }: ButtonProps) => (

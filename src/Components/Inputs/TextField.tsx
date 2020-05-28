@@ -18,7 +18,7 @@ type TextFieldProps = {
     min?: number
     step?: number
   }
-  onChange?: React.ChangeEventHandler
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
 const TextField = ({

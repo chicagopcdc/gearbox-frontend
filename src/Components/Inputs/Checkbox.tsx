@@ -7,7 +7,7 @@ type CheckboxProps = {
   placeholder?: string
   required?: boolean
   checked?: boolean
-  onChange?: React.ChangeEventHandler
+  onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
 const Checkbox = ({
