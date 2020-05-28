@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Button from './Inputs/Button'
 import TextField from './Inputs/TextField'
@@ -8,6 +9,8 @@ const styles = {
 }
 
 const LoginForm = () => {
+  const history = useHistory()
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -15,6 +18,7 @@ const LoginForm = () => {
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
+      history.replace('/')
     },
   })
   return (
