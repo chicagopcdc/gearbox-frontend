@@ -13,7 +13,6 @@ type CheckboxProps = {
 const Checkbox = ({
   label = '',
   name = '',
-  placeholder,
   required,
   checked,
   onChange,
@@ -25,7 +24,6 @@ const Checkbox = ({
         id={name}
         name={name}
         type="checkbox"
-        placeholder={placeholder}
         required={required}
         checked={checked}
         onChange={onChange}
