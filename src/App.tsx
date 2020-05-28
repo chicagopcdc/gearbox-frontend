@@ -36,11 +36,29 @@ function App() {
 
       <main className={styles.main}>
         <Switch>
-          {routes.map(({ exact, path, component }) => (
-            <Route exact={exact} path={path} key={path}>
-              {component}
-            </Route>
-          ))}
+          <Route path="/" exact>
+            <Home />
+          </Route>
+
+          <Route path="/login">
+            <Login />
+          </Route>
+
+          <Route path="/results">
+            <Results />
+          </Route>
+
+          <Route path="/guide">
+            <Guide />
+          </Route>
+
+          <Route path="/trials">
+            <Trials />
+          </Route>
+
+          <Route path="/about">
+            <About />
+          </Route>
         </Switch>
       </main>
 
