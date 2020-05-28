@@ -11,7 +11,13 @@ const styles = {
   navbarItem: 'list-none',
 }
 
-const Navbar = ({ items }: { items: { name: string; path: string }[] }) => {
+const navItems = [
+  { name: 'Guide for Use', path: '/guide' },
+  { name: 'Eligible Trials', path: '/trials' },
+  { name: 'About GEARBOx', path: '/about' },
+]
+
+const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarLogo}>
@@ -21,7 +27,7 @@ const Navbar = ({ items }: { items: { name: string; path: string }[] }) => {
       </div>
 
       <ul className={styles.navbarItems}>
-        {items.map(({ path, name }) => (
+        {navItems.map(({ path, name }) => (
           <li className={styles.navbarItem} key={path}>
             <NavLink to={path} activeClassName="text-red-500">
               {name}

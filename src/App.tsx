@@ -16,23 +16,12 @@ const styles = {
   footer: 'flex-shrink-0',
 }
 
-const routes = [
-  { component: Home, name: 'Home', path: '/', exact: true, nav: false },
-  { component: Results, name: 'Results', path: '/results', nav: false },
-  { component: Login, name: 'Login', path: '/login', nav: false },
-  { component: Guide, name: 'Guide for Use', path: '/guide', nav: true },
-  { component: Trials, name: 'Eligible Trials', path: '/trials', nav: true },
-  { component: About, name: 'About GEARBOx', path: '/about', nav: true },
-]
-
 function App() {
   const isLogin = window.location.pathname === '/login'
 
   return (
     <Router>
-      <header>
-        {!isLogin && <Navbar items={routes.filter(({ nav }) => nav)} />}
-      </header>
+      <header>{!isLogin && <Navbar />}</header>
 
       <main className={styles.main}>
         <Switch>
