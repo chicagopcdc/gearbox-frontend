@@ -2,16 +2,23 @@ import React from 'react'
 
 type ButtonProps = {
   children: React.ReactNode
+  disabled?: boolean
   type?: 'button' | 'submit' | 'reset' | undefined
   onclick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const Button = ({ children, type, onclick }: ButtonProps) => (
-  <button
-    className="border border-solid border-black hover:bg-gray-300 rounded px-4 py-2"
-    type={type}
-    onClick={onclick}
-  >
+const styles = {
+  button(disabled?: boolean) {
+    return `border border-solid rounded px-4 py-2 ${
+      disabled
+        ? 'cursor-not-allowed opacity-50'
+        : 'border-black hover:bg-gray-300'
+    }`
+  },
+}
+
+const Button = ({ children, disabled, type, onclick }: ButtonProps) => (
+  <button className={styles.button(disabled)} type={type} onClick={onclick}>
     {children}
   </button>
 )
