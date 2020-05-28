@@ -1,5 +1,10 @@
-import React from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
 
 import Home from './Pages/Home'
 import About from './Pages/About'
@@ -16,8 +21,48 @@ const styles = {
   footer: 'flex-shrink-0',
 }
 
+// fakeAuth copied from https://reacttraining.com/react-router/web/example/auth-workflow
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb: () => void) {
+    fakeAuth.isAuthenticated = true
+    setTimeout(cb, 100) // fake async
+  },
+  signout(cb: () => void) {
+    fakeAuth.isAuthenticated = false
+    setTimeout(cb, 100)
+  },
+}
+
+type MyRouteProps = {
+  cb?(): void
+  children: React.ReactNode
+  isPrivate?: boolean
+  exact?: boolean
+  path: string
+}
+
+const MyRoute = ({ cb, children, isPrivate, ...rest }: MyRouteProps) => {
+  useEffect(() => {
+    if (cb) cb()
+  }, [cb])
+
+  return (
+    <Route
+      {...rest}
+      render={() => {
+        return isPrivate && !fakeAuth.isAuthenticated ? (
+          <Redirect to={{ pathname: '/login' }} />
+        ) : (
+          children
+        )
+      }}
+    />
+  )
+}
+
 function App() {
-  const isLogin = window.location.pathname === '/login'
+  const [isLogin, setIsLogin] = useState(false)
 
   return (
     <Router>
@@ -25,17 +70,17 @@ function App() {
 
       <main className={styles.main}>
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
+          <MyRoute path="/" exact cb={() => setIsLogin(false)}>
+            <Home isAuthenticated={fakeAuth.isAuthenticated} />
+          </MyRoute>
 
-          <Route path="/login">
-            <Login />
-          </Route>
+          <MyRoute path="/login" cb={() => setIsLogin(true)}>
+            <Login onLogin={fakeAuth.authenticate} />
+          </MyRoute>
 
-          <Route path="/results">
+          <MyRoute path="/results" isPrivate>
             <Results />
-          </Route>
+          </MyRoute>
 
           <Route path="/guide">
             <Guide />

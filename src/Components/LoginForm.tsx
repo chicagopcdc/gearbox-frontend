@@ -8,7 +8,7 @@ const styles = {
   field: 'my-4 mx-8 text-center',
 }
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }: { onLogin(cb: () => void): void }) => {
   const history = useHistory()
 
   const formik = useFormik({
@@ -18,7 +18,7 @@ const LoginForm = () => {
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
-      history.replace('/')
+      onLogin(() => history.replace('/'))
     },
   })
   return (
