@@ -93,6 +93,10 @@ function App() {
           <Route path="/about">
             <About />
           </Route>
+
+          <Route path="*">
+            <Redirect to={{ pathname: '/' }} />
+          </Route>
         </Switch>
       </main>
 
