@@ -1,5 +1,4 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import { useFormik } from 'formik'
 import Button from './Inputs/Button'
 import TextField from './Inputs/TextField'
@@ -8,18 +7,17 @@ const styles = {
   field: 'my-4 mx-8 text-center',
 }
 
-const LoginForm = ({ onLogin }: { onLogin(cb: () => void): void }) => {
-  const history = useHistory()
+type LoginFormProps = {
+  onLogin: (values: { username: string; password: string }) => void
+}
 
+const LoginForm = ({ onLogin }: LoginFormProps) => {
   const formik = useFormik({
     initialValues: {
       username: '',
       password: '',
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-      onLogin(() => history.replace('/'))
-    },
+    onSubmit: onLogin,
   })
   return (
     <form onSubmit={formik.handleSubmit}>

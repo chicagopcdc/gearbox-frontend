@@ -75,7 +75,7 @@ function App() {
           </MyRoute>
 
           <MyRoute path="/login" cb={() => setIsLogin(true)}>
-            <Login onLogin={fakeAuth.authenticate} />
+            <Login authenticate={fakeAuth.authenticate} />
           </MyRoute>
 
           <MyRoute path="/results" isPrivate>
