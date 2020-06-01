@@ -8,6 +8,17 @@
   display: flex;
   flex-direction: column;
 }
+
+.multi-select {
+  --rmsc-border: black !important;
+  --rmsc-spacing: 0.5rem !important;
+  --rmsc-border-radius: 0 !important;
+  --rmsc-height: 24px !important;
+}
+
+.multi-select .dropdown-container {
+  @apply p-1;
+}
 /* purgecss end ignore */
 
 @tailwind utilities;
