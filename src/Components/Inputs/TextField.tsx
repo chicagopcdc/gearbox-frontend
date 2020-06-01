@@ -11,6 +11,7 @@ type TextFieldProps = {
   name?: string
   type?: 'text' | 'password' | 'number'
   placeholder?: string
+  readonly?: boolean
   required?: boolean
   value?: string | number
   numberAttrs?: {
@@ -26,6 +27,7 @@ const TextField = ({
   name = '',
   type = 'text',
   placeholder,
+  readonly,
   required,
   value,
   numberAttrs,
@@ -40,6 +42,7 @@ const TextField = ({
         name={name}
         type={type}
         placeholder={placeholder}
+        readOnly={readonly}
         required={required}
         value={value}
         onChange={onChange}
