@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from '../Components/Inputs/Button'
-import Box from '../Components/Box'
+import MatchForm from '../Components/MatchForm'
 import { Link } from 'react-router-dom'
 
 const paragraphs = [
@@ -18,23 +18,7 @@ const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
       ))}
 
       {isAuthenticated ? (
-        <div className="mt-16">
-          <div className="flex flex-wrap">
-            <div className="flex-1">
-              <Box name="Patient information">placeholder</Box>
-            </div>
-            <div className="flex-1">
-              <Box name="Biomarker Report Submission">placeholder</Box>
-            </div>
-          </div>
-          <Box name="Clinical Details">placeholder</Box>
-
-          <div className="text-center">
-            <Link to="/results">
-              <Button>Submit</Button>
-            </Link>
-          </div>
-        </div>
+        <MatchForm />
       ) : (
         <div className="text-center my-8">
           <Link to="/login">
