@@ -21,7 +21,7 @@ const Login = ({ authenticate }: { authenticate(cb: () => void): void }) => {
   return (
     <div className="flex flex-col h-full align-center">
       <div className="m-auto flex-col align-center justify-center">
-        <img src={gearboxLogo} alt="logo" style={{ height: '150px' }} />
+        <img src={gearboxLogo} alt="GEARBOx logo" style={{ height: '150px' }} />
 
         <Box name="Login">
           <LoginForm onLogin={handleLogin} />

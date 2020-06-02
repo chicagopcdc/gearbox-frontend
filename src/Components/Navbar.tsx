@@ -22,7 +22,11 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.navbarLogo}>
         <NavLink to="/">
-          <img src={gearboxLogo} alt="logo" style={{ height: '100px' }} />
+          <img
+            src={gearboxLogo}
+            alt="GEARBOx logo"
+            style={{ height: '100px' }}
+          />
         </NavLink>
       </div>
 

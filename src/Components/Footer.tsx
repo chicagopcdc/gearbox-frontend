@@ -16,7 +16,11 @@ const ExtraFooter = () => (
       New to the Pediatric Cancer Data Commons? Visit our website for more
       details on GEARBOx.
     </p>
-    <img src={pcdcLogo} alt="logo" style={{ height: '100px' }} />
+    <img
+      src={pcdcLogo}
+      alt="Pediatric Center Data Commons logo"
+      style={{ height: '100px' }}
+    />
   </div>
 )
 
@@ -25,9 +29,17 @@ const Footer = ({ showExtra = false }) => {
     <>
       {showExtra && <ExtraFooter />}
       <div className={styles.footerContent}>
-        <img src={uchicagoBSDlogo} alt="logo" style={{ height: '100px' }} />
-        <img src={volchenboumLabLogo} alt="logo" style={{ height: '100px' }} />
-        <img src={pedalLogo} alt="logo" style={{ height: '100px' }} />
+        <img
+          src={uchicagoBSDlogo}
+          alt="University of Chicago Biological Sciences Division logo"
+          style={{ height: '100px' }}
+        />
+        <img
+          src={volchenboumLabLogo}
+          alt="Volchenboum Lab logo"
+          style={{ height: '100px' }}
+        />
+        <img src={pedalLogo} alt="PedAL logo" style={{ height: '100px' }} />
       </div>
     </>
   )
