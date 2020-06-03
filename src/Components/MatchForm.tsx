@@ -293,12 +293,10 @@ const initialValues = {
   },
 }
 
-const MatchForm = () => {
+const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
   const formik = useFormik({
     initialValues: { ...initialValues },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-    },
+    onSubmit,
   })
   return (
     <form onSubmit={formik.handleSubmit}>

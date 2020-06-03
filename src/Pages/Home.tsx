@@ -9,6 +9,10 @@ const paragraphs = [
 ]
 
 const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
+  const handleSubmit = (values: any) => {
+    alert(JSON.stringify(values, null, 2))
+  }
+
   return (
     <>
       {paragraphs.map((p, i) => (
@@ -18,7 +22,7 @@ const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
       ))}
 
       {isAuthenticated ? (
-        <MatchForm />
+        <MatchForm onSubmit={handleSubmit}/>
       ) : (
         <div className="text-center my-8">
           <Link to="/login">
