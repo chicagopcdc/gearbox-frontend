@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Components/Inputs/Button'
 import MatchForm from '../Components/MatchForm'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const paragraphs = [
   `A tool built and maintained by the Pediatric Acute Leukemia (PedAL) Group, GEARBOx matches pediatric patients currently on Phase III clinical trials who experience refactory or relapsing disease to new Phase I or Phase II clinical trials based on their personal and clinical data. To see a list of all the trials included in this search, please select "Eligible Trials" above.`,
@@ -9,8 +9,10 @@ const paragraphs = [
 ]
 
 const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
+  const history = useHistory()
   const handleSubmit = (values: any) => {
-    alert(JSON.stringify(values, null, 2))
+    const confirmed = window.confirm(JSON.stringify(values, null, 2))
+    if (confirmed) history.replace('/results')
   }
 
   return (
@@ -22,7 +24,7 @@ const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
       ))}
 
       {isAuthenticated ? (
-        <MatchForm onSubmit={handleSubmit}/>
+        <MatchForm onSubmit={handleSubmit} />
       ) : (
         <div className="text-center my-8">
           <Link to="/login">
