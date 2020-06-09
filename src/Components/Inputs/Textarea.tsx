@@ -3,7 +3,7 @@ import Label from './Label'
 
 const styles = {
   label: 'mr-4',
-  input: 'border border-solid border-black p-1 block',
+  input: 'border border-solid border-black p-1 block w-full',
 }
 
 type TextareaProps = {
@@ -40,6 +40,10 @@ const Textarea = ({
         required={required}
         value={value}
         onChange={onChange}
+        style={{
+          minHeight: '100px',
+          resize: 'none',
+        }}
       />
     </>
   )
