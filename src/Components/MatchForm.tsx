@@ -200,7 +200,7 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             label="Baseline serum creatinine (mg/dL)"
             name="clinicalDetails.organFunction.secrumCr"
             type="number"
-            numberAttrs={{ min: 0, step: 0.1 }}
+            numberAttrs={{ min: 0, max: 999, step: 0.1 }}
             onChange={formik.handleChange}
             value={formik.values.clinicalDetails.organFunction.secrumCr}
           />
@@ -211,7 +211,7 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             label="Most recent AST (U/L)"
             name="clinicalDetails.organFunction.astRecent"
             type="number"
-            numberAttrs={{ min: 0 }}
+            numberAttrs={{ min: 0, max: 999 }}
             onChange={formik.handleChange}
             value={formik.values.clinicalDetails.organFunction.astRecent}
           />
