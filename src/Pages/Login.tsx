@@ -14,7 +14,10 @@ const Login = ({ authenticate }: { authenticate(cb: () => void): void }) => {
     username: string
     password: string
   }): void => {
-    alert(JSON.stringify(values, null, 2))
+    if (process.env.NODE_ENV === 'development') {
+      alert(JSON.stringify(values, null, 2))
+    }
+
     authenticate(() => history.replace('/'))
   }
 
