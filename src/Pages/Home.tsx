@@ -11,8 +11,12 @@ const paragraphs = [
 const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
-    const confirmed = window.confirm(JSON.stringify(values, null, 2))
-    if (confirmed) history.replace('/results')
+    if (process.env.NODE_ENV === 'development') {
+      const confirmed = window.confirm(JSON.stringify(values, null, 2))
+      if (confirmed) history.replace('/results')
+    } else {
+      history.replace('/results')
+    }
   }
 
   return (
