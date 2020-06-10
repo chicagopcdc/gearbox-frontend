@@ -14,14 +14,14 @@ const styles = {
   field: 'm-4',
 }
 
-const SectionInformation = ({ formik }: { formik: any }) => (
+const SectionInformation = ({ formik: { handleChange, values } }: any) => (
   <Box name="Patient Information">
     <div className={styles.field}>
       <TextField
         label="COG ID Number"
         name="patientInformation.cogId"
-        onChange={formik.handleChange}
-        value={formik.values.patientInformation.cogId}
+        onChange={handleChange}
+        value={values.patientInformation.cogId}
       />
     </div>
 
@@ -30,8 +30,8 @@ const SectionInformation = ({ formik }: { formik: any }) => (
         label="Patient Age"
         name="patientInformation.age"
         type="number"
-        onChange={formik.handleChange}
-        value={formik.values.patientInformation.age}
+        onChange={handleChange}
+        value={values.patientInformation.age}
         numberAttrs={{ min: 0 }}
       />
     </div>
@@ -42,8 +42,8 @@ const SectionInformation = ({ formik }: { formik: any }) => (
         name="patientInformation.initDiag"
         options={['foo', 'bar', 'baz']}
         placeholder="Select"
-        onChange={formik.handleChange}
-        value={formik.values.patientInformation.initDiag}
+        onChange={handleChange}
+        value={values.patientInformation.initDiag}
       />
     </div>
   </Box>
@@ -67,15 +67,15 @@ const SectionSubmission = () => (
   </Box>
 )
 
-const SectionDetails = ({ formik }: { formik: any }) => (
+const SectionDetails = ({ formik: { handleChange, values } }: any) => (
   <Box name="Clinical Details">
     <div className="flex flex-wrap justify-around">
       <div className={styles.field}>
         <Checkbox
           label="CNS Involvement"
           name="clinicalDetails.cnsInvolvement"
-          onChange={formik.handleChange}
-          checked={formik.values.clinicalDetails.cnsInvolvement}
+          onChange={handleChange}
+          checked={values.clinicalDetails.cnsInvolvement}
         />
       </div>
 
@@ -83,8 +83,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
         <Checkbox
           label="History of Autoimmune Disease"
           name="clinicalDetails.aiDisease"
-          onChange={formik.handleChange}
-          checked={formik.values.clinicalDetails.aiDisease}
+          onChange={handleChange}
+          checked={values.clinicalDetails.aiDisease}
         />
       </div>
 
@@ -93,8 +93,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="Drug Allergies"
             name="clinicalDetails.drugAllergiesFlag"
-            onChange={formik.handleChange}
-            checked={formik.values.clinicalDetails.drugAllergiesFlag}
+            onChange={handleChange}
+            checked={values.clinicalDetails.drugAllergiesFlag}
           />
         </div>
 
@@ -103,8 +103,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.drugAllergies"
             options={['foo', 'bar', 'baz']}
             placeholder="Please specify"
-            onChange={formik.handleChange}
-            values={formik.values.clinicalDetails.drugAllergies}
+            onChange={handleChange}
+            values={values.clinicalDetails.drugAllergies}
           />
         </div>
       </div>
@@ -118,10 +118,9 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="previous chemotherapy"
             name="clinicalDetails.priorTreatmentTherapies.prevChemoFlag"
-            onChange={formik.handleChange}
+            onChange={handleChange}
             checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies
-                .prevChemoFlag
+              values.clinicalDetails.priorTreatmentTherapies.prevChemoFlag
             }
           />
         </div>
@@ -130,10 +129,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="previous radiation therapy"
             name="clinicalDetails.priorTreatmentTherapies.prevRadFlag"
-            onChange={formik.handleChange}
-            checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies.prevRadFlag
-            }
+            onChange={handleChange}
+            checked={values.clinicalDetails.priorTreatmentTherapies.prevRadFlag}
           />
         </div>
 
@@ -141,10 +138,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="all-trans retinoid acid (ATRA)"
             name="clinicalDetails.priorTreatmentTherapies.prevAtra"
-            onChange={formik.handleChange}
-            checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies.prevAtra
-            }
+            onChange={handleChange}
+            checked={values.clinicalDetails.priorTreatmentTherapies.prevAtra}
           />
         </div>
 
@@ -152,10 +147,9 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="hydroxyurea"
             name="clinicalDetails.priorTreatmentTherapies.prevHydroxyurea"
-            onChange={formik.handleChange}
+            onChange={handleChange}
             checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies
-                .prevHydroxyurea
+              values.clinicalDetails.priorTreatmentTherapies.prevHydroxyurea
             }
           />
         </div>
@@ -164,9 +158,9 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="corticosteriods"
             name="clinicalDetails.priorTreatmentTherapies.prevSteroids"
-            onChange={formik.handleChange}
+            onChange={handleChange}
             checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies.prevSteroids
+              values.clinicalDetails.priorTreatmentTherapies.prevSteroids
             }
           />
         </div>
@@ -175,10 +169,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="IT cytarabine"
             name="clinicalDetails.priorTreatmentTherapies.prevItCyt"
-            onChange={formik.handleChange}
-            checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies.prevItCyt
-            }
+            onChange={handleChange}
+            checked={values.clinicalDetails.priorTreatmentTherapies.prevItCyt}
           />
         </div>
 
@@ -186,10 +178,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
           <Checkbox
             label="other antileukemic therapy"
             name="clinicalDetails.priorTreatmentTherapies.prevOther"
-            onChange={formik.handleChange}
-            checked={
-              formik.values.clinicalDetails.priorTreatmentTherapies.prevOther
-            }
+            onChange={handleChange}
+            checked={values.clinicalDetails.priorTreatmentTherapies.prevOther}
           />
         </div>
       </div>
@@ -202,8 +192,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.organFunction.lvEf"
             type="number"
             numberAttrs={{ min: 0, max: 100, step: 0.1 }}
-            onChange={formik.handleChange}
-            value={formik.values.clinicalDetails.organFunction.lvEf}
+            onChange={handleChange}
+            value={values.clinicalDetails.organFunction.lvEf}
           />
         </div>
 
@@ -213,8 +203,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.organFunction.secrumCr"
             type="number"
             numberAttrs={{ min: 0, max: 999, step: 0.1 }}
-            onChange={formik.handleChange}
-            value={formik.values.clinicalDetails.organFunction.secrumCr}
+            onChange={handleChange}
+            value={values.clinicalDetails.organFunction.secrumCr}
           />
         </div>
 
@@ -224,8 +214,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.organFunction.astRecent"
             type="number"
             numberAttrs={{ min: 0, max: 999 }}
-            onChange={formik.handleChange}
-            value={formik.values.clinicalDetails.organFunction.astRecent}
+            onChange={handleChange}
+            value={values.clinicalDetails.organFunction.astRecent}
           />
         </div>
 
@@ -235,8 +225,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.organFunction.altRecent"
             type="number"
             numberAttrs={{ min: 0, max: 999 }}
-            onChange={formik.handleChange}
-            value={formik.values.clinicalDetails.organFunction.altRecent}
+            onChange={handleChange}
+            value={values.clinicalDetails.organFunction.altRecent}
           />
         </div>
       </div>
@@ -252,8 +242,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.prevChemo"
             options={['foo', 'bar', 'baz']}
             placeholder="Please select all prior chemotherapy agents"
-            onChange={formik.handleChange}
-            values={formik.values.clinicalDetails.prevChemo}
+            onChange={handleChange}
+            values={values.clinicalDetails.prevChemo}
           />
         </div>
       </div>
@@ -266,8 +256,8 @@ const SectionDetails = ({ formik }: { formik: any }) => (
             name="clinicalDetails.prevRad"
             options={['foo', 'bar', 'baz']}
             placeholder="Please select all prior radiation modalities"
-            onChange={formik.handleChange}
-            values={formik.values.clinicalDetails.prevRad}
+            onChange={handleChange}
+            values={values.clinicalDetails.prevRad}
           />
         </div>
       </div>
