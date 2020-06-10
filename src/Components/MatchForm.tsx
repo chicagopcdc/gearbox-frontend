@@ -289,7 +289,7 @@ const initialValues = {
       altRecent: 0,
     },
     prevChemo: [],
-    prevRad: '',
+    prevRad: [],
   },
 }
 
