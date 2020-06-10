@@ -100,7 +100,10 @@ function App() {
       <main className={styles.main}>
         <Switch>
           <MyRoute path="/" exact cb={() => setIsLogin(false)}>
-            <Home isAuthenticated={fakeAuth.isAuthenticated} />
+            <Home
+              isAuthenticated={fakeAuth.isAuthenticated}
+              setInformation={setInformation}
+            />
           </MyRoute>
 
           <MyRoute path="/login" cb={() => setIsLogin(true)}>

@@ -8,13 +8,35 @@ const paragraphs = [
   `GEARBOx has compiled both a centralized lift of COG-sponsored Phase I and Phase II pediatric acute leukemia trials and a complete index of each study's eligibility criteria. Using these data points, our algorithm matches patients to trials for which they are eligible - streaming the process by which Clinical Research Associates (CRAs) identify and initiate their patients' next step in care.`,
 ]
 
-const Home = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
+type HomeProps = {
+  isAuthenticated: boolean
+  setInformation: React.Dispatch<React.SetStateAction<any>>
+}
+
+const Home = ({ isAuthenticated, setInformation }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
     if (process.env.NODE_ENV === 'development') {
       const confirmed = window.confirm(JSON.stringify(values, null, 2))
-      if (confirmed) history.replace('/results')
+      if (confirmed) {
+        setInformation((prevState: any) => ({
+          ...prevState,
+          priorTreatmentTherapies:
+            values.clinicalDetails.priorTreatmentTherapies,
+          organFunction: values.clinicalDetails.organFunction,
+          prevChemo: values.clinicalDetails.prevChemo,
+          prevRad: values.clinicalDetails.prevRad,
+        }))
+        history.replace('/results')
+      }
     } else {
+      setInformation((prevState: any) => ({
+        ...prevState,
+        priorTreatmentTherapies: values.clinicalDetails.priorTreatmentTherapies,
+        organFunction: values.clinicalDetails.organFunction,
+        prevChemo: values.clinicalDetails.prevChemo,
+        prevRad: values.clinicalDetails.prevRad,
+      }))
       history.replace('/results')
     }
   }
