@@ -7,6 +7,8 @@ import MultiSelect from './Inputs/MultiSelect'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
+import { labels } from '../config'
+
 import foundationMedicineLogo from '../assets/foundation-medicine-logo.jpg'
 import hematologicsLogo from '../assets/hematologics-logo.png'
 
@@ -18,7 +20,7 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
   <Box name="Patient Information">
     <div className={styles.field}>
       <TextField
-        label="COG ID Number"
+        label={labels.cogId}
         name="patientInformation.cogId"
         onChange={handleChange}
         value={values.patientInformation.cogId}
@@ -27,7 +29,7 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
 
     <div className={styles.field}>
       <TextField
-        label="Patient Age"
+        label={labels.age}
         name="patientInformation.age"
         type="number"
         onChange={handleChange}
@@ -38,7 +40,7 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
 
     <div className={styles.field}>
       <Select
-        label="Initial Disease Diagnosis"
+        label={labels.initDiag}
         name="patientInformation.initDiag"
         options={['foo', 'bar', 'baz']}
         placeholder="Select"
@@ -72,7 +74,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
     <div className="flex flex-wrap justify-around">
       <div className={styles.field}>
         <Checkbox
-          label="CNS Involvement"
+          label={labels.cnsInvolvement}
           name="clinicalDetails.cnsInvolvement"
           onChange={handleChange}
           checked={values.clinicalDetails.cnsInvolvement}
@@ -81,7 +83,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
       <div className={styles.field}>
         <Checkbox
-          label="History of Autoimmune Disease"
+          label={labels.aiDisease}
           name="clinicalDetails.aiDisease"
           onChange={handleChange}
           checked={values.clinicalDetails.aiDisease}
@@ -91,7 +93,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
       <div className={styles.field + ' flex'}>
         <div>
           <Checkbox
-            label="Drug Allergies"
+            label={labels.drugAllergiesFlag}
             name="clinicalDetails.drugAllergiesFlag"
             onChange={handleChange}
             checked={values.clinicalDetails.drugAllergiesFlag}
@@ -116,7 +118,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="previous chemotherapy"
+            label={labels.prevChemoFlag}
             name="clinicalDetails.priorTreatmentTherapies.prevChemoFlag"
             onChange={handleChange}
             checked={
@@ -127,7 +129,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="previous radiation therapy"
+            label={labels.prevRadFlag}
             name="clinicalDetails.priorTreatmentTherapies.prevRadFlag"
             onChange={handleChange}
             checked={values.clinicalDetails.priorTreatmentTherapies.prevRadFlag}
@@ -136,7 +138,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="all-trans retinoid acid (ATRA)"
+            label={labels.prevAtra}
             name="clinicalDetails.priorTreatmentTherapies.prevAtra"
             onChange={handleChange}
             checked={values.clinicalDetails.priorTreatmentTherapies.prevAtra}
@@ -145,7 +147,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="hydroxyurea"
+            label={labels.prevHydroxyurea}
             name="clinicalDetails.priorTreatmentTherapies.prevHydroxyurea"
             onChange={handleChange}
             checked={
@@ -156,7 +158,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="corticosteriods"
+            label={labels.prevSteroids}
             name="clinicalDetails.priorTreatmentTherapies.prevSteroids"
             onChange={handleChange}
             checked={
@@ -167,7 +169,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="IT cytarabine"
+            label={labels.prevItCyt}
             name="clinicalDetails.priorTreatmentTherapies.prevItCyt"
             onChange={handleChange}
             checked={values.clinicalDetails.priorTreatmentTherapies.prevItCyt}
@@ -176,7 +178,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <Checkbox
-            label="other antileukemic therapy"
+            label={labels.prevOther}
             name="clinicalDetails.priorTreatmentTherapies.prevOther"
             onChange={handleChange}
             checked={values.clinicalDetails.priorTreatmentTherapies.prevOther}
@@ -188,7 +190,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <TextField
-            label="Left Ventricular Ejection Fraction (%)"
+            label={labels.lvEf}
             name="clinicalDetails.organFunction.lvEf"
             type="number"
             numberAttrs={{ min: 0, max: 100, step: 0.1 }}
@@ -199,7 +201,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <TextField
-            label="Baseline serum creatinine (mg/dL)"
+            label={labels.secrumCr}
             name="clinicalDetails.organFunction.secrumCr"
             type="number"
             numberAttrs={{ min: 0, max: 999, step: 0.1 }}
@@ -210,7 +212,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <TextField
-            label="Most recent AST (U/L)"
+            label={labels.astRecent}
             name="clinicalDetails.organFunction.astRecent"
             type="number"
             numberAttrs={{ min: 0, max: 999 }}
@@ -221,7 +223,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <TextField
-            label="Most recent ALT (U/L)"
+            label={labels.altRecent}
             name="clinicalDetails.organFunction.altRecent"
             type="number"
             numberAttrs={{ min: 0, max: 999 }}
