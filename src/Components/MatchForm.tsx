@@ -88,13 +88,25 @@ const SectionDetails = ({ formik }: { formik: any }) => (
         />
       </div>
 
-      <div className={styles.field}>
-        <Checkbox
-          label="Drug Allergies"
-          name="clinicalDetails.drugAllergies"
-          onChange={formik.handleChange}
-          checked={formik.values.clinicalDetails.drugAllergies}
-        />
+      <div className={styles.field + ' flex'}>
+        <div>
+          <Checkbox
+            label="Drug Allergies"
+            name="clinicalDetails.drugAllergiesFlag"
+            onChange={formik.handleChange}
+            checked={formik.values.clinicalDetails.drugAllergiesFlag}
+          />
+        </div>
+
+        <div className="ml-4">
+          <MultiSelect
+            name="clinicalDetails.drugAllergies"
+            options={['foo', 'bar', 'baz']}
+            placeholder="Please specify"
+            onChange={formik.handleChange}
+            values={formik.values.clinicalDetails.drugAllergies}
+          />
+        </div>
       </div>
     </div>
 
@@ -272,7 +284,8 @@ const initialValues = {
   clinicalDetails: {
     cnsInvolvement: false,
     aiDisease: false,
-    drugAllergies: false,
+    drugAllergiesFlag: false,
+    drugAllergies: [],
     priorTreatmentTherapies: {
       prevChemoFlag: false,
       prevRadFlag: false,
