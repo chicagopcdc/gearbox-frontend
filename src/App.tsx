@@ -63,6 +63,35 @@ const MyRoute = ({ cb, children, isPrivate, ...rest }: MyRouteProps) => {
 
 function App() {
   const [isLogin, setIsLogin] = useState(false)
+  const [information, setInformation] = useState({
+    priorTreatmentTherapies: {
+      prevChemoFlag: true,
+      prevRadFlag: true,
+      prevAtra: false,
+      prevHydroxyurea: false,
+      prevSteroids: true,
+      prevItCyt: false,
+      prevOther: false,
+    },
+    organFunction: {
+      lvEf: 57,
+      secrumCr: 0.9,
+      astRecent: 23,
+      altRecent: 17,
+    },
+    prevChemo: ['foo', 'bar', 'baz'],
+    prevRad: [''],
+    biomarkers: ['MECOM(3q26.2)', 'ETS FUS-ERG Fusion'],
+  })
+  const [results, setResults] = useState([
+    {
+      title: '',
+      group: '',
+      location: '',
+      link: { name: '', url: '' },
+      contact: '',
+    },
+  ])
 
   return (
     <Router>
@@ -79,7 +108,12 @@ function App() {
           </MyRoute>
 
           <MyRoute path="/results" isPrivate>
-            <Results />
+            <Results
+              data={{
+                information,
+                results,
+              }}
+            />
           </MyRoute>
 
           <Route path="/guide">
