@@ -31,7 +31,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
         <div className="flex-1 m-4">
           <h2 className="font-bold">Prior treatment therapies</h2>
           {Object.keys(priorTreatmentTherapies).map((key) => (
-            <div className="m-4">
+            <div className="m-4" key={key}>
               <Checkbox
                 label={labels[key]}
                 checked={priorTreatmentTherapies[key]}
@@ -43,7 +43,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
         <div className="flex-1 m-4">
           <h2 className="font-bold">Organ Function</h2>
           {Object.keys(organFunction).map((key) => (
-            <div className="m-4">
+            <div className="m-4" key={key}>
               <TextField
                 label={labels[key]}
                 value={organFunction[key]}
@@ -71,7 +71,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
       <div className="m-4">
         <h2 className="font-bold">Biomarkers</h2>
         {allBiomarkers.map((marker) => (
-          <div className="m-4">
+          <div className="m-4" key={marker}>
             <Checkbox label={marker} checked={biomarkers.includes(marker)} />
           </div>
         ))}
