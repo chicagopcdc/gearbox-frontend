@@ -8,7 +8,7 @@ import { biomarkers as allBiomarkers, labels } from '../config'
 
 type SubmittedInfoProps = {
   data: {
-    treatments: { [key: string]: boolean }
+    priorTreatmentTherapies: { [key: string]: boolean }
     organFunction: { [key: string]: number }
     prevChemo: string[]
     prevRad: string[]
@@ -17,16 +17,25 @@ type SubmittedInfoProps = {
 }
 
 const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
-  const { treatments, organFunction, prevChemo, prevRad, biomarkers } = data
+  const {
+    priorTreatmentTherapies,
+    organFunction,
+    prevChemo,
+    prevRad,
+    biomarkers,
+  } = data
 
   return (
     <Box name="Summary of Submitted Patient Information">
       <div className="flex flex-wrap justify-around">
         <div className="flex-1 m-4">
           <h2 className="font-bold">Prior treatment therapies</h2>
-          {Object.keys(treatments).map((key) => (
+          {Object.keys(priorTreatmentTherapies).map((key) => (
             <div className="m-4">
-              <Checkbox label={labels[key]} checked={treatments[key]} />
+              <Checkbox
+                label={labels[key]}
+                checked={priorTreatmentTherapies[key]}
+              />
             </div>
           ))}
         </div>

@@ -5,7 +5,7 @@ import TrialTable from '../Components/TrialTable'
 
 const localData = {
   information: {
-    treatments: {
+    priorTreatmentTherapies: {
       prevChemoFlag: true,
       prevRadFlag: true,
       prevAtra: false,
@@ -37,7 +37,7 @@ const localData = {
 
 type ResultsData = {
   information: {
-    treatments: { [key: string]: boolean }
+    priorTreatmentTherapies: { [key: string]: boolean }
     organFunction: { [key: string]: number }
     prevChemo: string[]
     prevRad: string[]
