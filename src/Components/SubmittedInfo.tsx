@@ -35,6 +35,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
               <Checkbox
                 label={labels[key]}
                 checked={priorTreatmentTherapies[key]}
+                readonly
               />
             </div>
           ))}
@@ -72,7 +73,11 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
         <h2 className="font-bold">Biomarkers</h2>
         {allBiomarkers.map((marker) => (
           <div className="m-4" key={marker}>
-            <Checkbox label={marker} checked={biomarkers.includes(marker)} />
+            <Checkbox
+              label={marker}
+              checked={biomarkers.includes(marker)}
+              readonly
+            />
           </div>
         ))}
       </div>
