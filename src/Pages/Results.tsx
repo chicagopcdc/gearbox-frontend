@@ -20,8 +20,8 @@ const localData = {
       astRecent: 23,
       altRecent: 17,
     },
-    priorChemotherapy: ['foo', 'bar', 'baz'],
-    priorRadiation: [''],
+    prevChemo: ['foo', 'bar', 'baz'],
+    prevRad: [''],
     biomarkers: ['MECOM(3q26.2)', 'ETS FUS-ERG Fusion'],
   },
   results: [
@@ -39,8 +39,8 @@ type ResultsData = {
   information: {
     treatments: { [key: string]: boolean }
     organFunction: { [key: string]: number }
-    priorChemotherapy: string[]
-    priorRadiation: string[]
+    prevChemo: string[]
+    prevRad: string[]
     biomarkers: string[]
   }
   results: any[]

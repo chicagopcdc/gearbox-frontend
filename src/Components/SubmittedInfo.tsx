@@ -10,20 +10,14 @@ type SubmittedInfoProps = {
   data: {
     treatments: { [key: string]: boolean }
     organFunction: { [key: string]: number }
-    priorChemotherapy: string[]
-    priorRadiation: string[]
+    prevChemo: string[]
+    prevRad: string[]
     biomarkers: string[]
   }
 }
 
 const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
-  const {
-    treatments,
-    organFunction,
-    priorChemotherapy,
-    priorRadiation,
-    biomarkers,
-  } = data
+  const { treatments, organFunction, prevChemo, prevRad, biomarkers } = data
 
   return (
     <Box name="Summary of Submitted Patient Information">
@@ -56,12 +50,12 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
       <div className="flex flex-wrap justify-around">
         <div className="flex-1 m-4">
           <h2 className="font-bold">Prior chemotherapy</h2>
-          <Textarea value={priorChemotherapy.join('\n')} readonly />
+          <Textarea value={prevChemo.join('\n')} readonly />
         </div>
 
         <div className="flex-1 m-4">
           <h2 className="font-bold">Prior radiation therapy</h2>
-          <Textarea value={priorRadiation.join('\n')} readonly />
+          <Textarea value={prevRad.join('\n')} readonly />
         </div>
       </div>
 
