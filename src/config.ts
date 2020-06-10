@@ -15,6 +15,12 @@ export const biomarkers: string[] = [
 ]
 
 export const labels: { [key: string]: string } = {
+  cogId: 'COG ID Number',
+  age: 'Patient Age',
+  initDiag: 'Initial Disease Diagnosis',
+  cnsInvolvement: 'CNS Involvement',
+  aiDisease: 'History of Autoimmune Disease',
+  drugAllergiesFlag: 'Drug Allergies',
   prevChemoFlag: 'previous chemotherapy',
   prevRadFlag: 'previous radiation therapy',
   prevAtra: 'all-trans retinoid acid (ATRA)',
