@@ -14,25 +14,18 @@ export const biomarkers: string[] = [
   'Non-KMT2A MLLT10 Fusions',
 ]
 
-export const labels: {
-  treatments: { [key: string]: string }
-  organFunction: { [key: string]: string }
-} = {
-  treatments: {
-    prevChemoFlag: 'previous chemotherapy',
-    prevRadFlag: 'previous radiation therapy',
-    prevAtra: 'all-trans retinoid acid (ATRA)',
-    prevHydroxyurea: 'hydroxyurea',
-    prevSteroids: 'corticosteriods',
-    prevItCyt: 'IT cytarabine',
-    prevOther: 'other antileukemic therapy',
-  },
-  organFunction: {
-    lvEf: 'Left Ventricular Ejection Fraction (%)',
-    secrumCr: 'Baseline serum creatinine (mg/dL)',
-    astRecent: 'Most recent AST (U/L)',
-    altRecent: 'Most recent ALT (U/L)',
-  },
+export const labels: { [key: string]: string } = {
+  prevChemoFlag: 'previous chemotherapy',
+  prevRadFlag: 'previous radiation therapy',
+  prevAtra: 'all-trans retinoid acid (ATRA)',
+  prevHydroxyurea: 'hydroxyurea',
+  prevSteroids: 'corticosteriods',
+  prevItCyt: 'IT cytarabine',
+  prevOther: 'other antileukemic therapy',
+  lvEf: 'Left Ventricular Ejection Fraction (%)',
+  secrumCr: 'Baseline serum creatinine (mg/dL)',
+  astRecent: 'Most recent AST (U/L)',
+  altRecent: 'Most recent ALT (U/L)',
 }
 
 export default {

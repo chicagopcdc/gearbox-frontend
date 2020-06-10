@@ -32,10 +32,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
           <h2 className="font-bold">Prior treatment therapies</h2>
           {Object.keys(treatments).map((key) => (
             <div className="m-4">
-              <Checkbox
-                label={labels.treatments[key]}
-                checked={treatments[key]}
-              />
+              <Checkbox label={labels[key]} checked={treatments[key]} />
             </div>
           ))}
         </div>
@@ -45,7 +42,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
           {Object.keys(organFunction).map((key) => (
             <div className="m-4">
               <TextField
-                label={labels.organFunction[key]}
+                label={labels[key]}
                 value={organFunction[key]}
                 type="number"
                 numberAttrs={{ min: 0, max: 999 }}
