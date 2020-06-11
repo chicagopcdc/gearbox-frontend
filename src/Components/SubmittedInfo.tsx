@@ -6,6 +6,12 @@ import Textarea from './Inputs/Textarea'
 
 import { biomarkers as allBiomarkers, labels } from '../config'
 
+const styles = {
+  group: 'flex-1 m-4',
+  groupName: 'font-bold',
+  field: 'm-4',
+}
+
 type SubmittedInfoProps = {
   data: {
     priorTreatmentTherapies: { [key: string]: boolean }
@@ -28,10 +34,10 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
   return (
     <Box name="Summary of Submitted Patient Information">
       <div className="flex flex-wrap justify-around">
-        <div className="flex-1 m-4">
-          <h2 className="font-bold">Prior treatment therapies</h2>
+        <div className={styles.group}>
+          <h2 className={styles.groupName}>Prior treatment therapies</h2>
           {Object.keys(priorTreatmentTherapies).map((key) => (
-            <div className="m-4" key={key}>
+            <div className={styles.field} key={key}>
               <Checkbox
                 label={labels[key]}
                 checked={priorTreatmentTherapies[key]}
@@ -41,10 +47,10 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
           ))}
         </div>
 
-        <div className="flex-1 m-4">
-          <h2 className="font-bold">Organ Function</h2>
+        <div className={styles.group}>
+          <h2 className={styles.groupName}>Organ Function</h2>
           {Object.keys(organFunction).map((key) => (
-            <div className="m-4" key={key}>
+            <div className={styles.field} key={key}>
               <TextField
                 label={labels[key]}
                 value={organFunction[key]}
@@ -58,21 +64,21 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
       </div>
 
       <div className="flex flex-wrap justify-around">
-        <div className="flex-1 m-4">
-          <h2 className="font-bold">Prior chemotherapy</h2>
+        <div className={styles.group}>
+          <h2 className={styles.groupName}>Prior chemotherapy</h2>
           <Textarea value={prevChemo.join('\n')} readonly />
         </div>
 
-        <div className="flex-1 m-4">
-          <h2 className="font-bold">Prior radiation therapy</h2>
+        <div className={styles.group}>
+          <h2 className={styles.groupName}>Prior radiation therapy</h2>
           <Textarea value={prevRad.join('\n')} readonly />
         </div>
       </div>
 
-      <div className="m-4">
-        <h2 className="font-bold">Biomarkers</h2>
+      <div className={styles.group}>
+        <h2 className={styles.groupName}>Biomarkers</h2>
         {allBiomarkers.map((marker) => (
-          <div className="m-4" key={marker}>
+          <div className={styles.field} key={marker}>
             <Checkbox
               label={marker}
               checked={biomarkers.includes(marker)}
