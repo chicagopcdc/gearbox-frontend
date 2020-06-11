@@ -17,7 +17,7 @@ import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 
 const styles = {
-  main: 'flex-1 max-w-screen-lg w-full mx-auto my-8',
+  main: 'flex-1 max-w-screen-lg mx-4 lg:mx-auto my-8',
   footer: 'flex-shrink-0',
 }
 
