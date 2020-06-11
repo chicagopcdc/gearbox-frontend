@@ -25,7 +25,7 @@ const Navbar = () => {
           <img
             src={gearboxLogo}
             alt="GEARBOx logo"
-            style={{ height: '100px' }}
+            style={{ maxHeight: '100px' }}
           />
         </NavLink>
       </div>
