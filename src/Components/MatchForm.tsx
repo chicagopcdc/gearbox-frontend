@@ -58,12 +58,12 @@ const SectionSubmission = () => (
     <div className="text-center">
       <h2 className={styles.groupName}>Upload Files</h2>
       <img
-        className="border border-solid border-black m-auto my-2 w-1/2"
+        className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
         src={hematologicsLogo}
         alt="Hematologics logo"
       />
       <img
-        className="border border-solid border-black m-auto my-2 w-1/2"
+        className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
         src={foundationMedicineLogo}
         alt="Foundation Medicine logo"
       />
@@ -73,7 +73,7 @@ const SectionSubmission = () => (
 
 const SectionDetails = ({ formik: { handleChange, values } }: any) => (
   <Box name="Clinical Details">
-    <div className="flex flex-wrap justify-around">
+    <div className="lg:flex lg:flex-wrap lg:justify-around m-4">
       <div className={styles.field}>
         <Checkbox
           label={labels.cnsInvolvement}
@@ -92,7 +92,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
         />
       </div>
 
-      <div className={styles.field + ' flex'}>
+      <div className={styles.field + ' md:flex'}>
         <div>
           <Checkbox
             label={labels.drugAllergiesFlag}
@@ -102,7 +102,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
           />
         </div>
 
-        <div className="ml-4">
+        <div className="mt-4 md:mt-0 md:ml-4">
           <MultiSelect
             name="clinicalDetails.drugAllergies"
             options={['foo', 'bar', 'baz']}
@@ -114,7 +114,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
       </div>
     </div>
 
-    <div className="flex flex-wrap justify-between">
+    <div className="md:flex md:flex-wrap justify-between">
       <div className={styles.group}>
         <h2 className={styles.groupName}>Prior treatment therapies</h2>
 
@@ -236,7 +236,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
       </div>
     </div>
 
-    <div className="flex flex-wrap justify-between">
+    <div className="md:flex md:flex-wrap justify-between">
       <div className={styles.group}>
         <h2 className={styles.groupName}>Prior chemotherapy</h2>
 
@@ -308,7 +308,7 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-16">
-        <div className="flex flex-wrap">
+        <div className="md:flex md:flex-wrap">
           <div className="flex-1">
             <SectionInformation formik={formik} />
           </div>
