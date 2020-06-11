@@ -57,16 +57,28 @@ const SectionSubmission = () => (
   <Box name="Biomaker Report Submission">
     <div className="text-center">
       <h2 className={styles.groupName}>Upload Files</h2>
-      <img
-        className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
-        src={hematologicsLogo}
-        alt="Hematologics logo"
-      />
-      <img
-        className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
-        src={foundationMedicineLogo}
-        alt="Foundation Medicine logo"
-      />
+      <a
+        href="https://www.hematologics.com/"
+        target="blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
+          src={hematologicsLogo}
+          alt="Hematologics logo"
+        />
+      </a>
+      <a
+        href="https://www.foundationmedicine.com/"
+        target="blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
+          src={foundationMedicineLogo}
+          alt="Foundation Medicine logo"
+        />
+      </a>
     </div>
   </Box>
 )
