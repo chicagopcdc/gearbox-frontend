@@ -10,6 +10,7 @@ type TextFieldProps = {
   label?: string
   name?: string
   type?: 'text' | 'password' | 'number'
+  autofocus?: boolean
   placeholder?: string
   readonly?: boolean
   required?: boolean
@@ -26,6 +27,7 @@ const TextField = ({
   label = '',
   name = '',
   type = 'text',
+  autofocus,
   placeholder,
   readonly,
   required,
@@ -41,6 +43,7 @@ const TextField = ({
         id={name}
         name={name}
         type={type}
+        autoFocus={autofocus}
         placeholder={placeholder}
         readOnly={readonly}
         required={required}
