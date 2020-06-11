@@ -33,7 +33,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
 
   return (
     <Box name="Summary of Submitted Patient Information">
-      <div className="flex flex-wrap justify-around">
+      <div className="md:flex md:flex-wrap justify-around">
         <div className={styles.group}>
           <h2 className={styles.groupName}>Prior treatment therapies</h2>
           {Object.keys(priorTreatmentTherapies).map((key) => (
@@ -63,7 +63,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-around">
+      <div className="md:flex md:flex-wrap justify-around">
         <div className={styles.group}>
           <h2 className={styles.groupName}>Prior chemotherapy</h2>
           <Textarea value={prevChemo.join('\n')} readonly />
