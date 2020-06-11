@@ -92,7 +92,7 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
         />
       </div>
 
-      <div className={styles.field + ' md:flex'}>
+      <div className={`${styles.field} md:flex`}>
         <div>
           <Checkbox
             label={labels.drugAllergiesFlag}
