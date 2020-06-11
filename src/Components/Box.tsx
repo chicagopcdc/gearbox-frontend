@@ -1,7 +1,7 @@
 import React from 'react'
 
 const styles = {
-  box: 'border-2 border-solid border-black m-4',
+  box: 'border-2 border-solid border-black my-4 md:mx-4',
   boxNameOuter: 'text-base -mt-4 ml-2 mb-0',
   boxNameInner: 'bg-white px-2',
   boxContent: 'p-4',
