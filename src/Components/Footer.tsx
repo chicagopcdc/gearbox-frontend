@@ -7,7 +7,7 @@ import pedalLogo from '../assets/pedal-logo.png'
 
 const styles = {
   footerContent:
-    'flex flex-wrap items-center justify-between border-t-2 border-solid border-black mx-4 py-4',
+    'flex flex-wrap items-center justify-center lg:justify-between text-center lg:text-left border-t-2 border-solid border-black mx-4 py-4',
 }
 
 const ExtraFooter = () => (
