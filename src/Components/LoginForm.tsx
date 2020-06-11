@@ -25,6 +25,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         <TextField
           label="Username"
           name="username"
+          autofocus
           required
           onChange={formik.handleChange}
           value={formik.values.username}
