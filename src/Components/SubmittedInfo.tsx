@@ -9,7 +9,7 @@ import { biomarkers as allBiomarkers, labels } from '../config'
 const styles = {
   group: 'flex-1 m-4',
   groupName: 'font-bold',
-  field: 'm-4',
+  field: 'my-4',
 }
 
 type SubmittedInfoProps = {
