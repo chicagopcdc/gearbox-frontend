@@ -13,6 +13,8 @@ import foundationMedicineLogo from '../assets/foundation-medicine-logo.jpg'
 import hematologicsLogo from '../assets/hematologics-logo.png'
 
 const styles = {
+  group: 'flex-1 m-4',
+  groupName: 'font-bold',
   field: 'm-4',
 }
 
@@ -54,7 +56,7 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
 const SectionSubmission = () => (
   <Box name="Biomaker Report Submission">
     <div className="text-center">
-      <h2 className="font-bold">Upload Files</h2>
+      <h2 className={styles.groupName}>Upload Files</h2>
       <img
         className="border border-solid border-black m-auto my-2 w-1/2"
         src={hematologicsLogo}
@@ -113,8 +115,8 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
     </div>
 
     <div className="flex flex-wrap justify-between">
-      <div className="flex-1 m-4">
-        <h2 className="font-bold">Prior treatment therapies</h2>
+      <div className={styles.group}>
+        <h2 className={styles.groupName}>Prior treatment therapies</h2>
 
         <div className={styles.field}>
           <Checkbox
@@ -185,8 +187,8 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
           />
         </div>
       </div>
-      <div className="m-4">
-        <h2 className="font-bold">Organ Function</h2>
+      <div className={styles.group}>
+        <h2 className={styles.groupName}>Organ Function</h2>
 
         <div className={styles.field}>
           <TextField
@@ -235,8 +237,8 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
     </div>
 
     <div className="flex flex-wrap justify-between">
-      <div className="flex-1 m-4">
-        <h2 className="font-bold">Prior chemotherapy</h2>
+      <div className={styles.group}>
+        <h2 className={styles.groupName}>Prior chemotherapy</h2>
 
         <div className={styles.field}>
           <MultiSelect
@@ -249,8 +251,8 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
           />
         </div>
       </div>
-      <div className="flex-1 m-4">
-        <h2 className="font-bold">Prior radiation therapy</h2>
+      <div className={styles.group}>
+        <h2 className={styles.groupName}>Prior radiation therapy</h2>
 
         <div className={styles.field}>
           <MultiSelect
