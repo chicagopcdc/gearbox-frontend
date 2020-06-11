@@ -22,8 +22,8 @@ const Login = ({ authenticate }: { authenticate(cb: () => void): void }) => {
   }
 
   return (
-    <div className="flex flex-col h-full align-center">
-      <div className="m-auto flex-col align-center justify-center">
+    <div className="flex flex-col h-full align-center max-w-md mx-auto">
+      <div className="flex-col align-center justify-center">
         <img
           src={gearboxLogo}
           alt="GEARBOx logo"
