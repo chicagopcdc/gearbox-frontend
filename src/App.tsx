@@ -86,11 +86,30 @@ function App() {
   })
   const [results, setResults] = useState([
     {
-      title: '',
-      group: '',
-      location: '',
-      link: { name: '', url: '' },
-      contact: '',
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
+    },
+    {
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
     },
   ])
   const trials: Trial[] = [
