@@ -54,7 +54,7 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
 )
 
 const SectionSubmission = () => (
-  <Box name="Biomaker Report Submission">
+  <Box name="Biomarker Report Submission">
     <div className="text-center">
       <h2 className={styles.groupName}>Upload Files</h2>
       <a
