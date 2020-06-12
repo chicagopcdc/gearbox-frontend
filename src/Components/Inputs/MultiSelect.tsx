@@ -55,6 +55,13 @@ const MultiSelect = ({
         selectSomeItems: placeholder || '',
       }}
       hasSelectAll={false}
+      filterOptions={(options, filter) =>
+        filter
+          ? options.filter(
+              ({ value }) => value && value.match(new RegExp(filter, 'i'))
+            )
+          : options
+      }
     />
   )
 }
