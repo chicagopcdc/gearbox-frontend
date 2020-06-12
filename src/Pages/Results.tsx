@@ -1,6 +1,6 @@
 import React from 'react'
 import Box from '../Components/Box'
-import SubmittedInfo from '../Components/SubmittedInfo'
+import PatientInfo from '../Components/PatientInfo'
 import TrialCard, { Trial } from '../Components/TrialCard'
 
 type ResultsData = {
@@ -23,7 +23,7 @@ const Results = ({ data }: ResultsProps) => {
   return (
     <>
       <Box name="Summary of Submitted Patient Information">
-        <SubmittedInfo data={information} />
+        <PatientInfo data={information} />
       </Box>
 
       <Box name="Results">

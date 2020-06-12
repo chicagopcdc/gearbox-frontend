@@ -11,7 +11,7 @@ const styles = {
   field: 'my-4',
 }
 
-type SubmittedInfoProps = {
+type PatientInfoProps = {
   data: {
     priorTreatmentTherapies: { [key: string]: boolean }
     organFunction: { [key: string]: number }
@@ -21,7 +21,7 @@ type SubmittedInfoProps = {
   }
 }
 
-const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
+const PatientInfo = ({ data }: PatientInfoProps) => {
   const {
     priorTreatmentTherapies,
     organFunction,
@@ -90,4 +90,4 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
   )
 }
 
-export default SubmittedInfo
+export default PatientInfo
