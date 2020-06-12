@@ -1,5 +1,4 @@
 import React from 'react'
-import Box from './Box'
 import Checkbox from './Inputs/Checkbox'
 import TextField from './Inputs/TextField'
 import Textarea from './Inputs/Textarea'
@@ -32,7 +31,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
   } = data
 
   return (
-    <Box name="Summary of Submitted Patient Information">
+    <>
       <div className="md:flex md:flex-wrap justify-around">
         <div className={styles.group}>
           <h2 className={styles.groupName}>Prior treatment therapies</h2>
@@ -87,7 +86,7 @@ const SubmittedInfo = ({ data }: SubmittedInfoProps) => {
           </div>
         ))}
       </div>
-    </Box>
+    </>
   )
 }
 

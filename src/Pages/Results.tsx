@@ -22,7 +22,9 @@ const Results = ({ data }: ResultsProps) => {
   const { information, results } = data
   return (
     <>
-      <SubmittedInfo data={information} />
+      <Box name="Summary of Submitted Patient Information">
+        <SubmittedInfo data={information} />
+      </Box>
 
       <Box name="Results">
         <div className="flex flex-wrap justify-center">
