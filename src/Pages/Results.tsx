@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '../Components/Box'
 import SubmittedInfo from '../Components/SubmittedInfo'
-import TrialTable from '../Components/TrialTable'
+import TrialCard, { Trial } from '../Components/TrialCard'
 
 type ResultsData = {
   information: {
@@ -11,7 +11,7 @@ type ResultsData = {
     prevRad: string[]
     biomarkers: string[]
   }
-  results: any[]
+  results: Trial[]
 }
 
 type ResultsProps = {
@@ -25,7 +25,11 @@ const Results = ({ data }: ResultsProps) => {
       <SubmittedInfo data={information} />
 
       <Box name="Results">
-        <TrialTable data={results} />
+        <div className="flex flex-wrap justify-center">
+          {results.map((trial) => (
+            <TrialCard data={trial}></TrialCard>
+          ))}
+        </div>
       </Box>
     </>
   )
