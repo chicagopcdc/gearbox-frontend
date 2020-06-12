@@ -22,24 +22,22 @@ const Login = ({ authenticate }: { authenticate(cb: () => void): void }) => {
   }
 
   return (
-    <div className="flex flex-col h-full align-center max-w-md mx-auto">
-      <div className="flex-col align-center justify-center">
-        <img
-          src={gearboxLogo}
-          alt="GEARBOx logo"
-          style={{ maxHeight: '150px' }}
-        />
+    <div className="flex flex-col h-full align-center justify-center max-w-md mx-auto">
+      <img
+        src={gearboxLogo}
+        alt="GEARBOx logo"
+        style={{ maxHeight: '150px' }}
+      />
 
-        <Box name="Login">
-          <LoginForm onLogin={handleLogin} />
-        </Box>
+      <Box name="Login">
+        <LoginForm onLogin={handleLogin} />
+      </Box>
 
-        <div className="flex justify-around">
-          <Button onclick={() => alert('add user')}>Add User</Button>
-          <Button onclick={() => alert('add institution')}>
-            Add Institution
-          </Button>
-        </div>
+      <div className="flex justify-around">
+        <Button onclick={() => alert('add user')}>Add User</Button>
+        <Button onclick={() => alert('add institution')}>
+          Add Institution
+        </Button>
       </div>
     </div>
   )
