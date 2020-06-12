@@ -15,6 +15,7 @@ import Trials from './Pages/Trials'
 
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
+import { Trial } from './Components/TrialCard'
 
 const styles = {
   main: 'flex-1 max-w-screen-lg mx-4 lg:mx-auto my-8',
@@ -92,6 +93,75 @@ function App() {
       contact: '',
     },
   ])
+  const trials: Trial[] = [
+    {
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
+    },
+    {
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
+    },
+    {
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
+    },
+    {
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
+    },
+    {
+      title: 'AML 1021',
+      group: 'COG',
+      location: 'CHOP (Philadelphia)',
+      registerLinks: [
+        {
+          name: 'Visit website',
+          url: 'about:blank',
+        },
+      ],
+    },
+  ]
 
   return (
     <Router>
@@ -124,7 +194,7 @@ function App() {
           </Route>
 
           <Route path="/trials">
-            <Trials />
+            <Trials data={trials} />
           </Route>
 
           <Route path="/about">
