@@ -32,9 +32,11 @@ const Results = ({ data }: ResultsProps) => {
 
       <Box name="Results">
         <div className="flex flex-wrap justify-center">
-          {results.trials.map((trial, i) => (
-            <TrialCard data={trial} key={i}></TrialCard>
-          ))}
+          {results.isLoaded
+            ? results.trials.map((trial, i) => (
+                <TrialCard data={trial} key={i}></TrialCard>
+              ))
+            : 'Loading matched trials...'}
         </div>
       </Box>
     </>
