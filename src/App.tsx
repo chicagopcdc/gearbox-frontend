@@ -40,12 +40,19 @@ const fakeAuth = {
 type MyRouteProps = {
   cb?(): void
   children: React.ReactNode
+  isAuthenticated: boolean
   isPrivate?: boolean
   exact?: boolean
   path: string
 }
 
-const MyRoute = ({ cb, children, isPrivate, ...rest }: MyRouteProps) => {
+const MyRoute = ({
+  cb,
+  children,
+  isAuthenticated,
+  isPrivate,
+  ...rest
+}: MyRouteProps) => {
   useEffect(() => {
     if (cb) cb()
   }, [cb])
@@ -54,7 +61,7 @@ const MyRoute = ({ cb, children, isPrivate, ...rest }: MyRouteProps) => {
     <Route
       {...rest}
       render={() => {
-        return isPrivate && !fakeAuth.isAuthenticated ? (
+        return isPrivate && !isAuthenticated ? (
           <Redirect to={{ pathname: '/login' }} />
         ) : (
           children
@@ -76,18 +83,31 @@ function App() {
 
       <main className={styles.main}>
         <Switch>
-          <MyRoute path="/" exact cb={() => setIsLogin(false)}>
+          <MyRoute
+            path="/"
+            exact
+            isAuthenticated={fakeAuth.isAuthenticated}
+            cb={() => setIsLogin(false)}
+          >
             <Home
               isAuthenticated={fakeAuth.isAuthenticated}
               setInformation={setInformation}
             />
           </MyRoute>
 
-          <MyRoute path="/login" cb={() => setIsLogin(true)}>
+          <MyRoute
+            path="/login"
+            isAuthenticated={fakeAuth.isAuthenticated}
+            cb={() => setIsLogin(true)}
+          >
             <Login authenticate={fakeAuth.authenticate} />
           </MyRoute>
 
-          <MyRoute path="/results" isPrivate>
+          <MyRoute
+            path="/results"
+            isAuthenticated={fakeAuth.isAuthenticated}
+            isPrivate
+          >
             <Results
               data={{
                 information,
