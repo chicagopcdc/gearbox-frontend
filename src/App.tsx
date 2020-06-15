@@ -50,6 +50,13 @@ function App() {
 
   const handleMatchSubmit = (values: any) => {
     setInformation((prevState: any) => ({ ...prevState, ...values }))
+    setTimeout(() => {
+      setResults((prevState) => ({
+        ...prevState,
+        isLoaded: true,
+        trials: dummyTrials.slice(0, 2),
+      }))
+    }, 1000)
   }
 
   return (
