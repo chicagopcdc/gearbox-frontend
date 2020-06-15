@@ -41,7 +41,11 @@ const fakeAuth = {
 function App() {
   const [isLogin, setIsLogin] = useState(false)
   const [information, setInformation] = useState({ ...initPatientInformation })
-  const [results] = useState(dummyTrials.slice(0, 2))
+  const [results] = useState({
+    isLoaded: false,
+    isError: false,
+    trials: [] as Trial[],
+  })
   const trials: Trial[] = dummyTrials
 
   return (

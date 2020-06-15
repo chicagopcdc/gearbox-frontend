@@ -11,7 +11,11 @@ type ResultsData = {
     prevRad: string[]
     biomarkers: string[]
   }
-  results: Trial[]
+  results: {
+    isLoaded: boolean
+    isError: boolean
+    trials: Trial[]
+  }
 }
 
 type ResultsProps = {
@@ -28,7 +32,7 @@ const Results = ({ data }: ResultsProps) => {
 
       <Box name="Results">
         <div className="flex flex-wrap justify-center">
-          {results.map((trial, i) => (
+          {results.trials.map((trial, i) => (
             <TrialCard data={trial} key={i}></TrialCard>
           ))}
         </div>
