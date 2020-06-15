@@ -29,8 +29,8 @@ const TrialCard = ({
     <p>{location}</p>
 
     <h3 className={styles.subtitle}>Registration information</h3>
-    {registerLinks?.map(({ name, url }) => (
-      <a className="block text-blue-700" href={url} target="blank">
+    {registerLinks?.map(({ name, url }, i) => (
+      <a className="block text-blue-700" href={url} target="blank" key={i}>
         {name}
       </a>
     ))}
