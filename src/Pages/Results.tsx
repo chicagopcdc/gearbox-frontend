@@ -28,8 +28,8 @@ const Results = ({ data }: ResultsProps) => {
 
       <Box name="Results">
         <div className="flex flex-wrap justify-center">
-          {results.map((trial) => (
-            <TrialCard data={trial}></TrialCard>
+          {results.map((trial, i) => (
+            <TrialCard data={trial} key={i}></TrialCard>
           ))}
         </div>
       </Box>
