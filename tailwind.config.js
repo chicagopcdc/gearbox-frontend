@@ -5,6 +5,9 @@ module.exports = {
       flex: {
         '2': '2 2 0%',
       },
+      width: {
+        'screen-lg': '1024px',
+      },
     },
   },
   variants: {},
