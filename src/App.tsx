@@ -48,6 +48,10 @@ function App() {
   })
   const trials: Trial[] = dummyTrials
 
+  const handleMatchSubmit = (values: any) => {
+    setInformation((prevState: any) => ({ ...prevState, ...values }))
+  }
+
   return (
     <Router>
       <header>{!isLogin && <Navbar />}</header>
@@ -62,7 +66,7 @@ function App() {
           >
             <Home
               isAuthenticated={fakeAuth.isAuthenticated}
-              setInformation={setInformation}
+              onMatchSubmit={handleMatchSubmit}
             />
           </MyRoute>
 

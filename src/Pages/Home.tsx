@@ -10,33 +10,31 @@ const paragraphs = [
 
 type HomeProps = {
   isAuthenticated: boolean
-  setInformation: React.Dispatch<React.SetStateAction<any>>
+  onMatchSubmit(values: any): void
 }
 
-const Home = ({ isAuthenticated, setInformation }: HomeProps) => {
+const Home = ({ isAuthenticated, onMatchSubmit }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
     if (process.env.NODE_ENV === 'development') {
       const confirmed = window.confirm(JSON.stringify(values, null, 2))
       if (confirmed) {
-        setInformation((prevState: any) => ({
-          ...prevState,
+        onMatchSubmit({
           priorTreatmentTherapies:
             values.clinicalDetails.priorTreatmentTherapies,
           organFunction: values.clinicalDetails.organFunction,
           prevChemo: values.clinicalDetails.prevChemo,
           prevRad: values.clinicalDetails.prevRad,
-        }))
+        })
         history.replace('/results')
       }
     } else {
-      setInformation((prevState: any) => ({
-        ...prevState,
+      onMatchSubmit({
         priorTreatmentTherapies: values.clinicalDetails.priorTreatmentTherapies,
         organFunction: values.clinicalDetails.organFunction,
         prevChemo: values.clinicalDetails.prevChemo,
         prevRad: values.clinicalDetails.prevRad,
-      }))
+      })
       history.replace('/results')
     }
   }
