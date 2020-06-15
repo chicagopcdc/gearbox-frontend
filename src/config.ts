@@ -33,3 +33,24 @@ export const labels: { [key: string]: string } = {
   astRecent: 'Most recent AST (U/L)',
   altRecent: 'Most recent ALT (U/L)',
 }
+
+export const initPatientInformation = {
+  priorTreatmentTherapies: {
+    prevChemoFlag: false,
+    prevRadFlag: false,
+    prevAtra: false,
+    prevHydroxyurea: false,
+    prevSteroids: false,
+    prevItCyt: false,
+    prevOther: false,
+  },
+  organFunction: {
+    lvEf: 0,
+    secrumCr: 0,
+    astRecent: 0,
+    altRecent: 0,
+  },
+  prevChemo: [],
+  prevRad: [],
+  biomarkers: [],
+}

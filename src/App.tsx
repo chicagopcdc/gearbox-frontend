@@ -17,6 +17,8 @@ import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { Trial } from './Components/TrialCard'
 
+import { initPatientInformation } from './config'
+
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
   footer: 'flex-shrink-0',
@@ -64,27 +66,8 @@ const MyRoute = ({ cb, children, isPrivate, ...rest }: MyRouteProps) => {
 
 function App() {
   const [isLogin, setIsLogin] = useState(false)
-  const [information, setInformation] = useState({
-    priorTreatmentTherapies: {
-      prevChemoFlag: true,
-      prevRadFlag: true,
-      prevAtra: false,
-      prevHydroxyurea: false,
-      prevSteroids: true,
-      prevItCyt: false,
-      prevOther: false,
-    },
-    organFunction: {
-      lvEf: 57,
-      secrumCr: 0.9,
-      astRecent: 23,
-      altRecent: 17,
-    },
-    prevChemo: ['foo', 'bar', 'baz'],
-    prevRad: [''],
-    biomarkers: ['MECOM(3q26.2)', 'ETS FUS-ERG Fusion'],
-  })
-  const [results, setResults] = useState([
+  const [information, setInformation] = useState({ ...initPatientInformation })
+  const [results] = useState([
     {
       title: 'AML 1021',
       group: 'COG',
