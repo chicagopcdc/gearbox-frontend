@@ -17,7 +17,7 @@ import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { Trial } from './Components/TrialCard'
 
-import { initPatientInformation } from './config'
+import { initPatientInformation, dummyTrials } from './config'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -67,103 +67,8 @@ const MyRoute = ({ cb, children, isPrivate, ...rest }: MyRouteProps) => {
 function App() {
   const [isLogin, setIsLogin] = useState(false)
   const [information, setInformation] = useState({ ...initPatientInformation })
-  const [results] = useState([
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-  ])
-  const trials: Trial[] = [
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-    {
-      title: 'AML 1021',
-      group: 'COG',
-      location: 'CHOP (Philadelphia)',
-      registerLinks: [
-        {
-          name: 'Visit website',
-          url: 'about:blank',
-        },
-      ],
-    },
-  ]
+  const [results] = useState(dummyTrials.slice(0, 2))
+  const trials: Trial[] = dummyTrials
 
   return (
     <Router>

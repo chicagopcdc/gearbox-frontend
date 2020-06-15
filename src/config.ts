@@ -54,3 +54,73 @@ export const initPatientInformation = {
   prevRad: [],
   biomarkers: [],
 }
+
+export const dummyTrials = [
+  {
+    title: 'AML 1021',
+    group: 'COG',
+    location: 'CHOP (Philadelphia)',
+    registerLinks: [
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+    ],
+  },
+  {
+    title: 'AML 1021',
+    group: 'COG',
+    location: 'CHOP (Philadelphia)',
+    registerLinks: [
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+    ],
+  },
+  {
+    title: 'AML 1021',
+    group: 'COG',
+    location: 'CHOP (Philadelphia)',
+    registerLinks: [
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+    ],
+  },
+  {
+    title: 'AML 1021',
+    group: 'COG',
+    location: 'CHOP (Philadelphia)',
+    registerLinks: [
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+    ],
+  },
+  {
+    title: 'AML 1021',
+    group: 'COG',
+    location: 'CHOP (Philadelphia)',
+    registerLinks: [
+      {
+        name: 'Visit website',
+        url: 'about:blank',
+      },
+    ],
+  },
+]
