@@ -41,7 +41,7 @@ const fakeAuth = {
 function App() {
   const [isLogin, setIsLogin] = useState(false)
   const [information, setInformation] = useState({ ...initPatientInformation })
-  const [results] = useState({
+  const [results, setResults] = useState({
     isLoaded: false,
     isError: false,
     trials: [] as Trial[],
@@ -62,7 +62,10 @@ function App() {
             path="/"
             exact
             isAuthenticated={fakeAuth.isAuthenticated}
-            cb={() => setIsLogin(false)}
+            cb={() => {
+              setIsLogin(false)
+              setResults({ isLoaded: false, isError: false, trials: [] })
+            }}
           >
             <Home
               isAuthenticated={fakeAuth.isAuthenticated}
