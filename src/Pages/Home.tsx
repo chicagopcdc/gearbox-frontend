@@ -16,25 +16,21 @@ type HomeProps = {
 const Home = ({ isAuthenticated, onMatchSubmit }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
+    const newValues = {
+      priorTreatmentTherapies: values.clinicalDetails.priorTreatmentTherapies,
+      organFunction: values.clinicalDetails.organFunction,
+      prevChemo: values.clinicalDetails.prevChemo,
+      prevRad: values.clinicalDetails.prevRad,
+    }
+
     if (process.env.NODE_ENV === 'development') {
       const confirmed = window.confirm(JSON.stringify(values, null, 2))
       if (confirmed) {
-        onMatchSubmit({
-          priorTreatmentTherapies:
-            values.clinicalDetails.priorTreatmentTherapies,
-          organFunction: values.clinicalDetails.organFunction,
-          prevChemo: values.clinicalDetails.prevChemo,
-          prevRad: values.clinicalDetails.prevRad,
-        })
+        onMatchSubmit(newValues)
         history.replace('/results')
       }
     } else {
-      onMatchSubmit({
-        priorTreatmentTherapies: values.clinicalDetails.priorTreatmentTherapies,
-        organFunction: values.clinicalDetails.organFunction,
-        prevChemo: values.clinicalDetails.prevChemo,
-        prevRad: values.clinicalDetails.prevRad,
-      })
+      onMatchSubmit(newValues)
       history.replace('/results')
     }
   }
