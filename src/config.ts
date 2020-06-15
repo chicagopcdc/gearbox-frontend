@@ -33,8 +33,3 @@ export const labels: { [key: string]: string } = {
   astRecent: 'Most recent AST (U/L)',
   altRecent: 'Most recent ALT (U/L)',
 }
-
-export default {
-  biomarkers,
-  labels,
-}
