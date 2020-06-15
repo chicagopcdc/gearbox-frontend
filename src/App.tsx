@@ -18,7 +18,7 @@ import Footer from './Components/Footer'
 import { Trial } from './Components/TrialCard'
 
 const styles = {
-  main: 'flex-1 max-w-screen-lg mx-4 lg:mx-auto my-8',
+  main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
   footer: 'flex-shrink-0',
 }
 
