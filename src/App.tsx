@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +13,7 @@ import Login from './Pages/Login'
 import Results from './Pages/Results'
 import Trials from './Pages/Trials'
 
+import MyRoute from './Components/MyRoute'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { Trial } from './Components/TrialCard'
@@ -35,40 +36,6 @@ const fakeAuth = {
     fakeAuth.isAuthenticated = false
     setTimeout(cb, 100)
   },
-}
-
-type MyRouteProps = {
-  cb?(): void
-  children: React.ReactNode
-  isAuthenticated: boolean
-  isPrivate?: boolean
-  exact?: boolean
-  path: string
-}
-
-const MyRoute = ({
-  cb,
-  children,
-  isAuthenticated,
-  isPrivate,
-  ...rest
-}: MyRouteProps) => {
-  useEffect(() => {
-    if (cb) cb()
-  }, [cb])
-
-  return (
-    <Route
-      {...rest}
-      render={() => {
-        return isPrivate && !isAuthenticated ? (
-          <Redirect to={{ pathname: '/login' }} />
-        ) : (
-          children
-        )
-      }}
-    />
-  )
 }
 
 function App() {
