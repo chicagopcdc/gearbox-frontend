@@ -49,6 +49,9 @@ function App() {
   const trials: Trial[] = dummyTrials
 
   const handleMatchSubmit = (values: any) => {
+    // reset results
+    setResults({ isLoaded: false, isError: false, trials: [] })
+
     setInformation((prevState: any) => ({ ...prevState, ...values }))
     setTimeout(() => {
       setResults((prevState) => ({
@@ -71,7 +74,6 @@ function App() {
             isAuthenticated={fakeAuth.isAuthenticated}
             cb={() => {
               setIsLogin(false)
-              setResults({ isLoaded: false, isError: false, trials: [] })
             }}
           >
             <Home
