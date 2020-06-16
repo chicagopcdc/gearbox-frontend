@@ -11,7 +11,7 @@ type TextareaProps = {
   name?: string
   disabled?: boolean
   placeholder?: string
-  readonly?: boolean
+  readOnly?: boolean
   required?: boolean
   value?: string | number
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>
@@ -22,7 +22,7 @@ const Textarea = ({
   name = '',
   disabled,
   placeholder,
-  readonly,
+  readOnly,
   required,
   value,
   onChange,
@@ -36,7 +36,7 @@ const Textarea = ({
         name={name}
         disabled={disabled}
         placeholder={placeholder}
-        readOnly={readonly}
+        readOnly={readOnly}
         required={required}
         value={value}
         onChange={onChange}

@@ -17,8 +17,8 @@ export const defaultView = () => (
   />
 )
 
-export const checked = () => <Checkbox label="checked" checked readonly />
+export const checked = () => <Checkbox label="checked" checked readOnly />
 
 export const unchecked = () => (
-  <Checkbox label="unchecked" checked={false} readonly />
+  <Checkbox label="unchecked" checked={false} readOnly />
 )

@@ -19,11 +19,11 @@ export const defaultView = () => (
   />
 )
 
-export const readonly = () => (
+export const readOnly = () => (
   <TextField
     label="read only"
     value="cannot be changed"
-    readonly
+    readOnly
     onChange={(e) => console.log(e.target.value)}
   />
 )

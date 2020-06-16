@@ -40,7 +40,7 @@ const PatientInfo = ({ data }: PatientInfoProps) => {
               <Checkbox
                 label={labels[key]}
                 checked={priorTreatmentTherapies[key]}
-                readonly
+                readOnly
               />
             </div>
           ))}
@@ -55,7 +55,7 @@ const PatientInfo = ({ data }: PatientInfoProps) => {
                 value={organFunction[key]}
                 type="number"
                 numberAttrs={{ min: 0, max: 999 }}
-                readonly
+                readOnly
               />
             </div>
           ))}
@@ -65,12 +65,12 @@ const PatientInfo = ({ data }: PatientInfoProps) => {
       <div className="md:flex md:flex-wrap justify-around">
         <div className={styles.group}>
           <h2 className={styles.groupName}>Prior chemotherapy</h2>
-          <Textarea value={prevChemo.join('\n')} readonly />
+          <Textarea value={prevChemo.join('\n')} readOnly />
         </div>
 
         <div className={styles.group}>
           <h2 className={styles.groupName}>Prior radiation therapy</h2>
-          <Textarea value={prevRad.join('\n')} readonly />
+          <Textarea value={prevRad.join('\n')} readOnly />
         </div>
       </div>
 
@@ -81,7 +81,7 @@ const PatientInfo = ({ data }: PatientInfoProps) => {
             <Checkbox
               label={marker}
               checked={biomarkers.includes(marker)}
-              readonly
+              readOnly
             />
           </div>
         ))}

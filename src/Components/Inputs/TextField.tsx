@@ -12,7 +12,7 @@ type TextFieldProps = {
   type?: 'text' | 'password' | 'number'
   autoFocus?: boolean
   placeholder?: string
-  readonly?: boolean
+  readOnly?: boolean
   required?: boolean
   value?: string | number
   numberAttrs?: {
@@ -29,7 +29,7 @@ const TextField = ({
   type = 'text',
   autoFocus,
   placeholder,
-  readonly,
+  readOnly,
   required,
   value,
   numberAttrs,
@@ -45,7 +45,7 @@ const TextField = ({
         type={type}
         autoFocus={autoFocus}
         placeholder={placeholder}
-        readOnly={readonly}
+        readOnly={readOnly}
         required={required}
         value={value}
         onChange={onChange}

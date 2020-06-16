@@ -18,11 +18,11 @@ export const defaultView = () => (
   />
 )
 
-export const readonly = () => (
+export const readOnly = () => (
   <Textarea
     label="Read only"
     value="cannot be changed"
-    readonly
+    readOnly
     onChange={(e) => console.log(e.target.value)}
   />
 )

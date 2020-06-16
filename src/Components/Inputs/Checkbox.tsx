@@ -5,7 +5,7 @@ type CheckboxProps = {
   label?: string
   name?: string
   placeholder?: string
-  readonly?: boolean
+  readOnly?: boolean
   required?: boolean
   checked?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
@@ -14,7 +14,7 @@ type CheckboxProps = {
 const Checkbox = ({
   label = '',
   name = '',
-  readonly,
+  readOnly,
   required,
   checked,
   onChange,
@@ -27,7 +27,7 @@ const Checkbox = ({
       type="checkbox"
       required={required}
       checked={checked}
-      onChange={readonly ? () => false : onChange}
+      onChange={readOnly ? () => false : onChange}
     />
     {label && <Label text={label} htmlFor={name} />}
   </>
