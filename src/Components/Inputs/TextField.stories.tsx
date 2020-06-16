@@ -13,7 +13,7 @@ export default {
 export const defaultView = () => (
   <TextField
     label="default text field"
-    autofocus
+    autoFocus
     placeholder="some text"
     onChange={(e) => console.log(e.target.value)}
   />
