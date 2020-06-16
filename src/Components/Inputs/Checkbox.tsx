@@ -18,23 +18,19 @@ const Checkbox = ({
   required,
   checked,
   onChange,
-}: CheckboxProps) => {
-  if (readonly) onChange = () => false
-
-  return (
-    <>
-      <input
-        className="mr-4"
-        id={name}
-        name={name}
-        type="checkbox"
-        required={required}
-        checked={checked}
-        onChange={onChange}
-      />
-      {label && <Label text={label} htmlFor={name} />}
-    </>
-  )
-}
+}: CheckboxProps) => (
+  <>
+    <input
+      className="mr-4"
+      id={name}
+      name={name}
+      type="checkbox"
+      required={required}
+      checked={checked}
+      onChange={readonly ? () => false : onChange}
+    />
+    {label && <Label text={label} htmlFor={name} />}
+  </>
+)
 
 export default Checkbox
