@@ -4,7 +4,6 @@ import Label from './Label'
 type CheckboxProps = {
   label?: string
   name?: string
-  placeholder?: string
   readOnly?: boolean
   required?: boolean
   checked?: boolean
