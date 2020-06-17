@@ -254,7 +254,6 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <MultiSelect
-            label="hello"
             name="clinicalDetails.prevChemo"
             options={['foo', 'bar', 'baz']}
             placeholder="Please select all prior chemotherapy agents"
@@ -268,7 +267,6 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <MultiSelect
-            label="hello"
             name="clinicalDetails.prevRad"
             options={['foo', 'bar', 'baz']}
             placeholder="Please select all prior radiation modalities"
