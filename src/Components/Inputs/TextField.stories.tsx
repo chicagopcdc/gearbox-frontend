@@ -51,7 +51,8 @@ export const typeNumber = () => (
       label="with min and max"
       type="number"
       placeholder="between 0 and 10"
-      numberAttrs={{ min: 0, max: 10 }}
+      min={0}
+      max={10}
       onChange={(e) => console.log(e.target.value)}
     />
     <br />
@@ -60,7 +61,7 @@ export const typeNumber = () => (
       label="with step"
       type="number"
       placeholder="by 0.1"
-      numberAttrs={{ step: 0.1 }}
+      step={0.1}
       onChange={(e) => console.log(e.target.value)}
     />
   </>

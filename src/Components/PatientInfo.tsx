@@ -54,7 +54,8 @@ const PatientInfo = ({ data }: PatientInfoProps) => {
                 label={labels[key]}
                 value={organFunction[key]}
                 type="number"
-                numberAttrs={{ min: 0, max: 999 }}
+                min={0}
+                max={999}
                 readOnly
               />
             </div>

@@ -36,7 +36,7 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
         type="number"
         onChange={handleChange}
         value={values.patientInformation.age}
-        numberAttrs={{ min: 0 }}
+        min={0}
       />
     </div>
 
@@ -207,7 +207,9 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
             label={labels.lvEf}
             name="clinicalDetails.organFunction.lvEf"
             type="number"
-            numberAttrs={{ min: 0, max: 100, step: 0.1 }}
+            min={0}
+            max={100}
+            step={0.1}
             onChange={handleChange}
             value={values.clinicalDetails.organFunction.lvEf}
           />
@@ -218,7 +220,9 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
             label={labels.secrumCr}
             name="clinicalDetails.organFunction.secrumCr"
             type="number"
-            numberAttrs={{ min: 0, max: 999, step: 0.1 }}
+            min={0}
+            max={999}
+            step={0.1}
             onChange={handleChange}
             value={values.clinicalDetails.organFunction.secrumCr}
           />
@@ -229,7 +233,8 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
             label={labels.astRecent}
             name="clinicalDetails.organFunction.astRecent"
             type="number"
-            numberAttrs={{ min: 0, max: 999 }}
+            min={0}
+            max={999}
             onChange={handleChange}
             value={values.clinicalDetails.organFunction.astRecent}
           />
@@ -240,7 +245,8 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
             label={labels.altRecent}
             name="clinicalDetails.organFunction.altRecent"
             type="number"
-            numberAttrs={{ min: 0, max: 999 }}
+            min={0}
+            max={999}
             onChange={handleChange}
             value={values.clinicalDetails.organFunction.altRecent}
           />

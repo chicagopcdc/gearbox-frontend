@@ -15,11 +15,9 @@ type TextFieldProps = {
   readOnly?: boolean
   required?: boolean
   value?: string | number
-  numberAttrs?: {
-    max?: number
-    min?: number
-    step?: number
-  }
+  max?: number
+  min?: number
+  step?: number
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
@@ -31,8 +29,10 @@ const TextField = ({
   placeholder,
   readOnly,
   required,
+  max,
+  min,
+  step,
   value,
-  numberAttrs,
   onChange,
 }: TextFieldProps) => {
   return (
@@ -47,9 +47,11 @@ const TextField = ({
         placeholder={placeholder}
         readOnly={readOnly}
         required={required}
+        max={max}
+        min={min}
+        step={step}
         value={value}
         onChange={onChange}
-        {...(type === 'number' && numberAttrs)}
       />
     </>
   )
