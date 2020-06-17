@@ -34,8 +34,8 @@ const Login = ({ authenticate }: { authenticate(cb: () => void): void }) => {
       </Box>
 
       <div className="flex justify-around">
-        <Button onclick={() => alert('add user')}>Add User</Button>
-        <Button onclick={() => alert('add institution')}>
+        <Button onClick={() => alert('add user')}>Add User</Button>
+        <Button onClick={() => alert('add institution')}>
           Add Institution
         </Button>
       </div>

@@ -11,7 +11,7 @@ export default {
 }
 
 export const defaultView = () => (
-  <Button onclick={() => alert('clicked!')}>Click me</Button>
+  <Button onClick={() => alert('clicked!')}>Click me</Button>
 )
 
 export const disabled = () => <Button disabled={true}>Click me</Button>

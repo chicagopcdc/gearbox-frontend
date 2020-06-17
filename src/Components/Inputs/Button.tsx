@@ -4,7 +4,7 @@ type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset' | undefined
-  onclick?: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const styles = {
@@ -17,8 +17,8 @@ const styles = {
   },
 }
 
-const Button = ({ children, disabled, type, onclick }: ButtonProps) => (
-  <button className={styles.button(disabled)} type={type} onClick={onclick}>
+const Button = ({ children, disabled, type, onClick }: ButtonProps) => (
+  <button className={styles.button(disabled)} type={type} onClick={onClick}>
     {children}
   </button>
 )
