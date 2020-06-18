@@ -24,6 +24,8 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
       <TextField
         label={labels.cogId}
         name="patientInformation.cogId"
+        pattern="\d{7}"
+        placeholder="e.g. 1234567"
         onChange={handleChange}
         value={values.patientInformation.cogId}
       />
