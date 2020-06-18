@@ -11,6 +11,7 @@ type TextFieldProps = {
   name?: string
   type?: 'text' | 'password' | 'number'
   autoFocus?: boolean
+  pattern?: string
   placeholder?: string
   readOnly?: boolean
   required?: boolean
