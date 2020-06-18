@@ -4,9 +4,9 @@ import Label from './Label'
 type CheckboxProps = {
   label?: string
   name?: string
+  checked?: boolean
   readOnly?: boolean
   required?: boolean
-  checked?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
@@ -14,18 +14,16 @@ const Checkbox = ({
   label = '',
   name = '',
   readOnly,
-  required,
-  checked,
   onChange,
+  ...attrs
 }: CheckboxProps) => (
   <>
     <input
+      {...attrs}
       className="mr-4"
+      type="checkbox"
       id={name}
       name={name}
-      type="checkbox"
-      required={required}
-      checked={checked}
       onChange={readOnly ? () => false : onChange}
     />
     {label && <Label text={label} htmlFor={name} />}

@@ -17,8 +17,8 @@ const styles = {
   },
 }
 
-const Button = ({ children, disabled, type, onClick }: ButtonProps) => (
-  <button className={styles.button(disabled)} type={type} onClick={onClick}>
+const Button = ({ children, disabled, ...attrs }: ButtonProps) => (
+  <button {...attrs} className={styles.button(disabled)}>
     {children}
   </button>
 )

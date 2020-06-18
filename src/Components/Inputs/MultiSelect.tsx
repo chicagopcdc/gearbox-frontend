@@ -23,10 +23,10 @@ const MultiSelect = ({
   label,
   name,
   options,
-  values,
-  disabled,
   placeholder,
+  values,
   onChange,
+  ...attrs
 }: MultiSelectProps) => {
   const multiOptions = reshapeToMulti(options)
   const [multiSelected, setMultiSelected] = useState(
@@ -46,15 +46,10 @@ const MultiSelect = ({
 
   return (
     <ReactMultiSelect
+      {...attrs}
       options={multiOptions}
       value={multiSelected}
       onChange={setMultiSelected}
-      disabled={disabled}
-      labelledBy={label || ''}
-      overrideStrings={{
-        selectSomeItems: placeholder || '',
-      }}
-      hasSelectAll={false}
       filterOptions={(options, filter) =>
         filter
           ? options.filter(
@@ -62,6 +57,9 @@ const MultiSelect = ({
             )
           : options
       }
+      hasSelectAll={false}
+      labelledBy={label || ''}
+      overrideStrings={{ selectSomeItems: placeholder || '' }}
     />
   )
 }

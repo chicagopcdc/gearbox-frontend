@@ -10,8 +10,8 @@ type SelectProps = {
   label?: string
   name?: string
   options: string[]
-  disabled?: boolean
   placeholder?: string
+  disabled?: boolean
   required?: boolean
   value?: string
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
@@ -21,24 +21,18 @@ const Select = ({
   label,
   name,
   options,
-  disabled,
-  required,
   placeholder,
-  value,
-  onChange,
+  ...attr
 }: SelectProps) => (
   <>
     {label && (
       <Label className={styles.label} text={label} htmlFor={name || ''} />
     )}
     <select
+      {...attr}
       className={styles.input}
       id={name}
       name={name}
-      disabled={disabled}
-      required={required}
-      onChange={onChange}
-      value={value}
       style={{
         minWidth: '200px',
       }}

@@ -2,14 +2,12 @@ import React from 'react'
 
 type LabelProps = {
   className?: string
-  text: string
   htmlFor: string
+  text: string
 }
 
-const Label = ({ className, text, htmlFor }: LabelProps) => (
-  <label className={className} htmlFor={htmlFor}>
-    {text}
-  </label>
+const Label = ({ text, ...attrs }: LabelProps) => (
+  <label {...attrs}>{text}</label>
 )
 
 export default Label

@@ -14,10 +14,10 @@ type TextFieldProps = {
   placeholder?: string
   readOnly?: boolean
   required?: boolean
-  value?: string | number
-  max?: number
   min?: number
+  max?: number
   step?: number
+  value?: string | number
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
@@ -25,33 +25,17 @@ const TextField = ({
   label = '',
   name = '',
   type = 'text',
-  autoFocus,
-  placeholder,
-  readOnly,
-  required,
-  max,
-  min,
-  step,
-  value,
-  onChange,
+  ...attrs
 }: TextFieldProps) => {
   return (
     <>
       {label && <Label className={styles.label} text={label} htmlFor={name} />}
       <input
+        {...attrs}
         className={styles.input}
         id={name}
         name={name}
         type={type}
-        autoFocus={autoFocus}
-        placeholder={placeholder}
-        readOnly={readOnly}
-        required={required}
-        max={max}
-        min={min}
-        step={step}
-        value={value}
-        onChange={onChange}
       />
     </>
   )

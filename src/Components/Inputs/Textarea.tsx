@@ -17,29 +17,15 @@ type TextareaProps = {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>
 }
 
-const Textarea = ({
-  label = '',
-  name = '',
-  disabled,
-  placeholder,
-  readOnly,
-  required,
-  value,
-  onChange,
-}: TextareaProps) => {
+const Textarea = ({ label = '', name = '', ...attrs }: TextareaProps) => {
   return (
     <>
       {label && <Label className={styles.label} text={label} htmlFor={name} />}
       <textarea
+        {...attrs}
         className={styles.input}
         id={name}
         name={name}
-        disabled={disabled}
-        placeholder={placeholder}
-        readOnly={readOnly}
-        required={required}
-        value={value}
-        onChange={onChange}
         style={{
           minHeight: '100px',
           resize: 'none',
