@@ -3,7 +3,8 @@ import Label from './Label'
 
 const styles = {
   label: 'mr-4',
-  input: 'border border-solid border-black p-1 block w-full',
+  input:
+    'form-textarea rounded-none border border-solid border-black p-1 block w-full',
 }
 
 type TextareaProps = {

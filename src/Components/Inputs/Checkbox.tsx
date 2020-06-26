@@ -20,7 +20,7 @@ const Checkbox = ({
   <>
     <input
       {...attrs}
-      className="mr-4"
+      className="form-checkbox rounded-none border border-solid border-black mr-4"
       type="checkbox"
       id={name}
       name={name}

@@ -3,7 +3,7 @@ import Label from './Label'
 
 const styles = {
   label: 'mr-4',
-  input: 'border border-solid border-black p-1',
+  input: 'form-select rounded-none border border-solid border-black p-1',
 }
 
 type SelectProps = {
