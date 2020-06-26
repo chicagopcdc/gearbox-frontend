@@ -11,13 +11,35 @@
 
 .multi-select {
   --rmsc-border: black !important;
-  --rmsc-spacing: 0.5rem !important;
+  --rmsc-spacing: 0.25rem !important;
   --rmsc-border-radius: 0 !important;
   --rmsc-height: 24px !important;
+  --rmsc-gray: #a0aec0 !important;
 }
 
 .multi-select .dropdown-container {
   @apply p-1;
+}
+
+.multi-select .dropdown-content {
+  @apply border border-solid border-black pt-0;
+  left: 0%;
+}
+
+.multi-select .dropdown-container .dropdown-heading-value > span {
+  vertical-align: baseline;
+}
+
+.multi-select .dropdown-container .panel-content {
+  @apply shadow-none;
+}
+
+.multi-select .dropdown-container .select-panel > div {
+  @apply border-none p-1;
+}
+
+.multi-select .dropdown-container .select-item input {
+  @apply hidden;
 }
 /* purgecss end ignore */
 
