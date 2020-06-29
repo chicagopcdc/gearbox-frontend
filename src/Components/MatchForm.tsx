@@ -68,7 +68,11 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
           />
         </div>
 
-        <div className="mt-4 md:mt-0 md:mx-4 w-full">
+        <div
+          className={
+            values.drugAllergiesFlag ? 'mt-4 md:mt-0 md:mx-4 w-full' : 'hidden'
+          }
+        >
           <MultiSelect
             name="drugAllergies"
             options={['foo', 'bar', 'baz']}
@@ -202,32 +206,38 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
       </div>
     </div>
 
-    <div className="md:flex md:flex-wrap justify-between">
-      <div className={styles.group}>
-        <h2 className={styles.groupName}>Prior chemotherapy</h2>
+    <div
+      className={
+        values.priorTreatmentTherapies.prevChemoFlag ? 'm-4 md:w-1/2' : 'hidden'
+      }
+    >
+      <h2 className={styles.groupName}>Prior chemotherapy</h2>
 
-        <div className={styles.field}>
-          <MultiSelect
-            name="prevChemo"
-            options={['foo', 'bar', 'baz']}
-            placeholder="Select all prior chemotherapy agents"
-            onChange={handleChange}
-            values={values.prevChemo}
-          />
-        </div>
+      <div className={styles.field}>
+        <MultiSelect
+          name="prevChemo"
+          options={['foo', 'bar', 'baz']}
+          placeholder="Select all prior chemotherapy agents"
+          onChange={handleChange}
+          values={values.prevChemo}
+        />
       </div>
-      <div className={styles.group}>
-        <h2 className={styles.groupName}>Prior radiation therapy</h2>
+    </div>
+    <div
+      className={
+        values.priorTreatmentTherapies.prevRadFlag ? 'm-4 md:w-1/2' : 'hidden'
+      }
+    >
+      <h2 className={styles.groupName}>Prior radiation therapy</h2>
 
-        <div className={styles.field}>
-          <MultiSelect
-            name="prevRad"
-            options={['foo', 'bar', 'baz']}
-            placeholder="Select all prior radiation modalities"
-            onChange={handleChange}
-            values={values.prevRad}
-          />
-        </div>
+      <div className={styles.field}>
+        <MultiSelect
+          name="prevRad"
+          options={['foo', 'bar', 'baz']}
+          placeholder="Select all prior radiation modalities"
+          onChange={handleChange}
+          values={values.prevRad}
+        />
       </div>
     </div>
   </Box>
@@ -262,7 +272,12 @@ const initialValues = {
 const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
   const formik = useFormik({
     initialValues: { ...initialValues },
-    onSubmit,
+    onSubmit: (values) => {
+      if (!values.drugAllergiesFlag) values.drugAllergies = []
+      if (!values.priorTreatmentTherapies.prevChemoFlag) values.prevChemo = []
+      if (!values.priorTreatmentTherapies.prevRadFlag) values.prevRad = []
+      onSubmit(values)
+    },
   })
   return (
     <form onSubmit={formik.handleSubmit}>
