@@ -58,29 +58,25 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
         />
       </div>
 
-      <div className={`${styles.field} md:flex md:w-1/2`}>
-        <div className="flex-shrink-0">
-          <Checkbox
-            label={labels.drugAllergiesFlag}
-            name="drugAllergiesFlag"
-            onChange={handleChange}
-            checked={values.drugAllergiesFlag}
-          />
-        </div>
+      <div className="flex-shrink-0">
+        <Checkbox
+          label={labels.drugAllergiesFlag}
+          name="drugAllergiesFlag"
+          onChange={handleChange}
+          checked={values.drugAllergiesFlag}
+        />
+      </div>
 
-        <div
-          className={
-            values.drugAllergiesFlag ? 'mt-4 md:mt-0 md:mx-4 w-full' : 'hidden'
-          }
-        >
-          <MultiSelect
-            name="drugAllergies"
-            options={['foo', 'bar', 'baz']}
-            placeholder="Specify all drug allergies"
-            onChange={handleChange}
-            values={values.drugAllergies}
-          />
-        </div>
+      <div
+        className={values.drugAllergiesFlag ? 'mt-4 w-full md:w-1/2' : 'hidden'}
+      >
+        <MultiSelect
+          name="drugAllergies"
+          options={['foo', 'bar', 'baz']}
+          placeholder="Specify all drug allergies"
+          onChange={handleChange}
+          values={values.drugAllergies}
+        />
       </div>
     </div>
 
@@ -97,12 +93,42 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
           />
         </div>
 
+        <div
+          className={
+            values.priorTreatmentTherapies.prevChemoFlag
+              ? styles.field
+              : 'hidden'
+          }
+        >
+          <MultiSelect
+            name="prevChemo"
+            options={['foo', 'bar', 'baz']}
+            placeholder="Select all prior chemotherapy agents"
+            onChange={handleChange}
+            values={values.prevChemo}
+          />
+        </div>
+
         <div className={styles.field}>
           <Checkbox
             label={labels.prevRadFlag}
             name="priorTreatmentTherapies.prevRadFlag"
             onChange={handleChange}
             checked={values.priorTreatmentTherapies.prevRadFlag}
+          />
+        </div>
+
+        <div
+          className={
+            values.priorTreatmentTherapies.prevRadFlag ? styles.field : 'hidden'
+          }
+        >
+          <MultiSelect
+            name="prevRad"
+            options={['foo', 'bar', 'baz']}
+            placeholder="Select all prior radiation modalities"
+            onChange={handleChange}
+            values={values.prevRad}
           />
         </div>
 
@@ -203,41 +229,6 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
             value={values.organFunction.altRecent}
           />
         </div>
-      </div>
-    </div>
-
-    <div
-      className={
-        values.priorTreatmentTherapies.prevChemoFlag ? 'm-4 md:w-1/2' : 'hidden'
-      }
-    >
-      <h2 className={styles.groupName}>Prior chemotherapy</h2>
-
-      <div className={styles.field}>
-        <MultiSelect
-          name="prevChemo"
-          options={['foo', 'bar', 'baz']}
-          placeholder="Select all prior chemotherapy agents"
-          onChange={handleChange}
-          values={values.prevChemo}
-        />
-      </div>
-    </div>
-    <div
-      className={
-        values.priorTreatmentTherapies.prevRadFlag ? 'm-4 md:w-1/2' : 'hidden'
-      }
-    >
-      <h2 className={styles.groupName}>Prior radiation therapy</h2>
-
-      <div className={styles.field}>
-        <MultiSelect
-          name="prevRad"
-          options={['foo', 'bar', 'baz']}
-          placeholder="Select all prior radiation modalities"
-          onChange={handleChange}
-          values={values.prevRad}
-        />
       </div>
     </div>
   </Box>
