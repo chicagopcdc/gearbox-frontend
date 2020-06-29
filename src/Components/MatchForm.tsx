@@ -9,9 +9,6 @@ import TextField from './Inputs/TextField'
 
 import { labels } from '../config'
 
-import foundationMedicineLogo from '../assets/foundation-medicine-logo.jpg'
-import hematologicsLogo from '../assets/hematologics-logo.png'
-
 const styles = {
   group: 'flex-1 m-4',
   groupName: 'font-bold',
@@ -51,36 +48,6 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
         onChange={handleChange}
         value={values.patientInformation.initDiag}
       />
-    </div>
-  </Box>
-)
-
-const SectionSubmission = () => (
-  <Box name="Biomarker Report Submission">
-    <div className="text-center">
-      <h2 className={styles.groupName}>Upload Files</h2>
-      <a
-        href="https://www.hematologics.com/"
-        target="blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
-          src={hematologicsLogo}
-          alt="Hematologics logo"
-        />
-      </a>
-      <a
-        href="https://www.foundationmedicine.com/"
-        target="blank"
-        rel="noopener noreferrer"
-      >
-        <img
-          className="border border-solid border-black m-auto my-2 w-2/3 sm:w-1/2"
-          src={foundationMedicineLogo}
-          alt="Foundation Medicine logo"
-        />
-      </a>
     </div>
   </Box>
 )
@@ -326,14 +293,7 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-16">
-        <div className="md:flex md:flex-wrap">
-          <div className="flex-1">
-            <SectionInformation formik={formik} />
-          </div>
-          <div className="flex-1">
-            <SectionSubmission />
-          </div>
-        </div>
+        <SectionInformation formik={formik} />
         <SectionDetails formik={formik} />
 
         <div className="text-center">
