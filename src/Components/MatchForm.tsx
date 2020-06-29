@@ -58,8 +58,8 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
         />
       </div>
 
-      <div className={`${styles.field} md:flex`}>
-        <div>
+      <div className={`${styles.field} md:flex md:w-1/2`}>
+        <div className="flex-shrink-0">
           <Checkbox
             label={labels.drugAllergiesFlag}
             name="drugAllergiesFlag"
@@ -68,7 +68,7 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
           />
         </div>
 
-        <div className="mt-4 md:mt-0 md:ml-4">
+        <div className="mt-4 md:mt-0 md:mx-4 w-full">
           <MultiSelect
             name="drugAllergies"
             options={['foo', 'bar', 'baz']}
