@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactMultiSelect from 'react-multi-select-component'
 
-type FormikMinimalTarget = { name: string; value: string[] }
-
 type MultiSelectProps = {
   label?: string
   name?: string
@@ -10,7 +8,7 @@ type MultiSelectProps = {
   disabled?: boolean
   placeholder?: string
   values?: string[]
-  onChange?({ target }: { target: FormikMinimalTarget }): void
+  onChange?(event: any): void
 }
 
 const reshapeToMulti = (options: string[]) =>
