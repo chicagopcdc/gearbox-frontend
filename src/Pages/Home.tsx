@@ -17,10 +17,10 @@ const Home = ({ isAuthenticated, onMatchSubmit }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
     const newValues = {
-      priorTreatmentTherapies: values.clinicalDetails.priorTreatmentTherapies,
-      organFunction: values.clinicalDetails.organFunction,
-      prevChemo: values.clinicalDetails.prevChemo,
-      prevRad: values.clinicalDetails.prevRad,
+      priorTreatmentTherapies: values.priorTreatmentTherapies,
+      organFunction: values.organFunction,
+      prevChemo: values.prevChemo,
+      prevRad: values.prevRad,
     }
 
     if (process.env.NODE_ENV === 'development') {

@@ -21,10 +21,10 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
       <div className={styles.field}>
         <TextField
           label={labels.age}
-          name="patientInformation.age"
+          name="age"
           type="number"
           onChange={handleChange}
-          value={values.patientInformation.age}
+          value={values.age}
           min={0}
         />
       </div>
@@ -32,29 +32,29 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
       <div className={styles.field}>
         <Select
           label={labels.initDiag}
-          name="patientInformation.initDiag"
+          name="initDiag"
           options={['foo', 'bar', 'baz']}
           placeholder="Select"
           onChange={handleChange}
-          value={values.patientInformation.initDiag}
+          value={values.initDiag}
         />
       </div>
 
       <div className={styles.field}>
         <Checkbox
           label={labels.cnsInvolvement}
-          name="clinicalDetails.cnsInvolvement"
+          name="cnsInvolvement"
           onChange={handleChange}
-          checked={values.clinicalDetails.cnsInvolvement}
+          checked={values.cnsInvolvement}
         />
       </div>
 
       <div className={styles.field}>
         <Checkbox
           label={labels.aiDisease}
-          name="clinicalDetails.aiDisease"
+          name="aiDisease"
           onChange={handleChange}
-          checked={values.clinicalDetails.aiDisease}
+          checked={values.aiDisease}
         />
       </div>
 
@@ -62,19 +62,19 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
         <div>
           <Checkbox
             label={labels.drugAllergiesFlag}
-            name="clinicalDetails.drugAllergiesFlag"
+            name="drugAllergiesFlag"
             onChange={handleChange}
-            checked={values.clinicalDetails.drugAllergiesFlag}
+            checked={values.drugAllergiesFlag}
           />
         </div>
 
         <div className="mt-4 md:mt-0 md:ml-4">
           <MultiSelect
-            name="clinicalDetails.drugAllergies"
+            name="drugAllergies"
             options={['foo', 'bar', 'baz']}
             placeholder="Please specify"
             onChange={handleChange}
-            values={values.clinicalDetails.drugAllergies}
+            values={values.drugAllergies}
           />
         </div>
       </div>
@@ -87,69 +87,63 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
         <div className={styles.field}>
           <Checkbox
             label={labels.prevChemoFlag}
-            name="clinicalDetails.priorTreatmentTherapies.prevChemoFlag"
+            name="priorTreatmentTherapies.prevChemoFlag"
             onChange={handleChange}
-            checked={
-              values.clinicalDetails.priorTreatmentTherapies.prevChemoFlag
-            }
+            checked={values.priorTreatmentTherapies.prevChemoFlag}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevRadFlag}
-            name="clinicalDetails.priorTreatmentTherapies.prevRadFlag"
+            name="priorTreatmentTherapies.prevRadFlag"
             onChange={handleChange}
-            checked={values.clinicalDetails.priorTreatmentTherapies.prevRadFlag}
+            checked={values.priorTreatmentTherapies.prevRadFlag}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevAtra}
-            name="clinicalDetails.priorTreatmentTherapies.prevAtra"
+            name="priorTreatmentTherapies.prevAtra"
             onChange={handleChange}
-            checked={values.clinicalDetails.priorTreatmentTherapies.prevAtra}
+            checked={values.priorTreatmentTherapies.prevAtra}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevHydroxyurea}
-            name="clinicalDetails.priorTreatmentTherapies.prevHydroxyurea"
+            name="priorTreatmentTherapies.prevHydroxyurea"
             onChange={handleChange}
-            checked={
-              values.clinicalDetails.priorTreatmentTherapies.prevHydroxyurea
-            }
+            checked={values.priorTreatmentTherapies.prevHydroxyurea}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevSteroids}
-            name="clinicalDetails.priorTreatmentTherapies.prevSteroids"
+            name="priorTreatmentTherapies.prevSteroids"
             onChange={handleChange}
-            checked={
-              values.clinicalDetails.priorTreatmentTherapies.prevSteroids
-            }
+            checked={values.priorTreatmentTherapies.prevSteroids}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevItCyt}
-            name="clinicalDetails.priorTreatmentTherapies.prevItCyt"
+            name="priorTreatmentTherapies.prevItCyt"
             onChange={handleChange}
-            checked={values.clinicalDetails.priorTreatmentTherapies.prevItCyt}
+            checked={values.priorTreatmentTherapies.prevItCyt}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevOther}
-            name="clinicalDetails.priorTreatmentTherapies.prevOther"
+            name="priorTreatmentTherapies.prevOther"
             onChange={handleChange}
-            checked={values.clinicalDetails.priorTreatmentTherapies.prevOther}
+            checked={values.priorTreatmentTherapies.prevOther}
           />
         </div>
       </div>
@@ -159,50 +153,50 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
         <div className={styles.field}>
           <TextField
             label={labels.lvEf}
-            name="clinicalDetails.organFunction.lvEf"
+            name="organFunction.lvEf"
             type="number"
             min={0}
             max={100}
             step={0.1}
             onChange={handleChange}
-            value={values.clinicalDetails.organFunction.lvEf}
+            value={values.organFunction.lvEf}
           />
         </div>
 
         <div className={styles.field}>
           <TextField
             label={labels.secrumCr}
-            name="clinicalDetails.organFunction.secrumCr"
+            name="organFunction.secrumCr"
             type="number"
             min={0}
             max={999}
             step={0.1}
             onChange={handleChange}
-            value={values.clinicalDetails.organFunction.secrumCr}
+            value={values.organFunction.secrumCr}
           />
         </div>
 
         <div className={styles.field}>
           <TextField
             label={labels.astRecent}
-            name="clinicalDetails.organFunction.astRecent"
+            name="organFunction.astRecent"
             type="number"
             min={0}
             max={999}
             onChange={handleChange}
-            value={values.clinicalDetails.organFunction.astRecent}
+            value={values.organFunction.astRecent}
           />
         </div>
 
         <div className={styles.field}>
           <TextField
             label={labels.altRecent}
-            name="clinicalDetails.organFunction.altRecent"
+            name="organFunction.altRecent"
             type="number"
             min={0}
             max={999}
             onChange={handleChange}
-            value={values.clinicalDetails.organFunction.altRecent}
+            value={values.organFunction.altRecent}
           />
         </div>
       </div>
@@ -214,11 +208,11 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <MultiSelect
-            name="clinicalDetails.prevChemo"
+            name="prevChemo"
             options={['foo', 'bar', 'baz']}
             placeholder="Please select all prior chemotherapy agents"
             onChange={handleChange}
-            values={values.clinicalDetails.prevChemo}
+            values={values.prevChemo}
           />
         </div>
       </div>
@@ -227,11 +221,11 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
 
         <div className={styles.field}>
           <MultiSelect
-            name="clinicalDetails.prevRad"
+            name="prevRad"
             options={['foo', 'bar', 'baz']}
             placeholder="Please select all prior radiation modalities"
             onChange={handleChange}
-            values={values.clinicalDetails.prevRad}
+            values={values.prevRad}
           />
         </div>
       </div>
@@ -240,33 +234,29 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
 )
 
 const initialValues = {
-  patientInformation: {
-    age: 0,
-    initDiag: '',
+  age: 0,
+  initDiag: '',
+  cnsInvolvement: false,
+  aiDisease: false,
+  drugAllergiesFlag: false,
+  drugAllergies: [],
+  priorTreatmentTherapies: {
+    prevChemoFlag: false,
+    prevRadFlag: false,
+    prevAtra: false,
+    prevHydroxyurea: false,
+    prevSteroids: false,
+    prevItCyt: false,
+    prevOther: false,
   },
-  clinicalDetails: {
-    cnsInvolvement: false,
-    aiDisease: false,
-    drugAllergiesFlag: false,
-    drugAllergies: [],
-    priorTreatmentTherapies: {
-      prevChemoFlag: false,
-      prevRadFlag: false,
-      prevAtra: false,
-      prevHydroxyurea: false,
-      prevSteroids: false,
-      prevItCyt: false,
-      prevOther: false,
-    },
-    organFunction: {
-      lvEf: 0,
-      secrumCr: 0,
-      astRecent: 0,
-      altRecent: 0,
-    },
-    prevChemo: [],
-    prevRad: [],
+  organFunction: {
+    lvEf: 0,
+    secrumCr: 0,
+    astRecent: 0,
+    altRecent: 0,
   },
+  prevChemo: [],
+  prevRad: [],
 }
 
 const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
