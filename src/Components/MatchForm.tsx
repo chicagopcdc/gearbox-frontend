@@ -15,35 +15,31 @@ const styles = {
   field: 'my-4',
 }
 
-const SectionInformation = ({ formik: { handleChange, values } }: any) => (
+const FormInputs = ({ formik: { handleChange, values } }: any) => (
   <Box name="Patient Information">
-    <div className={styles.field}>
-      <TextField
-        label={labels.age}
-        name="patientInformation.age"
-        type="number"
-        onChange={handleChange}
-        value={values.patientInformation.age}
-        min={0}
-      />
-    </div>
+    <div className="m-4">
+      <div className={styles.field}>
+        <TextField
+          label={labels.age}
+          name="patientInformation.age"
+          type="number"
+          onChange={handleChange}
+          value={values.patientInformation.age}
+          min={0}
+        />
+      </div>
 
-    <div className={styles.field}>
-      <Select
-        label={labels.initDiag}
-        name="patientInformation.initDiag"
-        options={['foo', 'bar', 'baz']}
-        placeholder="Select"
-        onChange={handleChange}
-        value={values.patientInformation.initDiag}
-      />
-    </div>
-  </Box>
-)
+      <div className={styles.field}>
+        <Select
+          label={labels.initDiag}
+          name="patientInformation.initDiag"
+          options={['foo', 'bar', 'baz']}
+          placeholder="Select"
+          onChange={handleChange}
+          value={values.patientInformation.initDiag}
+        />
+      </div>
 
-const SectionDetails = ({ formik: { handleChange, values } }: any) => (
-  <Box name="Clinical Details">
-    <div className="lg:flex lg:flex-wrap lg:justify-around m-4">
       <div className={styles.field}>
         <Checkbox
           label={labels.cnsInvolvement}
@@ -281,8 +277,7 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mt-16">
-        <SectionInformation formik={formik} />
-        <SectionDetails formik={formik} />
+        <FormInputs formik={formik} />
 
         <div className="text-center">
           <Button type="submit">Submit</Button>
