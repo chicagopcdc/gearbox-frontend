@@ -45,7 +45,9 @@ const Home = ({ isAuthenticated, onMatchSubmit }: HomeProps) => {
       ))}
 
       {isAuthenticated ? (
-        <MatchForm onSubmit={handleSubmit} />
+        <div className="mt-16">
+          <MatchForm onSubmit={handleSubmit} />
+        </div>
       ) : (
         <div className="text-center my-8">
           <Link to="/login">

@@ -54,249 +54,245 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
   })
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="mt-16">
-        <Box name="Patient Information">
-          <div className="m-4">
-            <div className={styles.field}>
-              <TextField
-                label={labels.age}
-                name="age"
-                type="number"
-                onChange={formik.handleChange}
-                value={formik.values.age}
-                min={0}
-              />
-            </div>
+      <Box name="Patient Information">
+        <div className="m-4">
+          <div className={styles.field}>
+            <TextField
+              label={labels.age}
+              name="age"
+              type="number"
+              onChange={formik.handleChange}
+              value={formik.values.age}
+              min={0}
+            />
+          </div>
 
-            <div className={styles.field}>
-              <Select
-                label={labels.initDiag}
-                name="initDiag"
-                options={['foo', 'bar', 'baz']}
-                placeholder="Select"
-                onChange={formik.handleChange}
-                value={formik.values.initDiag}
-              />
-            </div>
+          <div className={styles.field}>
+            <Select
+              label={labels.initDiag}
+              name="initDiag"
+              options={['foo', 'bar', 'baz']}
+              placeholder="Select"
+              onChange={formik.handleChange}
+              value={formik.values.initDiag}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <Checkbox
+              label={labels.cnsInvolvement}
+              name="cnsInvolvement"
+              onChange={formik.handleChange}
+              checked={formik.values.cnsInvolvement}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <Checkbox
+              label={labels.aiDisease}
+              name="aiDisease"
+              onChange={formik.handleChange}
+              checked={formik.values.aiDisease}
+            />
+          </div>
+
+          <div className="flex-shrink-0">
+            <Checkbox
+              label={labels.drugAllergiesFlag}
+              name="drugAllergiesFlag"
+              onChange={formik.handleChange}
+              checked={formik.values.drugAllergiesFlag}
+            />
+          </div>
+
+          <div
+            className={
+              formik.values.drugAllergiesFlag
+                ? 'mt-4 w-full md:w-1/2'
+                : 'hidden'
+            }
+          >
+            <MultiSelect
+              name="drugAllergies"
+              options={['foo', 'bar', 'baz']}
+              placeholder="Specify all drug allergies"
+              onChange={formik.handleChange}
+              values={formik.values.drugAllergies}
+            />
+          </div>
+        </div>
+
+        <div className="md:flex md:flex-wrap justify-between">
+          <div className={styles.group}>
+            <h2 className={styles.groupName}>Prior treatment therapies</h2>
 
             <div className={styles.field}>
               <Checkbox
-                label={labels.cnsInvolvement}
-                name="cnsInvolvement"
+                label={labels.prevChemoFlag}
+                name="priorTreatmentTherapies.prevChemoFlag"
                 onChange={formik.handleChange}
-                checked={formik.values.cnsInvolvement}
-              />
-            </div>
-
-            <div className={styles.field}>
-              <Checkbox
-                label={labels.aiDisease}
-                name="aiDisease"
-                onChange={formik.handleChange}
-                checked={formik.values.aiDisease}
-              />
-            </div>
-
-            <div className="flex-shrink-0">
-              <Checkbox
-                label={labels.drugAllergiesFlag}
-                name="drugAllergiesFlag"
-                onChange={formik.handleChange}
-                checked={formik.values.drugAllergiesFlag}
+                checked={formik.values.priorTreatmentTherapies.prevChemoFlag}
               />
             </div>
 
             <div
               className={
-                formik.values.drugAllergiesFlag
-                  ? 'mt-4 w-full md:w-1/2'
+                formik.values.priorTreatmentTherapies.prevChemoFlag
+                  ? styles.field
                   : 'hidden'
               }
             >
               <MultiSelect
-                name="drugAllergies"
+                name="prevChemo"
                 options={['foo', 'bar', 'baz']}
-                placeholder="Specify all drug allergies"
+                placeholder="Select all prior chemotherapy agents"
                 onChange={formik.handleChange}
-                values={formik.values.drugAllergies}
+                values={formik.values.prevChemo}
               />
             </div>
-          </div>
 
-          <div className="md:flex md:flex-wrap justify-between">
-            <div className={styles.group}>
-              <h2 className={styles.groupName}>Prior treatment therapies</h2>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevChemoFlag}
-                  name="priorTreatmentTherapies.prevChemoFlag"
-                  onChange={formik.handleChange}
-                  checked={formik.values.priorTreatmentTherapies.prevChemoFlag}
-                />
-              </div>
-
-              <div
-                className={
-                  formik.values.priorTreatmentTherapies.prevChemoFlag
-                    ? styles.field
-                    : 'hidden'
-                }
-              >
-                <MultiSelect
-                  name="prevChemo"
-                  options={['foo', 'bar', 'baz']}
-                  placeholder="Select all prior chemotherapy agents"
-                  onChange={formik.handleChange}
-                  values={formik.values.prevChemo}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevRadFlag}
-                  name="priorTreatmentTherapies.prevRadFlag"
-                  onChange={formik.handleChange}
-                  checked={formik.values.priorTreatmentTherapies.prevRadFlag}
-                />
-              </div>
-
-              <div
-                className={
-                  formik.values.priorTreatmentTherapies.prevRadFlag
-                    ? styles.field
-                    : 'hidden'
-                }
-              >
-                <MultiSelect
-                  name="prevRad"
-                  options={['foo', 'bar', 'baz']}
-                  placeholder="Select all prior radiation modalities"
-                  onChange={formik.handleChange}
-                  values={formik.values.prevRad}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevAtra}
-                  name="priorTreatmentTherapies.prevAtra"
-                  onChange={formik.handleChange}
-                  checked={formik.values.priorTreatmentTherapies.prevAtra}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevHydroxyurea}
-                  name="priorTreatmentTherapies.prevHydroxyurea"
-                  onChange={formik.handleChange}
-                  checked={
-                    formik.values.priorTreatmentTherapies.prevHydroxyurea
-                  }
-                />
-              </div>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevSteroids}
-                  name="priorTreatmentTherapies.prevSteroids"
-                  onChange={formik.handleChange}
-                  checked={formik.values.priorTreatmentTherapies.prevSteroids}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevItCyt}
-                  name="priorTreatmentTherapies.prevItCyt"
-                  onChange={formik.handleChange}
-                  checked={formik.values.priorTreatmentTherapies.prevItCyt}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <Checkbox
-                  label={labels.prevOther}
-                  name="priorTreatmentTherapies.prevOther"
-                  onChange={formik.handleChange}
-                  checked={formik.values.priorTreatmentTherapies.prevOther}
-                />
-              </div>
+            <div className={styles.field}>
+              <Checkbox
+                label={labels.prevRadFlag}
+                name="priorTreatmentTherapies.prevRadFlag"
+                onChange={formik.handleChange}
+                checked={formik.values.priorTreatmentTherapies.prevRadFlag}
+              />
             </div>
-            <div className={styles.group}>
-              <h2 className={styles.groupName}>Organ Function</h2>
 
-              <div className={styles.field}>
-                <TextField
-                  label={labels.lvEf}
-                  name="organFunction.lvEf"
-                  type="number"
-                  min={0}
-                  max={100}
-                  step={0.1}
-                  onChange={formik.handleChange}
-                  value={formik.values.organFunction.lvEf}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <TextField
-                  label={labels.secrumCr}
-                  name="organFunction.secrumCr"
-                  type="number"
-                  min={0}
-                  max={999}
-                  step={0.1}
-                  onChange={formik.handleChange}
-                  value={formik.values.organFunction.secrumCr}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <TextField
-                  label={labels.astRecent}
-                  name="organFunction.astRecent"
-                  type="number"
-                  min={0}
-                  max={999}
-                  onChange={formik.handleChange}
-                  value={formik.values.organFunction.astRecent}
-                />
-              </div>
-
-              <div className={styles.field}>
-                <TextField
-                  label={labels.altRecent}
-                  name="organFunction.altRecent"
-                  type="number"
-                  min={0}
-                  max={999}
-                  onChange={formik.handleChange}
-                  value={formik.values.organFunction.altRecent}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.group}>
-            <h2 className={styles.groupName}>Biomarkers</h2>
-
-            <div className="mt-4 w-full md:w-1/2">
+            <div
+              className={
+                formik.values.priorTreatmentTherapies.prevRadFlag
+                  ? styles.field
+                  : 'hidden'
+              }
+            >
               <MultiSelect
-                name="biomarkers"
-                options={biomarkers}
-                placeholder="Select all biomarkers"
+                name="prevRad"
+                options={['foo', 'bar', 'baz']}
+                placeholder="Select all prior radiation modalities"
                 onChange={formik.handleChange}
-                values={formik.values.biomarkers}
+                values={formik.values.prevRad}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <Checkbox
+                label={labels.prevAtra}
+                name="priorTreatmentTherapies.prevAtra"
+                onChange={formik.handleChange}
+                checked={formik.values.priorTreatmentTherapies.prevAtra}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <Checkbox
+                label={labels.prevHydroxyurea}
+                name="priorTreatmentTherapies.prevHydroxyurea"
+                onChange={formik.handleChange}
+                checked={formik.values.priorTreatmentTherapies.prevHydroxyurea}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <Checkbox
+                label={labels.prevSteroids}
+                name="priorTreatmentTherapies.prevSteroids"
+                onChange={formik.handleChange}
+                checked={formik.values.priorTreatmentTherapies.prevSteroids}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <Checkbox
+                label={labels.prevItCyt}
+                name="priorTreatmentTherapies.prevItCyt"
+                onChange={formik.handleChange}
+                checked={formik.values.priorTreatmentTherapies.prevItCyt}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <Checkbox
+                label={labels.prevOther}
+                name="priorTreatmentTherapies.prevOther"
+                onChange={formik.handleChange}
+                checked={formik.values.priorTreatmentTherapies.prevOther}
               />
             </div>
           </div>
-        </Box>
+          <div className={styles.group}>
+            <h2 className={styles.groupName}>Organ Function</h2>
 
-        <div className="text-center">
-          <Button type="submit">Submit</Button>
+            <div className={styles.field}>
+              <TextField
+                label={labels.lvEf}
+                name="organFunction.lvEf"
+                type="number"
+                min={0}
+                max={100}
+                step={0.1}
+                onChange={formik.handleChange}
+                value={formik.values.organFunction.lvEf}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <TextField
+                label={labels.secrumCr}
+                name="organFunction.secrumCr"
+                type="number"
+                min={0}
+                max={999}
+                step={0.1}
+                onChange={formik.handleChange}
+                value={formik.values.organFunction.secrumCr}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <TextField
+                label={labels.astRecent}
+                name="organFunction.astRecent"
+                type="number"
+                min={0}
+                max={999}
+                onChange={formik.handleChange}
+                value={formik.values.organFunction.astRecent}
+              />
+            </div>
+
+            <div className={styles.field}>
+              <TextField
+                label={labels.altRecent}
+                name="organFunction.altRecent"
+                type="number"
+                min={0}
+                max={999}
+                onChange={formik.handleChange}
+                value={formik.values.organFunction.altRecent}
+              />
+            </div>
+          </div>
         </div>
+
+        <div className={styles.group}>
+          <h2 className={styles.groupName}>Biomarkers</h2>
+
+          <div className="mt-4 w-full md:w-1/2">
+            <MultiSelect
+              name="biomarkers"
+              options={biomarkers}
+              placeholder="Select all biomarkers"
+              onChange={formik.handleChange}
+              values={formik.values.biomarkers}
+            />
+          </div>
+        </div>
+      </Box>
+
+      <div className="text-center">
+        <Button type="submit">Submit</Button>
       </div>
     </form>
   )
