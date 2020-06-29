@@ -21,6 +21,7 @@ const Home = ({ isAuthenticated, onMatchSubmit }: HomeProps) => {
       organFunction: values.organFunction,
       prevChemo: values.prevChemo,
       prevRad: values.prevRad,
+      biomarkers: values.biomarkers,
     }
 
     if (process.env.NODE_ENV === 'development') {

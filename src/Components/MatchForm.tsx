@@ -7,7 +7,7 @@ import MultiSelect from './Inputs/MultiSelect'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
-import { labels } from '../config'
+import { biomarkers, labels } from '../config'
 
 const styles = {
   group: 'flex-1 m-4',
@@ -231,6 +231,20 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
         </div>
       </div>
     </div>
+
+    <div className={styles.group}>
+      <h2 className={styles.groupName}>Biomarkers</h2>
+
+      <div className="mt-4 w-full md:w-1/2">
+        <MultiSelect
+          name="biomarkers"
+          options={biomarkers}
+          placeholder="Select all biomarkers"
+          onChange={handleChange}
+          values={values.biomarkers}
+        />
+      </div>
+    </div>
   </Box>
 )
 
@@ -258,6 +272,7 @@ const initialValues = {
   },
   prevChemo: [],
   prevRad: [],
+  biomarkers: [],
 }
 
 const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
