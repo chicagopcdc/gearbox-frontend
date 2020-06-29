@@ -5,8 +5,8 @@ import TrialCard, { Trial } from '../Components/TrialCard'
 const Trials = ({ data }: { data?: Trial[] }) => (
   <Box name="Complete List of Trials">
     <div className="flex flex-wrap justify-center">
-      {(data || []).map((trial) => (
-        <TrialCard data={trial}></TrialCard>
+      {(data || []).map((trial, i) => (
+        <TrialCard data={trial} key={i}></TrialCard>
       ))}
     </div>
   </Box>
