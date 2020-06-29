@@ -15,7 +15,6 @@ export const biomarkers: string[] = [
 ]
 
 export const labels: { [key: string]: string } = {
-  cogId: 'COG ID Number',
   age: 'Patient Age',
   initDiag: 'Initial Disease Diagnosis',
   cnsInvolvement: 'CNS Involvement',

@@ -19,17 +19,6 @@ const SectionInformation = ({ formik: { handleChange, values } }: any) => (
   <Box name="Patient Information">
     <div className={styles.field}>
       <TextField
-        label={labels.cogId}
-        name="patientInformation.cogId"
-        pattern="\d{7}"
-        placeholder="e.g. 1234567"
-        onChange={handleChange}
-        value={values.patientInformation.cogId}
-      />
-    </div>
-
-    <div className={styles.field}>
-      <TextField
         label={labels.age}
         name="patientInformation.age"
         type="number"
@@ -256,7 +245,6 @@ const SectionDetails = ({ formik: { handleChange, values } }: any) => (
 
 const initialValues = {
   patientInformation: {
-    cogId: '',
     age: 0,
     initDiag: '',
   },
