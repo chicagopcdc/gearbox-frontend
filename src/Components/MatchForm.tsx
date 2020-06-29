@@ -72,7 +72,7 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
           <MultiSelect
             name="drugAllergies"
             options={['foo', 'bar', 'baz']}
-            placeholder="Please specify"
+            placeholder="Specify all drug allergies"
             onChange={handleChange}
             values={values.drugAllergies}
           />
@@ -210,7 +210,7 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
           <MultiSelect
             name="prevChemo"
             options={['foo', 'bar', 'baz']}
-            placeholder="Please select all prior chemotherapy agents"
+            placeholder="Select all prior chemotherapy agents"
             onChange={handleChange}
             values={values.prevChemo}
           />
@@ -223,7 +223,7 @@ const FormInputs = ({ formik: { handleChange, values } }: any) => (
           <MultiSelect
             name="prevRad"
             options={['foo', 'bar', 'baz']}
-            placeholder="Please select all prior radiation modalities"
+            placeholder="Select all prior radiation modalities"
             onChange={handleChange}
             values={values.prevRad}
           />
