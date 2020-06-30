@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import Box from './Box'
 import Button from './Inputs/Button'
@@ -37,7 +37,12 @@ const initialValues = {
   biomarkers: [],
 }
 
-const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
+type MatchFormProps = {
+  onChange?(value: any): void
+  onSubmit(value: any): void
+}
+
+const MatchForm = ({ onChange, onSubmit }: MatchFormProps) => {
   const formik = useFormik({
     initialValues: { ...initialValues },
     onSubmit: (values) => {
@@ -47,6 +52,17 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
       onSubmit(values)
     },
   })
+
+  useEffect(() => {
+    if (onChange) {
+      const values = { ...formik.values }
+      if (!values.drugAllergiesFlag) values.drugAllergies = []
+      if (!values.prevChemoFlag) values.prevChemo = []
+      if (!values.prevRadFlag) values.prevRad = []
+      onChange(values)
+    }
+  }, [onChange, formik.values])
+
   return (
     <Box name="Patient Information" innerClassName="px-8">
       <form onSubmit={formik.handleSubmit}>
