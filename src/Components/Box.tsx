@@ -10,15 +10,21 @@ const styles = {
 type BoxProps = {
   name: string
   children?: React.ReactNode
+  innerClassName?: string
+  outerClassName?: string
 }
 
-const Box = ({ name, children }: BoxProps) => {
+const Box = ({ name, children, innerClassName, outerClassName }: BoxProps) => {
   return (
-    <div className={styles.box}>
+    <div className={`${styles.box} ${outerClassName}`}>
       <h1 className={styles.boxNameOuter}>
         <span className={styles.boxNameInner}>{name}</span>
       </h1>
-      {children && <div className={styles.boxContent}>{children}</div>}
+      {children && (
+        <div className={`${styles.boxContent} ${innerClassName}`}>
+          {children}
+        </div>
+      )}
     </div>
   )
 }
