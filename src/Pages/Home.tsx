@@ -20,8 +20,21 @@ const Home = ({ isAuthenticated, onMatchSubmit, matched }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
     const newValues = {
-      priorTreatmentTherapies: values.priorTreatmentTherapies,
-      organFunction: values.organFunction,
+      priorTreatmentTherapies: {
+        prevChemoFlag: values.prevChemoFlag,
+        prevRadFlag: values.prevRadFlag,
+        prevAtra: values.prevAtra,
+        prevHydroxyurea: values.prevHydroxyurea,
+        prevSteroids: values.prevSteroids,
+        prevItCyt: values.prevItCyt,
+        prevOther: values.prevOther,
+      },
+      organFunction: {
+        lvEf: values.lvEf,
+        secrumCr: values.secrumCr,
+        astRecent: values.astRecent,
+        altRecent: values.altRecent,
+      },
       prevChemo: values.prevChemo,
       prevRad: values.prevRad,
       biomarkers: values.biomarkers,

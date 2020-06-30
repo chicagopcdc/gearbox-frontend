@@ -21,21 +21,17 @@ const initialValues = {
   aiDisease: false,
   drugAllergiesFlag: false,
   drugAllergies: [],
-  priorTreatmentTherapies: {
-    prevChemoFlag: false,
-    prevRadFlag: false,
-    prevAtra: false,
-    prevHydroxyurea: false,
-    prevSteroids: false,
-    prevItCyt: false,
-    prevOther: false,
-  },
-  organFunction: {
-    lvEf: 0,
-    secrumCr: 0,
-    astRecent: 0,
-    altRecent: 0,
-  },
+  prevChemoFlag: false,
+  prevRadFlag: false,
+  prevAtra: false,
+  prevHydroxyurea: false,
+  prevSteroids: false,
+  prevItCyt: false,
+  prevOther: false,
+  lvEf: 0,
+  secrumCr: 0,
+  astRecent: 0,
+  altRecent: 0,
   prevChemo: [],
   prevRad: [],
   biomarkers: [],
@@ -46,8 +42,8 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
     initialValues: { ...initialValues },
     onSubmit: (values) => {
       if (!values.drugAllergiesFlag) values.drugAllergies = []
-      if (!values.priorTreatmentTherapies.prevChemoFlag) values.prevChemo = []
-      if (!values.priorTreatmentTherapies.prevRadFlag) values.prevRad = []
+      if (!values.prevChemoFlag) values.prevChemo = []
+      if (!values.prevRadFlag) values.prevRad = []
       onSubmit(values)
     },
   })
@@ -120,19 +116,13 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
         <div className={styles.field}>
           <Checkbox
             label={labels.prevChemoFlag}
-            name="priorTreatmentTherapies.prevChemoFlag"
+            name="prevChemoFlag"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevChemoFlag}
+            checked={formik.values.prevChemoFlag}
           />
         </div>
 
-        <div
-          className={
-            formik.values.priorTreatmentTherapies.prevChemoFlag
-              ? styles.field
-              : 'hidden'
-          }
-        >
+        <div className={formik.values.prevChemoFlag ? styles.field : 'hidden'}>
           <MultiSelect
             name="prevChemo"
             options={['foo', 'bar', 'baz']}
@@ -145,19 +135,13 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
         <div className={styles.field}>
           <Checkbox
             label={labels.prevRadFlag}
-            name="priorTreatmentTherapies.prevRadFlag"
+            name="prevRadFlag"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevRadFlag}
+            checked={formik.values.prevRadFlag}
           />
         </div>
 
-        <div
-          className={
-            formik.values.priorTreatmentTherapies.prevRadFlag
-              ? styles.field
-              : 'hidden'
-          }
-        >
+        <div className={formik.values.prevRadFlag ? styles.field : 'hidden'}>
           <MultiSelect
             name="prevRad"
             options={['foo', 'bar', 'baz']}
@@ -170,45 +154,45 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
         <div className={styles.field}>
           <Checkbox
             label={labels.prevAtra}
-            name="priorTreatmentTherapies.prevAtra"
+            name="prevAtra"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevAtra}
+            checked={formik.values.prevAtra}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevHydroxyurea}
-            name="priorTreatmentTherapies.prevHydroxyurea"
+            name="prevHydroxyurea"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevHydroxyurea}
+            checked={formik.values.prevHydroxyurea}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevSteroids}
-            name="priorTreatmentTherapies.prevSteroids"
+            name="prevSteroids"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevSteroids}
+            checked={formik.values.prevSteroids}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevItCyt}
-            name="priorTreatmentTherapies.prevItCyt"
+            name="prevItCyt"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevItCyt}
+            checked={formik.values.prevItCyt}
           />
         </div>
 
         <div className={styles.field}>
           <Checkbox
             label={labels.prevOther}
-            name="priorTreatmentTherapies.prevOther"
+            name="prevOther"
             onChange={formik.handleChange}
-            checked={formik.values.priorTreatmentTherapies.prevOther}
+            checked={formik.values.prevOther}
           />
         </div>
 
@@ -217,50 +201,50 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
         <div className={styles.field}>
           <TextField
             label={labels.lvEf}
-            name="organFunction.lvEf"
+            name="lvEf"
             type="number"
             min={0}
             max={100}
             step={0.1}
             onChange={formik.handleChange}
-            value={formik.values.organFunction.lvEf}
+            value={formik.values.lvEf}
           />
         </div>
 
         <div className={styles.field}>
           <TextField
             label={labels.secrumCr}
-            name="organFunction.secrumCr"
+            name="secrumCr"
             type="number"
             min={0}
             max={999}
             step={0.1}
             onChange={formik.handleChange}
-            value={formik.values.organFunction.secrumCr}
+            value={formik.values.secrumCr}
           />
         </div>
 
         <div className={styles.field}>
           <TextField
             label={labels.astRecent}
-            name="organFunction.astRecent"
+            name="astRecent"
             type="number"
             min={0}
             max={999}
             onChange={formik.handleChange}
-            value={formik.values.organFunction.astRecent}
+            value={formik.values.astRecent}
           />
         </div>
 
         <div className={styles.field}>
           <TextField
             label={labels.altRecent}
-            name="organFunction.altRecent"
+            name="altRecent"
             type="number"
             min={0}
             max={999}
             onChange={formik.handleChange}
-            value={formik.values.organFunction.altRecent}
+            value={formik.values.altRecent}
           />
         </div>
 
