@@ -65,6 +65,9 @@ export const dummyTrials = [
         url: 'about:blank',
       },
     ],
+    condition: {
+      aiDisease: true,
+    },
   },
   {
     title: 'AML 1021',
@@ -80,6 +83,10 @@ export const dummyTrials = [
         url: 'about:blank',
       },
     ],
+    condition: {
+      drugAllergiesFlag: false,
+      prevChemoFlag: false,
+    },
   },
   {
     title: 'AML 1021',
@@ -91,6 +98,9 @@ export const dummyTrials = [
         url: 'about:blank',
       },
     ],
+    condition: {
+      prevChemoFlag: true,
+    },
   },
   {
     title: 'AML 1021',
@@ -110,6 +120,9 @@ export const dummyTrials = [
         url: 'about:blank',
       },
     ],
+    condition: {
+      prevRadFlag: true,
+    },
   },
   {
     title: 'AML 1021',
