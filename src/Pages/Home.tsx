@@ -13,10 +13,10 @@ const paragraphs = [
 type HomeProps = {
   isAuthenticated: boolean
   onMatchSubmit(values: any): void
-  matched: Trial[]
+  trials: Trial[]
 }
 
-const Home = ({ isAuthenticated, onMatchSubmit, matched }: HomeProps) => {
+const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
     const newValues = {
@@ -51,6 +51,8 @@ const Home = ({ isAuthenticated, onMatchSubmit, matched }: HomeProps) => {
       history.replace('/results')
     }
   }
+
+  const matched = trials
 
   return (
     <>
