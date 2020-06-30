@@ -9,7 +9,7 @@ const styles = {
 
 type BoxProps = {
   name: string
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const Box = ({ name, children }: BoxProps) => {
@@ -18,7 +18,7 @@ const Box = ({ name, children }: BoxProps) => {
       <h1 className={styles.boxNameOuter}>
         <span className={styles.boxNameInner}>{name}</span>
       </h1>
-      <div className={styles.boxContent}>{children}</div>
+      {children && <div className={styles.boxContent}>{children}</div>}
     </div>
   )
 }
