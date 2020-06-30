@@ -52,7 +52,7 @@ const MatchForm = ({ onSubmit }: { onSubmit(value: any): void }) => {
     },
   })
   return (
-    <Box name="Patient Information">
+    <Box name="Patient Information" innerClassName="px-8">
       <form onSubmit={formik.handleSubmit}>
         <div className={styles.field}>
           <TextField
