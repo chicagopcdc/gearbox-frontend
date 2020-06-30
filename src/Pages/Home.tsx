@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Button from '../Components/Inputs/Button'
 import MatchForm from '../Components/MatchForm'
@@ -52,7 +52,19 @@ const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
     }
   }
 
-  const matched = trials
+  const [matched, setMatched] = useState([] as Trial[])
+  const handleChange = (values: any) => {
+    const newMatched = trials.filter(({ condition }) =>
+      condition
+        ? Object.keys(condition).every(
+            (k) => values.hasOwnProperty(k) && values[k] === condition[k]
+          )
+        : true
+    )
+
+    if (JSON.stringify(matched) !== JSON.stringify(newMatched))
+      setMatched(newMatched)
+  }
 
   return (
     <>
@@ -64,7 +76,7 @@ const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
 
       {isAuthenticated ? (
         <div className="mt-16 md:flex">
-          <MatchForm onSubmit={handleSubmit} />
+          <MatchForm onChange={handleChange} onSubmit={handleSubmit} />
           <MatchedTrials data={matched} className="md:flex-grow" />
         </div>
       ) : (
