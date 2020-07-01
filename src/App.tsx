@@ -79,6 +79,7 @@ function App() {
             <Home
               isAuthenticated={fakeAuth.isAuthenticated}
               onMatchSubmit={handleMatchSubmit}
+              trials={trials}
             />
           </MyRoute>
 

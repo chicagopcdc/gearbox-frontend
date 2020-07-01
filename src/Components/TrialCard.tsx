@@ -12,6 +12,7 @@ export type Trial = {
   group: string
   location: string
   registerLinks: { name: string; url: string }[]
+  condition?: { [key: string]: any }
 }
 
 const TrialCard = ({
