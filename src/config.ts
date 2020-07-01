@@ -33,7 +33,7 @@ export const labels: { [key: string]: string } = {
   altRecent: 'Most recent ALT (U/L)',
 }
 
-export const initPatientInformation = {
+export const initialPatientInformation = {
   priorTreatmentTherapies: {
     prevChemoFlag: false,
     prevRadFlag: false,

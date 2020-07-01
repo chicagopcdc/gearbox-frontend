@@ -18,7 +18,7 @@ import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { Trial } from './Components/TrialCard'
 
-import { initPatientInformation, dummyTrials } from './config'
+import { initialPatientInformation, dummyTrials } from './config'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -40,7 +40,9 @@ const fakeAuth = {
 
 function App() {
   const [isLogin, setIsLogin] = useState(false)
-  const [information, setInformation] = useState({ ...initPatientInformation })
+  const [information, setInformation] = useState({
+    ...initialPatientInformation,
+  })
   const [results, setResults] = useState({
     isLoaded: false,
     isError: false,
