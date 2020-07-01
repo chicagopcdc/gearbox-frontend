@@ -56,27 +56,6 @@ export const initialMatchFormValues = {
   biomarkers: [],
 }
 
-export const initialPatientInformation = {
-  priorTreatmentTherapies: {
-    prevChemoFlag: false,
-    prevRadFlag: false,
-    prevAtra: false,
-    prevHydroxyurea: false,
-    prevSteroids: false,
-    prevItCyt: false,
-    prevOther: false,
-  },
-  organFunction: {
-    lvEf: 0,
-    secrumCr: 0,
-    astRecent: 0,
-    altRecent: 0,
-  },
-  prevChemo: [],
-  prevRad: [],
-  biomarkers: [],
-}
-
 export const dummyTrials = [
   {
     title: 'AML 1021',
