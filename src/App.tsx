@@ -18,7 +18,7 @@ import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { Trial } from './Components/TrialCard'
 
-import { initialPatientInformation, dummyTrials } from './config'
+import { dummyTrials, initialMatchFormValues } from './config'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -40,8 +40,8 @@ const fakeAuth = {
 
 function App() {
   const [isLogin, setIsLogin] = useState(false)
-  const [information, setInformation] = useState({
-    ...initialPatientInformation,
+  const [matchFormValues, setMatchFormValues] = useState({
+    ...initialMatchFormValues,
   })
   const [results, setResults] = useState({
     isLoaded: false,
@@ -51,29 +51,10 @@ function App() {
   const trials: Trial[] = dummyTrials
 
   const handleMatchSubmit = (values: any) => {
+    setMatchFormValues({ ...values })
+
     // reset results
     setResults({ isLoaded: false, isError: false, trials: [] })
-
-    setInformation({
-      priorTreatmentTherapies: {
-        prevChemoFlag: values.prevChemoFlag,
-        prevRadFlag: values.prevRadFlag,
-        prevAtra: values.prevAtra,
-        prevHydroxyurea: values.prevHydroxyurea,
-        prevSteroids: values.prevSteroids,
-        prevItCyt: values.prevItCyt,
-        prevOther: values.prevOther,
-      },
-      organFunction: {
-        lvEf: values.lvEf,
-        secrumCr: values.secrumCr,
-        astRecent: values.astRecent,
-        altRecent: values.altRecent,
-      },
-      prevChemo: values.prevChemo,
-      prevRad: values.prevRad,
-      biomarkers: values.biomarkers,
-    })
     setTimeout(() => {
       setResults((prevState) => ({
         ...prevState,
@@ -119,7 +100,26 @@ function App() {
           >
             <Results
               data={{
-                information,
+                information: {
+                  priorTreatmentTherapies: {
+                    prevChemoFlag: matchFormValues.prevChemoFlag,
+                    prevRadFlag: matchFormValues.prevRadFlag,
+                    prevAtra: matchFormValues.prevAtra,
+                    prevHydroxyurea: matchFormValues.prevHydroxyurea,
+                    prevSteroids: matchFormValues.prevSteroids,
+                    prevItCyt: matchFormValues.prevItCyt,
+                    prevOther: matchFormValues.prevOther,
+                  },
+                  organFunction: {
+                    lvEf: matchFormValues.lvEf,
+                    secrumCr: matchFormValues.secrumCr,
+                    astRecent: matchFormValues.astRecent,
+                    altRecent: matchFormValues.altRecent,
+                  },
+                  prevChemo: matchFormValues.prevChemo,
+                  prevRad: matchFormValues.prevRad,
+                  biomarkers: matchFormValues.biomarkers,
+                },
                 results,
               }}
             />
