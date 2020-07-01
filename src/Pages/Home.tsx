@@ -21,14 +21,11 @@ const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
   const handleSubmit = (values: any) => {
     if (process.env.NODE_ENV === 'development') {
       const confirmed = window.confirm(JSON.stringify(values, null, 2))
-      if (confirmed) {
-        onMatchSubmit(values)
-        history.replace('/results')
-      }
-    } else {
-      onMatchSubmit(values)
-      history.replace('/results')
+      if (!confirmed) return
     }
+
+    onMatchSubmit(values)
+    history.replace('/results')
   }
 
   const [matched, setMatched] = useState([] as Trial[])
