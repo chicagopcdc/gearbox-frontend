@@ -7,34 +7,11 @@ import MultiSelect from './Inputs/MultiSelect'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
-import { biomarkers, labels } from '../config'
+import { biomarkers, initialMatchFormValues, labels } from '../config'
 
 const styles = {
   groupName: 'font-bold',
   field: 'my-4',
-}
-
-const initialValues = {
-  age: 0,
-  initDiag: '',
-  cnsInvolvement: false,
-  aiDisease: false,
-  drugAllergiesFlag: false,
-  drugAllergies: [],
-  prevChemoFlag: false,
-  prevRadFlag: false,
-  prevAtra: false,
-  prevHydroxyurea: false,
-  prevSteroids: false,
-  prevItCyt: false,
-  prevOther: false,
-  lvEf: 0,
-  secrumCr: 0,
-  astRecent: 0,
-  altRecent: 0,
-  prevChemo: [],
-  prevRad: [],
-  biomarkers: [],
 }
 
 type MatchFormProps = {
@@ -44,7 +21,7 @@ type MatchFormProps = {
 
 const MatchForm = ({ onChange, onSubmit }: MatchFormProps) => {
   const formik = useFormik({
-    initialValues: { ...initialValues },
+    initialValues: { ...initialMatchFormValues },
     onSubmit: (values) => {
       if (!values.drugAllergiesFlag) values.drugAllergies = []
       if (!values.prevChemoFlag) values.prevChemo = []

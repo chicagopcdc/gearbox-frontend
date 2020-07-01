@@ -33,6 +33,29 @@ export const labels: { [key: string]: string } = {
   altRecent: 'Most recent ALT (U/L)',
 }
 
+export const initialMatchFormValues = {
+  age: 0,
+  initDiag: '',
+  cnsInvolvement: false,
+  aiDisease: false,
+  drugAllergiesFlag: false,
+  drugAllergies: [],
+  prevChemoFlag: false,
+  prevRadFlag: false,
+  prevAtra: false,
+  prevHydroxyurea: false,
+  prevSteroids: false,
+  prevItCyt: false,
+  prevOther: false,
+  lvEf: 0,
+  secrumCr: 0,
+  astRecent: 0,
+  altRecent: 0,
+  prevChemo: [],
+  prevRad: [],
+  biomarkers: [],
+}
+
 export const initialPatientInformation = {
   priorTreatmentTherapies: {
     prevChemoFlag: false,
