@@ -51,9 +51,9 @@ export const initialMatchFormValues = {
   secrumCr: 0,
   astRecent: 0,
   altRecent: 0,
-  prevChemo: [],
-  prevRad: [],
-  biomarkers: [],
+  prevChemo: [] as string[],
+  prevRad: [] as string[],
+  biomarkers: [] as string[],
 }
 
 export const dummyTrials = [
