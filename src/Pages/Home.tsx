@@ -19,35 +19,14 @@ type HomeProps = {
 const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
-    const newValues = {
-      priorTreatmentTherapies: {
-        prevChemoFlag: values.prevChemoFlag,
-        prevRadFlag: values.prevRadFlag,
-        prevAtra: values.prevAtra,
-        prevHydroxyurea: values.prevHydroxyurea,
-        prevSteroids: values.prevSteroids,
-        prevItCyt: values.prevItCyt,
-        prevOther: values.prevOther,
-      },
-      organFunction: {
-        lvEf: values.lvEf,
-        secrumCr: values.secrumCr,
-        astRecent: values.astRecent,
-        altRecent: values.altRecent,
-      },
-      prevChemo: values.prevChemo,
-      prevRad: values.prevRad,
-      biomarkers: values.biomarkers,
-    }
-
     if (process.env.NODE_ENV === 'development') {
       const confirmed = window.confirm(JSON.stringify(values, null, 2))
       if (confirmed) {
-        onMatchSubmit(newValues)
+        onMatchSubmit(values)
         history.replace('/results')
       }
     } else {
-      onMatchSubmit(newValues)
+      onMatchSubmit(values)
       history.replace('/results')
     }
   }

@@ -52,7 +52,26 @@ function App() {
     // reset results
     setResults({ isLoaded: false, isError: false, trials: [] })
 
-    setInformation((prevState: any) => ({ ...prevState, ...values }))
+    setInformation({
+      priorTreatmentTherapies: {
+        prevChemoFlag: values.prevChemoFlag,
+        prevRadFlag: values.prevRadFlag,
+        prevAtra: values.prevAtra,
+        prevHydroxyurea: values.prevHydroxyurea,
+        prevSteroids: values.prevSteroids,
+        prevItCyt: values.prevItCyt,
+        prevOther: values.prevOther,
+      },
+      organFunction: {
+        lvEf: values.lvEf,
+        secrumCr: values.secrumCr,
+        astRecent: values.astRecent,
+        altRecent: values.altRecent,
+      },
+      prevChemo: values.prevChemo,
+      prevRad: values.prevRad,
+      biomarkers: values.biomarkers,
+    })
     setTimeout(() => {
       setResults((prevState) => ({
         ...prevState,
