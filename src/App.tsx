@@ -51,23 +51,25 @@ function App() {
   const trials: Trial[] = dummyTrials
 
   const handleMatchSubmit = (values: any) => {
-    setMatchFormValues({ ...values })
+    if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
+      setMatchFormValues({ ...values })
 
-    // reset results
-    setResults({ isLoaded: false, isError: false, trials: [] })
-    setTimeout(() => {
-      setResults((prevState) => ({
-        ...prevState,
-        isLoaded: true,
-        trials: trials.filter(({ condition }) =>
-          condition
-            ? Object.keys(condition).every(
-                (k) => values.hasOwnProperty(k) && values[k] === condition[k]
-              )
-            : true
-        ),
-      }))
-    }, 1000)
+      // reset results
+      setResults({ isLoaded: false, isError: false, trials: [] })
+      setTimeout(() => {
+        setResults((prevState) => ({
+          ...prevState,
+          isLoaded: true,
+          trials: trials.filter(({ condition }) =>
+            condition
+              ? Object.keys(condition).every(
+                  (k) => values.hasOwnProperty(k) && values[k] === condition[k]
+                )
+              : true
+          ),
+        }))
+      }, 1000)
+    }
   }
 
   return (
