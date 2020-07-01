@@ -59,7 +59,13 @@ function App() {
       setResults((prevState) => ({
         ...prevState,
         isLoaded: true,
-        trials: dummyTrials.slice(0, 2),
+        trials: trials.filter(({ condition }) =>
+          condition
+            ? Object.keys(condition).every(
+                (k) => values.hasOwnProperty(k) && values[k] === condition[k]
+              )
+            : true
+        ),
       }))
     }, 1000)
   }
