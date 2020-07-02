@@ -43,12 +43,20 @@ function App() {
   const [matchFormValues, setMatchFormValues] = useState({
     ...initialMatchFormValues,
   })
+  const trials: Trial[] = dummyTrials
   const [results, setResults] = useState({
     isLoaded: false,
     isError: false,
-    trials: [] as Trial[],
+    trials: trials.filter(({ condition }) =>
+      condition
+        ? Object.keys(condition).every(
+            (k) =>
+              initialMatchFormValues.hasOwnProperty(k) &&
+              (initialMatchFormValues as any)[k] === condition[k]
+          )
+        : true
+    ),
   })
-  const trials: Trial[] = dummyTrials
 
   const handleMatchSubmit = (values: any) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
