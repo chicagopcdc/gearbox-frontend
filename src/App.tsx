@@ -54,7 +54,7 @@ function App() {
   })
   const trials: Trial[] = dummyTrials
   const [results, setResults] = useState({
-    isLoaded: false,
+    isLoaded: true,
     isError: false,
     trials: getMatchedTrials(trials, initialMatchFormValues),
   })
