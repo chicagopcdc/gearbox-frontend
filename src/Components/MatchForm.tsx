@@ -7,7 +7,7 @@ import MultiSelect from './Inputs/MultiSelect'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
-import { biomarkers, initialMatchFormValues, labels } from '../config'
+import { biomarkers, labels } from '../config'
 
 const styles = {
   groupName: 'font-bold',
@@ -15,13 +15,14 @@ const styles = {
 }
 
 type MatchFormProps = {
+  values: any
   onChange?(value: any): void
   onSubmit(value: any): void
 }
 
-const MatchForm = ({ onChange, onSubmit }: MatchFormProps) => {
+const MatchForm = ({ values, onChange, onSubmit }: MatchFormProps) => {
   const formik = useFormik({
-    initialValues: { ...initialMatchFormValues },
+    initialValues: { ...values },
     onSubmit: (values) => {
       if (!values.drugAllergiesFlag) values.drugAllergies = []
       if (!values.prevChemoFlag) values.prevChemo = []

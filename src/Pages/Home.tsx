@@ -19,12 +19,14 @@ type HomeProps = {
     isError: boolean
     trials: Trial[]
   }
+  matchFormValues: any
 }
 
 const Home = ({
   isAuthenticated,
   onMatchChange,
   onMatchSubmit,
+  matchFormValues,
   matched,
 }: HomeProps) => {
   const history = useHistory()
@@ -50,7 +52,11 @@ const Home = ({
 
       {isAuthenticated ? (
         <div className="mt-16 md:flex">
-          <MatchForm onChange={handleChange} onSubmit={handleSubmit} />
+          <MatchForm
+            values={matchFormValues}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+          />
           <MatchedTrials
             data={matched.trials}
             className={`md:flex-grow ${matched.isLoaded ? '' : 'bg-gray-200'}`}
