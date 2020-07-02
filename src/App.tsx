@@ -64,7 +64,11 @@ function App() {
       setMatchFormValues({ ...values })
 
       // reset results
-      setResults({ isLoaded: false, isError: false, trials: [] })
+      setResults((prevState) => ({
+        ...prevState,
+        isLoaded: false,
+        isError: false,
+      }))
       setTimeout(() => {
         setResults((prevState) => ({
           ...prevState,
