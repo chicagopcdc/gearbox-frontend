@@ -38,6 +38,15 @@ const fakeAuth = {
   },
 }
 
+const getMatchedTrials = (trials: Trial[], values: any): Trial[] =>
+  trials.filter(({ condition }) =>
+    condition
+      ? Object.keys(condition).every(
+          (k) => values.hasOwnProperty(k) && values[k] === condition[k]
+        )
+      : true
+  )
+
 function App() {
   const [isLogin, setIsLogin] = useState(false)
   const [matchFormValues, setMatchFormValues] = useState({
@@ -47,15 +56,7 @@ function App() {
   const [results, setResults] = useState({
     isLoaded: false,
     isError: false,
-    trials: trials.filter(({ condition }) =>
-      condition
-        ? Object.keys(condition).every(
-            (k) =>
-              initialMatchFormValues.hasOwnProperty(k) &&
-              (initialMatchFormValues as any)[k] === condition[k]
-          )
-        : true
-    ),
+    trials: getMatchedTrials(trials, initialMatchFormValues),
   })
 
   const handleMatchSubmit = (values: any) => {
@@ -68,13 +69,7 @@ function App() {
         setResults((prevState) => ({
           ...prevState,
           isLoaded: true,
-          trials: trials.filter(({ condition }) =>
-            condition
-              ? Object.keys(condition).every(
-                  (k) => values.hasOwnProperty(k) && values[k] === condition[k]
-                )
-              : true
-          ),
+          trials: getMatchedTrials(trials, values),
         }))
       }, 1000)
     }
