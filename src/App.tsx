@@ -79,7 +79,7 @@ function App() {
           isLoaded: true,
           trials: getMatchedTrials(trials, values),
         }))
-      }, 1000)
+      }, 500)
     }
   }
 
