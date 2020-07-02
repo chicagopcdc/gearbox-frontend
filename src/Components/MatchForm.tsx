@@ -7,7 +7,7 @@ import MultiSelect from './Inputs/MultiSelect'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
-import { biomarkers, labels } from '../config'
+import { biomarkers, initialMatchFormValues, labels } from '../config'
 
 const styles = {
   groupName: 'font-bold',
@@ -262,8 +262,15 @@ const MatchForm = ({ values, onChange, onSubmit }: MatchFormProps) => {
           />
         </div>
 
-        <div className="text-center mt-8">
+        <div className="flex flex-wrap justify-center mt-8">
           <Button type="submit">Submit</Button>
+          <div className="mx-2"></div>
+          <Button
+            type="reset"
+            onClick={() => formik.setValues(initialMatchFormValues)}
+          >
+            Reset
+          </Button>
         </div>
       </form>
     </Box>
