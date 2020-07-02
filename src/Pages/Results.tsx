@@ -12,7 +12,7 @@ type ResultsProps = {
       prevRad: string[]
       biomarkers: string[]
     }
-    results: {
+    matchResult: {
       isLoaded: boolean
       isError: boolean
       trials: Trial[]
@@ -20,7 +20,7 @@ type ResultsProps = {
   }
 }
 
-const Results = ({ data: { information, results } }: ResultsProps) => (
+const Results = ({ data: { information, matchResult } }: ResultsProps) => (
   <>
     <Box name="Summary of Submitted Patient Information">
       <PatientInfo data={information} />
@@ -28,8 +28,8 @@ const Results = ({ data: { information, results } }: ResultsProps) => (
 
     <Box name="Results">
       <div className="flex flex-wrap justify-center">
-        {results.isLoaded
-          ? results.trials.map((trial, i) => (
+        {matchResult.isLoaded
+          ? matchResult.trials.map((trial, i) => (
               <TrialCard data={trial} key={i}></TrialCard>
             ))
           : 'Loading matched trials...'}

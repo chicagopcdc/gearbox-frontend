@@ -53,7 +53,7 @@ function App() {
     ...initialMatchFormValues,
   })
   const trials: Trial[] = dummyTrials
-  const [results, setResults] = useState({
+  const [matchResult, setMatchResult] = useState({
     isLoaded: true,
     isError: false,
     trials: getMatchedTrials(trials, initialMatchFormValues),
@@ -67,14 +67,14 @@ function App() {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
 
-      // reset results
-      setResults((prevState) => ({
+      // reset match result
+      setMatchResult((prevState) => ({
         ...prevState,
         isLoaded: false,
         isError: false,
       }))
       setTimeout(() => {
-        setResults((prevState) => ({
+        setMatchResult((prevState) => ({
           ...prevState,
           isLoaded: true,
           trials: getMatchedTrials(trials, values),
@@ -101,7 +101,7 @@ function App() {
               isAuthenticated={fakeAuth.isAuthenticated}
               onMatchChange={handleMatchChange}
               onMatchSubmit={handleMatchSubmit}
-              matched={results}
+              matchResult={matchResult}
               matchFormValues={matchFormValues}
             />
           </MyRoute>
@@ -141,7 +141,7 @@ function App() {
                   prevRad: matchFormValues.prevRad,
                   biomarkers: matchFormValues.biomarkers,
                 },
-                results,
+                matchResult,
               }}
             />
           </MyRoute>
