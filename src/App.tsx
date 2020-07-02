@@ -60,6 +60,10 @@ function App() {
   })
 
   const handleMatchSubmit = (values: any) => {
+    alert('submitted')
+  }
+
+  const handleMatchChange = (values: any) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
 
@@ -95,8 +99,9 @@ function App() {
           >
             <Home
               isAuthenticated={fakeAuth.isAuthenticated}
+              onMatchChange={handleMatchChange}
               onMatchSubmit={handleMatchSubmit}
-              trials={trials}
+              matched={results}
             />
           </MyRoute>
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Button from '../Components/Inputs/Button'
 import MatchForm from '../Components/MatchForm'
@@ -12,11 +12,21 @@ const paragraphs = [
 
 type HomeProps = {
   isAuthenticated: boolean
+  onMatchChange(values: any): void
   onMatchSubmit(values: any): void
-  trials: Trial[]
+  matched: {
+    isLoaded: boolean
+    isError: boolean
+    trials: Trial[]
+  }
 }
 
-const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
+const Home = ({
+  isAuthenticated,
+  onMatchChange,
+  onMatchSubmit,
+  matched,
+}: HomeProps) => {
   const history = useHistory()
   const handleSubmit = (values: any) => {
     if (process.env.NODE_ENV === 'development') {
@@ -28,19 +38,7 @@ const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
     history.replace('/results')
   }
 
-  const [matched, setMatched] = useState([] as Trial[])
-  const handleChange = (values: any) => {
-    const newMatched = trials.filter(({ condition }) =>
-      condition
-        ? Object.keys(condition).every(
-            (k) => values.hasOwnProperty(k) && values[k] === condition[k]
-          )
-        : true
-    )
-
-    if (JSON.stringify(matched) !== JSON.stringify(newMatched))
-      setMatched(newMatched)
-  }
+  const handleChange = onMatchChange
 
   return (
     <>
@@ -53,7 +51,7 @@ const Home = ({ isAuthenticated, onMatchSubmit, trials }: HomeProps) => {
       {isAuthenticated ? (
         <div className="mt-16 md:flex">
           <MatchForm onChange={handleChange} onSubmit={handleSubmit} />
-          <MatchedTrials data={matched} className="md:flex-grow" />
+          <MatchedTrials data={matched.trials} className="md:flex-grow" />
         </div>
       ) : (
         <div className="text-center my-8">
