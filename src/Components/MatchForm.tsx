@@ -31,12 +31,20 @@ const MatchForm = ({ onChange, onSubmit }: MatchFormProps) => {
   })
 
   useEffect(() => {
+    let timeout: NodeJS.Timeout | undefined
     if (onChange) {
-      const values = { ...formik.values }
-      if (!values.drugAllergiesFlag) values.drugAllergies = []
-      if (!values.prevChemoFlag) values.prevChemo = []
-      if (!values.prevRadFlag) values.prevRad = []
-      onChange(values)
+      if (timeout !== undefined) clearTimeout(timeout)
+
+      timeout = setTimeout(() => {
+        const values = { ...formik.values }
+        if (!values.drugAllergiesFlag) values.drugAllergies = []
+        if (!values.prevChemoFlag) values.prevChemo = []
+        if (!values.prevRadFlag) values.prevRad = []
+        onChange(values)
+      }, 1000)
+    }
+    return () => {
+      if (timeout !== undefined) clearTimeout(timeout)
     }
   }, [onChange, formik.values])
 
