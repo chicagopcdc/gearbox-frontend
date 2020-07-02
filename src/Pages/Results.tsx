@@ -1,7 +1,8 @@
 import React from 'react'
 import Box from '../Components/Box'
 import PatientInfo from '../Components/PatientInfo'
-import TrialCard, { Trial } from '../Components/TrialCard'
+import { Trial } from '../Components/TrialCard'
+import MatchedTrials from '../Components/MatchedTrials'
 
 type ResultsProps = {
   data: {
@@ -21,21 +22,16 @@ type ResultsProps = {
 }
 
 const Results = ({ data: { information, matchResult } }: ResultsProps) => (
-  <>
+  <div className="md:flex">
     <Box name="Summary of Submitted Patient Information">
       <PatientInfo data={information} />
     </Box>
 
-    <Box name="Results">
-      <div className="flex flex-wrap justify-center">
-        {matchResult.isLoaded
-          ? matchResult.trials.map((trial, i) => (
-              <TrialCard data={trial} key={i}></TrialCard>
-            ))
-          : 'Loading matched trials...'}
-      </div>
-    </Box>
-  </>
+    <MatchedTrials
+      data={matchResult.trials}
+      className={`md:flex-grow ${matchResult.isLoaded ? '' : 'bg-gray-200'}`}
+    />
+  </div>
 )
 
 export default Results
