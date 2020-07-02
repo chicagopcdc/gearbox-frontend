@@ -51,7 +51,10 @@ const Home = ({
       {isAuthenticated ? (
         <div className="mt-16 md:flex">
           <MatchForm onChange={handleChange} onSubmit={handleSubmit} />
-          <MatchedTrials data={matched.trials} className="md:flex-grow" />
+          <MatchedTrials
+            data={matched.trials}
+            className={`md:flex-grow ${matched.isLoaded ? '' : 'bg-gray-200'}`}
+          />
         </div>
       ) : (
         <div className="text-center my-8">
