@@ -28,3 +28,9 @@ export type MatchFormValues = {
   prevRad: string[]
   biomarkers: string[]
 }
+
+export type MatchResult = {
+  isLoaded: boolean
+  isError: boolean
+  trials: Trial[]
+}

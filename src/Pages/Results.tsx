@@ -2,16 +2,12 @@ import React from 'react'
 import Box from '../Components/Box'
 import PatientInfo from '../Components/PatientInfo'
 import MatchedTrials from '../Components/MatchedTrials'
-import { Trial, MatchFormValues } from '../types'
+import { MatchFormValues, MatchResult } from '../types'
 
 type ResultsProps = {
   data: {
     matchFormValues: MatchFormValues
-    matchResult: {
-      isLoaded: boolean
-      isError: boolean
-      trials: Trial[]
-    }
+    matchResult: MatchResult
   }
 }
 
