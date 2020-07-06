@@ -14,7 +14,7 @@ type HomeProps = {
   isAuthenticated: boolean
   onMatchChange(values: MatchFormValues): void
   onMatchSubmit(values: MatchFormValues): void
-  matchFormValues: any
+  matchFormValues: MatchFormValues
   matchResult: MatchResult
 }
 
