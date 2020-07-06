@@ -26,7 +26,6 @@ const PatientInfo = ({ data }: { data: MatchFormValues }) => (
         'prevOther',
       ].map((key) => (
         <div className={styles.field} key={key}>
-          data
           <Checkbox label={labels[key]} checked={(data as any)[key]} readOnly />
           <div className="mt-2">
             {key === 'prevChemoFlag' && data[key] && (
