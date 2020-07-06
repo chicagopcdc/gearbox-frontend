@@ -6,12 +6,12 @@ import {
   Redirect,
 } from 'react-router-dom'
 
-import Home from './Pages/Home'
-import About from './Pages/About'
-import Guide from './Pages/Guide'
-import Login from './Pages/Login'
-import Results from './Pages/Results'
-import Trials from './Pages/Trials'
+import Home from './pages/Home'
+import About from './pages/About'
+import Guide from './pages/Guide'
+import Login from './pages/Login'
+import Results from './pages/Results'
+import Trials from './pages/Trials'
 
 import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
