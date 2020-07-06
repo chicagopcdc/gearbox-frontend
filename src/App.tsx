@@ -52,7 +52,7 @@ function App() {
   const [matchFormValues, setMatchFormValues] = useState({
     ...initialMatchFormValues,
   })
-  const trials: Trial[] = dummyTrials
+  const trials = dummyTrials
   const [matchResult, setMatchResult] = useState({
     isLoaded: true,
     isError: false,
