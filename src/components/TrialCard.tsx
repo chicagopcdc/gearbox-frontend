@@ -1,5 +1,5 @@
 import React from 'react'
-import { Trial } from '../types'
+import { Trial } from '../model'
 
 const styles = {
   container:

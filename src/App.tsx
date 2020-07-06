@@ -18,7 +18,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
 import { dummyTrials, initialMatchFormValues } from './config'
-import { MatchFormValues, Trial } from './types'
+import { MatchFormValues, Trial } from './model'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',

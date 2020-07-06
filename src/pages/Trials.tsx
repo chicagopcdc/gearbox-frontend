@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '../components/Box'
 import TrialCard from '../components/TrialCard'
-import { Trial } from '../types'
+import { Trial } from '../model'
 
 const Trials = ({ data }: { data?: Trial[] }) => (
   <Box

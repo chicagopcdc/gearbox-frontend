@@ -2,7 +2,7 @@ import React from 'react'
 import Box from '../components/Box'
 import PatientInfo from '../components/PatientInfo'
 import MatchedTrials from '../components/MatchedTrials'
-import { MatchFormValues, MatchResult } from '../types'
+import { MatchFormValues, MatchResult } from '../model'
 
 type ResultsProps = {
   data: {

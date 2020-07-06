@@ -8,7 +8,7 @@ import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
 import { biomarkers, initialMatchFormValues, labels } from '../config'
-import { MatchFormValues } from '../types'
+import { MatchFormValues } from '../model'
 
 const styles = {
   groupName: 'font-bold',

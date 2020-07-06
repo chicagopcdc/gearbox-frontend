@@ -4,7 +4,7 @@ import TextField from './Inputs/TextField'
 import Textarea from './Inputs/Textarea'
 
 import { labels } from '../config'
-import { MatchFormValues } from '../types'
+import { MatchFormValues } from '../model'
 
 const styles = {
   group: 'flex-1 m-4',

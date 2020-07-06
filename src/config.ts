@@ -1,4 +1,4 @@
-import { MatchFormValues, Trial } from './types'
+import { MatchFormValues, Trial } from './model'
 
 export const biomarkers: string[] = [
   'MECOM(3q26.2)',
