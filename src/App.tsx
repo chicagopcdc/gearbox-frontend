@@ -119,31 +119,7 @@ function App() {
             isAuthenticated={fakeAuth.isAuthenticated}
             isPrivate
           >
-            <Results
-              data={{
-                information: {
-                  priorTreatmentTherapies: {
-                    prevChemoFlag: matchFormValues.prevChemoFlag,
-                    prevRadFlag: matchFormValues.prevRadFlag,
-                    prevAtra: matchFormValues.prevAtra,
-                    prevHydroxyurea: matchFormValues.prevHydroxyurea,
-                    prevSteroids: matchFormValues.prevSteroids,
-                    prevItCyt: matchFormValues.prevItCyt,
-                    prevOther: matchFormValues.prevOther,
-                  },
-                  organFunction: {
-                    lvEf: matchFormValues.lvEf,
-                    secrumCr: matchFormValues.secrumCr,
-                    astRecent: matchFormValues.astRecent,
-                    altRecent: matchFormValues.altRecent,
-                  },
-                  prevChemo: matchFormValues.prevChemo,
-                  prevRad: matchFormValues.prevRad,
-                  biomarkers: matchFormValues.biomarkers,
-                },
-                matchResult,
-              }}
-            />
+            <Results data={{ matchFormValues, matchResult }} />
           </MyRoute>
 
           <Route path="/guide">

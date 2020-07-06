@@ -4,6 +4,7 @@ import TextField from './Inputs/TextField'
 import Textarea from './Inputs/Textarea'
 
 import { labels } from '../config'
+import { MatchFormValues } from '../types'
 
 const styles = {
   group: 'flex-1 m-4',
@@ -11,41 +12,28 @@ const styles = {
   field: 'my-4',
 }
 
-type PatientInfoProps = {
-  data: {
-    priorTreatmentTherapies: { [key: string]: boolean }
-    organFunction: { [key: string]: number }
-    prevChemo: string[]
-    prevRad: string[]
-    biomarkers: string[]
-  }
-}
-
-const PatientInfo = ({
-  data: {
-    priorTreatmentTherapies,
-    organFunction,
-    prevChemo,
-    prevRad,
-    biomarkers,
-  },
-}: PatientInfoProps) => (
+const PatientInfo = ({ data }: { data: MatchFormValues }) => (
   <>
     <div className={styles.group}>
       <h2 className={styles.groupName}>Prior treatment therapies</h2>
-      {Object.keys(priorTreatmentTherapies).map((key) => (
+      {[
+        'prevChemoFlag',
+        'prevRadFlag',
+        'prevAtra',
+        'prevHydroxyurea',
+        'prevSteroids',
+        'prevItCyt',
+        'prevOther',
+      ].map((key) => (
         <div className={styles.field} key={key}>
-          <Checkbox
-            label={labels[key]}
-            checked={priorTreatmentTherapies[key]}
-            readOnly
-          />
+          data
+          <Checkbox label={labels[key]} checked={(data as any)[key]} readOnly />
           <div className="mt-2">
-            {key === 'prevChemoFlag' && priorTreatmentTherapies[key] && (
-              <Textarea value={prevChemo.join('\n') || 'N/A'} readOnly />
+            {key === 'prevChemoFlag' && data[key] && (
+              <Textarea value={data.prevChemo.join('\n') || 'N/A'} readOnly />
             )}
-            {key === 'prevRadFlag' && priorTreatmentTherapies[key] && (
-              <Textarea value={prevRad.join('\n') || 'N/A'} readOnly />
+            {key === 'prevRadFlag' && data[key] && (
+              <Textarea value={data.prevRad.join('\n') || 'N/A'} readOnly />
             )}
           </div>
         </div>
@@ -54,11 +42,11 @@ const PatientInfo = ({
 
     <div className={styles.group}>
       <h2 className={styles.groupName}>Organ Function</h2>
-      {Object.keys(organFunction).map((key) => (
+      {['lvEf', 'secrumCr', 'astRecent', 'altRecent'].map((key) => (
         <div className={styles.field} key={key}>
           <TextField
             label={labels[key]}
-            value={organFunction[key]}
+            value={(data as any)[key]}
             type="number"
             min={0}
             max={999}
@@ -70,7 +58,7 @@ const PatientInfo = ({
 
     <div className={styles.group}>
       <h2 className={styles.groupName}>Biomarkers</h2>
-      <Textarea value={biomarkers.join('\n')} readOnly />
+      <Textarea value={data.biomarkers.join('\n')} readOnly />
     </div>
   </>
 )
