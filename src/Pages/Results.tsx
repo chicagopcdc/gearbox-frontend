@@ -1,8 +1,8 @@
 import React from 'react'
 import Box from '../Components/Box'
 import PatientInfo from '../Components/PatientInfo'
-import { Trial } from '../Components/TrialCard'
 import MatchedTrials from '../Components/MatchedTrials'
+import { Trial } from '../types'
 
 type ResultsProps = {
   data: {

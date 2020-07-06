@@ -16,9 +16,9 @@ import Trials from './Pages/Trials'
 import MyRoute from './Components/MyRoute'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
-import { Trial } from './Components/TrialCard'
 
 import { dummyTrials, initialMatchFormValues } from './config'
+import { Trial } from './types'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',

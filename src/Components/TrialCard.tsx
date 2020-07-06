@@ -1,18 +1,11 @@
 import React from 'react'
+import { Trial } from '../types'
 
 const styles = {
   container:
     'border border-solid border-black hover:border-red-500 hover:bg-red-100 m-4 py-4 px-8',
   title: 'font-bold text-lg pb-2',
   subtitle: 'font-bold inline pr-2',
-}
-
-export type Trial = {
-  title: string
-  group: string
-  location: string
-  registerLinks: { name: string; url: string }[]
-  condition?: { [key: string]: any }
 }
 
 const TrialCard = ({

@@ -1,6 +1,7 @@
 import React from 'react'
 import Box from './Box'
-import TrialCard, { Trial } from './TrialCard'
+import TrialCard from './TrialCard'
+import { Trial } from '../types'
 
 type MatchedTrialsProps = {
   className?: string
