@@ -1,7 +1,7 @@
 import React from 'react'
-import Box from '../Components/Box'
-import PatientInfo from '../Components/PatientInfo'
-import MatchedTrials from '../Components/MatchedTrials'
+import Box from '../components/Box'
+import PatientInfo from '../components/PatientInfo'
+import MatchedTrials from '../components/MatchedTrials'
 import { MatchFormValues, MatchResult } from '../types'
 
 type ResultsProps = {

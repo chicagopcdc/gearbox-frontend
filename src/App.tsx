@@ -13,9 +13,9 @@ import Login from './Pages/Login'
 import Results from './Pages/Results'
 import Trials from './Pages/Trials'
 
-import MyRoute from './Components/MyRoute'
-import Navbar from './Components/Navbar'
-import Footer from './Components/Footer'
+import MyRoute from './components/MyRoute'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 import { dummyTrials, initialMatchFormValues } from './config'
 import { MatchFormValues, Trial } from './types'

@@ -1,5 +1,5 @@
 import React from 'react'
-import Box from '../Components/Box'
+import Box from '../components/Box'
 
 const steps = [
   `Study coordinators gather patient information, lab values, flow cytometry, and cytogenetic reports.`,

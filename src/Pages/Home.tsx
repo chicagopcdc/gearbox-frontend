@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import Button from '../Components/Inputs/Button'
-import MatchForm from '../Components/MatchForm'
-import MatchedTrials from '../Components/MatchedTrials'
+import Button from '../components/Inputs/Button'
+import MatchForm from '../components/MatchForm'
+import MatchedTrials from '../components/MatchedTrials'
 import { MatchFormValues, MatchResult } from '../types'
 
 const paragraphs = [

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 
-import Box from '../Components/Box'
-import Button from '../Components/Inputs/Button'
-import LoginForm from '../Components/LoginForm'
+import Box from '../components/Box'
+import Button from '../components/Inputs/Button'
+import LoginForm from '../components/LoginForm'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
 
