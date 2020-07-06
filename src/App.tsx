@@ -18,7 +18,7 @@ import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 
 import { dummyTrials, initialMatchFormValues } from './config'
-import { Trial } from './types'
+import { MatchFormValues, Trial } from './types'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -38,11 +38,11 @@ const fakeAuth = {
   },
 }
 
-const getMatchedTrials = (trials: Trial[], values: any): Trial[] =>
+const getMatchedTrials = (trials: Trial[], values: MatchFormValues): Trial[] =>
   trials.filter(({ condition }) =>
     condition
       ? Object.keys(condition).every(
-          (k) => values.hasOwnProperty(k) && values[k] === condition[k]
+          (k) => values.hasOwnProperty(k) && (values as any)[k] === condition[k]
         )
       : true
   )
@@ -59,11 +59,11 @@ function App() {
     trials: getMatchedTrials(trials, initialMatchFormValues),
   })
 
-  const handleMatchSubmit = (values: any) => {
+  const handleMatchSubmit = (values: MatchFormValues) => {
     alert('submitted')
   }
 
-  const handleMatchChange = (values: any) => {
+  const handleMatchChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
 

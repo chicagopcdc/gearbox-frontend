@@ -8,6 +8,7 @@ import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
 import { biomarkers, initialMatchFormValues, labels } from '../config'
+import { MatchFormValues } from '../types'
 
 const styles = {
   groupName: 'font-bold',
@@ -15,9 +16,9 @@ const styles = {
 }
 
 type MatchFormProps = {
-  values: any
-  onChange?(value: any): void
-  onSubmit(value: any): void
+  values: MatchFormValues
+  onChange?(value: MatchFormValues): void
+  onSubmit(value: MatchFormValues): void
 }
 
 const MatchForm = ({ values, onChange, onSubmit }: MatchFormProps) => {
