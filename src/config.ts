@@ -1,3 +1,5 @@
+import { MatchFormValues, Trial } from './types'
+
 export const biomarkers: string[] = [
   'MECOM(3q26.2)',
   't(6;9)(p23;q34.1)(DEK-NUP214)',
@@ -33,7 +35,7 @@ export const labels: { [key: string]: string } = {
   altRecent: 'Most recent ALT (U/L)',
 }
 
-export const initialMatchFormValues = {
+export const initialMatchFormValues: MatchFormValues = {
   age: 0,
   initDiag: '',
   cnsInvolvement: false,
@@ -51,12 +53,12 @@ export const initialMatchFormValues = {
   secrumCr: 0,
   astRecent: 0,
   altRecent: 0,
-  prevChemo: [] as string[],
-  prevRad: [] as string[],
-  biomarkers: [] as string[],
+  prevChemo: [],
+  prevRad: [],
+  biomarkers: [],
 }
 
-export const dummyTrials = [
+export const dummyTrials: Trial[] = [
   {
     title: 'AML 1021',
     group: 'COG',
