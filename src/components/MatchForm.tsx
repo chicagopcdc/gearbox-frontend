@@ -17,19 +17,13 @@ const styles = {
 
 type MatchFormProps = {
   values: MatchFormValues
-  onChange?(value: MatchFormValues): void
-  onSubmit(value: MatchFormValues): void
+  onChange(value: MatchFormValues): void
 }
 
-const MatchForm = ({ values, onChange, onSubmit }: MatchFormProps) => {
+const MatchForm = ({ values, onChange }: MatchFormProps) => {
   const formik = useFormik({
     initialValues: { ...values },
-    onSubmit: (values) => {
-      if (!values.drugAllergiesFlag) values.drugAllergies = []
-      if (!values.prevChemoFlag) values.prevChemo = []
-      if (!values.prevRadFlag) values.prevRad = []
-      onSubmit(values)
-    },
+    onSubmit() {},
   })
 
   useEffect(() => {
@@ -52,7 +46,7 @@ const MatchForm = ({ values, onChange, onSubmit }: MatchFormProps) => {
 
   return (
     <Box name="Patient Information" innerClassName="px-8">
-      <form onSubmit={formik.handleSubmit}>
+      <form>
         <div className={styles.field}>
           <TextField
             label={labels.age}
@@ -264,8 +258,6 @@ const MatchForm = ({ values, onChange, onSubmit }: MatchFormProps) => {
         </div>
 
         <div className="flex flex-wrap justify-center mt-8">
-          <Button type="submit">Submit</Button>
-          <div className="mx-2"></div>
           <Button
             type="reset"
             onClick={() => formik.setValues(initialMatchFormValues)}

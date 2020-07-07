@@ -10,7 +10,6 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
-import Results from './pages/Results'
 import Trials from './pages/Trials'
 
 import MyRoute from './components/MyRoute'
@@ -59,10 +58,6 @@ function App() {
     trials: getMatchedTrials(trials, initialMatchFormValues),
   })
 
-  const handleMatchSubmit = (values: MatchFormValues) => {
-    alert('submitted')
-  }
-
   const handleMatchChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
@@ -100,7 +95,6 @@ function App() {
             <Home
               isAuthenticated={fakeAuth.isAuthenticated}
               onMatchChange={handleMatchChange}
-              onMatchSubmit={handleMatchSubmit}
               matchResult={matchResult}
               matchFormValues={matchFormValues}
             />
@@ -112,14 +106,6 @@ function App() {
             cb={() => setIsLogin(true)}
           >
             <Login authenticate={fakeAuth.authenticate} />
-          </MyRoute>
-
-          <MyRoute
-            path="/results"
-            isAuthenticated={fakeAuth.isAuthenticated}
-            isPrivate
-          >
-            <Results data={{ matchFormValues, matchResult }} />
           </MyRoute>
 
           <Route path="/guide">

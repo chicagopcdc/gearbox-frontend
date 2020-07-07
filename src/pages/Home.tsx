@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchedTrials from '../components/MatchedTrials'
@@ -12,63 +12,42 @@ const paragraphs = [
 
 type HomeProps = {
   isAuthenticated: boolean
-  onMatchChange(values: MatchFormValues): void
-  onMatchSubmit(values: MatchFormValues): void
   matchFormValues: MatchFormValues
   matchResult: MatchResult
+  onMatchChange(values: MatchFormValues): void
 }
 
 const Home = ({
   isAuthenticated,
-  onMatchChange,
-  onMatchSubmit,
   matchFormValues,
   matchResult,
-}: HomeProps) => {
-  const history = useHistory()
-  const handleSubmit = (values: MatchFormValues) => {
-    if (process.env.NODE_ENV === 'development') {
-      const confirmed = window.confirm(JSON.stringify(values, null, 2))
-      if (!confirmed) return
-    }
+  onMatchChange,
+}: HomeProps) => (
+  <>
+    {paragraphs.map((p, i) => (
+      <p className="mb-4" key={i}>
+        {p}
+      </p>
+    ))}
 
-    onMatchSubmit(values)
-    history.replace('/results')
-  }
-
-  const handleChange = onMatchChange
-
-  return (
-    <>
-      {paragraphs.map((p, i) => (
-        <p className="mb-4" key={i}>
-          {p}
-        </p>
-      ))}
-
-      {isAuthenticated ? (
-        <div className="mt-16 md:flex">
-          <MatchForm
-            values={matchFormValues}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-          />
-          <MatchedTrials
-            data={matchResult.trials}
-            className={`md:flex-grow ${
-              matchResult.isLoaded ? '' : 'bg-gray-200'
-            }`}
-          />
-        </div>
-      ) : (
-        <div className="text-center my-8">
-          <Link to="/login">
-            <Button>Log in to find matching clinical trials</Button>
-          </Link>
-        </div>
-      )}
-    </>
-  )
-}
+    {isAuthenticated ? (
+      <div className="mt-16 md:flex">
+        <MatchForm values={matchFormValues} onChange={onMatchChange} />
+        <MatchedTrials
+          data={matchResult.trials}
+          className={`md:flex-grow ${
+            matchResult.isLoaded ? '' : 'bg-gray-200'
+          }`}
+        />
+      </div>
+    ) : (
+      <div className="text-center my-8">
+        <Link to="/login">
+          <Button>Log in to find matching clinical trials</Button>
+        </Link>
+      </div>
+    )}
+  </>
+)
 
 export default Home
