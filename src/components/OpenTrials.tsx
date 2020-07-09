@@ -3,14 +3,14 @@ import Box from './Box'
 import TrialCard from './TrialCard'
 import { Trial } from '../model'
 
-type MatchedTrialsProps = {
+type OpenTrialsProps = {
   className?: string
   matchIds: string[]
   trials: Trial[]
 }
 
-const MatchedTrials = ({ className, matchIds, trials }: MatchedTrialsProps) => (
-  <Box name="Matched Trials" outerClassName={className}>
+const OpenTrials = ({ className, matchIds, trials }: OpenTrialsProps) => (
+  <Box name="Open Trials" outerClassName={className}>
     <h2 className="font-bold text-center">Matched</h2>
     {trials
       .filter(({ id }) => matchIds.includes(id))
@@ -27,4 +27,4 @@ const MatchedTrials = ({ className, matchIds, trials }: MatchedTrialsProps) => (
   </Box>
 )
 
-export default MatchedTrials
+export default OpenTrials

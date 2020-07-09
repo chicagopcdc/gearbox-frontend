@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
-import MatchedTrials from '../components/MatchedTrials'
+import OpenTrials from '../components/OpenTrials'
 import { MatchFormValues, MatchResult, Trial } from '../model'
 
 const paragraphs = [
@@ -35,7 +35,7 @@ const Home = ({
     {isAuthenticated ? (
       <div className="mt-16 md:flex">
         <MatchForm values={matchFormValues} onChange={onMatchChange} />
-        <MatchedTrials
+        <OpenTrials
           matchIds={matchResult.ids}
           trials={trials}
           className={`md:flex-grow ${
