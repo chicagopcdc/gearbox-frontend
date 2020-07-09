@@ -60,6 +60,7 @@ export const initialMatchFormValues: MatchFormValues = {
 
 export const dummyTrials: Trial[] = [
   {
+    id: '0',
     title: 'AML 1021',
     group: 'COG',
     location: 'CHOP (Philadelphia)',
@@ -74,6 +75,7 @@ export const dummyTrials: Trial[] = [
     },
   },
   {
+    id: '1',
     title: 'AML 1021',
     group: 'COG',
     location: 'CHOP (Philadelphia)',
@@ -93,6 +95,7 @@ export const dummyTrials: Trial[] = [
     },
   },
   {
+    id: '2',
     title: 'AML 1021',
     group: 'COG',
     location: 'CHOP (Philadelphia)',
@@ -107,6 +110,7 @@ export const dummyTrials: Trial[] = [
     },
   },
   {
+    id: '3',
     title: 'AML 1021',
     group: 'COG',
     location: 'CHOP (Philadelphia)',
@@ -129,6 +133,7 @@ export const dummyTrials: Trial[] = [
     },
   },
   {
+    id: '4',
     title: 'AML 1021',
     group: 'COG',
     location: 'CHOP (Philadelphia)',

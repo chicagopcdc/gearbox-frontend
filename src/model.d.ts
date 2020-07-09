@@ -1,4 +1,5 @@
 export type Trial = {
+  id: string
   title: string
   group: string
   location: string
