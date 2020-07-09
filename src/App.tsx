@@ -37,14 +37,17 @@ const fakeAuth = {
   },
 }
 
-const getMatchedTrials = (trials: Trial[], values: MatchFormValues): Trial[] =>
-  trials.filter(({ condition }) =>
-    condition
-      ? Object.keys(condition).every(
-          (k) => values.hasOwnProperty(k) && (values as any)[k] === condition[k]
-        )
-      : true
-  )
+const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
+  trials
+    .filter(({ condition }) =>
+      condition
+        ? Object.keys(condition).every(
+            (k) =>
+              values.hasOwnProperty(k) && (values as any)[k] === condition[k]
+          )
+        : true
+    )
+    .map(({ id }) => id)
 
 function App() {
   const [isLogin, setIsLogin] = useState(false)
@@ -55,7 +58,7 @@ function App() {
   const [matchResult, setMatchResult] = useState({
     isLoaded: true,
     isError: false,
-    trials: getMatchedTrials(trials, initialMatchFormValues),
+    ids: getMatchIds(trials, initialMatchFormValues),
   })
 
   const handleMatchChange = (values: MatchFormValues) => {
@@ -72,7 +75,7 @@ function App() {
         setMatchResult((prevState) => ({
           ...prevState,
           isLoaded: true,
-          trials: getMatchedTrials(trials, values),
+          ids: getMatchIds(trials, values),
         }))
       }, 500)
     }
@@ -97,6 +100,7 @@ function App() {
               onMatchChange={handleMatchChange}
               matchResult={matchResult}
               matchFormValues={matchFormValues}
+              trials={trials}
             />
           </MyRoute>
 

@@ -5,15 +5,19 @@ import { Trial } from '../model'
 
 type MatchedTrialsProps = {
   className?: string
-  data: Trial[]
+  matchIds: string[]
+  trials: Trial[]
 }
 
-const MatchedTrials = ({ className, data }: MatchedTrialsProps) => (
-  <Box name="Matched Trials" outerClassName={className}>
-    {data.length > 0
-      ? data.map((trial, i) => <TrialCard data={trial} key={i} />)
-      : 'No matches'}
-  </Box>
-)
+const MatchedTrials = ({ className, matchIds, trials }: MatchedTrialsProps) => {
+  const matches = trials.filter(({ id }) => matchIds.includes(id))
+  return (
+    <Box name="Matched Trials" outerClassName={className}>
+      {matches.length > 0
+        ? matches.map((trial, i) => <TrialCard data={trial} key={i} />)
+        : 'No matches'}
+    </Box>
+  )
+}
 
 export default MatchedTrials

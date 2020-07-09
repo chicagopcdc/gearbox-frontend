@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchedTrials from '../components/MatchedTrials'
-import { MatchFormValues, MatchResult } from '../model'
+import { MatchFormValues, MatchResult, Trial } from '../model'
 
 const paragraphs = [
   `A tool built and maintained by the Pediatric Acute Leukemia (PedAL) Group, GEARBOx matches pediatric patients currently on Phase III clinical trials who experience refactory or relapsing disease to new Phase I or Phase II clinical trials based on their personal and clinical data. To see a list of all the trials included in this search, please select "Eligible Trials" above.`,
@@ -14,6 +14,7 @@ type HomeProps = {
   isAuthenticated: boolean
   matchFormValues: MatchFormValues
   matchResult: MatchResult
+  trials: Trial[]
   onMatchChange(values: MatchFormValues): void
 }
 
@@ -21,6 +22,7 @@ const Home = ({
   isAuthenticated,
   matchFormValues,
   matchResult,
+  trials,
   onMatchChange,
 }: HomeProps) => (
   <>
@@ -34,7 +36,8 @@ const Home = ({
       <div className="mt-16 md:flex">
         <MatchForm values={matchFormValues} onChange={onMatchChange} />
         <MatchedTrials
-          data={matchResult.trials}
+          matchIds={matchResult.ids}
+          trials={trials}
           className={`md:flex-grow ${
             matchResult.isLoaded ? '' : 'bg-gray-200'
           }`}
