@@ -10,17 +10,17 @@ export type Trial = {
 export type MatchFormValues = {
   age?: number
   initDiag?: string
-  cnsInvolvement?: boolean
-  aiDisease?: boolean
-  drugAllergiesFlag?: boolean
+  cnsInvolvement?: string
+  aiDisease?: string
+  drugAllergiesFlag?: string
   drugAllergies?: string[]
-  prevChemoFlag?: boolean
-  prevRadFlag?: boolean
-  prevAtra?: boolean
-  prevHydroxyurea?: boolean
-  prevSteroids?: boolean
-  prevItCyt?: boolean
-  prevOther?: boolean
+  prevChemoFlag?: string
+  prevRadFlag?: string
+  prevAtra?: string
+  prevHydroxyurea?: string
+  prevSteroids?: string
+  prevItCyt?: string
+  prevOther?: string
   lvEf?: number
   secrumCr?: number
   astRecent?: number

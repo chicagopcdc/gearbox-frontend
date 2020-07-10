@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import Box from './Box'
 import Button from './Inputs/Button'
-import Checkbox from './Inputs/Checkbox'
 import MultiSelect from './Inputs/MultiSelect'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
@@ -70,34 +69,39 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.cnsInvolvement}
             name="cnsInvolvement"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.cnsInvolvement}
+            value={formik.values.cnsInvolvement}
           />
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.aiDisease}
             name="aiDisease"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.aiDisease}
+            value={formik.values.aiDisease}
           />
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.drugAllergiesFlag}
             name="drugAllergiesFlag"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.drugAllergiesFlag}
+            value={formik.values.drugAllergiesFlag}
           />
         </div>
 
         <div
-          className={formik.values.drugAllergiesFlag ? styles.field : 'hidden'}
+          className={
+            formik.values.drugAllergiesFlag === 'true' ? styles.field : 'hidden'
+          }
         >
           <MultiSelect
             name="drugAllergies"
@@ -111,15 +115,20 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         <h2 className={styles.groupName}>Prior treatment therapies</h2>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevChemoFlag}
             name="prevChemoFlag"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevChemoFlag}
+            value={formik.values.prevChemoFlag}
           />
         </div>
 
-        <div className={formik.values.prevChemoFlag ? styles.field : 'hidden'}>
+        <div
+          className={
+            formik.values.prevChemoFlag === 'true' ? styles.field : 'hidden'
+          }
+        >
           <MultiSelect
             name="prevChemo"
             options={['foo', 'bar', 'baz']}
@@ -130,15 +139,20 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevRadFlag}
             name="prevRadFlag"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevRadFlag}
+            value={formik.values.prevRadFlag}
           />
         </div>
 
-        <div className={formik.values.prevRadFlag ? styles.field : 'hidden'}>
+        <div
+          className={
+            formik.values.prevRadFlag === 'true' ? styles.field : 'hidden'
+          }
+        >
           <MultiSelect
             name="prevRad"
             options={['foo', 'bar', 'baz']}
@@ -149,47 +163,52 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevAtra}
             name="prevAtra"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevAtra}
+            value={formik.values.prevAtra}
           />
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevHydroxyurea}
             name="prevHydroxyurea"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevHydroxyurea}
+            value={formik.values.prevHydroxyurea}
           />
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevSteroids}
             name="prevSteroids"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevSteroids}
+            value={formik.values.prevSteroids}
           />
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevItCyt}
             name="prevItCyt"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevItCyt}
+            value={formik.values.prevItCyt}
           />
         </div>
 
         <div className={styles.field}>
-          <Checkbox
+          <Select
             label={labels.prevOther}
             name="prevOther"
+            options={['', 'true', 'false']}
             onChange={formik.handleChange}
-            checked={formik.values.prevOther}
+            value={formik.values.prevOther}
           />
         </div>
 
