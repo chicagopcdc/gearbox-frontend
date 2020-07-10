@@ -71,7 +71,7 @@ export const dummyTrials: Trial[] = [
       },
     ],
     condition: {
-      aiDisease: true,
+      aiDisease: 'true',
     },
   },
   {
@@ -90,8 +90,8 @@ export const dummyTrials: Trial[] = [
       },
     ],
     condition: {
-      drugAllergiesFlag: false,
-      prevChemoFlag: false,
+      drugAllergiesFlag: 'false',
+      prevChemoFlag: 'false',
     },
   },
   {
@@ -106,7 +106,7 @@ export const dummyTrials: Trial[] = [
       },
     ],
     condition: {
-      prevChemoFlag: true,
+      prevChemoFlag: 'true',
     },
   },
   {
@@ -129,7 +129,7 @@ export const dummyTrials: Trial[] = [
       },
     ],
     condition: {
-      prevRadFlag: true,
+      prevRadFlag: 'true',
     },
   },
   {
@@ -143,5 +143,9 @@ export const dummyTrials: Trial[] = [
         url: 'about:blank',
       },
     ],
+    condition: {
+      aiDisease: 'true',
+      drugAllergiesFlag: 'true',
+    },
   },
 ]
