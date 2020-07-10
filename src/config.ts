@@ -41,7 +41,7 @@ export const initialMatchFormValues: MatchFormValues = {
   cnsInvolvement: undefined,
   aiDisease: undefined,
   drugAllergiesFlag: undefined,
-  drugAllergies: undefined,
+  drugAllergies: [],
   prevChemoFlag: undefined,
   prevRadFlag: undefined,
   prevAtra: undefined,
@@ -53,9 +53,9 @@ export const initialMatchFormValues: MatchFormValues = {
   secrumCr: undefined,
   astRecent: undefined,
   altRecent: undefined,
-  prevChemo: undefined,
-  prevRad: undefined,
-  biomarkers: undefined,
+  prevChemo: [],
+  prevRad: [],
+  biomarkers: [],
 }
 
 export const dummyTrials: Trial[] = [
