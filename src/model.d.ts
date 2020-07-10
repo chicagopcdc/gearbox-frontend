@@ -8,26 +8,26 @@ export type Trial = {
 }
 
 export type MatchFormValues = {
-  age: number
-  initDiag: string
-  cnsInvolvement: boolean
-  aiDisease: boolean
-  drugAllergiesFlag: boolean
-  drugAllergies: string[]
-  prevChemoFlag: boolean
-  prevRadFlag: boolean
-  prevAtra: boolean
-  prevHydroxyurea: boolean
-  prevSteroids: boolean
-  prevItCyt: boolean
-  prevOther: boolean
-  lvEf: number
-  secrumCr: number
-  astRecent: number
-  altRecent: number
-  prevChemo: string[]
-  prevRad: string[]
-  biomarkers: string[]
+  age?: number
+  initDiag?: string
+  cnsInvolvement?: boolean
+  aiDisease?: boolean
+  drugAllergiesFlag?: boolean
+  drugAllergies?: string[]
+  prevChemoFlag?: boolean
+  prevRadFlag?: boolean
+  prevAtra?: boolean
+  prevHydroxyurea?: boolean
+  prevSteroids?: boolean
+  prevItCyt?: boolean
+  prevOther?: boolean
+  lvEf?: number
+  secrumCr?: number
+  astRecent?: number
+  altRecent?: number
+  prevChemo?: string[]
+  prevRad?: string[]
+  biomarkers?: string[]
 }
 
 export type MatchResult = {
