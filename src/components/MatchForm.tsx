@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import Box from './Box'
 import Button from './Inputs/Button'
 import MultiSelect from './Inputs/MultiSelect'
+import Radio from './Inputs/Radio'
 import Select from './Inputs/Select'
 import TextField from './Inputs/TextField'
 
@@ -69,30 +70,30 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.cnsInvolvement}
             name="cnsInvolvement"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.cnsInvolvement}
           />
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.aiDisease}
             name="aiDisease"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.aiDisease}
           />
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.drugAllergiesFlag}
             name="drugAllergiesFlag"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.drugAllergiesFlag}
           />
@@ -115,10 +116,10 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         <h2 className={styles.groupName}>Prior treatment therapies</h2>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevChemoFlag}
             name="prevChemoFlag"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevChemoFlag}
           />
@@ -139,10 +140,10 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevRadFlag}
             name="prevRadFlag"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevRadFlag}
           />
@@ -163,50 +164,50 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevAtra}
             name="prevAtra"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevAtra}
           />
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevHydroxyurea}
             name="prevHydroxyurea"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevHydroxyurea}
           />
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevSteroids}
             name="prevSteroids"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevSteroids}
           />
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevItCyt}
             name="prevItCyt"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevItCyt}
           />
         </div>
 
         <div className={styles.field}>
-          <Select
+          <Radio
             label={labels.prevOther}
             name="prevOther"
-            options={['', 'true', 'false']}
+            options={['true', 'false', 'unknown']}
             onChange={formik.handleChange}
             value={formik.values.prevOther}
           />
