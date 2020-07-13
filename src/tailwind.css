@@ -11,9 +11,9 @@
 
 .multi-select {
   --rmsc-border: black !important;
-  --rmsc-spacing: 0.25rem !important;
-  --rmsc-border-radius: 0 !important;
-  --rmsc-height: 24px !important;
+  --rmsc-p: 0.25rem !important;
+  --rmsc-radius: 0 !important;
+  --rmsc-h: 24px !important;
   --rmsc-gray: #a0aec0 !important;
 }
 
