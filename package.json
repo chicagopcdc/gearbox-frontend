@@ -8,17 +8,17 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.47",
-    "@types/react": "^16.9.36",
+    "@types/node": "^12.12.50",
+    "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "formik": "^2.1.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-multi-select-component": "^2.0.10",
+    "react-multi-select-component": "^2.0.14",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   },
   "scripts": {
     "prestart": "postcss src/tailwind.css -o src/index.css",
@@ -51,9 +51,9 @@
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-links": "^5.3.19",
     "@storybook/addons": "^5.3.19",
-    "@storybook/preset-create-react-app": "^3.0.1",
+    "@storybook/preset-create-react-app": "^3.1.4",
     "@storybook/react": "^5.3.19",
-    "autoprefixer": "^9.8.0",
+    "autoprefixer": "^9.8.5",
     "postcss-cli": "^7.1.1",
     "prettier": "^2.0.5",
     "tailwindcss": "^1.4.6"
