@@ -8,6 +8,9 @@ module.exports = {
       width: {
         'screen-lg': '1024px',
       },
+      maxWidth: {
+        '3/5': '60%',
+      },
     },
   },
   variants: {},

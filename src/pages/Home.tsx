@@ -34,7 +34,9 @@ const Home = ({
 
     {isAuthenticated ? (
       <div className="mt-16 md:flex">
-        <MatchForm values={matchFormValues} onChange={onMatchChange} />
+        <div className="md:max-w-3/5">
+          <MatchForm values={matchFormValues} onChange={onMatchChange} />
+        </div>
         <OpenTrials
           matchIds={matchResult.ids}
           trials={trials}
