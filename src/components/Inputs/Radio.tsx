@@ -53,7 +53,7 @@ const Radio = ({
               name={name}
               type="radio"
               value={option}
-              checked={option === radioValue}
+              checked={option === value}
               onChange={disabled ? undefined : () => setRadioValue(option)}
             />
             <Label className={styles.label} text={option} htmlFor={option} />
