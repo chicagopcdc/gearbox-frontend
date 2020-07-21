@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
 import Box from './Box'
 import Button from './Inputs/Button'
@@ -21,9 +21,13 @@ type MatchFormProps = {
 }
 
 const MatchForm = ({ values, onChange }: MatchFormProps) => {
+  const [triggerReset, setTriggerReset] = useState(false)
   const formik = useFormik({
     initialValues: { ...values },
     onSubmit() {},
+    onReset() {
+      setTriggerReset(true)
+    },
   })
 
   useEffect(() => {
@@ -31,22 +35,27 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
     if (onChange) {
       if (timeout !== undefined) clearTimeout(timeout)
 
-      timeout = setTimeout(() => {
-        const values = { ...formik.values }
-        if (!values.drugAllergiesFlag) values.drugAllergies = []
-        if (!values.prevChemoFlag) values.prevChemo = []
-        if (!values.prevRadFlag) values.prevRad = []
-        onChange(values)
-      }, 1000)
+      if (triggerReset) {
+        formik.setValues(initialMatchFormValues)
+        setTriggerReset(false)
+      } else {
+        timeout = setTimeout(() => {
+          const values = { ...formik.values }
+          if (!values.drugAllergiesFlag) values.drugAllergies = []
+          if (!values.prevChemoFlag) values.prevChemo = []
+          if (!values.prevRadFlag) values.prevRad = []
+          onChange(values)
+        }, 1000)
+      }
     }
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
-  }, [onChange, formik.values])
+  }, [onChange, formik, triggerReset])
 
   return (
     <Box name="Patient Information" innerClassName="px-8">
-      <form>
+      <form onReset={formik.handleReset}>
         <div className={styles.field}>
           <TextField
             label={labels.age}
@@ -278,12 +287,7 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
         </div>
 
         <div className="flex flex-wrap justify-center mt-8">
-          <Button
-            type="reset"
-            onClick={() => formik.setValues(initialMatchFormValues)}
-          >
-            Reset
-          </Button>
+          <Button type="reset">Reset</Button>
         </div>
       </form>
     </Box>
