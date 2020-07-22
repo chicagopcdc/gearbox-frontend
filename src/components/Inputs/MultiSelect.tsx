@@ -32,6 +32,13 @@ const MultiSelect = ({
   )
 
   useEffect(() => {
+    const reshaped = reshapeToMulti(values || [])
+    if (JSON.stringify(reshaped) !== JSON.stringify(multiSelected))
+      setMultiSelected(reshaped)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values])
+
+  useEffect(() => {
     if (onChange && name) {
       onChange({
         target: {
