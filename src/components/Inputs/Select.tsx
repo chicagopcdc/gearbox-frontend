@@ -22,6 +22,7 @@ const Select = ({
   name,
   options,
   placeholder,
+  value = '',
   ...attr
 }: SelectProps) => (
   <>
@@ -33,6 +34,7 @@ const Select = ({
       className={styles.input}
       id={name}
       name={name}
+      value={value}
       style={{
         minWidth: '200px',
       }}
