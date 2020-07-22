@@ -26,6 +26,7 @@ const TextField = ({
   label = '',
   name = '',
   type = 'text',
+  value = '',
   ...attrs
 }: TextFieldProps) => {
   return (
@@ -36,6 +37,7 @@ const TextField = ({
         className={styles.input}
         id={name}
         name={name}
+        value={value}
         type={type}
       />
     </>
