@@ -27,6 +27,12 @@ const Radio = ({
   ...attrs
 }: RadioProps) => {
   const [radioValue, setRadioValue] = useState(value || undefined)
+
+  useEffect(() => {
+    if (value !== radioValue) setRadioValue(value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value])
+
   useEffect(() => {
     if (onChange && name) {
       onChange({
