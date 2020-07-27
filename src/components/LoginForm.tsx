@@ -4,7 +4,7 @@ import Button from './Inputs/Button'
 import TextField from './Inputs/TextField'
 
 const styles = {
-  field: 'my-4 mx-8 text-center',
+  field: 'my-4 mx-8 sm:ml-0 sm:mr-12 sm:text-right',
 }
 
 type LoginFormProps = {
