@@ -1,10 +1,12 @@
-import React, { useState, useEffect, Fragment } from 'react'
+import React, { useState, useEffect } from 'react'
 import Label from './Label'
 
 const styles = {
-  labelGroup: 'mr-2',
-  label: 'mx-2',
-  input: 'form-radio border border-solid border-black p-1 ml-2',
+  container: 'sm:flex sm:items-center',
+  label: 'sm:w-1/2 mr-4',
+  options: 'sm:w-1/2 flex flex-wrap justify-between',
+  optionLabel: 'mx-2',
+  optionInput: 'form-radio border border-solid border-black p-1',
 }
 
 type RadioProps = {
@@ -45,27 +47,32 @@ const Radio = ({
   }, [name, onChange, radioValue])
 
   return (
-    <>
-      {label && (
-        <Label className={styles.labelGroup} text={label} htmlFor={name} />
+    <div className={styles.container}>
+      {label && <Label className={styles.label} text={label} htmlFor={name} />}
+      {options && (
+        <div className={styles.options}>
+          {options.map((option) => (
+            <div key={option}>
+              <input
+                {...attrs}
+                className={styles.optionInput}
+                id={option}
+                name={name}
+                type="radio"
+                value={option}
+                checked={option === radioValue}
+                onChange={disabled ? undefined : () => setRadioValue(option)}
+              />
+              <Label
+                className={styles.optionLabel}
+                text={option}
+                htmlFor={option}
+              />
+            </div>
+          ))}
+        </div>
       )}
-      {options &&
-        options.map((option) => (
-          <Fragment key={option}>
-            <input
-              {...attrs}
-              className={styles.input}
-              id={option}
-              name={name}
-              type="radio"
-              value={option}
-              checked={option === radioValue}
-              onChange={disabled ? undefined : () => setRadioValue(option)}
-            />
-            <Label className={styles.label} text={option} htmlFor={option} />
-          </Fragment>
-        ))}
-    </>
+    </div>
   )
 }
 
