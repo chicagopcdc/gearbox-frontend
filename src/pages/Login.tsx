@@ -7,7 +7,11 @@ import LoginForm from '../components/LoginForm'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
 
-const Login = ({ authenticate }: { authenticate(cb?: () => void): void }) => {
+const Login = ({
+  authenticate,
+}: {
+  authenticate(username: string, cb?: () => void): void
+}) => {
   const history = useHistory()
 
   const handleLogin = (values: {
@@ -18,7 +22,7 @@ const Login = ({ authenticate }: { authenticate(cb?: () => void): void }) => {
       alert(JSON.stringify(values, null, 2))
     }
 
-    authenticate(() => history.replace('/'))
+    authenticate(values.username, () => history.replace('/'))
   }
 
   return (

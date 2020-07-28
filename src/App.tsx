@@ -27,19 +27,22 @@ const styles = {
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 const useFakeAuth = (): [
   boolean,
-  (cb?: () => void) => void,
+  string,
+  (username: string, cb?: () => void) => void,
   (cb?: () => void) => void
 ] => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const authenticate = (cb?: () => void) => {
+  const [username, setUsername] = useState('')
+  const authenticate = (username: string, cb?: () => void) => {
     setIsAuthenticated(true)
+    setUsername(username)
     if (cb) setTimeout(cb, 100) // fake async
   }
   const signout = (cb?: () => void) => {
     setIsAuthenticated(false)
     if (cb) setTimeout(cb, 100)
   }
-  return [isAuthenticated, authenticate, signout]
+  return [isAuthenticated, username, authenticate, signout]
 }
 
 const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
@@ -55,7 +58,7 @@ const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
     .map(({ id }) => id)
 
 function App() {
-  const [isAuthenticated, authenticate, signout] = useFakeAuth()
+  const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
   const [matchFormValues, setMatchFormValues] = useState({
     ...initialMatchFormValues,
