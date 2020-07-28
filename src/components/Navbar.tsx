@@ -20,12 +20,22 @@ const navItems = [
   { name: 'About GEARBOx', path: '/about' },
 ]
 
-const Navbar = ({ isAuthenticated, signout }: any) => {
+type NavbarProps = {
+  isAuthenticated: boolean
+  signout: (cb?: () => void) => void
+}
+
+const Navbar = ({ isAuthenticated, signout }: NavbarProps) => {
   return (
     <>
       <div className={styles.authbar}>
         {isAuthenticated ? (
-          <Button small onClick={signout}>
+          <Button
+            small
+            onClick={() => {
+              signout()
+            }}
+          >
             Logout
           </Button>
         ) : (

@@ -27,17 +27,17 @@ const styles = {
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 const useFakeAuth = (): [
   boolean,
-  (cb: () => void) => void,
-  (cb: () => void) => void
+  (cb?: () => void) => void,
+  (cb?: () => void) => void
 ] => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const authenticate = (cb: () => void) => {
+  const authenticate = (cb?: () => void) => {
     setIsAuthenticated(true)
-    setTimeout(cb, 100) // fake async
+    if (cb) setTimeout(cb, 100) // fake async
   }
-  const signout = (cb: () => void) => {
+  const signout = (cb?: () => void) => {
     setIsAuthenticated(false)
-    setTimeout(cb, 100)
+    if (cb) setTimeout(cb, 100)
   }
   return [isAuthenticated, authenticate, signout]
 }

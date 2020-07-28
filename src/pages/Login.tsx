@@ -7,7 +7,7 @@ import LoginForm from '../components/LoginForm'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
 
-const Login = ({ authenticate }: { authenticate(cb: () => void): void }) => {
+const Login = ({ authenticate }: { authenticate(cb?: () => void): void }) => {
   const history = useHistory()
 
   const handleLogin = (values: {
