@@ -6,8 +6,9 @@ import gearboxLogo from '../assets/gearbox-logo.png'
 const styles = {
   navbar:
     'md:flex md:flex-wrap md:items-center md:justify-between border-b-2 border-solid border-black mx-4 px-4 mb-4',
-  navbarLogo: 'flex justify-center md:justify-start md:flex-1 xl:flex-2',
-  navbarItems: 'text-center md:flex-1 flex items-center justify-between',
+  navbarLogo: 'flex justify-center md:justify-start md:flex-1',
+  navbarItems:
+    'text-center flex items-center justify-between md:flex-1 md:justify-end',
   navbarItem: 'list-none hover:text-red-500 p-4',
 }
 
