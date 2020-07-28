@@ -24,17 +24,22 @@ const styles = {
   footer: 'flex-shrink-0',
 }
 
-// fakeAuth copied from https://reacttraining.com/react-router/web/example/auth-workflow
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb: () => void) {
-    fakeAuth.isAuthenticated = true
+// useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
+const useFakeAuth = (): [
+  boolean,
+  (cb: () => void) => void,
+  (cb: () => void) => void
+] => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const authenticate = (cb: () => void) => {
+    setIsAuthenticated(true)
     setTimeout(cb, 100) // fake async
-  },
-  signout(cb: () => void) {
-    fakeAuth.isAuthenticated = false
+  }
+  const signout = (cb: () => void) => {
+    setIsAuthenticated(false)
     setTimeout(cb, 100)
-  },
+  }
+  return [isAuthenticated, authenticate, signout]
 }
 
 const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
@@ -50,6 +55,7 @@ const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
     .map(({ id }) => id)
 
 function App() {
+  const [isAuthenticated, authenticate] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
   const [matchFormValues, setMatchFormValues] = useState({
     ...initialMatchFormValues,
@@ -90,13 +96,13 @@ function App() {
           <MyRoute
             path="/"
             exact
-            isAuthenticated={fakeAuth.isAuthenticated}
+            isAuthenticated={isAuthenticated}
             cb={() => {
               setIsLogin(false)
             }}
           >
             <Home
-              isAuthenticated={fakeAuth.isAuthenticated}
+              isAuthenticated={isAuthenticated}
               onMatchChange={handleMatchChange}
               matchResult={matchResult}
               matchFormValues={matchFormValues}
@@ -106,10 +112,10 @@ function App() {
 
           <MyRoute
             path="/login"
-            isAuthenticated={fakeAuth.isAuthenticated}
+            isAuthenticated={isAuthenticated}
             cb={() => setIsLogin(true)}
           >
-            <Login authenticate={fakeAuth.authenticate} />
+            <Login authenticate={authenticate} />
           </MyRoute>
 
           <Route path="/guide">
