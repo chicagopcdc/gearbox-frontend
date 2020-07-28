@@ -94,7 +94,11 @@ function App() {
     <Router>
       <header>
         {!isLogin && (
-          <Navbar isAuthenticated={isAuthenticated} signout={signout} />
+          <Navbar
+            isAuthenticated={isAuthenticated}
+            username={username}
+            signout={signout}
+          />
         )}
       </header>
 

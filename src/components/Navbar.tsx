@@ -22,22 +22,30 @@ const navItems = [
 
 type NavbarProps = {
   isAuthenticated: boolean
+  username: string
   signout: (cb?: () => void) => void
 }
 
-const Navbar = ({ isAuthenticated, signout }: NavbarProps) => {
+const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => {
   return (
     <>
       <div className={styles.authbar}>
         {isAuthenticated ? (
-          <Button
-            small
-            onClick={() => {
-              signout()
-            }}
-          >
-            Logout
-          </Button>
+          <>
+            {username !== '' && (
+              <div className="flex items-center text-sm pr-4">
+                Hello,&nbsp;<span className="font-bold">{username}</span>
+              </div>
+            )}
+            <Button
+              small
+              onClick={() => {
+                signout()
+              }}
+            >
+              Logout
+            </Button>
+          </>
         ) : (
           <Link to="/login">
             <Button small>Login</Button>
