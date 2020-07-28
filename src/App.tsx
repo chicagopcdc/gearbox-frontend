@@ -55,7 +55,7 @@ const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
     .map(({ id }) => id)
 
 function App() {
-  const [isAuthenticated, authenticate] = useFakeAuth()
+  const [isAuthenticated, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
   const [matchFormValues, setMatchFormValues] = useState({
     ...initialMatchFormValues,
@@ -89,7 +89,11 @@ function App() {
 
   return (
     <Router>
-      <header>{!isLogin && <Navbar />}</header>
+      <header>
+        {!isLogin && (
+          <Navbar isAuthenticated={isAuthenticated} signout={signout} />
+        )}
+      </header>
 
       <main className={styles.main}>
         <Switch>
