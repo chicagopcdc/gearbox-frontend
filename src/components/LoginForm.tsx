@@ -2,6 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik'
 import Button from './Inputs/Button'
 import TextField from './Inputs/TextField'
+import GoogleLoginButton from './GoogleLoginButton'
 
 const styles = {
   field: 'my-4 mx-8 sm:ml-0 sm:mr-12 sm:text-right',
@@ -20,33 +21,43 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
     onSubmit: onLogin,
   })
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className={styles.field}>
-        <TextField
-          label="Username"
-          name="username"
-          autoFocus
-          required
-          onChange={formik.handleChange}
-          value={formik.values.username}
-        />
+    <div className="flex flex-col justify-center text-center">
+      <div className="my-4">
+        <GoogleLoginButton />
       </div>
 
-      <div className={styles.field}>
-        <TextField
-          label="Password"
-          name="password"
-          type="password"
-          required
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
+      <div className="flex items-center my-4">
+        <hr className="flex-1 border-gray-500 mx-4" />
+        <span className="text-sm uppercase">or</span>
+        <hr className="flex-1 border-gray-500 mx-4" />
       </div>
 
-      <div className="text-center">
+      <form onSubmit={formik.handleSubmit}>
+        <div className={styles.field}>
+          <TextField
+            label="Username"
+            name="username"
+            autoFocus
+            required
+            onChange={formik.handleChange}
+            value={formik.values.username}
+          />
+        </div>
+
+        <div className={styles.field}>
+          <TextField
+            label="Password"
+            name="password"
+            type="password"
+            required
+            onChange={formik.handleChange}
+            value={formik.values.password}
+          />
+        </div>
+
         <Button type="submit">Submit</Button>
-      </div>
-    </form>
+      </form>
+    </div>
   )
 }
 
