@@ -9,7 +9,7 @@ const styles = {
 }
 
 type LoginFormProps = {
-  onLogin: (values: { username: string; password: string }) => void
+  onLogin: (values: { username: string; password?: string }) => void
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
@@ -23,7 +23,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
   return (
     <div className="flex flex-col justify-center text-center">
       <div className="my-4">
-        <GoogleLoginButton />
+        <GoogleLoginButton onLogin={onLogin} />
       </div>
 
       <div className="flex items-center my-4">
