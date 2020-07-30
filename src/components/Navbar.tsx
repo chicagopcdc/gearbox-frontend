@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { useGoogleLogout } from 'react-google-login'
 import Button from './Inputs/Button'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
@@ -27,6 +28,10 @@ type NavbarProps = {
 }
 
 const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => {
+  const { signOut: googleSignOut } = useGoogleLogout({
+    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID as string,
+  })
+
   return (
     <>
       <div className={styles.authbar}>
@@ -40,7 +45,8 @@ const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => {
             <Button
               small
               onClick={() => {
-                signout()
+                const isGoogleLogin = username.includes('@gmail.com')
+                signout(isGoogleLogin ? googleSignOut : undefined)
               }}
             >
               Logout

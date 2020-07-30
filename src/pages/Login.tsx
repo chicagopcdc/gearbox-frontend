@@ -16,7 +16,7 @@ const Login = ({
 
   const handleLogin = (values: {
     username: string
-    password: string
+    password?: string
   }): void => {
     if (process.env.NODE_ENV === 'development') {
       alert(JSON.stringify(values, null, 2))
