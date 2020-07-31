@@ -7,7 +7,7 @@ type MultiSelectProps = {
   options: string[]
   disabled?: boolean
   placeholder?: string
-  values?: string[]
+  value?: string[]
   onChange?(event: any): void
 }
 
@@ -22,21 +22,21 @@ const MultiSelect = ({
   name,
   options,
   placeholder,
-  values,
+  value,
   onChange,
   ...attrs
 }: MultiSelectProps) => {
   const multiOptions = reshapeToMulti(options)
   const [multiSelected, setMultiSelected] = useState(
-    reshapeToMulti(values || [])
+    reshapeToMulti(value || [])
   )
 
   useEffect(() => {
-    const reshaped = reshapeToMulti(values || [])
+    const reshaped = reshapeToMulti(value || [])
     if (JSON.stringify(reshaped) !== JSON.stringify(multiSelected))
       setMultiSelected(reshaped)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [values])
+  }, [value])
 
   useEffect(() => {
     if (onChange && name) {

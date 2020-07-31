@@ -27,7 +27,7 @@ export const preselected: React.FC = () => {
     <MultiSelect
       label="multiselect"
       options={options}
-      values={['foo']}
+      value={['foo']}
       placeholder="Disabled"
     />
   )

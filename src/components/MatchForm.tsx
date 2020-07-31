@@ -118,7 +118,7 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
             options={['foo', 'bar', 'baz']}
             placeholder="Specify all drug allergies"
             onChange={formik.handleChange}
-            values={formik.values.drugAllergies}
+            value={formik.values.drugAllergies}
           />
         </div>
 
@@ -144,7 +144,7 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
             options={['foo', 'bar', 'baz']}
             placeholder="Select all prior chemotherapy agents"
             onChange={formik.handleChange}
-            values={formik.values.prevChemo}
+            value={formik.values.prevChemo}
           />
         </div>
 
@@ -168,7 +168,7 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
             options={['foo', 'bar', 'baz']}
             placeholder="Select all prior radiation modalities"
             onChange={formik.handleChange}
-            values={formik.values.prevRad}
+            value={formik.values.prevRad}
           />
         </div>
 
@@ -282,7 +282,7 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
             options={biomarkers}
             placeholder="Select all biomarkers"
             onChange={formik.handleChange}
-            values={formik.values.biomarkers}
+            value={formik.values.biomarkers}
           />
         </div>
 
