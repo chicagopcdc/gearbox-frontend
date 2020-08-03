@@ -42,13 +42,15 @@ const Home = ({
         >
           <MatchForm values={matchFormValues} onChange={onMatchChange} />
         </Box>
-        <OpenTrials
-          matchIds={matchResult.ids}
-          trials={trials}
-          className={`md:flex-grow ${
+
+        <Box
+          name="Open Trials"
+          outerClassName={`md:flex-grow ${
             matchResult.isLoaded ? '' : 'bg-gray-200'
           }`}
-        />
+        >
+          <OpenTrials matchIds={matchResult.ids} trials={trials} />
+        </Box>
       </div>
     ) : (
       <div className="text-center my-8">
