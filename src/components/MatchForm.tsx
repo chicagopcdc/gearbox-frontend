@@ -57,23 +57,24 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
           <Fragment key={group.id}>
             {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
 
-            {matchFormConfig.fields.map((field) => {
-              if (field.groupId !== group.id) return undefined
+            {matchFormConfig.fields.map(
+              ({ defaultValue, showIf, groupId, ...fieldConfig }) => {
+                if (groupId !== group.id) return undefined
 
-              const { defaultValue, showIf, groupId, ...fieldConfig } = field
-              const hideField =
-                showIf && showIf.value !== formik.values[showIf.name]
+                const hideField =
+                  showIf && showIf.value !== formik.values[showIf.name]
 
-              return hideField ? undefined : (
-                <div style={{ margin: '1rem' }} key={fieldConfig.name}>
-                  <Field
-                    config={fieldConfig}
-                    value={formik.values[fieldConfig.name]}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-              )
-            })}
+                return hideField ? undefined : (
+                  <div style={{ margin: '1rem' }} key={fieldConfig.name}>
+                    <Field
+                      config={fieldConfig}
+                      value={formik.values[fieldConfig.name]}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                )
+              }
+            )}
           </Fragment>
         ))}
 
