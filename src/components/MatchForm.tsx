@@ -53,14 +53,14 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
   return (
     <Box name="Patient Information" innerClassName="px-8">
       <form onReset={formik.handleReset}>
-        {matchFormConfig.groups.map((g) => (
-          <Fragment key={g}>
-            {g && <h2 className={styles.groupName}>{g}</h2>}
+        {matchFormConfig.groups.map((group) => (
+          <Fragment key={group.id}>
+            {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
 
             {matchFormConfig.inputs.map((input) => {
-              if (input.group !== g) return undefined
+              if (input.groupId !== group.id) return undefined
 
-              const { defaultValue, showIf, group, ...fieldConfig } = input
+              const { defaultValue, showIf, groupId, ...fieldConfig } = input
               const hideField =
                 showIf && showIf.value !== formik.values[showIf.name]
 

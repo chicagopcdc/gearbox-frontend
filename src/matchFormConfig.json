@@ -1,15 +1,32 @@
 {
-  "groups": ["", "Prior treatment therapies", "Organ function", "Biomarkers"],
+  "groups": [
+    {
+      "id": 0,
+      "name": ""
+    },
+    {
+      "id": 1,
+      "name": "Prior treatment therapies"
+    },
+    {
+      "id": 2,
+      "name": "Organ function"
+    },
+    {
+      "id": 3,
+      "name": "Biomarkers"
+    }
+  ],
   "inputs": [
     {
-      "group": "",
+      "groupId": 0,
       "type": "number",
       "name": "age",
       "label": "Patient Age",
       "min": 0
     },
     {
-      "group": "",
+      "groupId": 0,
       "type": "select",
       "name": "initDiag",
       "label": "Initial Disease Diagnosis",
@@ -17,28 +34,28 @@
       "placeholder": "Select"
     },
     {
-      "group": "",
+      "groupId": 0,
       "type": "radio",
       "name": "cnsInvolvement",
       "label": "CNS Involvement",
       "options": ["true", "false", "unknown"]
     },
     {
+      "groupId": 0,
       "name": "aiDisease",
       "type": "radio",
-      "group": "",
       "label": "History of Autoimmune Disease",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "",
+      "groupId": 0,
       "type": "radio",
       "name": "drugAllergiesFlag",
       "label": "Drug Allergies",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "",
+      "groupId": 0,
       "type": "multiselect",
       "name": "drugAllergies",
       "options": ["foo", "bar", "baz"],
@@ -49,14 +66,14 @@
       }
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevChemoFlag",
       "label": "Previous chemotherapy",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "multiselect",
       "name": "prevChemo",
       "options": ["foo", "bar", "baz"],
@@ -67,14 +84,14 @@
       }
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevRadFlag",
       "label": "Previous radiation therapy",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "multiselect",
       "name": "prevRad",
       "options": ["foo", "bar", "baz"],
@@ -85,42 +102,42 @@
       }
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevAtra",
       "label": "All-trans retinoid acid (ATRA)",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevHydroxyurea",
       "label": "Hydroxyurea",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevSteroids",
       "label": "Corticosteriods",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevItCyt",
       "label": "IT cytarabin",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Prior treatment therapies",
+      "groupId": 1,
       "type": "radio",
       "name": "prevOther",
       "label": "Other antileukemic therapy",
       "options": ["true", "false", "unknown"]
     },
     {
-      "group": "Organ function",
+      "groupId": 2,
       "type": "number",
       "name": "lvEf",
       "label": "Left Ventricular Ejection Fraction (%)",
@@ -129,7 +146,7 @@
       "step": 0.1
     },
     {
-      "group": "Organ function",
+      "groupId": 2,
       "type": "number",
       "name": "secrumCr",
       "label": "Baseline serum creatinine (mg/dL)",
@@ -138,7 +155,7 @@
       "step": 0.1
     },
     {
-      "group": "Organ function",
+      "groupId": 2,
       "type": "number",
       "name": "astRecent",
       "label": "Most recent AST (U/L)",
@@ -146,7 +163,7 @@
       "max": 999
     },
     {
-      "group": "Organ function",
+      "groupId": 2,
       "type": "number",
       "name": "altRecent",
       "label": "Most recent ALT (U/L)",
@@ -154,7 +171,7 @@
       "max": 999
     },
     {
-      "group": "Biomarkers",
+      "groupId": 3,
       "type": "multiselect",
       "name": "biomarkers",
       "options": [

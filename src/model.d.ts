@@ -8,9 +8,12 @@ export type Trial = {
 }
 
 export type MatchFormConfig = {
-  groups: string[]
+  groups: {
+    id: number
+    name: string
+  }[]
   inputs: {
-    group: string
+    groupId: number
     type: string
     name: string
     label?: string
