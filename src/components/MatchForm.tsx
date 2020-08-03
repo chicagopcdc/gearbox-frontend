@@ -57,10 +57,10 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
           <Fragment key={group.id}>
             {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
 
-            {matchFormConfig.inputs.map((input) => {
-              if (input.groupId !== group.id) return undefined
+            {matchFormConfig.fields.map((field) => {
+              if (field.groupId !== group.id) return undefined
 
-              const { defaultValue, showIf, groupId, ...fieldConfig } = input
+              const { defaultValue, showIf, groupId, ...fieldConfig } = field
               const hideField =
                 showIf && showIf.value !== formik.values[showIf.name]
 

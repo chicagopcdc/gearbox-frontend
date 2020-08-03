@@ -12,7 +12,7 @@ export type MatchFormConfig = {
     id: number
     name: string
   }[]
-  inputs: {
+  fields: {
     groupId: number
     type: string
     name: string

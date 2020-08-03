@@ -3,7 +3,7 @@ import matchFormConfigJson from './matchFormConfig.json'
 
 export const matchFormConfig: MatchFormConfig = matchFormConfigJson
 
-export const initialMatchFormValues: MatchFormValues = matchFormConfig.inputs.reduce(
+export const initialMatchFormValues: MatchFormValues = matchFormConfig.fields.reduce(
   (acc, { name, type, defaultValue }) => ({
     ...acc,
     [name]: type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
