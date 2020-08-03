@@ -7,27 +7,21 @@ export type Trial = {
   condition?: { [key: string]: any }
 }
 
+export type MatchFormConfig = {
+  groups: string[]
+  inputs: {
+    group: string
+    type: string
+    name: string
+    label?: string
+    options?: string[]
+    defaultValue?: any
+    [key: string]: any
+  }[]
+}
+
 export type MatchFormValues = {
-  age?: number
-  initDiag?: string
-  cnsInvolvement?: string
-  aiDisease?: string
-  drugAllergiesFlag?: string
-  drugAllergies?: string[]
-  prevChemoFlag?: string
-  prevRadFlag?: string
-  prevAtra?: string
-  prevHydroxyurea?: string
-  prevSteroids?: string
-  prevItCyt?: string
-  prevOther?: string
-  lvEf?: number
-  secrumCr?: number
-  astRecent?: number
-  altRecent?: number
-  prevChemo?: string[]
-  prevRad?: string[]
-  biomarkers?: string[]
+  [key: string]: any
 }
 
 export type MatchResult = {
