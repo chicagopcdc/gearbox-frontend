@@ -7,6 +7,19 @@ export type Trial = {
   condition?: { [key: string]: any }
 }
 
+export type MatchFormConfig = {
+  groups: string[]
+  inputs: {
+    group: string
+    type: string
+    name: string
+    label?: string
+    options?: string[]
+    defaultValue?: any
+    [key: string]: any
+  }[]
+}
+
 export type MatchFormValues = {
   [key: string]: any
 }
