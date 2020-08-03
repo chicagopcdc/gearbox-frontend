@@ -13,6 +13,7 @@ export type MatchFormGroupConfig = {
 }
 
 export type MatchFormFieldConfig = {
+  id: number
   groupId: number
   type: string
   name: string

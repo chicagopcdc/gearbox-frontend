@@ -19,6 +19,7 @@
   ],
   "fields": [
     {
+      "id": 0,
       "groupId": 0,
       "type": "number",
       "name": "age",
@@ -26,6 +27,7 @@
       "min": 0
     },
     {
+      "id": 1,
       "groupId": 0,
       "type": "select",
       "name": "initDiag",
@@ -34,6 +36,7 @@
       "placeholder": "Select"
     },
     {
+      "id": 2,
       "groupId": 0,
       "type": "radio",
       "name": "cnsInvolvement",
@@ -41,6 +44,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 3,
       "groupId": 0,
       "name": "aiDisease",
       "type": "radio",
@@ -48,6 +52,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 4,
       "groupId": 0,
       "type": "radio",
       "name": "drugAllergiesFlag",
@@ -55,17 +60,19 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 5,
       "groupId": 0,
       "type": "multiselect",
       "name": "drugAllergies",
       "options": ["foo", "bar", "baz"],
       "placeholder": "Specify all drug allergies",
       "showIf": {
-        "name": "drugAllergiesFlag",
+        "id": 4,
         "value": "true"
       }
     },
     {
+      "id": 6,
       "groupId": 1,
       "type": "radio",
       "name": "prevChemoFlag",
@@ -73,17 +80,19 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 7,
       "groupId": 1,
       "type": "multiselect",
       "name": "prevChemo",
       "options": ["foo", "bar", "baz"],
       "placeholder": "Select all prior chemotherapy agents",
       "showIf": {
-        "name": "prevChemoFlag",
+        "id": 6,
         "value": "true"
       }
     },
     {
+      "id": 8,
       "groupId": 1,
       "type": "radio",
       "name": "prevRadFlag",
@@ -91,17 +100,19 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 9,
       "groupId": 1,
       "type": "multiselect",
       "name": "prevRad",
       "options": ["foo", "bar", "baz"],
       "placeholder": "Select all prior radiation modalities",
       "showIf": {
-        "name": "prevRadFlag",
+        "id": 8,
         "value": "true"
       }
     },
     {
+      "id": 10,
       "groupId": 1,
       "type": "radio",
       "name": "prevAtra",
@@ -109,6 +120,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 11,
       "groupId": 1,
       "type": "radio",
       "name": "prevHydroxyurea",
@@ -116,6 +128,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 12,
       "groupId": 1,
       "type": "radio",
       "name": "prevSteroids",
@@ -123,6 +136,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 13,
       "groupId": 1,
       "type": "radio",
       "name": "prevItCyt",
@@ -130,6 +144,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 14,
       "groupId": 1,
       "type": "radio",
       "name": "prevOther",
@@ -137,6 +152,7 @@
       "options": ["true", "false", "unknown"]
     },
     {
+      "id": 15,
       "groupId": 2,
       "type": "number",
       "name": "lvEf",
@@ -146,6 +162,7 @@
       "step": 0.1
     },
     {
+      "id": 16,
       "groupId": 2,
       "type": "number",
       "name": "secrumCr",
@@ -155,6 +172,7 @@
       "step": 0.1
     },
     {
+      "id": 17,
       "groupId": 2,
       "type": "number",
       "name": "astRecent",
@@ -163,6 +181,7 @@
       "max": 999
     },
     {
+      "id": 18,
       "groupId": 2,
       "type": "number",
       "name": "altRecent",
@@ -171,6 +190,7 @@
       "max": 999
     },
     {
+      "id": 19,
       "groupId": 3,
       "type": "multiselect",
       "name": "biomarkers",
