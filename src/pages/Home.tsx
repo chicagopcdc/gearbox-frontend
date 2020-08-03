@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import OpenTrials from '../components/OpenTrials'
@@ -34,9 +35,13 @@ const Home = ({
 
     {isAuthenticated ? (
       <div className="mt-16 md:flex">
-        <div className="md:max-w-3/5">
+        <Box
+          name="Patient Information"
+          outerClassName="md:max-w-3/5"
+          innerClassName="px-8"
+        >
           <MatchForm values={matchFormValues} onChange={onMatchChange} />
-        </div>
+        </Box>
         <OpenTrials
           matchIds={matchResult.ids}
           trials={trials}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useFormik } from 'formik'
-import Box from './Box'
 import Button from './Inputs/Button'
 
 import { initialMatchFormValues, matchFormConfig } from '../config'
@@ -63,42 +62,40 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
   }, [onChange, formik, triggerReset])
 
   return (
-    <Box name="Patient Information" innerClassName="px-8">
-      <form onReset={formik.handleReset}>
-        {matchFormConfig.groups.map((group) => (
-          <Fragment key={group.id}>
-            {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
+    <form onReset={formik.handleReset}>
+      {matchFormConfig.groups.map((group) => (
+        <Fragment key={group.id}>
+          {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
 
-            {matchFormConfig.fields.map(
-              ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
-                if (groupId !== group.id) return undefined
+          {matchFormConfig.fields.map(
+            ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
+              if (groupId !== group.id) return undefined
 
-                const showIfName =
-                  showIf && getShowIfName(matchFormConfig.fields, showIf.id)
-                const hideField =
-                  showIf &&
-                  showIfName &&
-                  showIf.value !== formik.values[showIfName]
+              const showIfName =
+                showIf && getShowIfName(matchFormConfig.fields, showIf.id)
+              const hideField =
+                showIf &&
+                showIfName &&
+                showIf.value !== formik.values[showIfName]
 
-                return hideField ? undefined : (
-                  <div style={{ margin: '1rem' }} key={fieldConfig.name}>
-                    <Field
-                      config={fieldConfig}
-                      value={formik.values[fieldConfig.name]}
-                      onChange={formik.handleChange}
-                    />
-                  </div>
-                )
-              }
-            )}
-          </Fragment>
-        ))}
+              return hideField ? undefined : (
+                <div style={{ margin: '1rem' }} key={fieldConfig.name}>
+                  <Field
+                    config={fieldConfig}
+                    value={formik.values[fieldConfig.name]}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+              )
+            }
+          )}
+        </Fragment>
+      ))}
 
-        <div className="flex flex-wrap justify-center mt-8">
-          <Button type="reset">Reset</Button>
-        </div>
-      </form>
-    </Box>
+      <div className="flex flex-wrap justify-center mt-8">
+        <Button type="reset">Reset</Button>
+      </div>
+    </form>
   )
 }
 
