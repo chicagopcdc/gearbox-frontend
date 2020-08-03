@@ -7,20 +7,24 @@ export type Trial = {
   condition?: { [key: string]: any }
 }
 
+export type MatchFormGroupConfig = {
+  id: number
+  name: string
+}
+
+export type MatchFormFieldConfig = {
+  groupId: number
+  type: string
+  name: string
+  label?: string
+  options?: string[]
+  defaultValue?: any
+  [key: string]: any
+}
+
 export type MatchFormConfig = {
-  groups: {
-    id: number
-    name: string
-  }[]
-  fields: {
-    groupId: number
-    type: string
-    name: string
-    label?: string
-    options?: string[]
-    defaultValue?: any
-    [key: string]: any
-  }[]
+  groups: MatchFormGroupConfig[]
+  fields: MatchFormFieldConfig[]
 }
 
 export type MatchFormValues = {
