@@ -1,0 +1,178 @@
+{
+  "groups": ["", "Prior treatment therapies", "Organ function", "Biomarkers"],
+  "inputs": [
+    {
+      "group": "",
+      "type": "number",
+      "name": "age",
+      "label": "Patient Age",
+      "min": 0
+    },
+    {
+      "group": "",
+      "type": "select",
+      "name": "initDiag",
+      "label": "Initial Disease Diagnosis",
+      "options": ["foo", "bar", "baz"],
+      "placeholder": "Select"
+    },
+    {
+      "group": "",
+      "type": "radio",
+      "name": "cnsInvolvement",
+      "label": "CNS Involvement",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "name": "aiDisease",
+      "type": "radio",
+      "group": "",
+      "label": "History of Autoimmune Disease",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "",
+      "type": "radio",
+      "name": "drugAllergiesFlag",
+      "label": "Drug Allergies",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "",
+      "type": "multiselect",
+      "name": "drugAllergies",
+      "options": ["foo", "bar", "baz"],
+      "placeholder": "Specify all drug allergies",
+      "showIf": {
+        "name": "drugAllergiesFlag",
+        "value": "true"
+      }
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevChemoFlag",
+      "label": "Previous chemotherapy",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "multiselect",
+      "name": "prevChemo",
+      "options": ["foo", "bar", "baz"],
+      "placeholder": "Select all prior chemotherapy agents",
+      "showIf": {
+        "name": "prevChemoFlag",
+        "value": "true"
+      }
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevRadFlag",
+      "label": "Previous radiation therapy",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "multiselect",
+      "name": "prevRad",
+      "options": ["foo", "bar", "baz"],
+      "placeholder": "Select all prior radiation modalities",
+      "showIf": {
+        "name": "prevRadFlag",
+        "value": "true"
+      }
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevAtra",
+      "label": "All-trans retinoid acid (ATRA)",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevHydroxyurea",
+      "label": "Hydroxyurea",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevSteroids",
+      "label": "Corticosteriods",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevItCyt",
+      "label": "IT cytarabin",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Prior treatment therapies",
+      "type": "radio",
+      "name": "prevOther",
+      "label": "Other antileukemic therapy",
+      "options": ["true", "false", "unknown"]
+    },
+    {
+      "group": "Organ function",
+      "type": "number",
+      "name": "lvEf",
+      "label": "Left Ventricular Ejection Fraction (%)",
+      "min": 0,
+      "max": 100,
+      "step": 0.1
+    },
+    {
+      "group": "Organ function",
+      "type": "number",
+      "name": "secrumCr",
+      "label": "Baseline serum creatinine (mg/dL)",
+      "min": 0,
+      "max": 999,
+      "step": 0.1
+    },
+    {
+      "group": "Organ function",
+      "type": "number",
+      "name": "astRecent",
+      "label": "Most recent AST (U/L)",
+      "min": 0,
+      "max": 999
+    },
+    {
+      "group": "Organ function",
+      "type": "number",
+      "name": "altRecent",
+      "label": "Most recent ALT (U/L)",
+      "min": 0,
+      "max": 999
+    },
+    {
+      "group": "Biomarkers",
+      "type": "multiselect",
+      "name": "biomarkers",
+      "options": [
+        "MECOM(3q26.2)",
+        "t(6;9)(p23;q34.1)(DEK-NUP214)",
+        "Monosomy 7",
+        "Monosomy 5/5q-[ERG1(5q31) deleted]",
+        "KMT2A(MLL)(11q23.3)",
+        "NUP98(11p15.5)",
+        "12p abnormalities (ETV6)",
+        "ETS FUS-ERG Fusion",
+        "FLT3/ITD+ with alleic ratio > 0.1%",
+        "CBFA2T3-GLIS2",
+        "RAM phenotype",
+        "KAT6A(8p11.21) Fusion",
+        "Non-KMT2A MLLT10 Fusions"
+      ],
+      "placeholder": "Select all biomarkers"
+    }
+  ]
+}
