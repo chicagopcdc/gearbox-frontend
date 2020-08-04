@@ -52,7 +52,7 @@ const MatchForm = ({
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
-  }, [onChange, formik, triggerReset])
+  }, [initialValues, onChange, formik, triggerReset])
 
   return (
     <form onReset={formik.handleReset}>
