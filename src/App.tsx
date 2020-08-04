@@ -72,8 +72,6 @@ function App() {
   const handleMatchFormChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
-
-      // reset match result
       setIsMatchUpdating(true)
       setTimeout(() => {
         setMatchIds(getMatchIds(studies, values))
