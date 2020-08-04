@@ -68,7 +68,7 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
                   }
 
               return hideField ? undefined : (
-                <div style={{ margin: '1rem' }} key={fieldConfig.name}>
+                <div className="m-4" key={fieldConfig.name}>
                   <Field
                     config={fieldConfig}
                     value={formik.values[fieldConfig.name]}

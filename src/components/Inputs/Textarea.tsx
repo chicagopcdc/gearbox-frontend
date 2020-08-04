@@ -4,7 +4,7 @@ import Label from './Label'
 const styles = {
   label: 'mr-4',
   input:
-    'form-textarea rounded-none border border-solid border-black p-1 block w-full',
+    'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none',
 }
 
 type TextareaProps = {
@@ -27,10 +27,7 @@ const Textarea = ({ label = '', name = '', ...attrs }: TextareaProps) => {
         className={styles.input}
         id={name}
         name={name}
-        style={{
-          minHeight: '100px',
-          resize: 'none',
-        }}
+        style={{ minHeight: '100px' }}
       />
     </>
   )
