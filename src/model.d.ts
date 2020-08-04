@@ -1,5 +1,5 @@
 export type Trial = {
-  id: string
+  id: number
   title: string
   group: string
   location: string
@@ -36,5 +36,5 @@ export type MatchFormValues = {
 export type MatchResult = {
   isLoaded: boolean
   isError: boolean
-  ids: string[]
+  ids: number[]
 }

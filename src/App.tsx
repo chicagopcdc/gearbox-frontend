@@ -45,7 +45,7 @@ const useFakeAuth = (): [
   return [isAuthenticated, username, authenticate, signout]
 }
 
-const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
+const getMatchIds = (trials: Trial[], values: MatchFormValues): number[] =>
   trials
     .filter(({ condition }) =>
       condition

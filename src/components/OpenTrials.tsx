@@ -3,7 +3,7 @@ import TrialCard from './TrialCard'
 import { Trial } from '../model'
 
 type OpenTrialsProps = {
-  matchIds: string[]
+  matchIds: number[]
   trials: Trial[]
 }
 
