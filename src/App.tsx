@@ -16,8 +16,13 @@ import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-import { dummyStudies, matchFormConfig, matchFormInitialValues } from './config'
-import { MatchFormValues, Study } from './model'
+import {
+  dummyStudies,
+  matchFormConfig,
+  matchFormInitialValues,
+  dummyEligibilityCriteria,
+} from './config'
+import { MatchFormValues, EligibilityCriterion } from './model'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -45,17 +50,26 @@ const useFakeAuth = (): [
   return [isAuthenticated, username, authenticate, signout]
 }
 
-const getMatchIds = (studies: Study[], values: MatchFormValues): number[] =>
-  studies
-    .filter(({ condition }) =>
-      condition
-        ? Object.keys(condition).every(
-            (k) =>
-              values.hasOwnProperty(k) && (values as any)[k] === condition[k]
-          )
-        : true
-    )
-    .map(({ id }) => id)
+const getMatchIds = (
+  criteria: EligibilityCriterion[],
+  fieldIdtoName: { [key: number]: string },
+  values: MatchFormValues
+): number[] => {
+  const matchStatusById = criteria
+    .flatMap(({ fieldId, fieldValue, studyIds }) => {
+      const isMatch = fieldValue === values[fieldIdtoName[fieldId]]
+      return studyIds.map((id) => ({ id, isMatch }))
+    })
+    .reduce((acc, { id, isMatch }) => {
+      const newIsMatch = acc.hasOwnProperty(id) ? acc[id] && isMatch : isMatch
+      return { ...acc, [id]: newIsMatch }
+    }, {} as { [id: number]: boolean })
+
+  return Object.keys(matchStatusById).reduce(
+    (acc, id) => (matchStatusById[Number(id)] ? [...acc, Number(id)] : acc),
+    [] as number[]
+  )
+}
 
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
@@ -63,10 +77,15 @@ function App() {
   const [matchFormValues, setMatchFormValues] = useState({
     ...matchFormInitialValues,
   })
+  const criteria = dummyEligibilityCriteria
   const studies = dummyStudies
+  const fieldIdtoName = matchFormConfig.fields.reduce(
+    (acc, { id, name }) => ({ ...acc, [id]: name }),
+    {} as { [key: number]: string }
+  )
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
   const [matchIds, setMatchIds] = useState(
-    getMatchIds(studies, matchFormInitialValues)
+    getMatchIds(criteria, fieldIdtoName, matchFormInitialValues)
   )
 
   const handleMatchFormChange = (values: MatchFormValues) => {
@@ -74,7 +93,7 @@ function App() {
       setMatchFormValues({ ...values })
       setIsMatchUpdating(true)
       setTimeout(() => {
-        setMatchIds(getMatchIds(studies, values))
+        setMatchIds(getMatchIds(criteria, fieldIdtoName, values))
         setIsMatchUpdating(false)
       }, 500)
     }

@@ -4,7 +4,13 @@ export type Study = {
   group: string
   location: string
   registerLinks: { name: string; url: string }[]
-  condition?: { [key: string]: any }
+}
+
+export type EligibilityCriterion = {
+  id: number
+  fieldId: number
+  fieldValue: any
+  studyIds: number[]
 }
 
 export type MatchFormGroupConfig = {

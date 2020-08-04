@@ -1,4 +1,9 @@
-import { MatchFormConfig, MatchFormValues, Study } from './model'
+import {
+  EligibilityCriterion,
+  MatchFormConfig,
+  MatchFormValues,
+  Study,
+} from './model'
 import matchFormConfigJson from './matchFormConfig.json'
 
 export const matchFormConfig: MatchFormConfig = matchFormConfigJson
@@ -10,6 +15,45 @@ export const matchFormInitialValues: MatchFormValues = matchFormConfig.fields.re
   }),
   {}
 )
+
+export const dummyEligibilityCriteria: EligibilityCriterion[] = [
+  {
+    id: 0,
+    fieldId: 3,
+    fieldValue: 'true',
+    studyIds: [0, 4],
+  },
+  {
+    id: 1,
+    fieldId: 4,
+    fieldValue: 'false',
+    studyIds: [1],
+  },
+  {
+    id: 2,
+    fieldId: 4,
+    fieldValue: 'true',
+    studyIds: [4],
+  },
+  {
+    id: 3,
+    fieldId: 6,
+    fieldValue: 'false',
+    studyIds: [1],
+  },
+  {
+    id: 3,
+    fieldId: 6,
+    fieldValue: 'true',
+    studyIds: [2],
+  },
+  {
+    id: 4,
+    fieldId: 8,
+    fieldValue: 'true',
+    studyIds: [3],
+  },
+]
 
 export const dummyStudies: Study[] = [
   {
@@ -23,9 +67,6 @@ export const dummyStudies: Study[] = [
         url: 'about:blank',
       },
     ],
-    condition: {
-      aiDisease: 'true',
-    },
   },
   {
     id: 1,
@@ -42,10 +83,6 @@ export const dummyStudies: Study[] = [
         url: 'about:blank',
       },
     ],
-    condition: {
-      drugAllergiesFlag: 'false',
-      prevChemoFlag: 'false',
-    },
   },
   {
     id: 2,
@@ -58,9 +95,6 @@ export const dummyStudies: Study[] = [
         url: 'about:blank',
       },
     ],
-    condition: {
-      prevChemoFlag: 'true',
-    },
   },
   {
     id: 3,
@@ -81,9 +115,6 @@ export const dummyStudies: Study[] = [
         url: 'about:blank',
       },
     ],
-    condition: {
-      prevRadFlag: 'true',
-    },
   },
   {
     id: 4,
@@ -96,9 +127,5 @@ export const dummyStudies: Study[] = [
         url: 'about:blank',
       },
     ],
-    condition: {
-      aiDisease: 'true',
-      drugAllergiesFlag: 'true',
-    },
   },
 ]
