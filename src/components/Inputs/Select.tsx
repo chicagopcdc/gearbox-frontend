@@ -37,9 +37,7 @@ const Select = ({
       id={name}
       name={name}
       value={value}
-      style={{
-        minWidth: '200px',
-      }}
+      style={{ minWidth: '200px' }}
     >
       {placeholder && (
         <option value="" hidden>
