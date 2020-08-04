@@ -12,23 +12,22 @@ const paragraphs = [
 ]
 
 type HomeProps = {
-  initialMatchFormValues: MatchFormValues
   isAuthenticated: boolean
-  matchFormConfig: MatchFormConfig
-  matchFormValues: MatchFormValues
+  matchFormProps: {
+    config: MatchFormConfig
+    initialValues: MatchFormValues
+    values: MatchFormValues
+    onChange(values: MatchFormValues): void
+  }
   matchResult: MatchResult
   trials: Trial[]
-  onMatchChange(values: MatchFormValues): void
 }
 
 const Home = ({
-  initialMatchFormValues,
   isAuthenticated,
-  matchFormConfig,
-  matchFormValues,
+  matchFormProps,
   matchResult,
   trials,
-  onMatchChange,
 }: HomeProps) => (
   <>
     {paragraphs.map((p, i) => (
@@ -44,12 +43,7 @@ const Home = ({
           outerClassName="md:max-w-3/5"
           innerClassName="px-8"
         >
-          <MatchForm
-            initialValues={initialMatchFormValues}
-            config={matchFormConfig}
-            values={matchFormValues}
-            onChange={onMatchChange}
-          />
+          <MatchForm {...matchFormProps} />
         </Box>
 
         <Box

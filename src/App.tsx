@@ -113,13 +113,15 @@ function App() {
             }}
           >
             <Home
-              initialMatchFormValues={initialMatchFormValues}
               isAuthenticated={isAuthenticated}
-              matchFormConfig={matchFormConfig}
-              matchFormValues={matchFormValues}
+              matchFormProps={{
+                config: matchFormConfig,
+                initialValues: initialMatchFormValues,
+                values: matchFormValues,
+                onChange: handleMatchChange,
+              }}
               matchResult={matchResult}
               trials={trials}
-              onMatchChange={handleMatchChange}
             />
           </MyRoute>
 
