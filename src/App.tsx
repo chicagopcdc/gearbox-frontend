@@ -106,15 +106,17 @@ function App() {
           >
             <Home
               isAuthenticated={isAuthenticated}
+              isMatchUpdating={isMatchUpdating}
               matchFormProps={{
                 config: matchFormConfig,
                 initialValues: matchFormInitialValues,
                 values: matchFormValues,
                 onChange: handleMatchFormChange,
               }}
-              isMatchUpdating={isMatchUpdating}
-              matchIds={matchIds}
-              studies={studies}
+              matchStatusProps={{
+                matchIds,
+                studies,
+              }}
             />
           </MyRoute>
 

@@ -20,16 +20,17 @@ type HomeProps = {
     values: MatchFormValues
     onChange(values: MatchFormValues): void
   }
-  matchIds: number[]
-  studies: Study[]
+  matchStatusProps: {
+    matchIds: number[]
+    studies: Study[]
+  }
 }
 
 const Home = ({
   isAuthenticated,
   isMatchUpdating,
   matchFormProps,
-  matchIds,
-  studies,
+  matchStatusProps,
 }: HomeProps) => (
   <>
     {paragraphs.map((p, i) => (
@@ -54,7 +55,7 @@ const Home = ({
             isMatchUpdating ? 'bg-gray-200' : ''
           }`}
         >
-          <MatchStatus matchIds={matchIds} studies={studies} />
+          <MatchStatus {...matchStatusProps} />
         </Box>
       </div>
     ) : (
