@@ -2,8 +2,8 @@ import React, { useEffect, useState, Fragment } from 'react'
 import { useFormik } from 'formik'
 import Button from './Inputs/Button'
 
-import { initialMatchFormValues, matchFormConfig } from '../config'
-import { MatchFormValues } from '../model'
+import { initialMatchFormValues } from '../config'
+import { MatchFormValues, MatchFormConfig } from '../model'
 import Field from './Inputs/Field'
 
 const styles = {
@@ -12,11 +12,12 @@ const styles = {
 }
 
 type MatchFormProps = {
+  config: MatchFormConfig
   values: MatchFormValues
   onChange(value: MatchFormValues): void
 }
 
-const MatchForm = ({ values, onChange }: MatchFormProps) => {
+const MatchForm = ({ config, values, onChange }: MatchFormProps) => {
   const [triggerReset, setTriggerReset] = useState(false)
   const formik = useFormik({
     initialValues: { ...values },
@@ -51,17 +52,17 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
 
   return (
     <form onReset={formik.handleReset}>
-      {matchFormConfig.groups.map((group) => (
+      {config.groups.map((group) => (
         <Fragment key={group.id}>
           {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
 
-          {matchFormConfig.fields.map(
+          {config.fields.map(
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
               if (groupId !== group.id) return undefined
 
               let hideField = false
               if (showIf !== undefined)
-                for (const field of matchFormConfig.fields)
+                for (const field of config.fields)
                   if (showIf.id === field.id) {
                     hideField = showIf.value !== formik.values[field.name]
                     break

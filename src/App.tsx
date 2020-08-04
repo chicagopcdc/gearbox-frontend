@@ -16,7 +16,7 @@ import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-import { dummyTrials, initialMatchFormValues } from './config'
+import { dummyTrials, initialMatchFormValues, matchFormConfig } from './config'
 import { MatchFormValues, Trial } from './model'
 
 const styles = {
@@ -114,10 +114,11 @@ function App() {
           >
             <Home
               isAuthenticated={isAuthenticated}
-              onMatchChange={handleMatchChange}
-              matchResult={matchResult}
+              matchFormConfig={matchFormConfig}
               matchFormValues={matchFormValues}
+              matchResult={matchResult}
               trials={trials}
+              onMatchChange={handleMatchChange}
             />
           </MyRoute>
 
