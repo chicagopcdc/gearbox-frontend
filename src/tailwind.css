@@ -23,12 +23,11 @@
 }
 
 .multi-select .dropdown-content {
-  @apply border border-solid border-black pt-0;
-  left: 0%;
+  @apply border border-solid border-black pt-0 left-0;
 }
 
 .multi-select .dropdown-container .dropdown-heading-value > span {
-  vertical-align: baseline;
+  @apply align-baseline;
 }
 
 .multi-select .dropdown-container .panel-content {
