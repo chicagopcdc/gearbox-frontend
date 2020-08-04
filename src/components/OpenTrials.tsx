@@ -1,23 +1,23 @@
 import React from 'react'
 import TrialCard from './TrialCard'
-import { Trial } from '../model'
+import { Study } from '../model'
 
 type OpenTrialsProps = {
   matchIds: number[]
-  trials: Trial[]
+  studies: Study[]
 }
 
-const OpenTrials = ({ matchIds, trials }: OpenTrialsProps) => {
-  const matched = trials.filter(({ id }) => matchIds.includes(id))
-  const unmatched = trials.filter(({ id }) => !matchIds.includes(id))
+const OpenTrials = ({ matchIds, studies }: OpenTrialsProps) => {
+  const matched = studies.filter(({ id }) => matchIds.includes(id))
+  const unmatched = studies.filter(({ id }) => !matchIds.includes(id))
 
   return (
     <>
       {matched.length > 0 && (
         <>
           <h2 className="font-bold text-center">Matched</h2>
-          {matched.map((trial, i) => (
-            <TrialCard data={trial} key={i} />
+          {matched.map((study, i) => (
+            <TrialCard study={study} key={i} />
           ))}
           <br />
         </>
@@ -25,8 +25,8 @@ const OpenTrials = ({ matchIds, trials }: OpenTrialsProps) => {
       {unmatched.length > 0 && (
         <>
           <h2 className="font-bold text-center">Unmatched</h2>
-          {unmatched.map((trial, i) => (
-            <TrialCard data={trial} key={i} />
+          {unmatched.map((study, i) => (
+            <TrialCard study={study} key={i} />
           ))}
         </>
       )}

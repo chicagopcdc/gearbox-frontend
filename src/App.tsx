@@ -16,8 +16,8 @@ import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-import { dummyTrials, matchFormConfig, matchFormInitialValues } from './config'
-import { MatchFormValues, Trial } from './model'
+import { dummyStudies, matchFormConfig, matchFormInitialValues } from './config'
+import { MatchFormValues, Study } from './model'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -45,8 +45,8 @@ const useFakeAuth = (): [
   return [isAuthenticated, username, authenticate, signout]
 }
 
-const getMatchIds = (trials: Trial[], values: MatchFormValues): number[] =>
-  trials
+const getMatchIds = (studies: Study[], values: MatchFormValues): number[] =>
+  studies
     .filter(({ condition }) =>
       condition
         ? Object.keys(condition).every(
@@ -63,11 +63,11 @@ function App() {
   const [matchFormValues, setMatchFormValues] = useState({
     ...matchFormInitialValues,
   })
-  const trials = dummyTrials
+  const studies = dummyStudies
   const [matchResult, setMatchResult] = useState({
     isLoaded: true,
     isError: false,
-    ids: getMatchIds(trials, matchFormInitialValues),
+    ids: getMatchIds(studies, matchFormInitialValues),
   })
 
   const handleMatchFormChange = (values: MatchFormValues) => {
@@ -84,7 +84,7 @@ function App() {
         setMatchResult((prevState) => ({
           ...prevState,
           isLoaded: true,
-          ids: getMatchIds(trials, values),
+          ids: getMatchIds(studies, values),
         }))
       }, 500)
     }
@@ -121,7 +121,7 @@ function App() {
                 onChange: handleMatchFormChange,
               }}
               matchResult={matchResult}
-              trials={trials}
+              studies={studies}
             />
           </MyRoute>
 
@@ -138,7 +138,7 @@ function App() {
           </Route>
 
           <Route path="/trials">
-            <Trials data={trials} />
+            <Trials studies={studies} />
           </Route>
 
           <Route path="/about">

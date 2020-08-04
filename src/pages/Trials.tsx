@@ -1,15 +1,15 @@
 import React from 'react'
 import Box from '../components/Box'
 import TrialCard from '../components/TrialCard'
-import { Trial } from '../model'
+import { Study } from '../model'
 
-const Trials = ({ data }: { data?: Trial[] }) => (
+const Trials = ({ studies }: { studies?: Study[] }) => (
   <Box
     name="Complete List of Trials"
     innerClassName="flex flex-wrap justify-center"
   >
-    {(data || []).map((trial, i) => (
-      <TrialCard data={trial} key={i}></TrialCard>
+    {(studies || []).map((study, i) => (
+      <TrialCard study={study} key={i}></TrialCard>
     ))}
   </Box>
 )

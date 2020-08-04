@@ -1,4 +1,4 @@
-import { MatchFormConfig, MatchFormValues, Trial } from './model'
+import { MatchFormConfig, MatchFormValues, Study } from './model'
 import matchFormConfigJson from './matchFormConfig.json'
 
 export const matchFormConfig: MatchFormConfig = matchFormConfigJson
@@ -11,7 +11,7 @@ export const matchFormInitialValues: MatchFormValues = matchFormConfig.fields.re
   {}
 )
 
-export const dummyTrials: Trial[] = [
+export const dummyStudies: Study[] = [
   {
     id: 0,
     title: 'AML 1020',

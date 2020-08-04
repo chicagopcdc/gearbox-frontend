@@ -1,4 +1,4 @@
-export type Trial = {
+export type Study = {
   id: number
   title: string
   group: string

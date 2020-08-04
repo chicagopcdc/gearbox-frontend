@@ -4,7 +4,7 @@ import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import OpenTrials from '../components/OpenTrials'
-import { MatchFormValues, MatchResult, Trial, MatchFormConfig } from '../model'
+import { MatchFormConfig, MatchFormValues, MatchResult, Study } from '../model'
 
 const paragraphs = [
   `A tool built and maintained by the Pediatric Acute Leukemia (PedAL) Group, GEARBOx matches pediatric patients currently on Phase III clinical trials who experience refactory or relapsing disease to new Phase I or Phase II clinical trials based on their personal and clinical data. To see a list of all the trials included in this search, please select "Eligible Trials" above.`,
@@ -20,14 +20,14 @@ type HomeProps = {
     onChange(values: MatchFormValues): void
   }
   matchResult: MatchResult
-  trials: Trial[]
+  studies: Study[]
 }
 
 const Home = ({
   isAuthenticated,
   matchFormProps,
   matchResult,
-  trials,
+  studies,
 }: HomeProps) => (
   <>
     {paragraphs.map((p, i) => (
@@ -52,7 +52,7 @@ const Home = ({
             matchResult.isLoaded ? '' : 'bg-gray-200'
           }`}
         >
-          <OpenTrials matchIds={matchResult.ids} trials={trials} />
+          <OpenTrials matchIds={matchResult.ids} studies={studies} />
         </Box>
       </div>
     ) : (
