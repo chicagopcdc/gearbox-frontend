@@ -1,10 +1,8 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import { useFormik } from 'formik'
 import Button from './Inputs/Button'
-
-import { initialMatchFormValues } from '../config'
-import { MatchFormValues, MatchFormConfig } from '../model'
 import Field from './Inputs/Field'
+import { MatchFormValues, MatchFormConfig } from '../model'
 
 const styles = {
   groupName: 'font-bold',
@@ -13,11 +11,17 @@ const styles = {
 
 type MatchFormProps = {
   config: MatchFormConfig
+  initialValues: MatchFormValues
   values: MatchFormValues
   onChange(value: MatchFormValues): void
 }
 
-const MatchForm = ({ config, values, onChange }: MatchFormProps) => {
+const MatchForm = ({
+  config,
+  initialValues,
+  values,
+  onChange,
+}: MatchFormProps) => {
   const [triggerReset, setTriggerReset] = useState(false)
   const formik = useFormik({
     initialValues: { ...values },
@@ -33,7 +37,7 @@ const MatchForm = ({ config, values, onChange }: MatchFormProps) => {
       if (timeout !== undefined) clearTimeout(timeout)
 
       if (triggerReset) {
-        formik.setValues(initialMatchFormValues)
+        formik.setValues(initialValues)
         setTriggerReset(false)
       } else {
         timeout = setTimeout(() => {

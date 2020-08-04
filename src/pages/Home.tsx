@@ -12,6 +12,7 @@ const paragraphs = [
 ]
 
 type HomeProps = {
+  initialMatchFormValues: MatchFormValues
   isAuthenticated: boolean
   matchFormConfig: MatchFormConfig
   matchFormValues: MatchFormValues
@@ -21,6 +22,7 @@ type HomeProps = {
 }
 
 const Home = ({
+  initialMatchFormValues,
   isAuthenticated,
   matchFormConfig,
   matchFormValues,
@@ -43,6 +45,7 @@ const Home = ({
           innerClassName="px-8"
         >
           <MatchForm
+            initialValues={initialMatchFormValues}
             config={matchFormConfig}
             values={matchFormValues}
             onChange={onMatchChange}

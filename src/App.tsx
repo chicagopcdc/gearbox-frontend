@@ -113,6 +113,7 @@ function App() {
             }}
           >
             <Home
+              initialMatchFormValues={initialMatchFormValues}
               isAuthenticated={isAuthenticated}
               matchFormConfig={matchFormConfig}
               matchFormValues={matchFormValues}
