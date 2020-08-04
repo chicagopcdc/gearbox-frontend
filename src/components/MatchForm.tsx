@@ -3,24 +3,12 @@ import { useFormik } from 'formik'
 import Button from './Inputs/Button'
 
 import { initialMatchFormValues, matchFormConfig } from '../config'
-import { MatchFormFieldConfig, MatchFormValues } from '../model'
+import { MatchFormValues } from '../model'
 import Field from './Inputs/Field'
 
 const styles = {
   groupName: 'font-bold',
   field: 'my-4',
-}
-
-const getShowIfName = (fields: MatchFormFieldConfig[], showIfId: number) => {
-  let showIfName
-  for (const { id, name } of fields) {
-    if (showIfId === id) {
-      showIfName = name
-      break
-    }
-  }
-
-  return showIfName
 }
 
 type MatchFormProps = {
@@ -71,12 +59,13 @@ const MatchForm = ({ values, onChange }: MatchFormProps) => {
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
               if (groupId !== group.id) return undefined
 
-              const showIfName =
-                showIf && getShowIfName(matchFormConfig.fields, showIf.id)
-              const hideField =
-                showIf &&
-                showIfName &&
-                showIf.value !== formik.values[showIfName]
+              let hideField = false
+              if (showIf !== undefined)
+                for (const field of matchFormConfig.fields)
+                  if (showIf.id === field.id) {
+                    hideField = showIf.value !== formik.values[field.name]
+                    break
+                  }
 
               return hideField ? undefined : (
                 <div style={{ margin: '1rem' }} key={fieldConfig.name}>
