@@ -16,7 +16,7 @@ import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-import { dummyTrials, initialMatchFormValues, matchFormConfig } from './config'
+import { dummyTrials, matchFormConfig, matchFormInitialValues } from './config'
 import { MatchFormValues, Trial } from './model'
 
 const styles = {
@@ -61,16 +61,16 @@ function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
   const [matchFormValues, setMatchFormValues] = useState({
-    ...initialMatchFormValues,
+    ...matchFormInitialValues,
   })
   const trials = dummyTrials
   const [matchResult, setMatchResult] = useState({
     isLoaded: true,
     isError: false,
-    ids: getMatchIds(trials, initialMatchFormValues),
+    ids: getMatchIds(trials, matchFormInitialValues),
   })
 
-  const handleMatchChange = (values: MatchFormValues) => {
+  const handleMatchFormChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
 
@@ -116,9 +116,9 @@ function App() {
               isAuthenticated={isAuthenticated}
               matchFormProps={{
                 config: matchFormConfig,
-                initialValues: initialMatchFormValues,
+                initialValues: matchFormInitialValues,
                 values: matchFormValues,
-                onChange: handleMatchChange,
+                onChange: handleMatchFormChange,
               }}
               matchResult={matchResult}
               trials={trials}
