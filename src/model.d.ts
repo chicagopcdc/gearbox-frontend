@@ -32,8 +32,3 @@ export type MatchFormConfig = {
 export type MatchFormValues = {
   [key: string]: any
 }
-
-export type MatchResult = {
-  isLoaded: boolean
-  ids: number[]
-}

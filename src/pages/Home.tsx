@@ -4,7 +4,7 @@ import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchStatus from '../components/MatchStatus'
-import { MatchFormConfig, MatchFormValues, MatchResult, Study } from '../model'
+import { MatchFormConfig, MatchFormValues, Study } from '../model'
 
 const paragraphs = [
   `A tool built and maintained by the Pediatric Acute Leukemia (PedAL) Group, GEARBOx matches pediatric patients currently on Phase III clinical trials who experience refactory or relapsing disease to new Phase I or Phase II clinical trials based on their personal and clinical data. To see a list of all the trials included in this search, please select "Eligible Trials" above.`,
@@ -13,20 +13,22 @@ const paragraphs = [
 
 type HomeProps = {
   isAuthenticated: boolean
+  isMatchUpdating: boolean
   matchFormProps: {
     config: MatchFormConfig
     initialValues: MatchFormValues
     values: MatchFormValues
     onChange(values: MatchFormValues): void
   }
-  matchResult: MatchResult
+  matchIds: number[]
   studies: Study[]
 }
 
 const Home = ({
   isAuthenticated,
+  isMatchUpdating,
   matchFormProps,
-  matchResult,
+  matchIds,
   studies,
 }: HomeProps) => (
   <>
@@ -49,10 +51,10 @@ const Home = ({
         <Box
           name="Open Trials"
           outerClassName={`md:flex-grow ${
-            matchResult.isLoaded ? '' : 'bg-gray-200'
+            isMatchUpdating ? 'bg-gray-200' : ''
           }`}
         >
-          <MatchStatus matchIds={matchResult.ids} studies={studies} />
+          <MatchStatus matchIds={matchIds} studies={studies} />
         </Box>
       </div>
     ) : (

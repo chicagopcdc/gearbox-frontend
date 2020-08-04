@@ -64,25 +64,20 @@ function App() {
     ...matchFormInitialValues,
   })
   const studies = dummyStudies
-  const [matchResult, setMatchResult] = useState({
-    isLoaded: true,
-    ids: getMatchIds(studies, matchFormInitialValues),
-  })
+  const [isMatchUpdating, setIsMatchUpdating] = useState(false)
+  const [matchIds, setMatchIds] = useState(
+    getMatchIds(studies, matchFormInitialValues)
+  )
 
   const handleMatchFormChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
 
       // reset match result
-      setMatchResult((prevState) => ({
-        ...prevState,
-        isLoaded: false,
-      }))
+      setIsMatchUpdating(true)
       setTimeout(() => {
-        setMatchResult({
-          isLoaded: true,
-          ids: getMatchIds(studies, values),
-        })
+        setMatchIds(getMatchIds(studies, values))
+        setIsMatchUpdating(false)
       }, 500)
     }
   }
@@ -117,7 +112,8 @@ function App() {
                 values: matchFormValues,
                 onChange: handleMatchFormChange,
               }}
-              matchResult={matchResult}
+              isMatchUpdating={isMatchUpdating}
+              matchIds={matchIds}
               studies={studies}
             />
           </MyRoute>
