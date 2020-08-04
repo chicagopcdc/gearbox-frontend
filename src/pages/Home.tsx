@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
-import OpenTrials from '../components/OpenTrials'
+import MatchStatus from '../components/MatchStatus'
 import { MatchFormConfig, MatchFormValues, MatchResult, Study } from '../model'
 
 const paragraphs = [
@@ -52,7 +52,7 @@ const Home = ({
             matchResult.isLoaded ? '' : 'bg-gray-200'
           }`}
         >
-          <OpenTrials matchIds={matchResult.ids} studies={studies} />
+          <MatchStatus matchIds={matchResult.ids} studies={studies} />
         </Box>
       </div>
     ) : (

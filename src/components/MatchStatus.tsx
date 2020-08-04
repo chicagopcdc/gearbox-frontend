@@ -2,12 +2,12 @@ import React from 'react'
 import TrialCard from './TrialCard'
 import { Study } from '../model'
 
-type OpenTrialsProps = {
+type MatchStatusProps = {
   matchIds: number[]
   studies: Study[]
 }
 
-const OpenTrials = ({ matchIds, studies }: OpenTrialsProps) => {
+const MatchStatus = ({ matchIds, studies }: MatchStatusProps) => {
   const matched = studies.filter(({ id }) => matchIds.includes(id))
   const unmatched = studies.filter(({ id }) => !matchIds.includes(id))
 
@@ -34,4 +34,4 @@ const OpenTrials = ({ matchIds, studies }: OpenTrialsProps) => {
   )
 }
 
-export default OpenTrials
+export default MatchStatus
