@@ -66,7 +66,6 @@ function App() {
   const studies = dummyStudies
   const [matchResult, setMatchResult] = useState({
     isLoaded: true,
-    isError: false,
     ids: getMatchIds(studies, matchFormInitialValues),
   })
 
@@ -78,14 +77,12 @@ function App() {
       setMatchResult((prevState) => ({
         ...prevState,
         isLoaded: false,
-        isError: false,
       }))
       setTimeout(() => {
-        setMatchResult((prevState) => ({
-          ...prevState,
+        setMatchResult({
           isLoaded: true,
           ids: getMatchIds(studies, values),
-        }))
+        })
       }, 500)
     }
   }

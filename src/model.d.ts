@@ -35,6 +35,5 @@ export type MatchFormValues = {
 
 export type MatchResult = {
   isLoaded: boolean
-  isError: boolean
   ids: number[]
 }
