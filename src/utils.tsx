@@ -24,18 +24,21 @@ export const getMatchIds = (
 }
 
 export const getInitialValues = ({ fields }: MatchFormConfig) =>
-  fields &&
-  fields.reduce(
-    (acc, { name, type, defaultValue }) => ({
-      ...acc,
-      [name]: type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
-    }),
-    {} as MatchFormValues
-  )
+  fields
+    ? fields.reduce(
+        (acc, { name, type, defaultValue }) => ({
+          ...acc,
+          [name]:
+            type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
+        }),
+        {} as MatchFormValues
+      )
+    : ({} as MatchFormValues)
 
 export const getFieldIdToName = ({ fields }: MatchFormConfig) =>
-  fields &&
-  fields.reduce(
-    (acc, { id, name }) => ({ ...acc, [id]: name }),
-    {} as { [key: number]: string }
-  )
+  fields
+    ? fields.reduce(
+        (acc, { id, name }) => ({ ...acc, [id]: name }),
+        {} as { [key: number]: string }
+      )
+    : ({} as { [key: number]: string })
