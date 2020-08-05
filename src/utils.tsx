@@ -5,7 +5,7 @@ export const getMatchIds = (
   fieldIdToName: { [key: number]: string },
   values: MatchFormValues
 ): number[] => {
-  if (!criteria.length || fieldIdToName !== {} || values !== {}) return []
+  if (!criteria.length || fieldIdToName === {} || values === {}) return []
 
   const matchStatusById = criteria
     .flatMap(({ fieldId, fieldValue, studyIds }) => {
