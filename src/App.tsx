@@ -27,6 +27,7 @@ import {
   loadMockMatchFromConfig,
   loadMockStudies,
 } from './mock/utils'
+import { getInitialValues, getFieldIdToName, getMatchIds } from './utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -53,46 +54,6 @@ const useFakeAuth = (): [
   }
   return [isAuthenticated, username, authenticate, signout]
 }
-
-const getMatchIds = (
-  criteria: EligibilityCriterion[],
-  fieldIdToName: { [key: number]: string },
-  values: MatchFormValues
-): number[] => {
-  if (!criteria.length || fieldIdToName !== {} || values !== {}) return []
-
-  const matchStatusById = criteria
-    .flatMap(({ fieldId, fieldValue, studyIds }) => {
-      const isMatch = fieldValue === values[fieldIdToName[fieldId]]
-      return studyIds.map((id) => ({ id, isMatch }))
-    })
-    .reduce((acc, { id, isMatch }) => {
-      const newIsMatch = acc.hasOwnProperty(id) ? acc[id] && isMatch : isMatch
-      return { ...acc, [id]: newIsMatch }
-    }, {} as { [id: number]: boolean })
-
-  return Object.keys(matchStatusById).reduce(
-    (acc, id) => (matchStatusById[Number(id)] ? [...acc, Number(id)] : acc),
-    [] as number[]
-  )
-}
-
-const getInitialValues = ({ fields }: MatchFormConfig) =>
-  fields &&
-  fields.reduce(
-    (acc, { name, type, defaultValue }) => ({
-      ...acc,
-      [name]: type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
-    }),
-    {} as MatchFormValues
-  )
-
-const getFieldIdToName = ({ fields }: MatchFormConfig) =>
-  fields &&
-  fields.reduce(
-    (acc, { id, name }) => ({ ...acc, [id]: name }),
-    {} as { [key: number]: string }
-  )
 
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
