@@ -56,7 +56,6 @@ const useFakeAuth = (): [
 }
 
 function App() {
-  // handle authentication
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
 
