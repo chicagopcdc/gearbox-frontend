@@ -59,9 +59,21 @@ function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
 
+  // load data
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [matchFormConfig, setMatchFormConfig] = useState({} as MatchFormConfig)
   const [studies, setStudies] = useState([] as Study[])
+  useEffect(() => {
+    const loadData = async () => {
+      setCriteria(await loadMockEligibilityCriteria())
+      setMatchFormConfig(await loadMockMatchFromConfig())
+      setStudies(await loadMockStudies())
+    }
+    if (isAuthenticated) loadData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated])
+
+  // set states derived from data
   const [matchFormInitialValues, setMatchFormInitialValues] = useState(
     {} as MatchFormValues
   )
@@ -70,22 +82,13 @@ function App() {
     {} as { [key: number]: string }
   )
   const [matchIds, setMatchIds] = useState([] as number[])
-
   useEffect(() => {
-    const loadData = async () => {
-      setCriteria(await loadMockEligibilityCriteria())
-      setMatchFormConfig(await loadMockMatchFromConfig())
-      setStudies(await loadMockStudies())
-    }
-    if (isAuthenticated) loadData()
-
     setMatchFormInitialValues(getInitialValues(matchFormConfig))
     setMatchFormValues({ ...matchFormInitialValues })
     setFieldIdToname(getFieldIdToName(matchFormConfig))
     setMatchIds(getMatchIds(criteria, fieldIdToName, matchFormInitialValues))
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, criteria, matchFormConfig, studies])
+  }, [criteria, matchFormConfig, studies])
 
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
 
