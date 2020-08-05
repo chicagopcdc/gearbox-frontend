@@ -77,7 +77,7 @@ function App() {
       setMatchFormConfig(await loadMockMatchFromConfig())
       setStudies(await loadMockStudies())
     }
-    loadData()
+    if (isAuthenticated) loadData()
 
     setMatchFormInitialValues(getInitialValues(matchFormConfig))
     setMatchFormValues({ ...matchFormInitialValues })
@@ -85,7 +85,7 @@ function App() {
     setMatchIds(getMatchIds(criteria, fieldIdToName, matchFormInitialValues))
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [criteria, matchFormConfig, studies])
+  }, [isAuthenticated, criteria, matchFormConfig, studies])
 
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
 
