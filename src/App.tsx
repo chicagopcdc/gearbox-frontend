@@ -84,6 +84,12 @@ const getInitialValues = ({ fields }: MatchFormConfig) =>
     {} as MatchFormValues
   )
 
+const getFieldIdToName = ({ fields }: MatchFormConfig) =>
+  fields.reduce(
+    (acc, { id, name }) => ({ ...acc, [id]: name }),
+    {} as { [key: number]: string }
+  )
+
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
@@ -96,10 +102,7 @@ function App() {
   const [matchFormValues, setMatchFormValues] = useState({
     ...matchFormInitialValues,
   })
-  const fieldIdtoName = matchFormConfig.fields.reduce(
-    (acc, { id, name }) => ({ ...acc, [id]: name }),
-    {} as { [key: number]: string }
-  )
+  const fieldIdtoName = getFieldIdToName(matchFormConfig)
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
   const [matchIds, setMatchIds] = useState(
     getMatchIds(criteria, fieldIdtoName, matchFormInitialValues)
