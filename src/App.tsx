@@ -70,26 +70,33 @@ function App() {
       setMatchFormConfig(await loadMockMatchFromConfig())
       setStudies(await loadMockStudies())
     }
+    const clearData = () => {
+      setCriteria([] as EligibilityCriterion[])
+      setMatchFormConfig({} as MatchFormConfig)
+      setStudies([] as Study[])
+    }
     if (isAuthenticated) loadData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    else clearData()
   }, [isAuthenticated])
 
   // set states derived from data
   const [matchFormInitialValues, setMatchFormInitialValues] = useState(
     {} as MatchFormValues
   )
-  const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
   const [fieldIdToName, setFieldIdToname] = useState(
     {} as { [key: number]: string }
   )
-  const [matchIds, setMatchIds] = useState([] as number[])
   useEffect(() => {
     setMatchFormInitialValues(getInitialValues(matchFormConfig))
-    setMatchFormValues({ ...matchFormInitialValues })
     setFieldIdToname(getFieldIdToName(matchFormConfig))
+  }, [matchFormConfig])
+
+  const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
+  const [matchIds, setMatchIds] = useState([] as number[])
+  useEffect(() => {
+    setMatchFormValues({ ...matchFormInitialValues })
     setMatchIds(getMatchIds(criteria, fieldIdToName, matchFormInitialValues))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [criteria, matchFormConfig, studies])
+  }, [matchFormInitialValues]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // handle MatchForm update
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
