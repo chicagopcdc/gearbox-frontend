@@ -17,12 +17,16 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
 import {
-  dummyStudies,
-  matchFormConfig,
-  matchFormInitialValues,
-  dummyEligibilityCriteria,
-} from './config'
-import { MatchFormValues, EligibilityCriterion } from './model'
+  EligibilityCriterion,
+  MatchFormConfig,
+  MatchFormValues,
+  Study,
+} from './model'
+import {
+  loadMockEligibilityCriteria,
+  loadMockMatchFromConfig,
+  loadMockStudies,
+} from './mock/utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -74,11 +78,21 @@ const getMatchIds = (
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
+
+  const criteria: EligibilityCriterion[] = loadMockEligibilityCriteria()
+  const matchFormConfig: MatchFormConfig = loadMockMatchFromConfig()
+  const studies: Study[] = loadMockStudies()
+
+  const matchFormInitialValues = matchFormConfig.fields.reduce(
+    (acc, { name, type, defaultValue }) => ({
+      ...acc,
+      [name]: type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
+    }),
+    {} as MatchFormValues
+  )
   const [matchFormValues, setMatchFormValues] = useState({
     ...matchFormInitialValues,
   })
-  const criteria = dummyEligibilityCriteria
-  const studies = dummyStudies
   const fieldIdtoName = matchFormConfig.fields.reduce(
     (acc, { id, name }) => ({ ...acc, [id]: name }),
     {} as { [key: number]: string }
