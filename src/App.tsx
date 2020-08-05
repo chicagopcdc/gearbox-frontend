@@ -56,6 +56,7 @@ const useFakeAuth = (): [
 }
 
 function App() {
+  // handle authentication
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
 
@@ -90,8 +91,8 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [criteria, matchFormConfig, studies])
 
+  // handle MatchForm update
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
-
   const handleMatchFormChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
