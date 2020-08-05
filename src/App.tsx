@@ -75,6 +75,15 @@ const getMatchIds = (
   )
 }
 
+const getInitialValues = ({ fields }: MatchFormConfig) =>
+  fields.reduce(
+    (acc, { name, type, defaultValue }) => ({
+      ...acc,
+      [name]: type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
+    }),
+    {} as MatchFormValues
+  )
+
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
@@ -83,13 +92,7 @@ function App() {
   const matchFormConfig: MatchFormConfig = loadMockMatchFromConfig()
   const studies: Study[] = loadMockStudies()
 
-  const matchFormInitialValues = matchFormConfig.fields.reduce(
-    (acc, { name, type, defaultValue }) => ({
-      ...acc,
-      [name]: type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
-    }),
-    {} as MatchFormValues
-  )
+  const matchFormInitialValues = getInitialValues(matchFormConfig)
   const [matchFormValues, setMatchFormValues] = useState({
     ...matchFormInitialValues,
   })
