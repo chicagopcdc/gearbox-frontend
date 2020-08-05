@@ -94,15 +94,19 @@ function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
 
-  const criteria: EligibilityCriterion[] = loadMockEligibilityCriteria()
-  const matchFormConfig: MatchFormConfig = loadMockMatchFromConfig()
-  const studies: Study[] = loadMockStudies()
+  const [criteria] = useState(
+    loadMockEligibilityCriteria() as EligibilityCriterion[]
+  )
+  const [matchFormConfig] = useState(
+    loadMockMatchFromConfig() as MatchFormConfig
+  )
+  const [studies] = useState(loadMockStudies() as Study[])
 
-  const matchFormInitialValues = getInitialValues(matchFormConfig)
+  const [matchFormInitialValues] = useState(getInitialValues(matchFormConfig))
   const [matchFormValues, setMatchFormValues] = useState({
     ...matchFormInitialValues,
   })
-  const fieldIdtoName = getFieldIdToName(matchFormConfig)
+  const [fieldIdtoName] = useState(getFieldIdToName(matchFormConfig))
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
   const [matchIds, setMatchIds] = useState(
     getMatchIds(criteria, fieldIdtoName, matchFormInitialValues)
