@@ -106,7 +106,7 @@ function App() {
       setTimeout(() => {
         setMatchIds(getMatchIds(criteria, fieldIdToName, values))
         setIsMatchUpdating(false)
-      }, 500)
+      }, 100)
     }
   }
 
