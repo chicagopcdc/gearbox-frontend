@@ -1,3 +1,5 @@
+import { type } from 'os'
+
 export type Study = {
   id: number
   title: string
@@ -11,6 +13,16 @@ export type EligibilityCriterion = {
   fieldId: number
   fieldValue: any
   studyIds: number[]
+}
+
+export type MatchAlgorithm = {
+  operator: string
+  criteria: (number | MatchAlgorithm)[]
+}
+
+export type MatchCondition = {
+  studyId: number
+  algorithm: MatchAlgorithm
 }
 
 export type MatchFormGroupConfig = {
