@@ -1,10 +1,16 @@
-export type Trial = {
-  id: string
+export type Study = {
+  id: number
   title: string
   group: string
   location: string
   registerLinks: { name: string; url: string }[]
-  condition?: { [key: string]: any }
+}
+
+export type EligibilityCriterion = {
+  id: number
+  fieldId: number
+  fieldValue: any
+  studyIds: number[]
 }
 
 export type MatchFormGroupConfig = {
@@ -31,10 +37,4 @@ export type MatchFormConfig = {
 
 export type MatchFormValues = {
   [key: string]: any
-}
-
-export type MatchResult = {
-  isLoaded: boolean
-  isError: boolean
-  ids: string[]
 }

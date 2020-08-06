@@ -1,5 +1,5 @@
 import React from 'react'
-import { Trial } from '../model'
+import { Study } from '../model'
 
 const styles = {
   container:
@@ -9,9 +9,9 @@ const styles = {
 }
 
 const TrialCard = ({
-  data: { title, group, location, registerLinks },
+  study: { title, group, location, registerLinks },
 }: {
-  data: Trial
+  study: Study
 }) => (
   <div className={styles.container}>
     <h2 className={styles.title}>{title}</h2>

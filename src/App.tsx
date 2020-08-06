@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,8 +16,18 @@ import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-import { dummyTrials, matchFormConfig, matchFormInitialValues } from './config'
-import { MatchFormValues, Trial } from './model'
+import {
+  EligibilityCriterion,
+  MatchFormConfig,
+  MatchFormValues,
+  Study,
+} from './model'
+import {
+  loadMockEligibilityCriteria,
+  loadMockMatchFromConfig,
+  loadMockStudies,
+} from './mock/utils'
+import { getInitialValues, getFieldIdToName, getMatchIds } from './utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -45,47 +55,57 @@ const useFakeAuth = (): [
   return [isAuthenticated, username, authenticate, signout]
 }
 
-const getMatchIds = (trials: Trial[], values: MatchFormValues): string[] =>
-  trials
-    .filter(({ condition }) =>
-      condition
-        ? Object.keys(condition).every(
-            (k) =>
-              values.hasOwnProperty(k) && (values as any)[k] === condition[k]
-          )
-        : true
-    )
-    .map(({ id }) => id)
-
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [isLogin, setIsLogin] = useState(false)
-  const [matchFormValues, setMatchFormValues] = useState({
-    ...matchFormInitialValues,
-  })
-  const trials = dummyTrials
-  const [matchResult, setMatchResult] = useState({
-    isLoaded: true,
-    isError: false,
-    ids: getMatchIds(trials, matchFormInitialValues),
-  })
 
+  // load data
+  const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
+  const [matchFormConfig, setMatchFormConfig] = useState({} as MatchFormConfig)
+  const [studies, setStudies] = useState([] as Study[])
+  useEffect(() => {
+    const loadData = async () => {
+      setCriteria(await loadMockEligibilityCriteria())
+      setMatchFormConfig(await loadMockMatchFromConfig())
+      setStudies(await loadMockStudies())
+    }
+    const clearData = () => {
+      setCriteria([] as EligibilityCriterion[])
+      setMatchFormConfig({} as MatchFormConfig)
+      setStudies([] as Study[])
+    }
+    if (isAuthenticated) loadData()
+    else clearData()
+  }, [isAuthenticated])
+
+  // set states derived from data
+  const [matchFormInitialValues, setMatchFormInitialValues] = useState(
+    {} as MatchFormValues
+  )
+  const [fieldIdToName, setFieldIdToname] = useState(
+    {} as { [key: number]: string }
+  )
+  useEffect(() => {
+    setMatchFormInitialValues(getInitialValues(matchFormConfig))
+    setFieldIdToname(getFieldIdToName(matchFormConfig))
+  }, [matchFormConfig])
+
+  const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
+  const [matchIds, setMatchIds] = useState([] as number[])
+  useEffect(() => {
+    setMatchFormValues({ ...matchFormInitialValues })
+    setMatchIds(getMatchIds(criteria, fieldIdToName, matchFormInitialValues))
+  }, [matchFormInitialValues]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // handle MatchForm update
+  const [isMatchUpdating, setIsMatchUpdating] = useState(false)
   const handleMatchFormChange = (values: MatchFormValues) => {
     if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
       setMatchFormValues({ ...values })
-
-      // reset match result
-      setMatchResult((prevState) => ({
-        ...prevState,
-        isLoaded: false,
-        isError: false,
-      }))
+      setIsMatchUpdating(true)
       setTimeout(() => {
-        setMatchResult((prevState) => ({
-          ...prevState,
-          isLoaded: true,
-          ids: getMatchIds(trials, values),
-        }))
+        setMatchIds(getMatchIds(criteria, fieldIdToName, values))
+        setIsMatchUpdating(false)
       }, 500)
     }
   }
@@ -114,14 +134,17 @@ function App() {
           >
             <Home
               isAuthenticated={isAuthenticated}
+              isMatchUpdating={isMatchUpdating}
               matchFormProps={{
                 config: matchFormConfig,
                 initialValues: matchFormInitialValues,
                 values: matchFormValues,
                 onChange: handleMatchFormChange,
               }}
-              matchResult={matchResult}
-              trials={trials}
+              matchStatusProps={{
+                matchIds,
+                studies,
+              }}
             />
           </MyRoute>
 
@@ -138,7 +161,7 @@ function App() {
           </Route>
 
           <Route path="/trials">
-            <Trials data={trials} />
+            <Trials studies={studies} />
           </Route>
 
           <Route path="/about">

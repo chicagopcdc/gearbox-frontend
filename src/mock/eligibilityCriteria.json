@@ -1,0 +1,38 @@
+[
+  {
+    "id": 0,
+    "fieldId": 3,
+    "fieldValue": "true",
+    "studyIds": [0, 4]
+  },
+  {
+    "id": 1,
+    "fieldId": 4,
+    "fieldValue": "false",
+    "studyIds": [1]
+  },
+  {
+    "id": 2,
+    "fieldId": 4,
+    "fieldValue": "true",
+    "studyIds": [4]
+  },
+  {
+    "id": 3,
+    "fieldId": 6,
+    "fieldValue": "false",
+    "studyIds": [1]
+  },
+  {
+    "id": 3,
+    "fieldId": 6,
+    "fieldValue": "true",
+    "studyIds": [2]
+  },
+  {
+    "id": 4,
+    "fieldId": 8,
+    "fieldValue": "true",
+    "studyIds": [3]
+  }
+]
