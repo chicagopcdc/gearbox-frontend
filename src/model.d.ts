@@ -12,7 +12,6 @@ export type EligibilityCriterion = {
   id: number
   fieldId: number
   fieldValue: any
-  studyIds: number[]
 }
 
 export type MatchAlgorithm = {

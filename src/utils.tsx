@@ -1,26 +1,49 @@
-import { EligibilityCriterion, MatchFormConfig, MatchFormValues } from './model'
+import {
+  EligibilityCriterion,
+  MatchFormConfig,
+  MatchFormValues,
+  MatchCondition,
+  MatchAlgorithm,
+} from './model'
 
 export const getMatchIds = (
   criteria: EligibilityCriterion[],
-  fieldIdToName: { [key: number]: string },
+  fieldNameToId: { [name: string]: number },
+  matchConditions: MatchCondition[],
   values: MatchFormValues
-): number[] => {
-  if (!criteria.length || fieldIdToName === {} || values === {}) return []
-
-  const matchStatusById = criteria
-    .flatMap(({ fieldId, fieldValue, studyIds }) => {
-      const isMatch = fieldValue === values[fieldIdToName[fieldId]]
-      return studyIds.map((id) => ({ id, isMatch }))
-    })
-    .reduce((acc, { id, isMatch }) => {
-      const newIsMatch = acc.hasOwnProperty(id) ? acc[id] && isMatch : isMatch
-      return { ...acc, [id]: newIsMatch }
-    }, {} as { [id: number]: boolean })
-
-  return Object.keys(matchStatusById).reduce(
-    (acc, id) => (matchStatusById[Number(id)] ? [...acc, Number(id)] : acc),
-    [] as number[]
+) => {
+  const criteriaById = criteria.reduce(
+    (acc, { id, ...crit }) => ({ ...acc, [id]: crit }),
+    {} as { [id: number]: any }
   )
+  const valueById = Object.keys(values)
+    .map((name) => ({ id: fieldNameToId[name], value: values[name] }))
+    .reduce(
+      (acc, { id, value }) => ({ ...acc, [id]: value }),
+      {} as { [id: number]: any }
+    )
+  const isMatch = (algorithm: MatchAlgorithm) => {
+    const handler = (algoCrit: number | MatchAlgorithm) =>
+      typeof algoCrit === 'number'
+        ? criteriaById[algoCrit].fieldValue ===
+          valueById[criteriaById[algoCrit].fieldId]
+        : isMatch(algoCrit)
+
+    let result
+    switch (algorithm.operator) {
+      case 'AND':
+        result = algorithm.criteria.every(handler)
+        break
+      case 'OR':
+        result = algorithm.criteria.some(handler)
+    }
+
+    return result
+  }
+
+  return matchConditions
+    .filter(({ algorithm }) => isMatch(algorithm))
+    .map(({ studyId }) => studyId)
 }
 
 export const getInitialValues = ({ fields }: MatchFormConfig) =>
@@ -35,10 +58,10 @@ export const getInitialValues = ({ fields }: MatchFormConfig) =>
       )
     : ({} as MatchFormValues)
 
-export const getFieldIdToName = ({ fields }: MatchFormConfig) =>
+export const getFieldNameToId = ({ fields }: MatchFormConfig) =>
   fields
     ? fields.reduce(
-        (acc, { id, name }) => ({ ...acc, [id]: name }),
-        {} as { [key: number]: string }
+        (acc, { id, name }) => ({ ...acc, [name]: id }),
+        {} as { [name: string]: number }
       )
-    : ({} as { [key: number]: string })
+    : ({} as { [name: string]: number })
