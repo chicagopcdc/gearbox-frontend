@@ -12,7 +12,11 @@ export const getMatchIds = (
   { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
-  if (criteria === [] || matchConditions === [] || fields === undefined)
+  if (
+    criteria.length === 0 ||
+    matchConditions.length === 0 ||
+    fields === undefined
+  )
     return []
 
   const fieldIdByName = fields.reduce(
