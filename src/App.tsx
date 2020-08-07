@@ -110,6 +110,10 @@ function App() {
       setMatchFormInitialValues({ ...matchFormInitialValues })
       setMatchFormValues({ ...matchFormInitialValues })
       setMatchIds(matchIds)
+    } else {
+      setMatchFormInitialValues({} as MatchFormValues)
+      setMatchFormValues({} as MatchFormValues)
+      setMatchIds([] as number[])
     }
   }, [criteria, matchConditions, matchFormConfig])
 
