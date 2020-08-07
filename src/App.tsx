@@ -65,23 +65,28 @@ function App() {
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [matchConditions, setMatchConditions] = useState([] as MatchCondition[])
   const [matchFormConfig, setMatchFormConfig] = useState({} as MatchFormConfig)
-  const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
     const loadData = async () => {
       setCriteria(await loadMockEligibilityCriteria())
       setMatchConditions(await loadMockMatchConditions())
       setMatchFormConfig(await loadMockMatchFromConfig())
-      setStudies(await loadMockStudies())
     }
     const clearData = () => {
       setCriteria([] as EligibilityCriterion[])
       setMatchConditions([] as MatchCondition[])
       setMatchFormConfig({} as MatchFormConfig)
-      setStudies([] as Study[])
     }
     if (isAuthenticated) loadData()
     else clearData()
   }, [isAuthenticated])
+
+  const [studies, setStudies] = useState([] as Study[])
+  useEffect(() => {
+    const loadStudies = async () => {
+      setStudies(await loadMockStudies())
+    }
+    loadStudies()
+  }, [])
 
   // set states derived from data
   const [matchFormInitialValues, setMatchFormInitialValues] = useState(
