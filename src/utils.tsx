@@ -15,7 +15,7 @@ export const getMatchIds = (
   if (criteria === [] || matchConditions === [] || fields === undefined)
     return []
 
-  const fieldNameToId = fields.reduce(
+  const fieldIdByName = fields.reduce(
     (acc, { id, name }) => ({ ...acc, [name]: id }),
     {} as { [name: string]: number }
   )
@@ -24,7 +24,7 @@ export const getMatchIds = (
     {} as { [id: number]: any }
   )
   const valueById = Object.keys(values)
-    .map((name) => ({ id: fieldNameToId[name], value: values[name] }))
+    .map((name) => ({ id: fieldIdByName[name], value: values[name] }))
     .reduce(
       (acc, { id, value }) => ({ ...acc, [id]: value }),
       {} as { [id: number]: any }
