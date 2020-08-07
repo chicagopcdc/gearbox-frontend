@@ -63,14 +63,14 @@ function App() {
 
   // load data
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
-  const [matchConditions, setMatchConditions] = useState([] as MatchCondition[])
-  const [matchFormConfig, setMatchFormConfig] = useState({} as MatchFormConfig)
+  const [conditions, setConditions] = useState([] as MatchCondition[])
+  const [config, setConfig] = useState({} as MatchFormConfig)
   useEffect(() => {
     if (isAuthenticated) {
       const loadData = async () => {
         setCriteria(await loadMockEligibilityCriteria())
-        setMatchConditions(await loadMockMatchConditions())
-        setMatchFormConfig(await loadMockMatchFromConfig())
+        setConditions(await loadMockMatchConditions())
+        setConfig(await loadMockMatchFromConfig())
       }
       loadData()
     }
@@ -85,39 +85,32 @@ function App() {
   }, [])
 
   // set states derived from data
-  const [matchFormInitialValues, setMatchFormInitialValues] = useState(
-    {} as MatchFormValues
-  )
-  const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
+  const [initialValues, setInitialValues] = useState({} as MatchFormValues)
+  const [values, setValues] = useState({} as MatchFormValues)
   const [matchIds, setMatchIds] = useState([] as number[])
   useEffect(() => {
     if (
       criteria.length > 0 &&
-      matchConditions.length > 0 &&
-      matchFormConfig.fields !== undefined
+      conditions.length > 0 &&
+      config.fields !== undefined
     ) {
-      const matchFormInitialValues = getInitialValues(matchFormConfig)
-      const matchIds = getMatchIds(
-        criteria,
-        matchConditions,
-        matchFormConfig,
-        matchFormInitialValues
-      )
-      setMatchFormInitialValues({ ...matchFormInitialValues })
-      setMatchFormValues({ ...matchFormInitialValues })
+      const initialValues = getInitialValues(config)
+      const matchIds = getMatchIds(criteria, conditions, config, initialValues)
+      setInitialValues({ ...initialValues })
+      setValues({ ...initialValues })
       setMatchIds(matchIds)
     }
-  }, [criteria, matchConditions, matchFormConfig])
+  }, [criteria, conditions, config])
 
   // clear data at logout
   useEffect(() => {
     if (!isAuthenticated) {
       const clearData = () => {
         setCriteria([] as EligibilityCriterion[])
-        setMatchConditions([] as MatchCondition[])
-        setMatchFormConfig({} as MatchFormConfig)
-        setMatchFormInitialValues({} as MatchFormValues)
-        setMatchFormValues({} as MatchFormValues)
+        setConditions([] as MatchCondition[])
+        setConfig({} as MatchFormConfig)
+        setInitialValues({} as MatchFormValues)
+        setValues({} as MatchFormValues)
         setMatchIds([] as number[])
       }
       clearData()
@@ -126,14 +119,12 @@ function App() {
 
   // handle MatchForm update
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
-  const handleMatchFormChange = (values: MatchFormValues) => {
-    if (JSON.stringify(matchFormValues) !== JSON.stringify(values)) {
-      setMatchFormValues({ ...values })
+  const handleMatchFormChange = (newValues: MatchFormValues) => {
+    if (JSON.stringify(newValues) !== JSON.stringify(values)) {
+      setValues({ ...newValues })
       setIsMatchUpdating(true)
       setTimeout(() => {
-        setMatchIds(
-          getMatchIds(criteria, matchConditions, matchFormConfig, values)
-        )
+        setMatchIds(getMatchIds(criteria, conditions, config, newValues))
         setIsMatchUpdating(false)
       }, 100)
     }
@@ -165,9 +156,9 @@ function App() {
               isAuthenticated={isAuthenticated}
               isMatchUpdating={isMatchUpdating}
               matchFormProps={{
-                config: matchFormConfig,
-                initialValues: matchFormInitialValues,
-                values: matchFormValues,
+                config,
+                initialValues,
+                values,
                 onChange: handleMatchFormChange,
               }}
               matchStatusProps={{
