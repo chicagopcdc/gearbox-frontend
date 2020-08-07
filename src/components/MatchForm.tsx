@@ -9,6 +9,11 @@ const styles = {
   field: 'my-4',
 }
 
+type ShowIfFields = {
+  name: string
+  showIfValue: any
+}[]
+
 type MatchFormProps = {
   config: MatchFormConfig
   defaultValues: MatchFormValues
@@ -31,6 +36,16 @@ const MatchForm = ({
     },
   })
 
+  const showIfFieldsByName: { [name: string]: ShowIfFields } = {}
+  for (const field of config.fields) {
+    const showIfFields: ShowIfFields = []
+    for (const { name, showIf } of config.fields)
+      if (showIf !== undefined && showIf.id === field.id)
+        showIfFields.push({ name, showIfValue: showIf.value })
+
+    if (showIfFields.length > 0) showIfFieldsByName[field.name] = showIfFields
+  }
+
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
     if (onChange) {
@@ -42,9 +57,13 @@ const MatchForm = ({
       } else {
         timeout = setTimeout(() => {
           const values = { ...formik.values }
-          if (!values.drugAllergiesFlag) values.drugAllergies = []
-          if (!values.prevChemoFlag) values.prevChemo = []
-          if (!values.prevRadFlag) values.prevRad = []
+          for (const field of config.fields) {
+            const showIfFields = showIfFieldsByName[field.name]
+            if (showIfFields !== undefined)
+              for (const { name, showIfValue } of showIfFields)
+                if (showIfValue !== values[field.name])
+                  values[name] = defaultValues[name]
+          }
           onChange(values)
         }, 1000)
       }
@@ -52,6 +71,7 @@ const MatchForm = ({
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [defaultValues, onChange, formik, triggerReset])
 
   return (
