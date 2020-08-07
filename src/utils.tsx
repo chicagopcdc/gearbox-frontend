@@ -8,10 +8,16 @@ import {
 
 export const getMatchIds = (
   criteria: EligibilityCriterion[],
-  fieldNameToId: { [name: string]: number },
   matchConditions: MatchCondition[],
+  { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
+  const fieldNameToId = fields
+    ? fields.reduce(
+        (acc, { id, name }) => ({ ...acc, [name]: id }),
+        {} as { [name: string]: number }
+      )
+    : ({} as { [name: string]: number })
   const criteriaById = criteria.reduce(
     (acc, { id, ...crit }) => ({ ...acc, [id]: crit }),
     {} as { [id: number]: any }
@@ -57,11 +63,3 @@ export const getInitialValues = ({ fields }: MatchFormConfig) =>
         {} as MatchFormValues
       )
     : ({} as MatchFormValues)
-
-export const getFieldNameToId = ({ fields }: MatchFormConfig) =>
-  fields
-    ? fields.reduce(
-        (acc, { id, name }) => ({ ...acc, [name]: id }),
-        {} as { [name: string]: number }
-      )
-    : ({} as { [name: string]: number })

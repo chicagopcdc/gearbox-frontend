@@ -29,7 +29,7 @@ import {
   loadMockMatchFromConfig,
   loadMockStudies,
 } from './mock/utils'
-import { getInitialValues, getFieldNameToId, getMatchIds } from './utils'
+import { getInitialValues, getMatchIds } from './utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -87,12 +87,8 @@ function App() {
   const [matchFormInitialValues, setMatchFormInitialValues] = useState(
     {} as MatchFormValues
   )
-  const [fieldNameToId, setFieldNameToId] = useState(
-    {} as { [name: string]: number }
-  )
   useEffect(() => {
     setMatchFormInitialValues(getInitialValues(matchFormConfig))
-    setFieldNameToId(getFieldNameToId(matchFormConfig))
   }, [matchFormConfig])
 
   const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
@@ -102,8 +98,8 @@ function App() {
     setMatchIds(
       getMatchIds(
         criteria,
-        fieldNameToId,
         matchConditions,
+        matchFormConfig,
         matchFormInitialValues
       )
     )
@@ -117,7 +113,7 @@ function App() {
       setIsMatchUpdating(true)
       setTimeout(() => {
         setMatchIds(
-          getMatchIds(criteria, fieldNameToId, matchConditions, values)
+          getMatchIds(criteria, matchConditions, matchFormConfig, values)
         )
         setIsMatchUpdating(false)
       }, 100)
