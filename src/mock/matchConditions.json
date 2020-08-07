@@ -1,0 +1,37 @@
+[
+  {
+    "studyId": 0,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [0]
+    }
+  },
+  {
+    "studyId": 1,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [1, 3]
+    }
+  },
+  {
+    "studyId": 2,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [3, 4]
+    }
+  },
+  {
+    "studyId": 3,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [5]
+    }
+  },
+  {
+    "studyId": 4,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [0, 2]
+    }
+  }
+]

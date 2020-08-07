@@ -2,37 +2,31 @@
   {
     "id": 0,
     "fieldId": 3,
-    "fieldValue": "true",
-    "studyIds": [0, 4]
+    "fieldValue": "true"
   },
   {
     "id": 1,
     "fieldId": 4,
-    "fieldValue": "false",
-    "studyIds": [1]
+    "fieldValue": "false"
   },
   {
     "id": 2,
     "fieldId": 4,
-    "fieldValue": "true",
-    "studyIds": [4]
+    "fieldValue": "true"
   },
   {
     "id": 3,
     "fieldId": 6,
-    "fieldValue": "false",
-    "studyIds": [1]
-  },
-  {
-    "id": 3,
-    "fieldId": 6,
-    "fieldValue": "true",
-    "studyIds": [2]
+    "fieldValue": "false"
   },
   {
     "id": 4,
+    "fieldId": 6,
+    "fieldValue": "true"
+  },
+  {
+    "id": 5,
     "fieldId": 8,
-    "fieldValue": "true",
-    "studyIds": [3]
+    "fieldValue": "true"
   }
 ]

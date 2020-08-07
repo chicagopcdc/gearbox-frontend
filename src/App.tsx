@@ -18,16 +18,18 @@ import Footer from './components/Footer'
 
 import {
   EligibilityCriterion,
+  MatchCondition,
   MatchFormConfig,
   MatchFormValues,
   Study,
 } from './model'
 import {
   loadMockEligibilityCriteria,
+  loadMockMatchConditions,
   loadMockMatchFromConfig,
   loadMockStudies,
 } from './mock/utils'
-import { getInitialValues, getFieldIdToName, getMatchIds } from './utils'
+import { getInitialValues, getMatchIds } from './utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -61,16 +63,19 @@ function App() {
 
   // load data
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
+  const [matchConditions, setMatchConditions] = useState([] as MatchCondition[])
   const [matchFormConfig, setMatchFormConfig] = useState({} as MatchFormConfig)
   const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
     const loadData = async () => {
       setCriteria(await loadMockEligibilityCriteria())
+      setMatchConditions(await loadMockMatchConditions())
       setMatchFormConfig(await loadMockMatchFromConfig())
       setStudies(await loadMockStudies())
     }
     const clearData = () => {
       setCriteria([] as EligibilityCriterion[])
+      setMatchConditions([] as MatchCondition[])
       setMatchFormConfig({} as MatchFormConfig)
       setStudies([] as Study[])
     }
@@ -82,20 +87,26 @@ function App() {
   const [matchFormInitialValues, setMatchFormInitialValues] = useState(
     {} as MatchFormValues
   )
-  const [fieldIdToName, setFieldIdToname] = useState(
-    {} as { [key: number]: string }
-  )
-  useEffect(() => {
-    setMatchFormInitialValues(getInitialValues(matchFormConfig))
-    setFieldIdToname(getFieldIdToName(matchFormConfig))
-  }, [matchFormConfig])
-
   const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
   const [matchIds, setMatchIds] = useState([] as number[])
   useEffect(() => {
-    setMatchFormValues({ ...matchFormInitialValues })
-    setMatchIds(getMatchIds(criteria, fieldIdToName, matchFormInitialValues))
-  }, [matchFormInitialValues]) // eslint-disable-line react-hooks/exhaustive-deps
+    if (
+      criteria.length > 0 &&
+      matchConditions.length > 0 &&
+      matchFormConfig.fields !== undefined
+    ) {
+      const matchFormInitialValues = getInitialValues(matchFormConfig)
+      const matchIds = getMatchIds(
+        criteria,
+        matchConditions,
+        matchFormConfig,
+        matchFormInitialValues
+      )
+      setMatchFormInitialValues({ ...matchFormInitialValues })
+      setMatchFormValues({ ...matchFormInitialValues })
+      setMatchIds(matchIds)
+    }
+  }, [criteria, matchConditions, matchFormConfig])
 
   // handle MatchForm update
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
@@ -104,7 +115,9 @@ function App() {
       setMatchFormValues({ ...values })
       setIsMatchUpdating(true)
       setTimeout(() => {
-        setMatchIds(getMatchIds(criteria, fieldIdToName, values))
+        setMatchIds(
+          getMatchIds(criteria, matchConditions, matchFormConfig, values)
+        )
         setIsMatchUpdating(false)
       }, 100)
     }
