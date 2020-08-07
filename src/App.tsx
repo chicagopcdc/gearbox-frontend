@@ -87,23 +87,26 @@ function App() {
   const [matchFormInitialValues, setMatchFormInitialValues] = useState(
     {} as MatchFormValues
   )
-  useEffect(() => {
-    setMatchFormInitialValues(getInitialValues(matchFormConfig))
-  }, [matchFormConfig])
-
   const [matchFormValues, setMatchFormValues] = useState({} as MatchFormValues)
   const [matchIds, setMatchIds] = useState([] as number[])
   useEffect(() => {
-    setMatchFormValues({ ...matchFormInitialValues })
-    setMatchIds(
-      getMatchIds(
+    if (
+      criteria.length > 0 &&
+      matchConditions.length > 0 &&
+      matchFormConfig.fields !== undefined
+    ) {
+      const matchFormInitialValues = getInitialValues(matchFormConfig)
+      const matchIds = getMatchIds(
         criteria,
         matchConditions,
         matchFormConfig,
         matchFormInitialValues
       )
-    )
-  }, [matchFormInitialValues]) // eslint-disable-line react-hooks/exhaustive-deps
+      setMatchFormInitialValues({ ...matchFormInitialValues })
+      setMatchFormValues({ ...matchFormInitialValues })
+      setMatchIds(matchIds)
+    }
+  }, [criteria, matchConditions, matchFormConfig])
 
   // handle MatchForm update
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
