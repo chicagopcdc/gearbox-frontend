@@ -11,14 +11,14 @@ const styles = {
 
 type MatchFormProps = {
   config: MatchFormConfig
-  initialValues: MatchFormValues
+  defaultValues: MatchFormValues
   values: MatchFormValues
   onChange(value: MatchFormValues): void
 }
 
 const MatchForm = ({
   config,
-  initialValues,
+  defaultValues,
   values,
   onChange,
 }: MatchFormProps) => {
@@ -37,7 +37,7 @@ const MatchForm = ({
       if (timeout !== undefined) clearTimeout(timeout)
 
       if (triggerReset) {
-        formik.setValues(initialValues)
+        formik.setValues(defaultValues)
         setTriggerReset(false)
       } else {
         timeout = setTimeout(() => {
@@ -52,7 +52,7 @@ const MatchForm = ({
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
-  }, [initialValues, onChange, formik, triggerReset])
+  }, [defaultValues, onChange, formik, triggerReset])
 
   return (
     <form onReset={formik.handleReset}>

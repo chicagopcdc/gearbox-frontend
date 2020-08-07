@@ -16,7 +16,7 @@ type HomeProps = {
   isMatchUpdating: boolean
   matchFormProps: {
     config: MatchFormConfig
-    initialValues: MatchFormValues
+    defaultValues: MatchFormValues
     values: MatchFormValues
     onChange(values: MatchFormValues): void
   }

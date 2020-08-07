@@ -29,7 +29,7 @@ import {
   loadMockMatchFromConfig,
   loadMockStudies,
 } from './mock/utils'
-import { getInitialValues, getMatchIds } from './utils'
+import { getDefaultValues, getMatchIds } from './utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -85,7 +85,7 @@ function App() {
   }, [])
 
   // set states derived from data
-  const [initialValues, setInitialValues] = useState({} as MatchFormValues)
+  const [defaultValues, setDefaultValues] = useState({} as MatchFormValues)
   const [values, setValues] = useState({} as MatchFormValues)
   const [matchIds, setMatchIds] = useState([] as number[])
   useEffect(() => {
@@ -94,10 +94,10 @@ function App() {
       conditions.length > 0 &&
       config.fields !== undefined
     ) {
-      const initialValues = getInitialValues(config)
-      const matchIds = getMatchIds(criteria, conditions, config, initialValues)
-      setInitialValues({ ...initialValues })
-      setValues({ ...initialValues })
+      const defaultValues = getDefaultValues(config)
+      const matchIds = getMatchIds(criteria, conditions, config, defaultValues)
+      setDefaultValues({ ...defaultValues })
+      setValues({ ...defaultValues })
       setMatchIds(matchIds)
     }
   }, [criteria, conditions, config])
@@ -109,7 +109,7 @@ function App() {
         setCriteria([] as EligibilityCriterion[])
         setConditions([] as MatchCondition[])
         setConfig({} as MatchFormConfig)
-        setInitialValues({} as MatchFormValues)
+        setDefaultValues({} as MatchFormValues)
         setValues({} as MatchFormValues)
         setMatchIds([] as number[])
       }
@@ -157,7 +157,7 @@ function App() {
               isMatchUpdating={isMatchUpdating}
               matchFormProps={{
                 config,
-                initialValues,
+                defaultValues,
                 values,
                 onChange: handleMatchFormChange,
               }}

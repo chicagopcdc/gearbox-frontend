@@ -57,7 +57,7 @@ export const getMatchIds = (
     .map(({ studyId }) => studyId)
 }
 
-export const getInitialValues = ({ fields }: MatchFormConfig) =>
+export const getDefaultValues = ({ fields }: MatchFormConfig) =>
   fields
     ? fields.reduce(
         (acc, { name, type, defaultValue }) => ({
