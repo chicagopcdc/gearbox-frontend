@@ -45,5 +45,5 @@ export type MatchFormConfig = {
 }
 
 export type MatchFormValues = {
-  [key: string]: any
+  [id: number]: any
 }
