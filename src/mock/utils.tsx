@@ -21,3 +21,15 @@ export const mockLoadMatchConditions = () => Promise.resolve(matchConditions)
 export const mockLoadMatchFromConfig = () => Promise.resolve(matchFormConfig)
 
 export const mockLoadStudies = () => Promise.resolve(studies)
+
+export const mockPostLatestUserInput = (values: MatchFormValues) => {
+  const userInput = Object.keys(values).reduce((acc, id) => {
+    const value = values[Number(id)]
+    return value === undefined || (Array.isArray(value) && value.length === 0)
+      ? acc
+      : [...acc, { id: Number(id), value }]
+  }, [] as { id: number; value: any }[])
+  console.log(JSON.stringify(userInput))
+
+  return Promise.resolve({ status: 200 })
+}
