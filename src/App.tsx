@@ -29,6 +29,7 @@ import {
   mockLoadMatchFromConfig,
   mockLoadStudies,
   mockLoadLatestUserInput,
+  mockPostLatestUserInput,
 } from './mock/utils'
 import { getDefaultValues, getMatchIds } from './utils'
 
@@ -131,6 +132,7 @@ function App() {
   const handleMatchFormChange = (newValues: MatchFormValues) => {
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
+      mockPostLatestUserInput(newValues)
       setIsMatchUpdating(true)
       setTimeout(() => {
         setMatchIds(getMatchIds(criteria, conditions, config, newValues))
