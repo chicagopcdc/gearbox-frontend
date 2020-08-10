@@ -24,10 +24,12 @@ import {
   Study,
 } from './model'
 import {
-  loadMockEligibilityCriteria,
-  loadMockMatchConditions,
-  loadMockMatchFromConfig,
-  loadMockStudies,
+  mockLoadEligibilityCriteria,
+  mockLoadMatchConditions,
+  mockLoadMatchFromConfig,
+  mockLoadStudies,
+  mockLoadLatestUserInput,
+  mockPostLatestUserInput,
 } from './mock/utils'
 import { getDefaultValues, getMatchIds } from './utils'
 
@@ -68,9 +70,9 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       const loadData = async () => {
-        setCriteria(await loadMockEligibilityCriteria())
-        setConditions(await loadMockMatchConditions())
-        setConfig(await loadMockMatchFromConfig())
+        setCriteria(await mockLoadEligibilityCriteria())
+        setConditions(await mockLoadMatchConditions())
+        setConfig(await mockLoadMatchFromConfig())
       }
       loadData()
     }
@@ -79,7 +81,7 @@ function App() {
   const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
     const loadStudies = async () => {
-      setStudies(await loadMockStudies())
+      setStudies(await mockLoadStudies())
     }
     loadStudies()
   }, [])
@@ -94,11 +96,19 @@ function App() {
       conditions.length > 0 &&
       config.fields !== undefined
     ) {
-      const defaultValues = getDefaultValues(config)
-      const matchIds = getMatchIds(criteria, conditions, config, defaultValues)
-      setDefaultValues({ ...defaultValues })
-      setValues({ ...defaultValues })
-      setMatchIds(matchIds)
+      const initData = async () => {
+        const defaultValues = getDefaultValues(config)
+        const matchIds = getMatchIds(
+          criteria,
+          conditions,
+          config,
+          defaultValues
+        )
+        setDefaultValues({ ...defaultValues })
+        setValues({ ...defaultValues, ...(await mockLoadLatestUserInput()) })
+        setMatchIds(matchIds)
+      }
+      initData()
     }
   }, [criteria, conditions, config])
 
@@ -122,6 +132,7 @@ function App() {
   const handleMatchFormChange = (newValues: MatchFormValues) => {
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
+      mockPostLatestUserInput(newValues)
       setIsMatchUpdating(true)
       setTimeout(() => {
         setMatchIds(getMatchIds(criteria, conditions, config, newValues))
