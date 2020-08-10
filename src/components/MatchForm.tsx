@@ -9,40 +9,11 @@ const styles = {
   field: 'my-4',
 }
 
-type ShowIfFields = {
-  id: number
-  showIfValue: any
-}[]
-
 type MatchFormProps = {
   config: MatchFormConfig
   defaultValues: MatchFormValues
   values: MatchFormValues
   onChange(value: MatchFormValues): void
-}
-
-const clearShowIfField = (
-  { fields }: MatchFormConfig,
-  defaultValues: MatchFormValues,
-  values: MatchFormValues
-) => {
-  const showIfFieldsById: { [id: number]: ShowIfFields } = {}
-  for (const field of fields) {
-    const showIfFields: ShowIfFields = []
-    for (const { id, showIf } of fields)
-      if (showIf !== undefined && showIf.id === field.id)
-        showIfFields.push({ id, showIfValue: showIf.value })
-    if (showIfFields.length > 0) showIfFieldsById[field.id] = showIfFields
-  }
-
-  for (const field of fields) {
-    const showIfFields = showIfFieldsById[field.id]
-    if (showIfFields !== undefined)
-      for (const { id, showIfValue } of showIfFields)
-        if (showIfValue !== values[field.id]) values[id] = defaultValues[id]
-  }
-
-  return values
 }
 
 const MatchForm = ({
@@ -70,10 +41,7 @@ const MatchForm = ({
         setTriggerReset(false)
       } else {
         timeout = setTimeout(() => {
-          const values = clearShowIfField(config, defaultValues, {
-            ...formik.values,
-          })
-          onChange(values)
+          onChange({ ...formik.values })
         }, 1000)
       }
     }

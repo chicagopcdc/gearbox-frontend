@@ -31,7 +31,7 @@ import {
   mockLoadLatestUserInput,
   mockPostLatestUserInput,
 } from './mock/utils'
-import { getDefaultValues, getMatchIds } from './utils'
+import { clearShowIfField, getDefaultValues, getMatchIds } from './utils'
 
 const styles = {
   main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
@@ -129,7 +129,9 @@ function App() {
 
   // handle MatchForm update
   const [isMatchUpdating, setIsMatchUpdating] = useState(false)
-  const handleMatchFormChange = (newValues: MatchFormValues) => {
+  const handleMatchFormChange = (newFormValues: MatchFormValues) => {
+    const newValues = clearShowIfField(config, defaultValues, newFormValues)
+
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
       mockPostLatestUserInput(newValues)

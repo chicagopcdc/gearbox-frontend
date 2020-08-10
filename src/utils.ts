@@ -58,3 +58,29 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) =>
         {} as MatchFormValues
       )
     : ({} as MatchFormValues)
+
+export const clearShowIfField = (
+  { fields }: MatchFormConfig,
+  defaultValues: MatchFormValues,
+  values: MatchFormValues
+) => {
+  const showIfFieldsById: {
+    [id: number]: { id: number; showIfValue: any }[]
+  } = {}
+  for (const field of fields) {
+    const showIfFields: { id: number; showIfValue: any }[] = []
+    for (const { id, showIf } of fields)
+      if (showIf !== undefined && showIf.id === field.id)
+        showIfFields.push({ id, showIfValue: showIf.value })
+    if (showIfFields.length > 0) showIfFieldsById[field.id] = showIfFields
+  }
+
+  for (const field of fields) {
+    const showIfFields = showIfFieldsById[field.id]
+    if (showIfFields !== undefined)
+      for (const { id, showIfValue } of showIfFields)
+        if (showIfValue !== values[field.id]) values[id] = defaultValues[id]
+  }
+
+  return values
+}
