@@ -21,7 +21,7 @@ export const getMatchIds = (
 
   const criteriaById = criteria.reduce(
     (acc, { id, ...crit }) => ({ ...acc, [id]: crit }),
-    {} as { [id: number]: any }
+    {} as { [id: number]: { fieldId: number; fieldValue: any } }
   )
   const isMatch = (algorithm: MatchAlgorithm) => {
     const handler = (algoCrit: number | MatchAlgorithm) =>
