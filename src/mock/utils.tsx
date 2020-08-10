@@ -5,10 +5,10 @@ import matchFormConfig from './matchFormConfig.json'
 import studies from './studies.json'
 import { MatchFormValues } from '../model'
 
-export const loadMockEligibilityCriteria = () =>
+export const mockLoadEligibilityCriteria = () =>
   Promise.resolve(eligibilityCriteria)
 
-export const loadMockLatestUserInput = () =>
+export const mockLoadLatestUserInput = () =>
   Promise.resolve(latestUserInput).then((fields) =>
     fields.reduce(
       (acc, { id, value }) => ({ ...acc, [id]: value }),
@@ -16,8 +16,8 @@ export const loadMockLatestUserInput = () =>
     )
   )
 
-export const loadMockMatchConditions = () => Promise.resolve(matchConditions)
+export const mockLoadMatchConditions = () => Promise.resolve(matchConditions)
 
-export const loadMockMatchFromConfig = () => Promise.resolve(matchFormConfig)
+export const mockLoadMatchFromConfig = () => Promise.resolve(matchFormConfig)
 
-export const loadMockStudies = () => Promise.resolve(studies)
+export const mockLoadStudies = () => Promise.resolve(studies)
