@@ -28,6 +28,7 @@ import {
   loadMockMatchConditions,
   loadMockMatchFromConfig,
   loadMockStudies,
+  loadMockLatestUserInput,
 } from './mock/utils'
 import { getDefaultValues, getMatchIds } from './utils'
 
@@ -94,11 +95,19 @@ function App() {
       conditions.length > 0 &&
       config.fields !== undefined
     ) {
-      const defaultValues = getDefaultValues(config)
-      const matchIds = getMatchIds(criteria, conditions, config, defaultValues)
-      setDefaultValues({ ...defaultValues })
-      setValues({ ...defaultValues })
-      setMatchIds(matchIds)
+      const initData = async () => {
+        const defaultValues = getDefaultValues(config)
+        const matchIds = getMatchIds(
+          criteria,
+          conditions,
+          config,
+          defaultValues
+        )
+        setDefaultValues({ ...defaultValues })
+        setValues({ ...defaultValues, ...(await loadMockLatestUserInput()) })
+        setMatchIds(matchIds)
+      }
+      initData()
     }
   }, [criteria, conditions, config])
 
