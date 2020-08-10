@@ -33,23 +33,23 @@ const MatchForm = ({
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
-    if (onChange) {
-      if (timeout !== undefined) clearTimeout(timeout)
+    if (timeout !== undefined) clearTimeout(timeout)
 
-      if (triggerReset) {
-        formik.setValues(defaultValues)
-        setTriggerReset(false)
-      } else {
-        timeout = setTimeout(() => {
-          onChange({ ...formik.values })
-        }, 1000)
-      }
-    }
+    timeout = setTimeout(() => {
+      onChange({ ...formik.values })
+    }, 1000)
+
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultValues, onChange, formik, triggerReset])
+  }, [defaultValues, onChange, formik])
+
+  useEffect(() => {
+    if (triggerReset) {
+      formik.setValues(defaultValues)
+      setTriggerReset(false)
+    }
+  }, [triggerReset]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <form onReset={formik.handleReset}>
