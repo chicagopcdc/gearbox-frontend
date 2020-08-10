@@ -48,24 +48,24 @@ const testHelper = (values: MatchFormValues) =>
 
 test('getMatchIds for simple AND algorithm', () => {
   const values: MatchFormValues = {
-    'field 0': true,
-    'field 1': false,
+    0: true,
+    1: false,
   }
   expect(testHelper(values)).toEqual([0, 1])
 })
 
 test('getMatchIds for simple OR algorithm', () => {
   const values: MatchFormValues = {
-    'field 0': false,
-    'field 1': true,
+    0: false,
+    1: true,
   }
   expect(testHelper(values)).toEqual([1])
 })
 
 test('getMatchIds for nested algorithm', () => {
   const values: MatchFormValues = {
-    'field 0': true,
-    'field 2': true,
+    0: true,
+    2: true,
   }
   expect(testHelper(values)).toEqual([1, 2])
 })

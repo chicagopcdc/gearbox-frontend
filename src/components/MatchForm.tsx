@@ -10,7 +10,7 @@ const styles = {
 }
 
 type ShowIfFields = {
-  name: string
+  id: number
   showIfValue: any
 }[]
 
@@ -36,14 +36,14 @@ const MatchForm = ({
     },
   })
 
-  const showIfFieldsByName: { [name: string]: ShowIfFields } = {}
+  const showIfFieldsById: { [id: number]: ShowIfFields } = {}
   for (const field of config.fields) {
     const showIfFields: ShowIfFields = []
-    for (const { name, showIf } of config.fields)
+    for (const { id, showIf } of config.fields)
       if (showIf !== undefined && showIf.id === field.id)
-        showIfFields.push({ name, showIfValue: showIf.value })
+        showIfFields.push({ id, showIfValue: showIf.value })
 
-    if (showIfFields.length > 0) showIfFieldsByName[field.name] = showIfFields
+    if (showIfFields.length > 0) showIfFieldsById[field.id] = showIfFields
   }
 
   useEffect(() => {
@@ -58,11 +58,11 @@ const MatchForm = ({
         timeout = setTimeout(() => {
           const values = { ...formik.values }
           for (const field of config.fields) {
-            const showIfFields = showIfFieldsByName[field.name]
+            const showIfFields = showIfFieldsById[field.id]
             if (showIfFields !== undefined)
-              for (const { name, showIfValue } of showIfFields)
-                if (showIfValue !== values[field.name])
-                  values[name] = defaultValues[name]
+              for (const { id, showIfValue } of showIfFields)
+                if (showIfValue !== values[field.id])
+                  values[id] = defaultValues[id]
           }
           onChange(values)
         }, 1000)
@@ -88,15 +88,15 @@ const MatchForm = ({
               if (showIf !== undefined)
                 for (const field of config.fields)
                   if (showIf.id === field.id) {
-                    hideField = showIf.value !== formik.values[field.name]
+                    hideField = showIf.value !== formik.values[field.id]
                     break
                   }
 
               return hideField ? undefined : (
-                <div className="m-4" key={fieldConfig.name}>
+                <div className="m-4" key={id}>
                   <Field
-                    config={fieldConfig}
-                    value={formik.values[fieldConfig.name]}
+                    config={{ ...fieldConfig, name: String(id) }}
+                    value={formik.values[id]}
                     onChange={formik.handleChange}
                   />
                 </div>

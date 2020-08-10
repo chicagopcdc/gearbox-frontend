@@ -19,25 +19,15 @@ export const getMatchIds = (
   )
     return []
 
-  const fieldIdByName = fields.reduce(
-    (acc, { id, name }) => ({ ...acc, [name]: id }),
-    {} as { [name: string]: number }
-  )
   const criteriaById = criteria.reduce(
     (acc, { id, ...crit }) => ({ ...acc, [id]: crit }),
     {} as { [id: number]: any }
   )
-  const valueById = Object.keys(values)
-    .map((name) => ({ id: fieldIdByName[name], value: values[name] }))
-    .reduce(
-      (acc, { id, value }) => ({ ...acc, [id]: value }),
-      {} as { [id: number]: any }
-    )
   const isMatch = (algorithm: MatchAlgorithm) => {
     const handler = (algoCrit: number | MatchAlgorithm) =>
       typeof algoCrit === 'number'
         ? criteriaById[algoCrit].fieldValue ===
-          valueById[criteriaById[algoCrit].fieldId]
+          values[criteriaById[algoCrit].fieldId]
         : isMatch(algoCrit)
 
     let result
@@ -60,9 +50,9 @@ export const getMatchIds = (
 export const getDefaultValues = ({ fields }: MatchFormConfig) =>
   fields
     ? fields.reduce(
-        (acc, { name, type, defaultValue }) => ({
+        (acc, { id, type, defaultValue }) => ({
           ...acc,
-          [name]:
+          [id]:
             type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
         }),
         {} as MatchFormValues
