@@ -128,18 +128,16 @@ function App() {
   }, [isAuthenticated])
 
   // handle MatchForm update
-  const [isMatchUpdating, setIsMatchUpdating] = useState(false)
+  const [isChanging, setIsChanging] = useState(false)
+  const signalChange = () => setIsChanging(true)
   const handleMatchFormChange = (newFormValues: MatchFormValues) => {
     const newValues = clearShowIfField(config, defaultValues, newFormValues)
 
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
+      setMatchIds(getMatchIds(criteria, conditions, config, newValues))
+      setIsChanging(false)
       mockPostLatestUserInput(newValues)
-      setIsMatchUpdating(true)
-      setTimeout(() => {
-        setMatchIds(getMatchIds(criteria, conditions, config, newValues))
-        setIsMatchUpdating(false)
-      }, 100)
     }
   }
 
@@ -167,12 +165,13 @@ function App() {
           >
             <Home
               isAuthenticated={isAuthenticated}
-              isMatchUpdating={isMatchUpdating}
+              isChanging={isChanging}
               matchFormProps={{
                 config,
                 defaultValues,
                 values,
                 onChange: handleMatchFormChange,
+                signalChange,
               }}
               matchStatusProps={{
                 matchIds,

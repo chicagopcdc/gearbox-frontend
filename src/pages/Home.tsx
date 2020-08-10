@@ -13,12 +13,13 @@ const paragraphs = [
 
 type HomeProps = {
   isAuthenticated: boolean
-  isMatchUpdating: boolean
+  isChanging: boolean
   matchFormProps: {
     config: MatchFormConfig
     defaultValues: MatchFormValues
     values: MatchFormValues
     onChange(values: MatchFormValues): void
+    signalChange(): void
   }
   matchStatusProps: {
     matchIds: number[]
@@ -28,7 +29,7 @@ type HomeProps = {
 
 const Home = ({
   isAuthenticated,
-  isMatchUpdating,
+  isChanging,
   matchFormProps,
   matchStatusProps,
 }: HomeProps) => (
@@ -51,9 +52,7 @@ const Home = ({
 
         <Box
           name="Open Trials"
-          outerClassName={`md:flex-grow ${
-            isMatchUpdating ? 'bg-gray-200' : ''
-          }`}
+          outerClassName={`md:flex-grow ${isChanging ? 'bg-gray-200' : ''}`}
         >
           <MatchStatus {...matchStatusProps} />
         </Box>

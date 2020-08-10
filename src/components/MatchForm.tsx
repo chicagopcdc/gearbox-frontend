@@ -14,6 +14,7 @@ type MatchFormProps = {
   defaultValues: MatchFormValues
   values: MatchFormValues
   onChange(value: MatchFormValues): void
+  signalChange(): void
 }
 
 const MatchForm = ({
@@ -21,6 +22,7 @@ const MatchForm = ({
   defaultValues,
   values,
   onChange,
+  signalChange,
 }: MatchFormProps) => {
   const [triggerReset, setTriggerReset] = useState(false)
   const formik = useFormik({
@@ -36,6 +38,7 @@ const MatchForm = ({
     if (timeout !== undefined) clearTimeout(timeout)
 
     if (formik.dirty) {
+      signalChange()
       timeout = setTimeout(() => {
         onChange({ ...formik.values })
       }, 1000)
