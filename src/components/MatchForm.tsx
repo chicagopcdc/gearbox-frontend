@@ -35,14 +35,16 @@ const MatchForm = ({
     let timeout: NodeJS.Timeout | undefined
     if (timeout !== undefined) clearTimeout(timeout)
 
-    timeout = setTimeout(() => {
-      onChange({ ...formik.values })
-    }, 1000)
+    if (formik.dirty) {
+      timeout = setTimeout(() => {
+        onChange({ ...formik.values })
+      }, 1000)
+    }
 
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
-  }, [defaultValues, onChange, formik])
+  }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (triggerReset) {
