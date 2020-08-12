@@ -58,35 +58,36 @@ const MatchForm = ({
 
   return (
     <form onReset={formik.handleReset}>
-      {config.groups.map((group) => (
-        <Fragment key={group.id}>
-          {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
+      {config.groups &&
+        config.groups.map((group) => (
+          <Fragment key={group.id}>
+            {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
 
-          {config.fields.map(
-            ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
-              if (groupId !== group.id) return undefined
+            {config.fields.map(
+              ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
+                if (groupId !== group.id) return undefined
 
-              let hideField = false
-              if (showIf !== undefined)
-                for (const field of config.fields)
-                  if (showIf.id === field.id) {
-                    hideField = showIf.value !== formik.values[field.id]
-                    break
-                  }
+                let hideField = false
+                if (showIf !== undefined)
+                  for (const field of config.fields)
+                    if (showIf.id === field.id) {
+                      hideField = showIf.value !== formik.values[field.id]
+                      break
+                    }
 
-              return hideField ? undefined : (
-                <div className="m-4" key={id}>
-                  <Field
-                    config={{ ...fieldConfig, name: String(id) }}
-                    value={formik.values[id]}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-              )
-            }
-          )}
-        </Fragment>
-      ))}
+                return hideField ? undefined : (
+                  <div className="m-4" key={id}>
+                    <Field
+                      config={{ ...fieldConfig, name: String(id) }}
+                      value={formik.values[id]}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                )
+              }
+            )}
+          </Fragment>
+        ))}
 
       <div className="flex flex-wrap justify-center mt-8">
         <Button type="reset">Reset</Button>
