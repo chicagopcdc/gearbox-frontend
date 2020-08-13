@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
@@ -11,7 +11,24 @@ const paragraphs = [
   `GEARBOx has compiled both a centralized lift of COG-sponsored Phase I and Phase II pediatric acute leukemia trials and a complete index of each study's eligibility criteria. Using these data points, our algorithm matches patients to trials for which they are eligible - streaming the process by which Clinical Research Associates (CRAs) identify and initiate their patients' next step in care.`,
 ]
 
+const fetchFenceAccessToken = (code: string) => {
+  const fenceUrl = process.env.REACT_APP_FENCE_URL
+  const body = new FormData()
+  const params = [
+    ['grant_type', 'authorization_code'],
+    ['redirect_uri', window.location.origin],
+    ['code', code],
+    ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
+  ]
+  params.forEach(([key, value]) => body.append(key, value))
+
+  return fetch(`${fenceUrl}/oauth2/token`, { method: 'POST', body })
+    .then((response) => response.json())
+    .then(({ access_token }) => access_token)
+}
+
 type HomeProps = {
+  authenticate(username: string, cb?: () => void): void
   isAuthenticated: boolean
   isChanging: boolean
   matchFormProps: {
@@ -28,43 +45,63 @@ type HomeProps = {
 }
 
 const Home = ({
+  authenticate,
   isAuthenticated,
   isChanging,
   matchFormProps,
   matchStatusProps,
-}: HomeProps) => (
-  <>
-    {paragraphs.map((p, i) => (
-      <p className="mb-4" key={i}>
-        {p}
-      </p>
-    ))}
+}: HomeProps) => {
+  const history = useHistory()
+  useEffect(() => {
+    const hasAuthCode = window.location.search.match(/code=([-.\w]+)/)
 
-    {isAuthenticated ? (
-      <div className="mt-16 md:flex">
-        <Box
-          name="Patient Information"
-          outerClassName="md:max-w-3/5"
-          innerClassName="px-8"
-        >
-          <MatchForm {...matchFormProps} />
-        </Box>
+    if (!isAuthenticated && hasAuthCode !== null) {
+      const code = hasAuthCode[1]
+      fetchFenceAccessToken(code)
+        .then((access_token) => {
+          const token_payload = atob(access_token.split('.')[1])
+          const { context } = JSON.parse(token_payload)
+          authenticate(context.user.name, () => history.replace('/'))
+        })
+        .catch(() => console.error('Error: Invalid authorization code!'))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-        <Box
-          name="Open Trials"
-          outerClassName={`md:flex-grow ${isChanging ? 'bg-gray-200' : ''}`}
-        >
-          <MatchStatus {...matchStatusProps} />
-        </Box>
-      </div>
-    ) : (
-      <div className="text-center my-8">
-        <Link to="/login">
-          <Button>Log in to find matching clinical trials</Button>
-        </Link>
-      </div>
-    )}
-  </>
-)
+  return (
+    <>
+      {paragraphs.map((p, i) => (
+        <p className="mb-4" key={i}>
+          {p}
+        </p>
+      ))}
+
+      {isAuthenticated ? (
+        <div className="mt-16 md:flex">
+          <Box
+            name="Patient Information"
+            outerClassName="md:max-w-3/5"
+            innerClassName="px-8"
+          >
+            <MatchForm {...matchFormProps} />
+          </Box>
+
+          <Box
+            name="Open Trials"
+            outerClassName={`md:flex-grow ${isChanging ? 'bg-gray-200' : ''}`}
+          >
+            <MatchStatus {...matchStatusProps} />
+          </Box>
+        </div>
+      ) : (
+        <div className="text-center my-8">
+          <Link to="/login">
+            <Button>Log in to find matching clinical trials</Button>
+          </Link>
+        </div>
+      )}
+    </>
+  )
+}
 
 export default Home

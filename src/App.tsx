@@ -164,6 +164,7 @@ function App() {
             }}
           >
             <Home
+              authenticate={authenticate}
               isAuthenticated={isAuthenticated}
               isChanging={isChanging}
               matchFormProps={{
