@@ -41,12 +41,14 @@ const Home = ({
     const hasAuthCode = window.location.search.match(/code=([-.\w]+)/)
 
     if (!isAuthenticated && hasAuthCode !== null) {
+      history.replace('/')
+
       const code = hasAuthCode[1]
       fetchFenceAccessToken(code)
         .then((access_token) => {
           const token_payload = atob(access_token.split('.')[1])
           const { context } = JSON.parse(token_payload)
-          authenticate(context.user.name, () => history.replace('/'))
+          authenticate(context.user.name)
         })
         .catch(() => console.error('Error: Invalid authorization code!'))
     }
