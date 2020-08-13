@@ -1,5 +1,4 @@
-import React from 'react'
-import { useFormik } from 'formik'
+import React, { useState } from 'react'
 import Button from './Inputs/Button'
 import TextField from './Inputs/TextField'
 
@@ -12,23 +11,24 @@ type LoginFormProps = {
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
-  const formik = useFormik({
-    initialValues: {
-      username: '',
-      password: '',
-    },
-    onSubmit: onLogin,
-  })
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        onLogin({ username, password })
+      }}
+    >
       <div className={styles.field}>
         <TextField
           label="Username"
           name="username"
           autoFocus
           required
-          onChange={formik.handleChange}
-          value={formik.values.username}
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
         />
       </div>
 
@@ -38,8 +38,8 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           name="password"
           type="password"
           required
-          onChange={formik.handleChange}
-          value={formik.values.password}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
         />
       </div>
 
