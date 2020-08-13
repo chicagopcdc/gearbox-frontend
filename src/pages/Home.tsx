@@ -68,6 +68,10 @@ const Home = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const isMatchFromDataReady =
+    matchFormProps.config.fields !== undefined &&
+    Object.keys(matchFormProps.values).length > 0
+
   return (
     <>
       {paragraphs.map((p, i) => (
@@ -76,7 +80,7 @@ const Home = ({
         </p>
       ))}
 
-      {isAuthenticated ? (
+      {isAuthenticated && isMatchFromDataReady ? (
         <div className="mt-16 md:flex">
           <Box
             name="Patient Information"
