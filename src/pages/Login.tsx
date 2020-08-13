@@ -13,17 +13,8 @@ const Login = ({
   authenticate(username: string, cb?: () => void): void
 }) => {
   const history = useHistory()
-
-  const handleLogin = (values: {
-    username: string
-    password?: string
-  }): void => {
-    if (process.env.NODE_ENV === 'development') {
-      alert(JSON.stringify(values, null, 2))
-    }
-
+  const handleLogin = (values: { username: string; password?: string }) =>
     authenticate(values.username, () => history.replace('/'))
-  }
 
   return (
     <div className="flex flex-col h-full align-center justify-center max-w-md mx-auto">
