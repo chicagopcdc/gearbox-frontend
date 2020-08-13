@@ -26,6 +26,19 @@ const Login = ({
     authenticate(values.username, () => history.replace('/'))
   }
 
+  const initFenceOAuth = () => {
+    const fenceUrl = process.env.REACT_APP_FENCE_URL
+    const params = [
+      ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
+      ['response_type', 'code'],
+      ['redirect_uri', window.location.origin],
+      ['scope', 'openid'],
+    ]
+    window.location.href = `${fenceUrl}/oauth2/authorize?${params
+      .map(([key, value]) => `${key}=${value}`)
+      .join('&')}`
+  }
+
   return (
     <div className="flex flex-col h-full align-center justify-center max-w-md mx-auto">
       <img
@@ -39,7 +52,7 @@ const Login = ({
         innerClassName="flex flex-col justify-center text-center"
       >
         <div className="my-4">
-          <GoogleLoginButton onLogin={handleLogin} />
+          <GoogleLoginButton onClick={initFenceOAuth} />
         </div>
 
         <div className="flex items-center my-4">
