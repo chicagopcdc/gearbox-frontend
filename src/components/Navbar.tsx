@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
-import { useGoogleLogout } from 'react-google-login'
 import Button from './Inputs/Button'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
@@ -27,61 +26,49 @@ type NavbarProps = {
   signout: (cb?: () => void) => void
 }
 
-const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => {
-  const { signOut: googleSignOut } = useGoogleLogout({
-    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID as string,
-  })
+const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => (
+  <>
+    <div className={styles.authbar}>
+      {isAuthenticated ? (
+        <>
+          {username !== '' && (
+            <div className="flex items-center text-sm pr-4">
+              Hello,&nbsp;<span className="font-bold">{username}</span>
+            </div>
+          )}
+          <Button small onClick={() => signout()}>
+            Logout
+          </Button>
+        </>
+      ) : (
+        <Link to="/login">
+          <Button small>Login</Button>
+        </Link>
+      )}
+    </div>
 
-  return (
-    <>
-      <div className={styles.authbar}>
-        {isAuthenticated ? (
-          <>
-            {username !== '' && (
-              <div className="flex items-center text-sm pr-4">
-                Hello,&nbsp;<span className="font-bold">{username}</span>
-              </div>
-            )}
-            <Button
-              small
-              onClick={() => {
-                const isGoogleLogin = username.includes('@gmail.com')
-                signout(isGoogleLogin ? googleSignOut : undefined)
-              }}
-            >
-              Logout
-            </Button>
-          </>
-        ) : (
-          <Link to="/login">
-            <Button small>Login</Button>
-          </Link>
-        )}
+    <nav className={styles.navbar}>
+      <div className={styles.navbarLogo}>
+        <NavLink to="/">
+          <img
+            src={gearboxLogo}
+            alt="GEARBOx logo"
+            style={{ maxHeight: '100px' }}
+          />
+        </NavLink>
       </div>
 
-      <nav className={styles.navbar}>
-        <div className={styles.navbarLogo}>
-          <NavLink to="/">
-            <img
-              src={gearboxLogo}
-              alt="GEARBOx logo"
-              style={{ maxHeight: '100px' }}
-            />
-          </NavLink>
-        </div>
-
-        <ul className={styles.navbarItems}>
-          {navItems.map(({ path, name }) => (
-            <li className={styles.navbarItem} key={path}>
-              <NavLink to={path} activeClassName="text-red-500">
-                {name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </>
-  )
-}
+      <ul className={styles.navbarItems}>
+        {navItems.map(({ path, name }) => (
+          <li className={styles.navbarItem} key={path}>
+            <NavLink to={path} activeClassName="text-red-500">
+              {name}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </>
+)
 
 export default Navbar
