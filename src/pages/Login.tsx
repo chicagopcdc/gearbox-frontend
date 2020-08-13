@@ -1,11 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
-
 import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import LoginForm from '../components/LoginForm'
 import GoogleLoginButton from '../components/GoogleLoginButton'
-
+import { initFenceOAuth } from '../utils'
 import gearboxLogo from '../assets/gearbox-logo.png'
 
 const Login = ({
@@ -24,19 +23,6 @@ const Login = ({
     }
 
     authenticate(values.username, () => history.replace('/'))
-  }
-
-  const initFenceOAuth = () => {
-    const fenceUrl = process.env.REACT_APP_FENCE_URL
-    const params = [
-      ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
-      ['response_type', 'code'],
-      ['redirect_uri', window.location.origin],
-      ['scope', 'openid'],
-    ]
-    window.location.href = `${fenceUrl}/oauth2/authorize?${params
-      .map(([key, value]) => `${key}=${value}`)
-      .join('&')}`
   }
 
   return (

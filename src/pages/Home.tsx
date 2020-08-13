@@ -5,27 +5,12 @@ import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchStatus from '../components/MatchStatus'
 import { MatchFormConfig, MatchFormValues, Study } from '../model'
+import { fetchFenceAccessToken } from '../utils'
 
 const paragraphs = [
   `A tool built and maintained by the Pediatric Acute Leukemia (PedAL) Group, GEARBOx matches pediatric patients currently on Phase III clinical trials who experience refactory or relapsing disease to new Phase I or Phase II clinical trials based on their personal and clinical data. To see a list of all the trials included in this search, please select "Eligible Trials" above.`,
   `GEARBOx has compiled both a centralized lift of COG-sponsored Phase I and Phase II pediatric acute leukemia trials and a complete index of each study's eligibility criteria. Using these data points, our algorithm matches patients to trials for which they are eligible - streaming the process by which Clinical Research Associates (CRAs) identify and initiate their patients' next step in care.`,
 ]
-
-const fetchFenceAccessToken = (code: string) => {
-  const fenceUrl = process.env.REACT_APP_FENCE_URL
-  const body = new FormData()
-  const params = [
-    ['grant_type', 'authorization_code'],
-    ['redirect_uri', window.location.origin],
-    ['code', code],
-    ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
-  ]
-  params.forEach(([key, value]) => body.append(key, value))
-
-  return fetch(`${fenceUrl}/oauth2/token`, { method: 'POST', body })
-    .then((response) => response.json())
-    .then(({ access_token }) => access_token)
-}
 
 type HomeProps = {
   authenticate(username: string, cb?: () => void): void

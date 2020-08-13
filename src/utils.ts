@@ -84,3 +84,32 @@ export const clearShowIfField = (
 
   return values
 }
+
+export const initFenceOAuth = () => {
+  const fenceUrl = process.env.REACT_APP_FENCE_URL
+  const params = [
+    ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
+    ['response_type', 'code'],
+    ['redirect_uri', window.location.origin],
+    ['scope', 'openid'],
+  ]
+  window.location.href = `${fenceUrl}/oauth2/authorize?${params
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&')}`
+}
+
+export const fetchFenceAccessToken = (code: string) => {
+  const fenceUrl = process.env.REACT_APP_FENCE_URL
+  const body = new FormData()
+  const params = [
+    ['grant_type', 'authorization_code'],
+    ['redirect_uri', window.location.origin],
+    ['code', code],
+    ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
+  ]
+  params.forEach(([key, value]) => body.append(key, value))
+
+  return fetch(`${fenceUrl}/oauth2/token`, { method: 'POST', body })
+    .then((response) => response.json())
+    .then(({ access_token }) => access_token)
+}
