@@ -15,3 +15,5 @@ export const defaultView = () => (
 )
 
 export const disabled = () => <Button disabled={true}>Click me</Button>
+
+export const small = () => <Button small>Click me</Button>
