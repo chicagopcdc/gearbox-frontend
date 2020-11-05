@@ -18,7 +18,7 @@ const styleForSize = {
 }
 
 const styles = {
-  button(disabled?: boolean, size: ButtonSize = 'normal') {
+  button(disabled: boolean = false, size: ButtonSize = 'normal') {
     return `bg-primary text-white uppercase ${
       disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
     } ${styleForSize[size]}`
