@@ -10,10 +10,8 @@ type ButtonProps = {
 
 const styles = {
   button(disabled?: boolean, small?: boolean) {
-    return `border border-solid rounded px-4 ${
-      disabled
-        ? 'cursor-not-allowed opacity-50'
-        : 'border-black hover:bg-gray-300'
+    return `bg-primary text-white uppercase px-4 ${
+      disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
     } ${small ? 'text-xs py-1' : 'py-2'}`
   },
 }
