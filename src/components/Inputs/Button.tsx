@@ -13,11 +13,13 @@ type ButtonProps = {
 
 const styles = {
   button(disabled: boolean = false, size: ButtonSize = 'normal') {
+    const styleForDisabled = this.styleForDisabled(disabled)
     const styleForSize = this.styleForSize(size)
 
-    return `bg-primary text-white uppercase ${
-      disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
-    } ${styleForSize}`
+    return `bg-primary text-white uppercase ${styleForDisabled} ${styleForSize}`
+  },
+  styleForDisabled(disabled: boolean): string {
+    return disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
   },
   styleForSize(size: ButtonSize): string {
     switch (size) {
