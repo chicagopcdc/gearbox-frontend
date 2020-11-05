@@ -4,7 +4,7 @@ type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
   small?: boolean
-  type?: 'button' | 'submit' | 'reset' | undefined
+  type?: 'button' | 'submit' | 'reset'
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
