@@ -1,10 +1,13 @@
 import React from 'react'
 
+type ButtonSize = 'normal' | 'large' | 'small'
+type ButtonType = 'button' | 'submit' | 'reset'
+
 type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
-  size?: 'normal' | 'large' | 'small'
-  type?: 'button' | 'submit' | 'reset'
+  size?: ButtonSize
+  type?: ButtonType
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
@@ -15,7 +18,7 @@ const styleForSize = {
 }
 
 const styles = {
-  button(disabled?: boolean, size: 'normal' | 'large' | 'small' = 'normal') {
+  button(disabled?: boolean, size: ButtonSize = 'normal') {
     return `bg-primary text-white uppercase ${
       disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
     } ${styleForSize[size]}`
