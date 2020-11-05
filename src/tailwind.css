@@ -3,6 +3,10 @@
 
 @tailwind components;
 
+body {
+  font-family: Lato, Helvetica, Arial, sans-serif;
+}
+
 #root {
   height: 100vh;
   display: flex;
