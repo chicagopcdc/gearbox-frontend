@@ -16,6 +16,8 @@ export const defaultView = () => (
 
 export const disabled = () => <Button disabled={true}>Click me</Button>
 
+export const outline = () => <Button outline>Click me</Button>
+
 export const small = () => <Button size="small">Click me</Button>
 
 export const large = () => <Button size="large">Click me</Button>
