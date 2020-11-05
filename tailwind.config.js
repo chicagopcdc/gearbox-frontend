@@ -15,6 +15,10 @@ module.exports = {
         display: 'Bebas neue',
         body: 'Lato',
       },
+      colors: {
+        primary: '#CC0000',
+        secondary: '#AA0000',
+      },
     },
   },
   variants: {},
