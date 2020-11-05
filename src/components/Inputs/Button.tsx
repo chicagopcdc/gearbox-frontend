@@ -6,20 +6,38 @@ type ButtonType = 'button' | 'submit' | 'reset'
 type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
+  outline?: boolean
   size?: ButtonSize
   type?: ButtonType
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 const styles = {
-  button(disabled: boolean = false, size: ButtonSize = 'normal') {
+  button(
+    disabled: boolean = false,
+    outline: boolean = false,
+    size: ButtonSize = 'normal'
+  ) {
     const styleForDisabled = this.styleForDisabled(disabled)
+    const styleForHover = this.styleForHover(disabled, outline)
+    const styleForOutline = this.styleForOutline(outline)
     const styleForSize = this.styleForSize(size)
 
-    return `bg-primary text-white uppercase ${styleForDisabled} ${styleForSize}`
+    return `uppercase ${styleForDisabled} ${styleForHover} ${styleForOutline} ${styleForSize}`
   },
   styleForDisabled(disabled: boolean): string {
-    return disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
+    return disabled ? 'cursor-not-allowed opacity-50' : ''
+  },
+  styleForHover(disabled: boolean, outline: boolean): string {
+    if (disabled) return ''
+    return outline
+      ? 'hover:border-secondary hover:text-secondary hover:bg-red-100'
+      : 'hover:bg-secondary'
+  },
+  styleForOutline(outline: boolean): string {
+    return outline
+      ? 'text-primary border border-solid border-primary'
+      : 'bg-primary text-white'
   },
   styleForSize(size: ButtonSize): string {
     switch (size) {
@@ -33,8 +51,14 @@ const styles = {
   },
 }
 
-const Button = ({ children, disabled, size, ...attrs }: ButtonProps) => (
-  <button {...attrs} className={styles.button(disabled, size)}>
+const Button = ({
+  children,
+  disabled,
+  outline,
+  size,
+  ...attrs
+}: ButtonProps) => (
+  <button {...attrs} className={styles.button(disabled, outline, size)}>
     {children}
   </button>
 )
