@@ -13,11 +13,7 @@ type ButtonProps = {
 }
 
 const styles = {
-  button(
-    disabled: boolean = false,
-    outline: boolean = false,
-    size: ButtonSize = 'normal'
-  ) {
+  button(disabled = false, outline = false, size: ButtonSize = 'normal') {
     const styleForDisabled = this.styleForDisabled(disabled)
     const styleForHover = this.styleForHover(disabled, outline)
     const styleForOutline = this.styleForOutline(outline)
