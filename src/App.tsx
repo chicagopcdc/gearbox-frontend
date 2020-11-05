@@ -34,9 +34,8 @@ import {
 import { clearShowIfField, getDefaultValues, getMatchIds } from './utils'
 
 const styles = {
-  header: 'font-body',
-  main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8 font-body',
-  footer: 'flex-shrink-0 font-body',
+  main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
+  footer: 'flex-shrink-0',
 }
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
@@ -144,7 +143,7 @@ function App() {
 
   return (
     <Router>
-      <header className={styles.header}>
+      <header>
         {!isLogin && (
           <Navbar
             isAuthenticated={isAuthenticated}
