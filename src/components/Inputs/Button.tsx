@@ -55,12 +55,9 @@ const Button = ({
   type,
   onClick,
 }: ButtonProps) => {
-  const attrs = { disabled, type, onClick }
-  return (
-    <button {...attrs} className={styles.button(disabled, outline, size)}>
-      {children}
-    </button>
-  )
+  const className = styles.button(disabled, outline, size)
+  const attrs = { className, disabled, type, onClick }
+  return <button {...attrs}>{children}</button>
 }
 
 export default Button
