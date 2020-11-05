@@ -11,17 +11,23 @@ type ButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const styleForSize = {
-  normal: 'px-4 py-2',
-  large: 'px-6 py-3 text-xl',
-  small: 'px-2 py-1 text-xs',
-}
-
 const styles = {
   button(disabled: boolean = false, size: ButtonSize = 'normal') {
+    const styleForSize = this.styleForSize(size)
+
     return `bg-primary text-white uppercase ${
       disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
-    } ${styleForSize[size]}`
+    } ${styleForSize}`
+  },
+  styleForSize(size: ButtonSize): string {
+    switch (size) {
+      case 'normal':
+        return 'px-4 py-2'
+      case 'large':
+        return 'px-6 py-3 text-xl'
+      case 'small':
+        return 'px-2 py-1 text-xs'
+    }
   },
 }
 
