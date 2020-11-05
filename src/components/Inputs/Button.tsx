@@ -3,21 +3,27 @@ import React from 'react'
 type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
-  small?: boolean
+  size?: 'normal' | 'large' | 'small'
   type?: 'button' | 'submit' | 'reset'
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
+const styleForSize = {
+  normal: 'px-4 py-2',
+  large: 'px-6 py-3 text-xl',
+  small: 'px-2 py-1 text-xs',
+}
+
 const styles = {
-  button(disabled?: boolean, small?: boolean) {
-    return `bg-primary text-white uppercase px-4 ${
+  button(disabled?: boolean, size: 'normal' | 'large' | 'small' = 'normal') {
+    return `bg-primary text-white uppercase ${
       disabled ? 'cursor-not-allowed opacity-50' : 'hover:bg-secondary'
-    } ${small ? 'text-xs py-1' : 'py-2'}`
+    } ${styleForSize[size]}`
   },
 }
 
-const Button = ({ children, disabled, small, ...attrs }: ButtonProps) => (
-  <button {...attrs} className={styles.button(disabled, small)}>
+const Button = ({ children, disabled, size, ...attrs }: ButtonProps) => (
+  <button {...attrs} className={styles.button(disabled, size)}>
     {children}
   </button>
 )
