@@ -36,13 +36,13 @@ const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => (
               Hello,&nbsp;<span className="font-bold">{username}</span>
             </div>
           )}
-          <Button small onClick={() => signout()}>
+          <Button size="small" onClick={() => signout()}>
             Logout
           </Button>
         </>
       ) : (
         <Link to="/login">
-          <Button small>Login</Button>
+          <Button size="small">Login</Button>
         </Link>
       )}
     </div>
