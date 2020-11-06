@@ -1,12 +1,4 @@
 import React from 'react'
-import Label from './Label'
-
-const styles = {
-  container: 'sm:flex sm:items-center',
-  label: 'sm:w-1/2 mr-4',
-  input:
-    'form-input rounded-none border border-solid border-black p-1 w-full sm:w-1/2',
-}
 
 type TextFieldProps = {
   label?: string
@@ -24,24 +16,30 @@ type TextFieldProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const TextField = ({
+function TextField({
   label = '',
   name = '',
   type = 'text',
   value = '',
+  readOnly = false,
   ...attrs
-}: TextFieldProps) => {
+}: TextFieldProps) {
+  const baseClassName =
+    'form-input rounded-none border border-solid border-black p-1 w-full'
+  const readOnlyClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const inputAttrs = {
+    ...attrs,
+    className: readOnly ? readOnlyClassName : baseClassName,
+    id: name,
+    name,
+    readOnly,
+    type,
+    value,
+  }
   return (
-    <div className={styles.container}>
-      {label && <Label className={styles.label} text={label} htmlFor={name} />}
-      <input
-        {...attrs}
-        className={styles.input}
-        id={name}
-        name={name}
-        value={value}
-        type={type}
-      />
+    <div className="flex flex-col">
+      {label && <label htmlFor={name}>{label}</label>}
+      <input {...inputAttrs} />
     </div>
   )
 }

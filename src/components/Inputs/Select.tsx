@@ -1,12 +1,4 @@
 import React from 'react'
-import Label from './Label'
-
-const styles = {
-  container: 'sm:flex sm:items-center',
-  label: 'sm:w-1/2 mr-4',
-  input:
-    'form-select rounded-none border border-solid border-black p-1 w-full sm:w-1/2',
-}
 
 type SelectProps = {
   label?: string
@@ -19,38 +11,44 @@ type SelectProps = {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
 
-const Select = ({
+function Select({
   label,
   name,
   options,
   placeholder,
   value = '',
-  ...attr
-}: SelectProps) => (
-  <div className={styles.container}>
-    {label && (
-      <Label className={styles.label} text={label} htmlFor={name || ''} />
-    )}
-    <select
-      {...attr}
-      className={styles.input}
-      id={name}
-      name={name}
-      value={value}
-      style={{ minWidth: '200px' }}
-    >
-      {placeholder && (
-        <option value="" hidden>
-          {placeholder}
-        </option>
-      )}
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  </div>
-)
+  disabled = false,
+  ...attrs
+}: SelectProps) {
+  const baseClassName =
+    'form-select rounded-none border border-solid border-black p-1 w-full'
+  const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const selectAttrs = {
+    ...attrs,
+    className: disabled ? disabledClassName : baseClassName,
+    disabled,
+    id: name,
+    name,
+    value,
+    style: { minWidth: '200px' },
+  }
+  return (
+    <div className="flex flex-col">
+      {label && <label htmlFor={name || ''}>{label}</label>}
+      <select {...selectAttrs}>
+        {placeholder && (
+          <option value="" hidden>
+            {placeholder}
+          </option>
+        )}
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
+}
 
 export default Select

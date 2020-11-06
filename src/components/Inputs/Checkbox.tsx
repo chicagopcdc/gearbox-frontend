@@ -1,5 +1,4 @@
 import React from 'react'
-import Label from './Label'
 
 type CheckboxProps = {
   label?: string
@@ -10,24 +9,28 @@ type CheckboxProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const Checkbox = ({
+function Checkbox({
   label = '',
   name = '',
   readOnly,
   onChange,
   ...attrs
-}: CheckboxProps) => (
-  <>
-    <input
-      {...attrs}
-      className="form-checkbox rounded-none border border-solid border-black mr-4"
-      type="checkbox"
-      id={name}
-      name={name}
-      onChange={readOnly ? () => false : onChange}
-    />
-    {label && <Label text={label} htmlFor={name} />}
-  </>
-)
+}: CheckboxProps) {
+  const checkboxAttrs = {
+    ...attrs,
+    className:
+      'form-checkbox rounded-none border border-solid border-black mr-4',
+    id: name,
+    name,
+    type: 'checkbox',
+    onChange: readOnly ? undefined : onChange,
+  }
+  return (
+    <>
+      <input {...checkboxAttrs} />
+      {label && <label htmlFor={name}>{label}</label>}
+    </>
+  )
+}
 
 export default Checkbox

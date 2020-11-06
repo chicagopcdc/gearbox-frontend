@@ -11,13 +11,14 @@ type MultiSelectProps = {
   onChange?(event: any): void
 }
 
-const reshapeToMulti = (options: string[]) =>
-  options.map((option) => ({
+function reshapeToMulti(options: string[]) {
+  return options.map((option) => ({
     label: option,
     value: option,
   }))
+}
 
-const MultiSelect = ({
+function MultiSelect({
   label,
   name,
   options,
@@ -25,7 +26,7 @@ const MultiSelect = ({
   value,
   onChange,
   ...attrs
-}: MultiSelectProps) => {
+}: MultiSelectProps) {
   const multiOptions = reshapeToMulti(options)
   const [multiSelected, setMultiSelected] = useState(
     reshapeToMulti(value || [])

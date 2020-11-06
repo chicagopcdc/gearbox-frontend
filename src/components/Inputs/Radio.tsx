@@ -1,13 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Label from './Label'
-
-const styles = {
-  container: 'sm:flex sm:items-center',
-  label: 'sm:w-1/2 mr-4',
-  options: 'sm:w-1/2 flex flex-wrap justify-between',
-  optionLabel: 'mx-2',
-  optionInput: 'form-radio border border-solid border-black p-1',
-}
 
 type RadioProps = {
   label?: string
@@ -19,15 +10,15 @@ type RadioProps = {
   onChange?(event: any): void
 }
 
-const Radio = ({
+function Radio({
   label,
   name = '',
   options,
-  disabled,
+  disabled = false,
   value,
   onChange,
   ...attrs
-}: RadioProps) => {
+}: RadioProps) {
   const [radioValue, setRadioValue] = useState(value || undefined)
 
   useEffect(() => {
@@ -46,16 +37,21 @@ const Radio = ({
     }
   }, [name, onChange, radioValue])
 
+  const baseOptionClassName = 'form-radio border border-solid border-black p-1'
+  const optionClassName = disabled
+    ? `${baseOptionClassName} cursor-not-allowed bg-gray-200`
+    : baseOptionClassName
+
   return (
-    <div className={styles.container}>
-      {label && <Label className={styles.label} text={label} htmlFor={name} />}
+    <div className="flex flex-col">
+      {label && <label htmlFor={name}>{label}</label>}
       {options && (
-        <div className={styles.options}>
+        <div className="flex flex-wrap justify-between">
           {options.map((option) => (
             <div key={option}>
               <input
                 {...attrs}
-                className={styles.optionInput}
+                className={optionClassName}
                 id={option}
                 name={name}
                 type="radio"
@@ -63,11 +59,9 @@ const Radio = ({
                 checked={option === radioValue}
                 onChange={disabled ? undefined : () => setRadioValue(option)}
               />
-              <Label
-                className={styles.optionLabel}
-                text={option}
-                htmlFor={option}
-              />
+              <label className="mx-2" htmlFor={option}>
+                {option}
+              </label>
             </div>
           ))}
         </div>

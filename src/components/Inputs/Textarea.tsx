@@ -1,11 +1,4 @@
 import React from 'react'
-import Label from './Label'
-
-const styles = {
-  label: 'mr-4',
-  input:
-    'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none',
-}
 
 type TextareaProps = {
   label?: string
@@ -18,17 +11,29 @@ type TextareaProps = {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>
 }
 
-const Textarea = ({ label = '', name = '', ...attrs }: TextareaProps) => {
+function Textarea({
+  label = '',
+  name = '',
+  disabled = false,
+  readOnly = false,
+  ...attrs
+}: TextareaProps) {
+  const baseClassName =
+    'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
+  const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const textAreaAttrs = {
+    ...attrs,
+    className: disabled || readOnly ? disabledClassName : baseClassName,
+    disabled,
+    id: name,
+    name,
+    readOnly,
+    style: { minHeight: '100px' },
+  }
   return (
     <>
-      {label && <Label className={styles.label} text={label} htmlFor={name} />}
-      <textarea
-        {...attrs}
-        className={styles.input}
-        id={name}
-        name={name}
-        style={{ minHeight: '100px' }}
-      />
+      {label && <label htmlFor={name}>{label}</label>}
+      <textarea {...textAreaAttrs} />
     </>
   )
 }

@@ -12,23 +12,23 @@ type ButtonProps = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-function getButtonClassName(
+function Button({
+  children,
   disabled = false,
   outline = false,
-  size: ButtonSize = 'normal'
-) {
+  size = 'normal',
+  type = 'button',
+  onClick,
+}: ButtonProps) {
   const disabledClassName = disabled ? 'cursor-not-allowed opacity-50' : ''
-
   const hoverClassName = disabled
     ? ''
     : outline
     ? 'hover:bg-red-100 hover:border-secondary hover:text-secondary'
     : 'hover:bg-secondary'
-
   const outlineClassName = outline
     ? 'border border-solid border-primary text-primary'
     : 'bg-primary text-white'
-
   const sizeClassName =
     size === 'normal'
       ? 'px-4 py-2'
@@ -37,19 +37,8 @@ function getButtonClassName(
       : size === 'small'
       ? 'px-2 py-1 text-xs'
       : ''
+  const className = `uppercase ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
 
-  return `uppercase ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
-}
-
-function Button({
-  children,
-  disabled,
-  outline,
-  size,
-  type,
-  onClick,
-}: ButtonProps) {
-  const className = getButtonClassName(disabled, outline, size)
   const attrs = { className, disabled, type, onClick }
   return <button {...attrs}>{children}</button>
 }
