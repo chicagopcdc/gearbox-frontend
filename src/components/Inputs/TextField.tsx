@@ -24,23 +24,22 @@ function TextField({
   readOnly = false,
   ...attrs
 }: TextFieldProps) {
-  const baseInputClassName =
+  const baseClassName =
     'form-input rounded-none border border-solid border-black p-1 w-full'
-  const inputClassName = readOnly
-    ? `${baseInputClassName} cursor-not-allowed bg-gray-200`
-    : baseInputClassName
+  const readOnlyClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const inputAttrs = {
+    ...attrs,
+    className: readOnly ? readOnlyClassName : baseClassName,
+    id: name,
+    name,
+    readOnly,
+    type,
+    value,
+  }
   return (
     <div className="flex flex-col">
       {label && <label htmlFor={name}>{label}</label>}
-      <input
-        {...attrs}
-        id={name}
-        name={name}
-        value={value}
-        className={inputClassName}
-        readOnly={readOnly}
-        type={type}
-      />
+      <input {...inputAttrs} />
     </div>
   )
 }

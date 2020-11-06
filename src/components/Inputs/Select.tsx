@@ -18,25 +18,24 @@ function Select({
   placeholder,
   value = '',
   disabled = false,
-  ...attr
+  ...attrs
 }: SelectProps) {
-  const baseSelectClassName =
+  const baseClassName =
     'form-select rounded-none border border-solid border-black p-1 w-full'
-  const selectClassName = disabled
-    ? `${baseSelectClassName} cursor-not-allowed bg-gray-200`
-    : baseSelectClassName
+  const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const selectAttrs = {
+    ...attrs,
+    className: disabled ? disabledClassName : baseClassName,
+    disabled,
+    id: name,
+    name,
+    value,
+    style: { minWidth: '200px' },
+  }
   return (
     <div className="flex flex-col">
       {label && <label htmlFor={name || ''}>{label}</label>}
-      <select
-        {...attr}
-        id={name}
-        name={name}
-        value={value}
-        className={selectClassName}
-        disabled={disabled}
-        style={{ minWidth: '200px' }}
-      >
+      <select {...selectAttrs}>
         {placeholder && (
           <option value="" hidden>
             {placeholder}

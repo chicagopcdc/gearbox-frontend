@@ -16,16 +16,18 @@ function Checkbox({
   onChange,
   ...attrs
 }: CheckboxProps) {
+  const checkboxAttrs = {
+    ...attrs,
+    className:
+      'form-checkbox rounded-none border border-solid border-black mr-4',
+    id: name,
+    name,
+    type: 'checkbox',
+    onChange: readOnly ? undefined : onChange,
+  }
   return (
     <>
-      <input
-        {...attrs}
-        className="form-checkbox rounded-none border border-solid border-black mr-4"
-        type="checkbox"
-        id={name}
-        name={name}
-        onChange={readOnly ? () => false : onChange}
-      />
+      <input {...checkboxAttrs} />
       {label && <label htmlFor={name}>{label}</label>}
     </>
   )

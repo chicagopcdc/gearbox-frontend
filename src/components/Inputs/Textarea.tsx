@@ -18,24 +18,22 @@ function Textarea({
   readOnly = false,
   ...attrs
 }: TextareaProps) {
-  const baseTextareaClassName =
+  const baseClassName =
     'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
-  const textAreaClassName =
-    disabled || readOnly
-      ? `${baseTextareaClassName} cursor-not-allowed bg-gray-200`
-      : baseTextareaClassName
+  const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const textAreaAttrs = {
+    ...attrs,
+    className: disabled || readOnly ? disabledClassName : baseClassName,
+    disabled,
+    id: name,
+    name,
+    readOnly,
+    style: { minHeight: '100px' },
+  }
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
-      <textarea
-        {...attrs}
-        id={name}
-        name={name}
-        className={textAreaClassName}
-        disabled={disabled}
-        readOnly={readOnly}
-        style={{ minHeight: '100px' }}
-      />
+      <textarea {...textAreaAttrs} />
     </>
   )
 }
