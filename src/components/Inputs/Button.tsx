@@ -41,14 +41,14 @@ function getButtonClassName(
   return `uppercase ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
 }
 
-const Button = ({
+function Button({
   children,
   disabled,
   outline,
   size,
   type,
   onClick,
-}: ButtonProps) => {
+}: ButtonProps) {
   const className = getButtonClassName(disabled, outline, size)
   const attrs = { className, disabled, type, onClick }
   return <button {...attrs}>{children}</button>
