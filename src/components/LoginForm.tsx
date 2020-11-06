@@ -2,10 +2,6 @@ import React, { useState } from 'react'
 import Button from './Inputs/Button'
 import TextField from './Inputs/TextField'
 
-const styles = {
-  field: 'my-4 mx-8 sm:ml-0 sm:mr-12 sm:text-right',
-}
-
 type LoginFormProps = {
   onLogin: (values: { username: string; password?: string }) => void
 }
@@ -16,12 +12,13 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
 
   return (
     <form
+      className="mx-12"
       onSubmit={(e) => {
         e.preventDefault()
         onLogin({ username, password })
       }}
     >
-      <div className={styles.field}>
+      <div className="mb-4">
         <TextField
           label="Username"
           name="username"
@@ -32,7 +29,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         />
       </div>
 
-      <div className={styles.field}>
+      <div className="mb-8">
         <TextField
           label="Password"
           name="password"
@@ -43,7 +40,9 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         />
       </div>
 
-      <Button type="submit">Submit</Button>
+      <Button block type="submit">
+        Submit
+      </Button>
     </form>
   )
 }

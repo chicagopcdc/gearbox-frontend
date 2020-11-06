@@ -7,7 +7,7 @@ type GoogleLoginButtonProps = {
 }
 
 const GoogleLoginButton = ({ onClick }: GoogleLoginButtonProps) => (
-  <Button onClick={onClick}>
+  <Button block outline onClick={onClick}>
     <img src={googleLogo} alt="Google G logo" className="h-6 inline -mt-1" />
     <span className="pl-4">Continue with Google</span>
   </Button>
