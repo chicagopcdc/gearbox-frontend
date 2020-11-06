@@ -6,7 +6,7 @@ type LoginFormProps = {
   onLogin: (values: { username: string; password?: string }) => void
 }
 
-const LoginForm = ({ onLogin }: LoginFormProps) => {
+function LoginForm({ onLogin }: LoginFormProps) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
