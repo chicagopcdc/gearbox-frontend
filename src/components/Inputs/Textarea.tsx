@@ -3,8 +3,13 @@ import Label from './Label'
 
 const styles = {
   label: 'mr-4',
-  input:
-    'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none',
+  input(disabled: boolean = false, readOnly: boolean = false) {
+    const baseClassName =
+      'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
+    return disabled || readOnly
+      ? `${baseClassName} cursor-not-allowed bg-gray-200`
+      : baseClassName
+  },
 }
 
 type TextareaProps = {
@@ -24,7 +29,7 @@ const Textarea = ({ label = '', name = '', ...attrs }: TextareaProps) => {
       {label && <Label className={styles.label} text={label} htmlFor={name} />}
       <textarea
         {...attrs}
-        className={styles.input}
+        className={styles.input(attrs.disabled, attrs.readOnly)}
         id={name}
         name={name}
         style={{ minHeight: '100px' }}
