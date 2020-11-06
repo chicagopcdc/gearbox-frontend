@@ -5,11 +5,11 @@ import GoogleLoginButton from '../components/GoogleLoginButton'
 import { initFenceOAuth } from '../utils'
 import gearboxLogo from '../assets/gearbox-logo.png'
 
-function Login({
-  authenticate,
-}: {
+type LoginProps = {
   authenticate(username: string, cb?: () => void): void
-}) {
+}
+
+function Login({ authenticate }: LoginProps) {
   const history = useHistory()
   function handleLogin(values: { username: string; password?: string }) {
     authenticate(values.username, () => history.replace('/'))
