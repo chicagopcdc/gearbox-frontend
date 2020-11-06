@@ -6,8 +6,8 @@ type LabelProps = {
   text: string
 }
 
-const Label = ({ text, ...attrs }: LabelProps) => (
-  <label {...attrs}>{text}</label>
-)
+function Label({ text, ...attrs }: LabelProps) {
+  return <label {...attrs}>{text}</label>
+}
 
 export default Label

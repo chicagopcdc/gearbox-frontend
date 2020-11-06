@@ -23,7 +23,7 @@ type RadioProps = {
   onChange?(event: any): void
 }
 
-const Radio = ({
+function Radio({
   label,
   name = '',
   options,
@@ -31,7 +31,7 @@ const Radio = ({
   value,
   onChange,
   ...attrs
-}: RadioProps) => {
+}: RadioProps) {
   const [radioValue, setRadioValue] = useState(value || undefined)
 
   useEffect(() => {

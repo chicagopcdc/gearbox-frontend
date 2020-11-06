@@ -10,24 +10,26 @@ type CheckboxProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const Checkbox = ({
+function Checkbox({
   label = '',
   name = '',
   readOnly,
   onChange,
   ...attrs
-}: CheckboxProps) => (
-  <>
-    <input
-      {...attrs}
-      className="form-checkbox rounded-none border border-solid border-black mr-4"
-      type="checkbox"
-      id={name}
-      name={name}
-      onChange={readOnly ? () => false : onChange}
-    />
-    {label && <Label text={label} htmlFor={name} />}
-  </>
-)
+}: CheckboxProps) {
+  return (
+    <>
+      <input
+        {...attrs}
+        className="form-checkbox rounded-none border border-solid border-black mr-4"
+        type="checkbox"
+        id={name}
+        name={name}
+        onChange={readOnly ? () => false : onChange}
+      />
+      {label && <Label text={label} htmlFor={name} />}
+    </>
+  )
+}
 
 export default Checkbox

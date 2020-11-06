@@ -23,36 +23,38 @@ type SelectProps = {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
 
-const Select = ({
+function Select({
   label,
   name,
   options,
   placeholder,
   value = '',
   ...attr
-}: SelectProps) => (
-  <div className={styles.container}>
-    {label && <Label text={label} htmlFor={name || ''} />}
-    <select
-      {...attr}
-      className={styles.input(attr.disabled)}
-      id={name}
-      name={name}
-      value={value}
-      style={{ minWidth: '200px' }}
-    >
-      {placeholder && (
-        <option value="" hidden>
-          {placeholder}
-        </option>
-      )}
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  </div>
-)
+}: SelectProps) {
+  return (
+    <div className={styles.container}>
+      {label && <Label text={label} htmlFor={name || ''} />}
+      <select
+        {...attr}
+        className={styles.input(attr.disabled)}
+        id={name}
+        name={name}
+        value={value}
+        style={{ minWidth: '200px' }}
+      >
+        {placeholder && (
+          <option value="" hidden>
+            {placeholder}
+          </option>
+        )}
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
+}
 
 export default Select

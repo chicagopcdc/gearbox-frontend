@@ -28,13 +28,13 @@ type TextFieldProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const TextField = ({
+function TextField({
   label = '',
   name = '',
   type = 'text',
   value = '',
   ...attrs
-}: TextFieldProps) => {
+}: TextFieldProps) {
   return (
     <div className={styles.container}>
       {label && <Label text={label} htmlFor={name} />}

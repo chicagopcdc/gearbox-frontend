@@ -19,11 +19,11 @@ type FieldProps = {
   onChange(event: any): void
 }
 
-const Field = ({
+function Field({
   config: { type, name, label, options, ...attrs },
   value,
   onChange,
-}: FieldProps) => {
+}: FieldProps) {
   switch (type) {
     case 'text':
     case 'number':

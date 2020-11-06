@@ -23,7 +23,7 @@ type TextareaProps = {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>
 }
 
-const Textarea = ({ label = '', name = '', ...attrs }: TextareaProps) => {
+function Textarea({ label = '', name = '', ...attrs }: TextareaProps) {
   return (
     <>
       {label && <Label className={styles.label} text={label} htmlFor={name} />}
