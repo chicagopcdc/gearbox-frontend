@@ -1,27 +1,57 @@
 import React from 'react'
 
+type ButtonSize = 'normal' | 'large' | 'small'
+type ButtonType = 'button' | 'submit' | 'reset'
+
 type ButtonProps = {
   children: React.ReactNode
   disabled?: boolean
-  small?: boolean
-  type?: 'button' | 'submit' | 'reset' | undefined
+  outline?: boolean
+  size?: ButtonSize
+  type?: ButtonType
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-const styles = {
-  button(disabled?: boolean, small?: boolean) {
-    return `border border-solid rounded px-4 ${
-      disabled
-        ? 'cursor-not-allowed opacity-50'
-        : 'border-black hover:bg-gray-300'
-    } ${small ? 'text-xs py-1' : 'py-2'}`
-  },
+function getButtonClassName(
+  disabled = false,
+  outline = false,
+  size: ButtonSize = 'normal'
+) {
+  const disabledClassName = disabled ? 'cursor-not-allowed opacity-50' : ''
+
+  const hoverClassName = disabled
+    ? ''
+    : outline
+    ? 'hover:bg-red-100 hover:border-secondary hover:text-secondary'
+    : 'hover:bg-secondary'
+
+  const outlineClassName = outline
+    ? 'border border-solid border-primary text-primary'
+    : 'bg-primary text-white'
+
+  const sizeClassName =
+    size === 'normal'
+      ? 'px-4 py-2'
+      : size === 'large'
+      ? 'px-6 py-3 text-xl'
+      : size === 'small'
+      ? 'px-2 py-1 text-xs'
+      : ''
+
+  return `uppercase ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
 }
 
-const Button = ({ children, disabled, small, ...attrs }: ButtonProps) => (
-  <button {...attrs} className={styles.button(disabled, small)}>
-    {children}
-  </button>
-)
+function Button({
+  children,
+  disabled,
+  outline,
+  size,
+  type,
+  onClick,
+}: ButtonProps) {
+  const className = getButtonClassName(disabled, outline, size)
+  const attrs = { className, disabled, type, onClick }
+  return <button {...attrs}>{children}</button>
+}
 
 export default Button
