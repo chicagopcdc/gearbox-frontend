@@ -40,13 +40,6 @@ const Login = ({
 
         <LoginForm onLogin={handleLogin} />
       </Box>
-
-      <div className="flex justify-around">
-        <Button onClick={() => alert('add user')}>Add User</Button>
-        <Button onClick={() => alert('add institution')}>
-          Add Institution
-        </Button>
-      </div>
     </div>
   )
 }
