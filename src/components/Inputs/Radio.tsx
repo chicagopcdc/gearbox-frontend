@@ -5,7 +5,7 @@ const styles = {
   container: 'flex flex-col',
   options: 'flex flex-wrap justify-between',
   optionLabel: 'mx-2',
-  optionInput(disabled: boolean = false) {
+  optionInput(disabled = false) {
     const baseClassName = 'form-radio border border-solid border-black p-1'
     return disabled
       ? `${baseClassName} cursor-not-allowed bg-gray-200`

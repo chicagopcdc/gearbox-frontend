@@ -3,7 +3,7 @@ import Label from './Label'
 
 const styles = {
   label: 'mr-4',
-  input(disabled: boolean = false, readOnly: boolean = false) {
+  input(disabled = false, readOnly = false) {
     const baseClassName =
       'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
     return disabled || readOnly

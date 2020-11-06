@@ -3,7 +3,7 @@ import Label from './Label'
 
 const styles = {
   container: 'flex flex-col',
-  input(readOnly: boolean = false) {
+  input(readOnly = false) {
     const baseClassName =
       'form-input rounded-none border border-solid border-black p-1 w-full'
     return readOnly
