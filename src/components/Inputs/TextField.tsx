@@ -2,10 +2,8 @@ import React from 'react'
 import Label from './Label'
 
 const styles = {
-  container: 'sm:flex sm:items-center',
-  label: 'sm:w-1/2 mr-4',
-  input:
-    'form-input rounded-none border border-solid border-black p-1 w-full sm:w-1/2',
+  container: 'flex flex-col',
+  input: 'form-input rounded-none border border-solid border-black p-1 w-full',
 }
 
 type TextFieldProps = {
@@ -33,7 +31,7 @@ const TextField = ({
 }: TextFieldProps) => {
   return (
     <div className={styles.container}>
-      {label && <Label className={styles.label} text={label} htmlFor={name} />}
+      {label && <Label text={label} htmlFor={name} />}
       <input
         {...attrs}
         className={styles.input}
