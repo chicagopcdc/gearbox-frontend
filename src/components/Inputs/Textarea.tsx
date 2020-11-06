@@ -2,7 +2,6 @@ import React from 'react'
 import Label from './Label'
 
 const styles = {
-  label: 'mr-4',
   input(disabled = false, readOnly = false) {
     const baseClassName =
       'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
@@ -26,7 +25,7 @@ type TextareaProps = {
 function Textarea({ label = '', name = '', ...attrs }: TextareaProps) {
   return (
     <>
-      {label && <Label className={styles.label} text={label} htmlFor={name} />}
+      {label && <Label text={label} htmlFor={name} />}
       <textarea
         {...attrs}
         className={styles.input(attrs.disabled, attrs.readOnly)}
