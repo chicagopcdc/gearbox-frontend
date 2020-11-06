@@ -20,66 +20,22 @@ type FieldProps = {
 }
 
 function Field({
-  config: { type, name, label, options, ...attrs },
+  config: { type, options = [], ...attrs },
   value,
   onChange,
 }: FieldProps) {
   switch (type) {
     case 'text':
     case 'number':
-      return (
-        <TextField
-          type={type}
-          name={name}
-          label={label}
-          value={value}
-          onChange={onChange}
-          {...attrs}
-        />
-      )
+      return <TextField {...{ type, value, onChange, ...attrs }} />
     case 'checkbox':
-      return (
-        <Checkbox
-          name={name}
-          label={label}
-          checked={!!value}
-          onChange={onChange}
-          {...attrs}
-        />
-      )
+      return <Checkbox {...{ checekd: !!value, onChange, ...attrs }} />
     case 'select':
-      return (
-        <Select
-          name={name}
-          label={label}
-          options={options ? options : []}
-          value={value}
-          onChange={onChange}
-          {...attrs}
-        />
-      )
+      return <Select {...{ options, value, onChange, ...attrs }} />
     case 'radio':
-      return (
-        <Radio
-          name={name}
-          label={label}
-          options={options ? options : []}
-          value={value}
-          onChange={onChange}
-          {...attrs}
-        />
-      )
+      return <Radio {...{ options, value, onChange, ...attrs }} />
     case 'multiselect':
-      return (
-        <MultiSelect
-          name={name}
-          label={label}
-          options={options ? options : []}
-          value={value}
-          onChange={onChange}
-          {...attrs}
-        />
-      )
+      return <MultiSelect {...{ options, value, onChange, ...attrs }} />
     default:
       return null
   }
