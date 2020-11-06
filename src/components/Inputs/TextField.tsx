@@ -1,16 +1,5 @@
 import React from 'react'
 
-const styles = {
-  container: 'flex flex-col',
-  input(readOnly = false) {
-    const baseClassName =
-      'form-input rounded-none border border-solid border-black p-1 w-full'
-    return readOnly
-      ? `${baseClassName} cursor-not-allowed bg-gray-200`
-      : baseClassName
-  },
-}
-
 type TextFieldProps = {
   label?: string
   name?: string
@@ -32,17 +21,24 @@ function TextField({
   name = '',
   type = 'text',
   value = '',
+  readOnly = false,
   ...attrs
 }: TextFieldProps) {
+  const baseInputClassName =
+    'form-input rounded-none border border-solid border-black p-1 w-full'
+  const inputClassName = readOnly
+    ? `${baseInputClassName} cursor-not-allowed bg-gray-200`
+    : baseInputClassName
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col">
       {label && <label htmlFor={name}>{label}</label>}
       <input
         {...attrs}
-        className={styles.input(attrs.readOnly)}
         id={name}
         name={name}
         value={value}
+        className={inputClassName}
+        readOnly={readOnly}
         type={type}
       />
     </div>

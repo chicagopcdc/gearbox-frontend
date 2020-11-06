@@ -1,17 +1,5 @@
 import React, { useState, useEffect } from 'react'
 
-const styles = {
-  container: 'flex flex-col',
-  options: 'flex flex-wrap justify-between',
-  optionLabel: 'mx-2',
-  optionInput(disabled = false) {
-    const baseClassName = 'form-radio border border-solid border-black p-1'
-    return disabled
-      ? `${baseClassName} cursor-not-allowed bg-gray-200`
-      : baseClassName
-  },
-}
-
 type RadioProps = {
   label?: string
   name?: string
@@ -26,7 +14,7 @@ function Radio({
   label,
   name = '',
   options,
-  disabled,
+  disabled = false,
   value,
   onChange,
   ...attrs
@@ -49,16 +37,21 @@ function Radio({
     }
   }, [name, onChange, radioValue])
 
+  const baseOptionClassName = 'form-radio border border-solid border-black p-1'
+  const optionClassName = disabled
+    ? `${baseOptionClassName} cursor-not-allowed bg-gray-200`
+    : baseOptionClassName
+
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col">
       {label && <label htmlFor={name}>{label}</label>}
       {options && (
-        <div className={styles.options}>
+        <div className="flex flex-wrap justify-between">
           {options.map((option) => (
             <div key={option}>
               <input
                 {...attrs}
-                className={styles.optionInput(disabled)}
+                className={optionClassName}
                 id={option}
                 name={name}
                 type="radio"
@@ -66,7 +59,7 @@ function Radio({
                 checked={option === radioValue}
                 onChange={disabled ? undefined : () => setRadioValue(option)}
               />
-              <label className={styles.optionLabel} htmlFor={option}>
+              <label className="mx-2" htmlFor={option}>
                 {option}
               </label>
             </div>

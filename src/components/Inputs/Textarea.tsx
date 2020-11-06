@@ -1,15 +1,5 @@
 import React from 'react'
 
-const styles = {
-  input(disabled = false, readOnly = false) {
-    const baseClassName =
-      'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
-    return disabled || readOnly
-      ? `${baseClassName} cursor-not-allowed bg-gray-200`
-      : baseClassName
-  },
-}
-
 type TextareaProps = {
   label?: string
   name?: string
@@ -21,15 +11,29 @@ type TextareaProps = {
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>
 }
 
-function Textarea({ label = '', name = '', ...attrs }: TextareaProps) {
+function Textarea({
+  label = '',
+  name = '',
+  disabled = false,
+  readOnly = false,
+  ...attrs
+}: TextareaProps) {
+  const baseTextareaClassName =
+    'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
+  const textAreaClassName =
+    disabled || readOnly
+      ? `${baseTextareaClassName} cursor-not-allowed bg-gray-200`
+      : baseTextareaClassName
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
       <textarea
         {...attrs}
-        className={styles.input(attrs.disabled, attrs.readOnly)}
         id={name}
         name={name}
+        className={textAreaClassName}
+        disabled={disabled}
+        readOnly={readOnly}
         style={{ minHeight: '100px' }}
       />
     </>
