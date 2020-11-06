@@ -1,5 +1,4 @@
 import React from 'react'
-import Label from './Label'
 
 const styles = {
   input(disabled = false, readOnly = false) {
@@ -25,7 +24,7 @@ type TextareaProps = {
 function Textarea({ label = '', name = '', ...attrs }: TextareaProps) {
   return (
     <>
-      {label && <Label text={label} htmlFor={name} />}
+      {label && <label htmlFor={name}>{label}</label>}
       <textarea
         {...attrs}
         className={styles.input(attrs.disabled, attrs.readOnly)}

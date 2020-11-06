@@ -1,5 +1,4 @@
 import React from 'react'
-import Label from './Label'
 
 type CheckboxProps = {
   label?: string
@@ -27,7 +26,7 @@ function Checkbox({
         name={name}
         onChange={readOnly ? () => false : onChange}
       />
-      {label && <Label text={label} htmlFor={name} />}
+      {label && <label htmlFor={name}>{label}</label>}
     </>
   )
 }

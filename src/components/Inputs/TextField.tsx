@@ -1,5 +1,4 @@
 import React from 'react'
-import Label from './Label'
 
 const styles = {
   container: 'flex flex-col',
@@ -37,7 +36,7 @@ function TextField({
 }: TextFieldProps) {
   return (
     <div className={styles.container}>
-      {label && <Label text={label} htmlFor={name} />}
+      {label && <label htmlFor={name}>{label}</label>}
       <input
         {...attrs}
         className={styles.input(attrs.readOnly)}

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Label from './Label'
 
 const styles = {
   container: 'flex flex-col',
@@ -52,7 +51,7 @@ function Radio({
 
   return (
     <div className={styles.container}>
-      {label && <Label text={label} htmlFor={name} />}
+      {label && <label htmlFor={name}>{label}</label>}
       {options && (
         <div className={styles.options}>
           {options.map((option) => (
@@ -67,11 +66,9 @@ function Radio({
                 checked={option === radioValue}
                 onChange={disabled ? undefined : () => setRadioValue(option)}
               />
-              <Label
-                className={styles.optionLabel}
-                text={option}
-                htmlFor={option}
-              />
+              <label className={styles.optionLabel} htmlFor={option}>
+                {option}
+              </label>
             </div>
           ))}
         </div>
