@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Label from './Label'
 
 const styles = {
-  container: 'sm:flex sm:items-center',
-  label: 'sm:w-1/2 mr-4',
-  options: 'sm:w-1/2 flex flex-wrap justify-between',
+  container: 'flex flex-col',
+  options: 'flex flex-wrap justify-between',
   optionLabel: 'mx-2',
   optionInput: 'form-radio border border-solid border-black p-1',
 }
@@ -48,7 +47,7 @@ const Radio = ({
 
   return (
     <div className={styles.container}>
-      {label && <Label className={styles.label} text={label} htmlFor={name} />}
+      {label && <Label text={label} htmlFor={name} />}
       {options && (
         <div className={styles.options}>
           {options.map((option) => (
