@@ -5,7 +5,12 @@ const styles = {
   container: 'flex flex-col',
   options: 'flex flex-wrap justify-between',
   optionLabel: 'mx-2',
-  optionInput: 'form-radio border border-solid border-black p-1',
+  optionInput(disabled: boolean = false) {
+    const baseClassName = 'form-radio border border-solid border-black p-1'
+    return disabled
+      ? `${baseClassName} cursor-not-allowed bg-gray-200`
+      : baseClassName
+  },
 }
 
 type RadioProps = {
@@ -54,7 +59,7 @@ const Radio = ({
             <div key={option}>
               <input
                 {...attrs}
-                className={styles.optionInput}
+                className={styles.optionInput(disabled)}
                 id={option}
                 name={name}
                 type="radio"
