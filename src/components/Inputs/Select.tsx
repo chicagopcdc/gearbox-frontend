@@ -3,7 +3,13 @@ import Label from './Label'
 
 const styles = {
   container: 'flex flex-col',
-  input: 'form-select rounded-none border border-solid border-black p-1 w-full',
+  input(dsiabled: boolean = false) {
+    const baseClassName =
+      'form-select rounded-none border border-solid border-black p-1 w-full'
+    return dsiabled
+      ? `${baseClassName} cursor-not-allowed bg-gray-200`
+      : baseClassName
+  },
 }
 
 type SelectProps = {
@@ -29,7 +35,7 @@ const Select = ({
     {label && <Label text={label} htmlFor={name || ''} />}
     <select
       {...attr}
-      className={styles.input}
+      className={styles.input(attr.disabled)}
       id={name}
       name={name}
       value={value}
