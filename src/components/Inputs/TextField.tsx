@@ -3,7 +3,13 @@ import Label from './Label'
 
 const styles = {
   container: 'flex flex-col',
-  input: 'form-input rounded-none border border-solid border-black p-1 w-full',
+  input(readOnly: boolean = false) {
+    const baseClassName =
+      'form-input rounded-none border border-solid border-black p-1 w-full'
+    return readOnly
+      ? `${baseClassName} cursor-not-allowed bg-gray-200`
+      : baseClassName
+  },
 }
 
 type TextFieldProps = {
@@ -34,7 +40,7 @@ const TextField = ({
       {label && <Label text={label} htmlFor={name} />}
       <input
         {...attrs}
-        className={styles.input}
+        className={styles.input(attrs.readOnly)}
         id={name}
         name={name}
         value={value}
