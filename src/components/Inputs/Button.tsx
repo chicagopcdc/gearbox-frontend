@@ -4,6 +4,7 @@ type ButtonSize = 'normal' | 'large' | 'small'
 type ButtonType = 'button' | 'submit' | 'reset'
 
 type ButtonProps = {
+  block?: boolean
   children: React.ReactNode
   disabled?: boolean
   outline?: boolean
@@ -13,6 +14,7 @@ type ButtonProps = {
 }
 
 function Button({
+  block = false,
   children,
   disabled = false,
   outline = false,
@@ -20,6 +22,7 @@ function Button({
   type = 'button',
   onClick,
 }: ButtonProps) {
+  const blockClassName = block ? 'w-full' : ''
   const disabledClassName = disabled ? 'cursor-not-allowed opacity-50' : ''
   const hoverClassName = disabled
     ? ''
@@ -37,7 +40,7 @@ function Button({
       : size === 'small'
       ? 'px-2 py-1 text-xs'
       : ''
-  const className = `uppercase ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
+  const className = `uppercase ${blockClassName} ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
 
   const attrs = { className, disabled, type, onClick }
   return <button {...attrs}>{children}</button>
