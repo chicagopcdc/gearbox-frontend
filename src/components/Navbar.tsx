@@ -5,13 +5,14 @@ import Button from './Inputs/Button'
 import gearboxLogo from '../assets/gearbox-logo.png'
 
 const styles = {
-  authbar: 'flex justify-end pt-2 mx-4 px-4',
+  authbar: 'flex justify-end border-b border-solid border-primary',
   navbar:
-    'md:flex md:flex-wrap md:items-center md:justify-between border-b-2 border-solid border-black mx-4 px-4 mb-4',
+    'md:flex md:flex-wrap md:items-center md:justify-between border-b border-solid border-gray-400 mb-4',
   navbarLogo: 'flex justify-center md:justify-start md:flex-1',
   navbarItems:
-    'text-center flex items-center justify-between md:flex-1 md:justify-end',
-  navbarItem: 'list-none hover:text-red-500 p-4',
+    'flex self-stretch justify-between md:flex-1 md:justify-end text-center uppercase',
+  navbarItem:
+    'flex flex-1 md:flex-initial self-strech items-center justify-center hover:text-black hover:bg-gray-400 p-4 border-l border-solid border-gray-400',
 }
 
 const navItems = [
@@ -41,7 +42,7 @@ const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => (
           </Button>
         </>
       ) : (
-        <Link to="/login">
+        <Link style={{ lineHeight: '18px' }} to="/login">
           <Button size="small">Login</Button>
         </Link>
       )}
@@ -58,15 +59,18 @@ const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => (
         </NavLink>
       </div>
 
-      <ul className={styles.navbarItems}>
+      <div className={styles.navbarItems}>
         {navItems.map(({ path, name }) => (
-          <li className={styles.navbarItem} key={path}>
-            <NavLink to={path} activeClassName="text-red-500">
-              {name}
-            </NavLink>
-          </li>
+          <NavLink
+            key={path}
+            to={path}
+            className={styles.navbarItem}
+            activeClassName="bg-gray-700 text-white"
+          >
+            {name}
+          </NavLink>
         ))}
-      </ul>
+      </div>
     </nav>
   </>
 )
