@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Button from './Inputs/Button'
 
-type AuthbarProps = {
+export type AuthbarProps = {
   isAuthenticated: boolean
   username: string
   signout: (cb?: () => void) => void
