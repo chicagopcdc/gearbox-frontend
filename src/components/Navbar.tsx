@@ -11,7 +11,7 @@ const navItems = [
 
 function Navbar() {
   return (
-    <nav className="md:flex md:justify-between border-b border-solid border-gray-400 mb-4">
+    <nav className="md:flex md:justify-between border-b border-solid border-gray-400">
       <div className="flex justify-center">
         <NavLink to="/">
           <img

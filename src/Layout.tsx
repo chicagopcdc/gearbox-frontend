@@ -24,10 +24,10 @@ function Layout({
           <Navbar />
         </header>
       )}
-      <main className="flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8">
+      <main className="flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12">
         {children}
       </main>
-      <footer className="flex-shrink-0">
+      <footer>
         {showExtraFooter && <ExtraFooter />}
         <Footer />
       </footer>
