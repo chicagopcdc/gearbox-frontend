@@ -1,11 +1,9 @@
 import React from 'react'
-import { NavLink, Link } from 'react-router-dom'
-import Button from './Inputs/Button'
+import { NavLink } from 'react-router-dom'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
 
 const styles = {
-  authbar: 'flex justify-end border-b border-solid border-primary',
   navbar:
     'md:flex md:flex-wrap md:items-center md:justify-between border-b border-solid border-gray-400 mb-4',
   navbarLogo: 'flex justify-center md:justify-start md:flex-1',
@@ -21,59 +19,32 @@ const navItems = [
   { name: 'About GEARBOx', path: '/about' },
 ]
 
-type NavbarProps = {
-  isAuthenticated: boolean
-  username: string
-  signout: (cb?: () => void) => void
-}
-
-function Navbar({ isAuthenticated, username, signout }: NavbarProps) {
+function Navbar() {
   return (
-    <>
-      <div className={styles.authbar}>
-        {isAuthenticated ? (
-          <>
-            {username !== '' && (
-              <div className="flex items-center text-sm pr-4">
-                Hello,&nbsp;<span className="font-bold">{username}</span>
-              </div>
-            )}
-            <Button size="small" onClick={() => signout()}>
-              Logout
-            </Button>
-          </>
-        ) : (
-          <Link style={{ lineHeight: '18px' }} to="/login">
-            <Button size="small">Login</Button>
-          </Link>
-        )}
+    <nav className={styles.navbar}>
+      <div className={styles.navbarLogo}>
+        <NavLink to="/">
+          <img
+            src={gearboxLogo}
+            alt="GEARBOx logo"
+            style={{ maxHeight: '100px' }}
+          />
+        </NavLink>
       </div>
 
-      <nav className={styles.navbar}>
-        <div className={styles.navbarLogo}>
-          <NavLink to="/">
-            <img
-              src={gearboxLogo}
-              alt="GEARBOx logo"
-              style={{ maxHeight: '100px' }}
-            />
+      <div className={styles.navbarItems}>
+        {navItems.map(({ path, name }) => (
+          <NavLink
+            key={path}
+            to={path}
+            className={styles.navbarItem}
+            activeClassName="bg-gray-700 text-white"
+          >
+            {name}
           </NavLink>
-        </div>
-
-        <div className={styles.navbarItems}>
-          {navItems.map(({ path, name }) => (
-            <NavLink
-              key={path}
-              to={path}
-              className={styles.navbarItem}
-              activeClassName="bg-gray-700 text-white"
-            >
-              {name}
-            </NavLink>
-          ))}
-        </div>
-      </nav>
-    </>
+        ))}
+      </div>
+    </nav>
   )
 }
 

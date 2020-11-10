@@ -13,6 +13,7 @@ import Login from './pages/Login'
 import Trials from './pages/Trials'
 
 import MyRoute from './components/MyRoute'
+import Authbar from './components/Authbar'
 import Navbar from './components/Navbar'
 import Footer, { ExtraFooter } from './components/Footer'
 
@@ -143,15 +144,16 @@ function App() {
 
   return (
     <Router>
-      <header>
-        {!isLogin && (
-          <Navbar
+      {!isLogin && (
+        <header>
+          <Authbar
             isAuthenticated={isAuthenticated}
             username={username}
             signout={signout}
           />
-        )}
-      </header>
+          <Navbar />
+        </header>
+      )}
 
       <main className={styles.main}>
         <Switch>
