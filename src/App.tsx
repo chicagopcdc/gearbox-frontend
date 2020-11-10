@@ -6,16 +6,13 @@ import {
   Redirect,
 } from 'react-router-dom'
 
+import Layout from './Layout'
 import Home from './pages/Home'
 import About from './pages/About'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
 import Trials from './pages/Trials'
-
 import MyRoute from './components/MyRoute'
-import Authbar from './components/Authbar'
-import Navbar from './components/Navbar'
-import Footer, { ExtraFooter } from './components/Footer'
 
 import {
   EligibilityCriterion,
@@ -33,11 +30,6 @@ import {
   mockPostLatestUserInput,
 } from './mock/utils'
 import { clearShowIfField, getDefaultValues, getMatchIds } from './utils'
-
-const styles = {
-  main: 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-8',
-  footer: 'flex-shrink-0',
-}
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 const useFakeAuth = (): [
@@ -144,18 +136,11 @@ function App() {
 
   return (
     <Router>
-      {!isLogin && (
-        <header>
-          <Authbar
-            isAuthenticated={isAuthenticated}
-            username={username}
-            signout={signout}
-          />
-          <Navbar />
-        </header>
-      )}
-
-      <main className={styles.main}>
+      <Layout
+        authbarProps={{ isAuthenticated, username, signout }}
+        hideHeader={isLogin}
+        showExtraFooter={isLogin}
+      >
         <Switch>
           <MyRoute
             path="/"
@@ -207,12 +192,7 @@ function App() {
             <Redirect to={{ pathname: '/' }} />
           </Route>
         </Switch>
-      </main>
-
-      <footer className={styles.footer}>
-        {isLogin && <ExtraFooter />}
-        <Footer />
-      </footer>
+      </Layout>
     </Router>
   )
 }
