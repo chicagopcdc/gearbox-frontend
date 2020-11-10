@@ -5,14 +5,12 @@ import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
 import volchenboumLabLogo from '../assets/volchenboum-lab-logo.png'
 import pedalLogo from '../assets/pedal-logo.png'
 
-const baseFooterClassName =
+const baseClassName =
   'flex flex-wrap items-center justify-center lg:justify-between lg:text-left p-4'
-const extraFooterClassName = `${baseFooterClassName} bg-primary text-center text-white`
-const footerClassName = `${baseFooterClassName} border-t border-solid border-primary`
 
 export function ExtraFooter() {
   return (
-    <div className={extraFooterClassName}>
+    <div className={`${baseClassName} bg-primary text-center text-white`}>
       <p>
         New to the Pediatric Cancer Data Commons? Visit our website for more
         details on GEARBOx.
@@ -28,7 +26,7 @@ export function ExtraFooter() {
 
 export default function Footer() {
   return (
-    <div className={footerClassName}>
+    <div className={`${baseClassName} border-t border-solid border-primary`}>
       <img
         src={uchicagoBSDlogo}
         alt="University of Chicago Biological Sciences Division logo"
