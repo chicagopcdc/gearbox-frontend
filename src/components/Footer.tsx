@@ -10,7 +10,7 @@ const baseFooterClassName =
 const extraFooterClassName = `${baseFooterClassName} bg-primary text-center text-white`
 const footerClassName = `${baseFooterClassName} border-t border-solid border-primary`
 
-function ExtraFooter() {
+export function ExtraFooter() {
   return (
     <div className={extraFooterClassName}>
       <p>
@@ -26,25 +26,20 @@ function ExtraFooter() {
   )
 }
 
-function Footer({ showExtra = false }) {
+export default function Footer() {
   return (
-    <>
-      {showExtra && <ExtraFooter />}
-      <div className={footerClassName}>
-        <img
-          src={uchicagoBSDlogo}
-          alt="University of Chicago Biological Sciences Division logo"
-          style={{ maxHeight: '100px' }}
-        />
-        <img
-          src={volchenboumLabLogo}
-          alt="Volchenboum Lab logo"
-          style={{ maxHeight: '100px' }}
-        />
-        <img src={pedalLogo} alt="PedAL logo" style={{ maxHeight: '100px' }} />
-      </div>
-    </>
+    <div className={footerClassName}>
+      <img
+        src={uchicagoBSDlogo}
+        alt="University of Chicago Biological Sciences Division logo"
+        style={{ maxHeight: '100px' }}
+      />
+      <img
+        src={volchenboumLabLogo}
+        alt="Volchenboum Lab logo"
+        style={{ maxHeight: '100px' }}
+      />
+      <img src={pedalLogo} alt="PedAL logo" style={{ maxHeight: '100px' }} />
+    </div>
   )
 }
-
-export default Footer

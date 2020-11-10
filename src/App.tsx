@@ -14,7 +14,7 @@ import Trials from './pages/Trials'
 
 import MyRoute from './components/MyRoute'
 import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Footer, { ExtraFooter } from './components/Footer'
 
 import {
   EligibilityCriterion,
@@ -208,7 +208,8 @@ function App() {
       </main>
 
       <footer className={styles.footer}>
-        <Footer showExtra={isLogin} />
+        {isLogin && <ExtraFooter />}
+        <Footer />
       </footer>
     </Router>
   )
