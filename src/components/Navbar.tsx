@@ -5,12 +5,11 @@ import gearboxLogo from '../assets/gearbox-logo.png'
 
 const styles = {
   navbar:
-    'md:flex md:flex-wrap md:items-center md:justify-between border-b border-solid border-gray-400 mb-4',
-  navbarLogo: 'flex justify-center md:justify-start md:flex-1',
-  navbarItems:
-    'flex self-stretch justify-between md:flex-1 md:justify-end text-center uppercase',
+    'md:flex md:justify-between border-b border-solid border-gray-400 mb-4',
+  navbarLogo: 'flex justify-center',
+  navbarItems: 'flex md:justify-end text-center uppercase',
   navbarItem:
-    'flex flex-1 md:flex-initial self-strech items-center justify-center hover:text-black hover:bg-gray-400 p-4 border-l border-solid border-gray-400',
+    'flex flex-1 md:flex-initial items-center justify-center hover:bg-gray-400 p-4 border-l border-solid border-gray-400',
 }
 
 const navItems = [
