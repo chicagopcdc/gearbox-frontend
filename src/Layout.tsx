@@ -18,7 +18,7 @@ function Layout({
 }: LayoutProps) {
   return (
     <>
-      {!hideHeader && (
+      {hideHeader || (
         <header>
           <Authbar {...authbarProps} />
           <Navbar />
