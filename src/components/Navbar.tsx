@@ -27,52 +27,54 @@ type NavbarProps = {
   signout: (cb?: () => void) => void
 }
 
-const Navbar = ({ isAuthenticated, username, signout }: NavbarProps) => (
-  <>
-    <div className={styles.authbar}>
-      {isAuthenticated ? (
-        <>
-          {username !== '' && (
-            <div className="flex items-center text-sm pr-4">
-              Hello,&nbsp;<span className="font-bold">{username}</span>
-            </div>
-          )}
-          <Button size="small" onClick={() => signout()}>
-            Logout
-          </Button>
-        </>
-      ) : (
-        <Link style={{ lineHeight: '18px' }} to="/login">
-          <Button size="small">Login</Button>
-        </Link>
-      )}
-    </div>
-
-    <nav className={styles.navbar}>
-      <div className={styles.navbarLogo}>
-        <NavLink to="/">
-          <img
-            src={gearboxLogo}
-            alt="GEARBOx logo"
-            style={{ maxHeight: '100px' }}
-          />
-        </NavLink>
+function Navbar({ isAuthenticated, username, signout }: NavbarProps) {
+  return (
+    <>
+      <div className={styles.authbar}>
+        {isAuthenticated ? (
+          <>
+            {username !== '' && (
+              <div className="flex items-center text-sm pr-4">
+                Hello,&nbsp;<span className="font-bold">{username}</span>
+              </div>
+            )}
+            <Button size="small" onClick={() => signout()}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <Link style={{ lineHeight: '18px' }} to="/login">
+            <Button size="small">Login</Button>
+          </Link>
+        )}
       </div>
 
-      <div className={styles.navbarItems}>
-        {navItems.map(({ path, name }) => (
-          <NavLink
-            key={path}
-            to={path}
-            className={styles.navbarItem}
-            activeClassName="bg-gray-700 text-white"
-          >
-            {name}
+      <nav className={styles.navbar}>
+        <div className={styles.navbarLogo}>
+          <NavLink to="/">
+            <img
+              src={gearboxLogo}
+              alt="GEARBOx logo"
+              style={{ maxHeight: '100px' }}
+            />
           </NavLink>
-        ))}
-      </div>
-    </nav>
-  </>
-)
+        </div>
+
+        <div className={styles.navbarItems}>
+          {navItems.map(({ path, name }) => (
+            <NavLink
+              key={path}
+              to={path}
+              className={styles.navbarItem}
+              activeClassName="bg-gray-700 text-white"
+            >
+              {name}
+            </NavLink>
+          ))}
+        </div>
+      </nav>
+    </>
+  )
+}
 
 export default Navbar

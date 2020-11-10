@@ -10,21 +10,23 @@ const baseFooterClassName =
 const extraFooterClassName = `${baseFooterClassName} bg-primary text-center text-white`
 const footerClassName = `${baseFooterClassName} border-t border-solid border-primary`
 
-const ExtraFooter = () => (
-  <div className={extraFooterClassName}>
-    <p>
-      New to the Pediatric Cancer Data Commons? Visit our website for more
-      details on GEARBOx.
-    </p>
-    <img
-      src={pcdcLogo}
-      alt="Pediatric Center Data Commons logo"
-      style={{ maxHeight: '100px' }}
-    />
-  </div>
-)
+function ExtraFooter() {
+  return (
+    <div className={extraFooterClassName}>
+      <p>
+        New to the Pediatric Cancer Data Commons? Visit our website for more
+        details on GEARBOx.
+      </p>
+      <img
+        src={pcdcLogo}
+        alt="Pediatric Center Data Commons logo"
+        style={{ maxHeight: '100px' }}
+      />
+    </div>
+  )
+}
 
-const Footer = ({ showExtra = false }) => {
+function Footer({ showExtra = false }) {
   return (
     <>
       {showExtra && <ExtraFooter />}
