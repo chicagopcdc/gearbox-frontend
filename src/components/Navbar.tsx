@@ -3,15 +3,6 @@ import { NavLink } from 'react-router-dom'
 
 import gearboxLogo from '../assets/gearbox-logo.png'
 
-const styles = {
-  navbar:
-    'md:flex md:justify-between border-b border-solid border-gray-400 mb-4',
-  navbarLogo: 'flex justify-center',
-  navbarItems: 'flex md:justify-end text-center uppercase',
-  navbarItem:
-    'flex flex-1 md:flex-initial items-center justify-center hover:bg-gray-400 p-4 border-l border-solid border-gray-400',
-}
-
 const navItems = [
   { name: 'Guide for Use', path: '/guide' },
   { name: 'Eligible Trials', path: '/trials' },
@@ -20,8 +11,8 @@ const navItems = [
 
 function Navbar() {
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.navbarLogo}>
+    <nav className="md:flex md:justify-between border-b border-solid border-gray-400 mb-4">
+      <div className="flex justify-center">
         <NavLink to="/">
           <img
             src={gearboxLogo}
@@ -31,12 +22,12 @@ function Navbar() {
         </NavLink>
       </div>
 
-      <div className={styles.navbarItems}>
+      <div className="flex md:justify-end text-center uppercase">
         {navItems.map(({ path, name }) => (
           <NavLink
             key={path}
             to={path}
-            className={styles.navbarItem}
+            className="flex flex-1 md:flex-initial items-center justify-center hover:bg-gray-400 p-4 border-l border-solid border-gray-400"
             activeClassName="bg-gray-700 text-white"
           >
             {name}
