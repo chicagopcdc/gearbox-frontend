@@ -79,9 +79,7 @@ function Home({
           <div
             className={`flex-1 p-4 md:ml-8 ${isChanging ? 'bg-gray-100' : ''}`}
           >
-            <h1 className="uppercase text-primary font-bold">
-              Patient Information
-            </h1>
+            <h1 className="uppercase text-primary font-bold">Open Trials</h1>
             <MatchStatus {...matchStatusProps} />
           </div>
         </div>
