@@ -161,7 +161,7 @@ function App() {
                 onChange: handleMatchFormChange,
                 signalChange,
               }}
-              matchStatusProps={{
+              MatchResultProps={{
                 matchIds,
                 studies,
               }}

@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
-import Box from '../components/Box'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
-import MatchStatus from '../components/MatchStatus'
+import MatchResult from '../components/MatchResult'
 import { MatchFormConfig, MatchFormValues, Study } from '../model'
 import { fetchFenceAccessToken } from '../utils'
 
@@ -23,19 +22,19 @@ type HomeProps = {
     onChange(values: MatchFormValues): void
     signalChange(): void
   }
-  matchStatusProps: {
+  MatchResultProps: {
     matchIds: number[]
     studies: Study[]
   }
 }
 
-const Home = ({
+function Home({
   authenticate,
   isAuthenticated,
   isChanging,
   matchFormProps,
-  matchStatusProps,
-}: HomeProps) => {
+  MatchResultProps,
+}: HomeProps) {
   const history = useHistory()
   useEffect(() => {
     const hasAuthCode = window.location.search.match(/code=([-.\w]+)/)
@@ -67,27 +66,32 @@ const Home = ({
         </p>
       ))}
 
-      {isAuthenticated && isMatchFromDataReady ? (
-        <div className="mt-16 md:flex">
-          <Box
-            name="Patient Information"
-            outerClassName="md:max-w-3/5"
-            innerClassName="px-8"
-          >
-            <MatchForm {...matchFormProps} />
-          </Box>
+      <hr className="my-8" />
 
-          <Box
-            name="Open Trials"
-            outerClassName={`md:flex-grow ${isChanging ? 'bg-gray-200' : ''}`}
+      {isAuthenticated && isMatchFromDataReady ? (
+        <div className="md:flex md:justify-between">
+          <div className="flex-1 p-4 md:mr-4 lg:mr-8">
+            <h1 className="uppercase text-primary font-bold">
+              Patient Information
+            </h1>
+            <MatchForm {...matchFormProps} />
+          </div>
+          <div
+            className={`flex-1 p-4 md:ml-4 lg:lg-8 ${
+              isChanging ? 'bg-gray-100' : ''
+            }`}
           >
-            <MatchStatus {...matchStatusProps} />
-          </Box>
+            <h1 className="uppercase text-primary font-bold">Open Trials</h1>
+            <MatchResult {...MatchResultProps} />
+          </div>
         </div>
       ) : (
-        <div className="text-center my-8">
+        <div className="text-center my-32">
+          <p className="text-3xl mb-4">
+            Find matching clinical trials with GEARBOx
+          </p>
           <Link to="/login">
-            <Button>Log in to find matching clinical trials</Button>
+            <Button size="large">Log in</Button>
           </Link>
         </div>
       )}
