@@ -10,7 +10,7 @@ function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
   return (
     <Button block outline onClick={onClick}>
       <img src={googleLogo} alt="Google G logo" className="h-6 inline -mt-1" />
-      <span className="pl-4">Continue with Google</span>
+      <span className="pl-2">Continue with Google</span>
     </Button>
   )
 }
