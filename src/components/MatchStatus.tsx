@@ -1,4 +1,5 @@
 import React from 'react'
+import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
 import { Study } from '../model'
 
@@ -13,23 +14,16 @@ const MatchStatus = ({ matchIds, studies }: MatchStatusProps) => {
 
   return (
     <>
-      {matched.length > 0 && (
-        <>
-          <h2 className="font-bold text-center">Matched</h2>
-          {matched.map((study, i) => (
-            <TrialCard study={study} key={i} />
-          ))}
-          <br />
-        </>
-      )}
-      {unmatched.length > 0 && (
-        <>
-          <h2 className="font-bold text-center">Unmatched</h2>
-          {unmatched.map((study, i) => (
-            <TrialCard study={study} key={i} />
-          ))}
-        </>
-      )}
+      <DropdownSection name={`Matched (${matched.length})`}>
+        {matched.map((study, i) => (
+          <TrialCard study={study} key={i} />
+        ))}
+      </DropdownSection>
+      <DropdownSection name={`Unmatched (${unmatched.length})`}>
+        {unmatched.map((study, i) => (
+          <TrialCard study={study} key={i} />
+        ))}
+      </DropdownSection>
     </>
   )
 }
