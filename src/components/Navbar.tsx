@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import gearboxLogo from '../assets/gearbox-logo.png'
+import gearboxLogo from '../assets/gearbox-logo.svg'
 
 const navItems = [
   { name: 'Guide for Use', path: '/guide' },
@@ -17,6 +17,7 @@ function Navbar() {
           <img
             src={gearboxLogo}
             alt="GEARBOx logo"
+            className="px-4 py-2"
             style={{ maxHeight: '100px' }}
           />
         </NavLink>

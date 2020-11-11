@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import LoginForm from '../components/LoginForm'
 import GoogleLoginButton from '../components/GoogleLoginButton'
 import { initFenceOAuth } from '../utils'
-import gearboxLogo from '../assets/gearbox-logo.png'
+import gearboxLogo from '../assets/gearbox-logo.svg'
 
 type LoginProps = {
   authenticate(username: string, cb?: () => void): void
