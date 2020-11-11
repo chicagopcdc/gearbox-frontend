@@ -19,12 +19,12 @@ function Authbar({ isAuthenticated, username, signout }: AuthbarProps) {
             </div>
           )}
           <Button size="small" onClick={() => signout()}>
-            Logout
+            Log out
           </Button>
         </>
       ) : (
         <Link style={{ lineHeight: '18px' }} to="/login">
-          <Button size="small">Login</Button>
+          <Button size="small">Log in</Button>
         </Link>
       )}
     </div>
