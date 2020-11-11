@@ -70,14 +70,16 @@ function Home({
 
       {isAuthenticated && isMatchFromDataReady ? (
         <div className="md:flex md:justify-between">
-          <div className="flex-1 p-4 md:mr-8">
+          <div className="flex-1 p-4 md:mr-4 lg:mr-8">
             <h1 className="uppercase text-primary font-bold">
               Patient Information
             </h1>
             <MatchForm {...matchFormProps} />
           </div>
           <div
-            className={`flex-1 p-4 md:ml-8 ${isChanging ? 'bg-gray-100' : ''}`}
+            className={`flex-1 p-4 md:ml-4 lg:lg-8 ${
+              isChanging ? 'bg-gray-100' : ''
+            }`}
           >
             <h1 className="uppercase text-primary font-bold">Open Trials</h1>
             <MatchStatus {...matchStatusProps} />
