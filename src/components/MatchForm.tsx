@@ -1,13 +1,9 @@
-import React, { useEffect, useState, Fragment } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik'
+import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
 import { MatchFormValues, MatchFormConfig } from '../model'
-
-const styles = {
-  groupName: 'font-bold',
-  field: 'my-4',
-}
 
 type MatchFormProps = {
   config: MatchFormConfig
@@ -59,9 +55,7 @@ const MatchForm = ({
   return (
     <form onReset={formik.handleReset}>
       {config.groups.map((group) => (
-        <Fragment key={group.id}>
-          {group.name && <h2 className={styles.groupName}>{group.name}</h2>}
-
+        <DropdownSection key={group.id} name={group.name || 'General'}>
           {config.fields.map(
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
               if (groupId !== group.id) return undefined
@@ -75,7 +69,7 @@ const MatchForm = ({
                   }
 
               return hideField ? undefined : (
-                <div className="m-4" key={id}>
+                <div className="my-4" key={id}>
                   <Field
                     config={{ ...fieldConfig, name: String(id) }}
                     value={formik.values[id]}
@@ -85,11 +79,13 @@ const MatchForm = ({
               )
             }
           )}
-        </Fragment>
+        </DropdownSection>
       ))}
 
       <div className="flex flex-wrap justify-center mt-8">
-        <Button type="reset">Reset</Button>
+        <Button type="reset" outline>
+          Reset
+        </Button>
       </div>
     </form>
   )
