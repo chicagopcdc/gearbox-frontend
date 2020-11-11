@@ -23,7 +23,7 @@ function Navbar() {
         </NavLink>
       </div>
 
-      <div className="flex md:justify-end text-center uppercase">
+      <div className="flex md:justify-end text-sm text-center uppercase">
         {navItems.map(({ path, name }) => (
           <NavLink
             key={path}
