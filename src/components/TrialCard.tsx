@@ -5,7 +5,10 @@ import { Study } from '../model'
 const styles = {
   container: 'bg-gray-300 my-4 p-4',
   title: 'font-bold text-lg pb-2',
-  subtitle: 'font-bold inline pr-2',
+  field: {
+    container: 'mb-1',
+    title: 'font-bold inline pr-2',
+  },
 }
 
 function TrialCard({ study }: { study: Study }) {
@@ -28,17 +31,17 @@ function TrialCard({ study }: { study: Study }) {
       </div>
 
       <div className={isDropDownOpen ? 'pt-4' : 'hidden'}>
-        <h3 className={styles.subtitle}>Research group</h3>
-        {study.group}
-        <br />
-
-        <h3 className={styles.subtitle}>Location</h3>
-        {study.location}
-        <br />
-
-        <details>
+        <div className={styles.field.container}>
+          <h3 className={styles.field.title}>Research group</h3>
+          {study.group}
+        </div>
+        <div className={styles.field.container}>
+          <h3 className={styles.field.title}>Location</h3>
+          {study.location}
+        </div>
+        <details className={styles.field.container}>
           <summary>
-            <h3 className={styles.subtitle}>Registration information</h3>
+            <h3 className={styles.field.title}>Registration information</h3>
           </summary>
           {study.registerLinks?.map((link, i) => (
             <a
