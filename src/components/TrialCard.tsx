@@ -44,7 +44,8 @@ function TrialCard({ study }: { study: Study }) {
             <a
               className="block text-blue-700"
               href={link.url}
-              target="blank"
+              target="_blank"
+              rel="noopener noreferrer"
               key={i}
             >
               {link.name}
