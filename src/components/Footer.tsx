@@ -3,7 +3,7 @@ import React from 'react'
 import pcdcLogo from '../assets/pcdc-logo.png'
 import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
 import volchenboumLabLogo from '../assets/volchenboum-lab-logo.png'
-import pedalLogo from '../assets/pedal-logo.png'
+import pedalLogo from '../assets/pedal-logo.svg'
 
 const baseClassName =
   'flex flex-wrap items-center justify-center lg:justify-between lg:text-left p-4'
