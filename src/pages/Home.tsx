@@ -28,13 +28,13 @@ type HomeProps = {
   }
 }
 
-const Home = ({
+function Home({
   authenticate,
   isAuthenticated,
   isChanging,
   matchFormProps,
   matchStatusProps,
-}: HomeProps) => {
+}: HomeProps) {
   const history = useHistory()
   useEffect(() => {
     const hasAuthCode = window.location.search.match(/code=([-.\w]+)/)

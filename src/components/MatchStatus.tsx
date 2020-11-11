@@ -8,7 +8,7 @@ type MatchStatusProps = {
   studies: Study[]
 }
 
-const MatchStatus = ({ matchIds, studies }: MatchStatusProps) => {
+function MatchStatus({ matchIds, studies }: MatchStatusProps) {
   const matched = studies.filter(({ id }) => matchIds.includes(id))
   const unmatched = studies.filter(({ id }) => !matchIds.includes(id))
 

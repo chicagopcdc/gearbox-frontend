@@ -13,13 +13,13 @@ type MatchFormProps = {
   signalChange(): void
 }
 
-const MatchForm = ({
+function MatchForm({
   config,
   defaultValues,
   values,
   onChange,
   signalChange,
-}: MatchFormProps) => {
+}: MatchFormProps) {
   const [triggerReset, setTriggerReset] = useState(false)
   const formik = useFormik({
     initialValues: { ...values },

@@ -8,11 +8,11 @@ const styles = {
   subtitle: 'font-bold inline pr-2',
 }
 
-const TrialCard = ({
+function TrialCard({
   study: { title, group, location, registerLinks },
 }: {
   study: Study
-}) => {
+}) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
