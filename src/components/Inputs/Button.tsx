@@ -40,7 +40,7 @@ function Button({
       : size === 'small'
       ? 'px-2 py-1 text-xs'
       : ''
-  const className = `uppercase ${blockClassName} ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
+  const className = `tracking-wider uppercase ${blockClassName} ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
 
   const attrs = { className, disabled, type, onClick }
   return <button {...attrs}>{children}</button>
