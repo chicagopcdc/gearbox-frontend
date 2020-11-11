@@ -3,12 +3,12 @@ import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
 import { Study } from '../model'
 
-type MatchStatusProps = {
+type MatchResultProps = {
   matchIds: number[]
   studies: Study[]
 }
 
-function MatchStatus({ matchIds, studies }: MatchStatusProps) {
+function MatchResult({ matchIds, studies }: MatchResultProps) {
   const matched = studies.filter(({ id }) => matchIds.includes(id))
   const unmatched = studies.filter(({ id }) => !matchIds.includes(id))
 
@@ -28,4 +28,4 @@ function MatchStatus({ matchIds, studies }: MatchStatusProps) {
   )
 }
 
-export default MatchStatus
+export default MatchResult

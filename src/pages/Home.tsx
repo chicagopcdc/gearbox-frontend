@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
-import MatchStatus from '../components/MatchStatus'
+import MatchResult from '../components/MatchResult'
 import { MatchFormConfig, MatchFormValues, Study } from '../model'
 import { fetchFenceAccessToken } from '../utils'
 
@@ -22,7 +22,7 @@ type HomeProps = {
     onChange(values: MatchFormValues): void
     signalChange(): void
   }
-  matchStatusProps: {
+  MatchResultProps: {
     matchIds: number[]
     studies: Study[]
   }
@@ -33,7 +33,7 @@ function Home({
   isAuthenticated,
   isChanging,
   matchFormProps,
-  matchStatusProps,
+  MatchResultProps,
 }: HomeProps) {
   const history = useHistory()
   useEffect(() => {
@@ -82,7 +82,7 @@ function Home({
             }`}
           >
             <h1 className="uppercase text-primary font-bold">Open Trials</h1>
-            <MatchStatus {...matchStatusProps} />
+            <MatchResult {...MatchResultProps} />
           </div>
         </div>
       ) : (
