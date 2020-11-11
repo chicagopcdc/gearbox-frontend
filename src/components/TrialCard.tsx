@@ -8,18 +8,14 @@ const styles = {
   subtitle: 'font-bold inline pr-2',
 }
 
-function TrialCard({
-  study: { title, group, location, registerLinks },
-}: {
-  study: Study
-}) {
+function TrialCard({ study }: { study: Study }) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
   return (
     <div className={styles.container}>
       <div className="flex justify-between">
-        <h2 className="text-lg font-bold">{title}</h2>
+        <h2 className="text-lg font-bold">{study.title}</h2>
         {isDropDownOpen ? (
           <button type="button" onClick={handleClose}>
             <ChevronUp color="#C00" />
@@ -33,25 +29,25 @@ function TrialCard({
 
       <div className={isDropDownOpen ? 'pt-4' : 'hidden'}>
         <h3 className={styles.subtitle}>Research group</h3>
-        {group}
+        {study.group}
         <br />
 
         <h3 className={styles.subtitle}>Location</h3>
-        {location}
+        {study.location}
         <br />
 
         <details>
           <summary>
             <h3 className={styles.subtitle}>Registration information</h3>
           </summary>
-          {registerLinks?.map(({ name, url }, i) => (
+          {study.registerLinks?.map((link, i) => (
             <a
               className="block text-blue-700"
-              href={url}
+              href={link.url}
               target="blank"
               key={i}
             >
-              {name}
+              {link.name}
             </a>
           ))}
         </details>
