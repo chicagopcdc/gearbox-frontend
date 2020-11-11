@@ -17,6 +17,7 @@
     "formik": "^2.2.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-feather": "^2.0.8",
     "react-multi-select-component": "^3.0.5",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
