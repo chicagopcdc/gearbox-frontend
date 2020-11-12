@@ -29,7 +29,7 @@ function Navbar() {
             key={path}
             to={path}
             className="flex flex-1 md:flex-initial items-center justify-center hover:bg-gray-400 p-4 border-l border-solid border-gray-400"
-            activeClassName="bg-gray-700 text-white"
+            activeClassName="bg-gray-700 hover:bg-gray-600 text-white"
           >
             {name}
           </NavLink>
