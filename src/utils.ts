@@ -23,7 +23,7 @@ export const getMatchIds = (
     (acc, { id, ...crit }) => ({ ...acc, [id]: crit }),
     {} as { [id: number]: { fieldId: number; fieldValue: any } }
   )
-  const isMatch = (algorithm: MatchAlgorithm): boolean | undefined => {
+  const isMatch = (algorithm: MatchAlgorithm): boolean => {
     const handler = (algoCrit: number | MatchAlgorithm) =>
       typeof algoCrit === 'number'
         ? criteriaById[algoCrit].fieldValue ===

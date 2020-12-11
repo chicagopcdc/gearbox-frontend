@@ -64,7 +64,7 @@ function App() {
     if (isAuthenticated) {
       const loadData = async () => {
         setCriteria(await mockLoadEligibilityCriteria())
-        setConditions(await mockLoadMatchConditions())
+        setConditions((await mockLoadMatchConditions()) as MatchCondition[])
         setConfig(await mockLoadMatchFromConfig())
       }
       loadData()

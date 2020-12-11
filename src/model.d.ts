@@ -13,7 +13,7 @@ export type EligibilityCriterion = {
 }
 
 export type MatchAlgorithm = {
-  operator: string
+  operator: 'AND' | 'OR'
   criteria: (number | MatchAlgorithm)[]
 }
 
