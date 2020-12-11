@@ -51,11 +51,11 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^5.3.21",
-    "@storybook/addon-links": "^5.3.21",
-    "@storybook/addons": "^5.3.21",
+    "@storybook/addon-actions": "^6.1.10",
+    "@storybook/addon-links": "^6.1.10",
+    "@storybook/addons": "^6.1.10",
     "@storybook/preset-create-react-app": "^3.1.5",
-    "@storybook/react": "^5.3.21",
+    "@storybook/react": "^6.1.10",
     "autoprefixer": "^9.8.6",
     "postcss-cli": "^7.1.2",
     "prettier": "^2.2.1",
