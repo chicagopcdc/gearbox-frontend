@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { ChevronUp, ChevronDown } from 'react-feather'
+import ReactTooltip from 'react-tooltip'
+import { ChevronUp, ChevronDown, Info } from 'react-feather'
 import { Study } from '../model'
 
 const styles = {
@@ -19,15 +20,21 @@ function TrialCard({ study }: { study: Study }) {
     <div className={styles.container}>
       <div className="flex justify-between">
         <h2 className="text-lg font-bold">{study.title}</h2>
-        {isDropDownOpen ? (
-          <button type="button" onClick={handleClose}>
-            <ChevronUp color="#C00" />
-          </button>
-        ) : (
-          <button type="button" onClick={handleOpen}>
-            <ChevronDown />
-          </button>
-        )}
+        <div className="flex">
+          <Info className="mr-2" data-tip data-for={`match-info-${study.id}`} />
+          <ReactTooltip id={`match-info-${study.id}`} effect="solid">
+            {study.title}
+          </ReactTooltip>
+          {isDropDownOpen ? (
+            <button type="button" onClick={handleClose}>
+              <ChevronUp color="#C00" />
+            </button>
+          ) : (
+            <button type="button" onClick={handleOpen}>
+              <ChevronDown />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className={isDropDownOpen ? 'pt-4' : 'hidden'}>
