@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { ChevronUp, ChevronDown, Info } from 'react-feather'
-import { Study } from '../model'
+import { MatchInfoAlgorithm, Study } from '../model'
 
 const styles = {
   container: 'bg-gray-300 my-4 p-4',
@@ -12,7 +12,12 @@ const styles = {
   },
 }
 
-function TrialCard({ study }: { study: Study }) {
+type TrialCardProps = {
+  matchInfoAlgorithm?: MatchInfoAlgorithm
+  study: Study
+}
+
+function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
@@ -23,7 +28,7 @@ function TrialCard({ study }: { study: Study }) {
         <div className="flex">
           <Info className="mr-2" data-tip data-for={`match-info-${study.id}`} />
           <ReactTooltip id={`match-info-${study.id}`} effect="solid">
-            {study.title}
+            <pre>{JSON.stringify(matchInfoAlgorithm, null, 2)}</pre>
           </ReactTooltip>
           {isDropDownOpen ? (
             <button type="button" onClick={handleClose}>

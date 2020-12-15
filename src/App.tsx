@@ -181,6 +181,7 @@ function App() {
                 signalChange,
               }}
               MatchResultProps={{
+                matchDetails,
                 matchIds,
                 studies,
               }}

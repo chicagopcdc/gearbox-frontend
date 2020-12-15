@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchResult from '../components/MatchResult'
-import { MatchFormConfig, MatchFormValues, Study } from '../model'
+import { MatchDetails, MatchFormConfig, MatchFormValues, Study } from '../model'
 import { fetchFenceAccessToken } from '../utils'
 
 const paragraphs = [
@@ -23,6 +23,7 @@ type HomeProps = {
     signalChange(): void
   }
   MatchResultProps: {
+    matchDetails: MatchDetails
     matchIds: number[]
     studies: Study[]
   }
