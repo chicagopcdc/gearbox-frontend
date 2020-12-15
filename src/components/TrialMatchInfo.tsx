@@ -74,9 +74,14 @@ function MatchInfoDetails({
 type TrialMatchInfoProps = {
   studyId: number
   studyMatchInfo: MatchInfoAlgorithm
+  studyTitle: string
 }
 
-function TrialMatchInfo({ studyId, studyMatchInfo }: TrialMatchInfoProps) {
+function TrialMatchInfo({
+  studyId,
+  studyMatchInfo,
+  studyTitle,
+}: TrialMatchInfoProps) {
   const matchInfoId = `match-info-${studyId}`
   return (
     <>
@@ -88,7 +93,9 @@ function TrialMatchInfo({ studyId, studyMatchInfo }: TrialMatchInfoProps) {
         effect="solid"
         type="light"
       >
-        <h3 className="font-bold pb-2">Eligibility Criteria</h3>
+        <h3 className="font-bold pb-2">
+          Eligibility Criteria for {studyTitle}
+        </h3>
         <MatchInfoDetails
           matchInfoId={matchInfoId}
           matchInfoAlgorithm={studyMatchInfo}

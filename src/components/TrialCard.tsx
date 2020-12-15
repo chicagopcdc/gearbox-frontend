@@ -30,6 +30,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             <TrialMatchInfo
               studyId={study.id}
               studyMatchInfo={matchInfoAlgorithm}
+              studyTitle={study.title}
             />
           )}
           {isDropDownOpen ? (
