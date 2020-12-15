@@ -3,7 +3,13 @@
     "studyId": 0,
     "algorithm": {
       "operator": "AND",
-      "criteria": [0]
+      "criteria": [
+        0,
+        {
+          "operator": "OR",
+          "criteria": [3, 5]
+        }
+      ]
     }
   },
   {
@@ -23,14 +29,20 @@
   {
     "studyId": 3,
     "algorithm": {
-      "operator": "AND",
-      "criteria": [5]
+      "operator": "OR",
+      "criteria": [
+        {
+          "operator": "AND",
+          "criteria": [0, 2]
+        },
+        5
+      ]
     }
   },
   {
     "studyId": 4,
     "algorithm": {
-      "operator": "AND",
+      "operator": "OR",
       "criteria": [0, 2]
     }
   }
