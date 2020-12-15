@@ -26,10 +26,18 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
       <div className="flex justify-between">
         <h2 className="text-lg font-bold">{study.title}</h2>
         <div className="flex">
-          <Info className="mr-2" data-tip data-for={`match-info-${study.id}`} />
-          <ReactTooltip id={`match-info-${study.id}`} effect="solid">
-            <pre>{JSON.stringify(matchInfoAlgorithm, null, 2)}</pre>
-          </ReactTooltip>
+          {matchInfoAlgorithm !== undefined && (
+            <>
+              <Info
+                className="mr-2"
+                data-tip
+                data-for={`match-info-${study.id}`}
+              />
+              <ReactTooltip id={`match-info-${study.id}`} effect="solid">
+                <pre>{JSON.stringify(matchInfoAlgorithm, null, 2)}</pre>
+              </ReactTooltip>
+            </>
+          )}
           {isDropDownOpen ? (
             <button type="button" onClick={handleClose}>
               <ChevronUp color="#C00" />
