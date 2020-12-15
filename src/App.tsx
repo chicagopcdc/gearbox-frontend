@@ -145,9 +145,7 @@ function App() {
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
       setMatchIds(getMatchIds(criteria, conditions, config, newValues))
-      setMatchDetails(
-        getMatchDetails(criteria, conditions, config, defaultValues)
-      )
+      setMatchDetails(getMatchDetails(criteria, conditions, config, newValues))
       setIsChanging(false)
       mockPostLatestUserInput(newValues)
     }
