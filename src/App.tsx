@@ -16,6 +16,7 @@ import MyRoute from './components/MyRoute'
 
 import {
   EligibilityCriterion,
+  MatchDetails,
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
@@ -29,7 +30,12 @@ import {
   mockLoadLatestUserInput,
   mockPostLatestUserInput,
 } from './mock/utils'
-import { clearShowIfField, getDefaultValues, getMatchIds } from './utils'
+import {
+  clearShowIfField,
+  getDefaultValues,
+  getMatchIds,
+  getMatchDetails,
+} from './utils'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 const useFakeAuth = (): [
@@ -83,6 +89,7 @@ function App() {
   const [defaultValues, setDefaultValues] = useState({} as MatchFormValues)
   const [values, setValues] = useState({} as MatchFormValues)
   const [matchIds, setMatchIds] = useState([] as number[])
+  const [matchDetails, setMatchDetails] = useState({} as MatchDetails)
   useEffect(() => {
     if (
       criteria.length > 0 &&
@@ -91,15 +98,24 @@ function App() {
     ) {
       const initData = async () => {
         const defaultValues = getDefaultValues(config)
+        setDefaultValues({ ...defaultValues })
+        setValues({ ...defaultValues, ...(await mockLoadLatestUserInput()) })
+
         const matchIds = getMatchIds(
           criteria,
           conditions,
           config,
           defaultValues
         )
-        setDefaultValues({ ...defaultValues })
-        setValues({ ...defaultValues, ...(await mockLoadLatestUserInput()) })
         setMatchIds(matchIds)
+
+        const matchDetails = getMatchDetails(
+          criteria,
+          conditions,
+          config,
+          defaultValues
+        )
+        setMatchDetails(matchDetails)
       }
       initData()
     }
@@ -129,6 +145,9 @@ function App() {
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
       setMatchIds(getMatchIds(criteria, conditions, config, newValues))
+      setMatchDetails(
+        getMatchDetails(criteria, conditions, config, defaultValues)
+      )
       setIsChanging(false)
       mockPostLatestUserInput(newValues)
     }
