@@ -47,3 +47,16 @@ export type MatchFormConfig = {
 export type MatchFormValues = {
   [id: number]: any
 }
+
+export type MatchInfo = {
+  fieldName: string
+  fieldValue: any
+  isMatched: boolean
+}
+
+export type MatchInfoAlgorithm = {
+  operator: 'AND' | 'OR'
+  criteria: (MatchInfo | MatchInfoAlgorithm)[]
+}
+
+export type MatchDetails = { [id: number]: MatchInfoAlgorithm }
