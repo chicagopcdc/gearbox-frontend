@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import ReactTooltip from 'react-tooltip'
-import { ChevronUp, ChevronDown, Info } from 'react-feather'
+import { ChevronUp, ChevronDown } from 'react-feather'
+import TrialMatchInfo from './TrialMatchInfo'
 import { MatchInfoAlgorithm, Study } from '../model'
 
 const styles = {
@@ -27,16 +27,10 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
         <h2 className="text-lg font-bold">{study.title}</h2>
         <div className="flex">
           {matchInfoAlgorithm !== undefined && (
-            <>
-              <Info
-                className="mr-2"
-                data-tip
-                data-for={`match-info-${study.id}`}
-              />
-              <ReactTooltip id={`match-info-${study.id}`} effect="solid">
-                <pre>{JSON.stringify(matchInfoAlgorithm, null, 2)}</pre>
-              </ReactTooltip>
-            </>
+            <TrialMatchInfo
+              studyId={study.id}
+              studyMatchInfo={matchInfoAlgorithm}
+            />
           )}
           {isDropDownOpen ? (
             <button type="button" onClick={handleClose}>
