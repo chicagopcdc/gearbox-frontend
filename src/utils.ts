@@ -47,6 +47,52 @@ export const getMatchIds = (
     .map(({ studyId }) => studyId)
 }
 
+export const getMatchDetails = (
+  criteria: EligibilityCriterion[],
+  matchConditions: MatchCondition[],
+  { fields }: MatchFormConfig,
+  values: MatchFormValues
+) => {
+  type MatchInfo = {
+    fieldName: string
+    fieldValue: any
+    isMatched: boolean
+  }
+  const getMatchInfo = (algoCrit: number) => {
+    for (const crit of criteria)
+      if (crit.id === algoCrit)
+        for (const field of fields)
+          if (field.id === crit.fieldId)
+            return {
+              fieldName: field.label || field.name,
+              fieldValue: crit.fieldValue,
+              isMatched: crit.fieldValue === values[crit.fieldId],
+            }
+
+    return {} as MatchInfo
+  }
+
+  type MatchInfoAlgorithm = {
+    operator: 'AND' | 'OR'
+    criteria: (MatchInfo | MatchInfoAlgorithm)[]
+  }
+  const parseAlgorithm = (algorithm: MatchAlgorithm): MatchInfoAlgorithm => ({
+    operator: algorithm.operator,
+    criteria: algorithm.criteria.map((algoCrit) =>
+      typeof algoCrit === 'number'
+        ? getMatchInfo(algoCrit)
+        : parseAlgorithm(algoCrit)
+    ),
+  })
+
+  type MatchDetails = { [id: number]: MatchInfoAlgorithm }
+  const matchDetails = {} as MatchDetails
+  for (const { studyId, algorithm } of matchConditions)
+    matchDetails[studyId] = parseAlgorithm(algorithm)
+
+  return matchDetails
+}
+
 export const getDefaultValues = ({ fields }: MatchFormConfig) =>
   fields
     ? fields.reduce(
