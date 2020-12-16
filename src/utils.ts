@@ -23,17 +23,15 @@ export const getMatchIds = (
   )
     return matchIds
 
-  const criteriaById = {} as {
-    [id: number]: { fieldId: number; fieldValue: any }
-  }
-  for (const { id, ...crit } of criteria) criteriaById[id] = crit
+  const critById = {} as { [id: number]: { fieldId: number; fieldValue: any } }
+  for (const { id, ...crit } of criteria) critById[id] = crit
 
   const isMatch = (algorithm: MatchAlgorithm): boolean => {
-    const handler = (algoCrit: number | MatchAlgorithm) =>
-      typeof algoCrit === 'number'
-        ? criteriaById[algoCrit].fieldValue ===
-          values[criteriaById[algoCrit].fieldId]
-        : isMatch(algoCrit)
+    const handler = (critIdOrAlgo: number | MatchAlgorithm) =>
+      typeof critIdOrAlgo === 'number'
+        ? critById[critIdOrAlgo].fieldValue ===
+          values[critById[critIdOrAlgo].fieldId]
+        : isMatch(critIdOrAlgo)
 
     let result
     switch (algorithm.operator) {
@@ -59,9 +57,9 @@ export const getMatchDetails = (
   { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
-  const getMatchInfo = (algoCrit: number) => {
+  const getMatchInfo = (critId: number) => {
     for (const crit of criteria)
-      if (crit.id === algoCrit)
+      if (crit.id === critId)
         for (const field of fields)
           if (field.id === crit.fieldId)
             return {
@@ -75,10 +73,10 @@ export const getMatchDetails = (
 
   const parseAlgorithm = (algorithm: MatchAlgorithm): MatchInfoAlgorithm => ({
     operator: algorithm.operator,
-    criteria: algorithm.criteria.map((algoCrit) =>
-      typeof algoCrit === 'number'
-        ? getMatchInfo(algoCrit)
-        : parseAlgorithm(algoCrit)
+    criteria: algorithm.criteria.map((critIdOrAlgo) =>
+      typeof critIdOrAlgo === 'number'
+        ? getMatchInfo(critIdOrAlgo)
+        : parseAlgorithm(critIdOrAlgo)
     ),
   })
 
