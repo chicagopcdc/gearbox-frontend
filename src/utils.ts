@@ -128,7 +128,7 @@ export const fetchFenceAccessToken = (code: string) => {
     ['code', code],
     ['client_id', process.env.REACT_APP_FENCE_CLIENT_ID as string],
   ]
-  params.forEach(([key, value]) => body.append(key, value))
+  for (const [key, value] of params) body.append(key, value)
 
   return fetch(`${fenceUrl}/oauth2/token`, { method: 'POST', body })
     .then((response) => response.json())
