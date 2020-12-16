@@ -15,17 +15,19 @@ export const getMatchIds = (
   { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
+  const matchIds: number[] = []
   if (
     criteria.length === 0 ||
     matchConditions.length === 0 ||
     fields === undefined
   )
-    return []
+    return matchIds
 
-  const criteriaById = criteria.reduce(
-    (acc, { id, ...crit }) => ({ ...acc, [id]: crit }),
-    {} as { [id: number]: { fieldId: number; fieldValue: any } }
-  )
+  const criteriaById = {} as {
+    [id: number]: { fieldId: number; fieldValue: any }
+  }
+  for (const { id, ...crit } of criteria) criteriaById[id] = crit
+
   const isMatch = (algorithm: MatchAlgorithm): boolean => {
     const handler = (algoCrit: number | MatchAlgorithm) =>
       typeof algoCrit === 'number'
@@ -45,9 +47,10 @@ export const getMatchIds = (
     return result
   }
 
-  return matchConditions
-    .filter(({ algorithm }) => isMatch(algorithm))
-    .map(({ studyId }) => studyId)
+  for (const { algorithm, studyId } of matchConditions)
+    if (isMatch(algorithm)) matchIds.push(studyId)
+
+  return matchIds
 }
 
 export const getMatchDetails = (
