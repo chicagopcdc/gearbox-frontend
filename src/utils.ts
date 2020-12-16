@@ -87,17 +87,16 @@ export const getMatchDetails = (
   return matchDetails
 }
 
-export const getDefaultValues = ({ fields }: MatchFormConfig) =>
-  fields
-    ? fields.reduce(
-        (acc, { id, type, defaultValue }) => ({
-          ...acc,
-          [id]:
-            type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue,
-        }),
-        {} as MatchFormValues
-      )
-    : ({} as MatchFormValues)
+export const getDefaultValues = ({ fields }: MatchFormConfig) => {
+  const defaultValues = {} as MatchFormValues
+  if (fields === undefined) return defaultValues
+
+  for (const { id, type, defaultValue } of fields)
+    defaultValues[id] =
+      type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue
+
+  return defaultValues
+}
 
 export const clearShowIfField = (
   { fields }: MatchFormConfig,
