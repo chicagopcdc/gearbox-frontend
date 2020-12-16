@@ -23,7 +23,7 @@
     "studyId": 2,
     "algorithm": {
       "operator": "AND",
-      "criteria": [3, 4]
+      "criteria": [3, 5]
     }
   },
   {
