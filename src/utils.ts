@@ -19,16 +19,12 @@ export const getMatchIds = (matchDetails: MatchDetails) => {
         ? (matchInfoOrAlgo as MatchInfo).isMatched
         : isMatch(matchInfoOrAlgo as MatchInfoAlgorithm)
 
-    let result
     switch (algorithm.operator) {
       case 'AND':
-        result = algorithm.criteria.every(handler)
-        break
+        return algorithm.criteria.every(handler)
       case 'OR':
-        result = algorithm.criteria.some(handler)
+        return algorithm.criteria.some(handler)
     }
-
-    return result
   }
 
   for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
