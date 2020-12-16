@@ -4,7 +4,7 @@ import {
   MatchFormValues,
   MatchFormConfig,
 } from './model'
-import { getMatchIds } from './utils'
+import { getMatchIds, getMatchDetails } from './utils'
 
 const criteria: EligibilityCriterion[] = [
   { id: 0, fieldId: 0, fieldValue: true },
@@ -44,7 +44,7 @@ const conditions: MatchCondition[] = [
   },
 ]
 const testHelper = (values: MatchFormValues) =>
-  getMatchIds(criteria, conditions, config, values)
+  getMatchIds(getMatchDetails(criteria, conditions, config, values))
 
 test('getMatchIds for simple AND algorithm', () => {
   const values: MatchFormValues = {

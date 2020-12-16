@@ -9,29 +9,15 @@ import {
   MatchDetails,
 } from './model'
 
-export const getMatchIds = (
-  criteria: EligibilityCriterion[],
-  matchConditions: MatchCondition[],
-  { fields }: MatchFormConfig,
-  values: MatchFormValues
-) => {
+export const getMatchIds = (matchDetails: MatchDetails) => {
   const matchIds: number[] = []
-  if (
-    criteria.length === 0 ||
-    matchConditions.length === 0 ||
-    fields === undefined
-  )
-    return matchIds
+  if (Object.keys(matchDetails).length === 0) return matchIds
 
-  const critById = {} as { [id: number]: { fieldId: number; fieldValue: any } }
-  for (const { id, ...crit } of criteria) critById[id] = crit
-
-  const isMatch = (algorithm: MatchAlgorithm): boolean => {
-    const handler = (critIdOrAlgo: number | MatchAlgorithm) =>
-      typeof critIdOrAlgo === 'number'
-        ? critById[critIdOrAlgo].fieldValue ===
-          values[critById[critIdOrAlgo].fieldId]
-        : isMatch(critIdOrAlgo)
+  const isMatch = (algorithm: MatchInfoAlgorithm): boolean => {
+    const handler = (matchInfoOrAlgo: MatchInfo | MatchInfoAlgorithm) =>
+      matchInfoOrAlgo.hasOwnProperty('isMatched')
+        ? (matchInfoOrAlgo as MatchInfo).isMatched
+        : isMatch(matchInfoOrAlgo as MatchInfoAlgorithm)
 
     let result
     switch (algorithm.operator) {
@@ -45,8 +31,8 @@ export const getMatchIds = (
     return result
   }
 
-  for (const { algorithm, studyId } of matchConditions)
-    if (isMatch(algorithm)) matchIds.push(studyId)
+  for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
+    if (isMatch(studyMatchDetail)) matchIds.push(parseInt(studyId))
 
   return matchIds
 }

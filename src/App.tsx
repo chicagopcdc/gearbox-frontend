@@ -101,14 +101,6 @@ function App() {
         setDefaultValues({ ...defaultValues })
         setValues({ ...defaultValues, ...(await mockLoadLatestUserInput()) })
 
-        const matchIds = getMatchIds(
-          criteria,
-          conditions,
-          config,
-          defaultValues
-        )
-        setMatchIds(matchIds)
-
         const matchDetails = getMatchDetails(
           criteria,
           conditions,
@@ -116,6 +108,7 @@ function App() {
           defaultValues
         )
         setMatchDetails(matchDetails)
+        setMatchIds(getMatchIds(matchDetails))
       }
       initData()
     }
@@ -144,8 +137,14 @@ function App() {
 
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
-      setMatchIds(getMatchIds(criteria, conditions, config, newValues))
-      setMatchDetails(getMatchDetails(criteria, conditions, config, newValues))
+      const matchDetails = getMatchDetails(
+        criteria,
+        conditions,
+        config,
+        newValues
+      )
+      setMatchDetails(matchDetails)
+      setMatchIds(getMatchIds(matchDetails))
       setIsChanging(false)
       mockPostLatestUserInput(newValues)
     }
