@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { ChevronUp, ChevronDown } from 'react-feather'
-import { Study } from '../model'
+import TrialMatchInfo from './TrialMatchInfo'
+import { MatchInfoAlgorithm, Study } from '../model'
 
 const styles = {
   container: 'bg-gray-300 my-4 p-4',
@@ -11,7 +12,12 @@ const styles = {
   },
 }
 
-function TrialCard({ study }: { study: Study }) {
+type TrialCardProps = {
+  matchInfoAlgorithm?: MatchInfoAlgorithm
+  study: Study
+}
+
+function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
@@ -19,15 +25,24 @@ function TrialCard({ study }: { study: Study }) {
     <div className={styles.container}>
       <div className="flex justify-between">
         <h2 className="text-lg font-bold">{study.title}</h2>
-        {isDropDownOpen ? (
-          <button type="button" onClick={handleClose}>
-            <ChevronUp color="#C00" />
-          </button>
-        ) : (
-          <button type="button" onClick={handleOpen}>
-            <ChevronDown />
-          </button>
-        )}
+        <div className="flex">
+          {matchInfoAlgorithm !== undefined && (
+            <TrialMatchInfo
+              studyId={study.id}
+              studyMatchInfo={matchInfoAlgorithm}
+              studyTitle={study.title}
+            />
+          )}
+          {isDropDownOpen ? (
+            <button type="button" onClick={handleClose}>
+              <ChevronUp color="#C00" />
+            </button>
+          ) : (
+            <button type="button" onClick={handleOpen}>
+              <ChevronDown />
+            </button>
+          )}
+        </div>
       </div>
 
       <div className={isDropDownOpen ? 'pt-4' : 'hidden'}>

@@ -45,6 +45,10 @@ body {
 .multi-select .dropdown-container .select-item input {
   @apply hidden;
 }
+
+.__react_component_tooltip.show {
+  opacity: 1 !important;
+}
 /* purgecss end ignore */
 
 @tailwind utilities;

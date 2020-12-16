@@ -4,6 +4,9 @@ import {
   MatchFormValues,
   MatchCondition,
   MatchAlgorithm,
+  MatchInfo,
+  MatchInfoAlgorithm,
+  MatchDetails,
 } from './model'
 
 export const getMatchIds = (
@@ -45,6 +48,42 @@ export const getMatchIds = (
   return matchConditions
     .filter(({ algorithm }) => isMatch(algorithm))
     .map(({ studyId }) => studyId)
+}
+
+export const getMatchDetails = (
+  criteria: EligibilityCriterion[],
+  matchConditions: MatchCondition[],
+  { fields }: MatchFormConfig,
+  values: MatchFormValues
+) => {
+  const getMatchInfo = (algoCrit: number) => {
+    for (const crit of criteria)
+      if (crit.id === algoCrit)
+        for (const field of fields)
+          if (field.id === crit.fieldId)
+            return {
+              fieldName: field.label || field.name,
+              fieldValue: crit.fieldValue,
+              isMatched: crit.fieldValue === values[crit.fieldId],
+            }
+
+    return {} as MatchInfo
+  }
+
+  const parseAlgorithm = (algorithm: MatchAlgorithm): MatchInfoAlgorithm => ({
+    operator: algorithm.operator,
+    criteria: algorithm.criteria.map((algoCrit) =>
+      typeof algoCrit === 'number'
+        ? getMatchInfo(algoCrit)
+        : parseAlgorithm(algoCrit)
+    ),
+  })
+
+  const matchDetails = {} as MatchDetails
+  for (const { studyId, algorithm } of matchConditions)
+    matchDetails[studyId] = parseAlgorithm(algorithm)
+
+  return matchDetails
 }
 
 export const getDefaultValues = ({ fields }: MatchFormConfig) =>
