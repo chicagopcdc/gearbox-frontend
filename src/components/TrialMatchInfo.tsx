@@ -92,7 +92,9 @@ function TrialMatchInfo({
   return (
     <>
       <Info
-        className="cursor-pointer mr-2"
+        className={`cursor-pointer mr-2 ${
+          showModal ? 'text-red-700' : 'hover:text-red-700'
+        }`}
         data-tip
         data-for={matchInfoId}
         onClick={openModal}
@@ -118,7 +120,10 @@ function TrialMatchInfo({
                 <h3 className="font-bold mr-4">
                   Eligibility Criteria for {studyTitle}
                 </h3>
-                <XCircle className="cursor-pointer" onClick={closeModal} />
+                <XCircle
+                  className="cursor-pointer hover:text-red-700"
+                  onClick={closeModal}
+                />
               </div>
               <MatchInfoDetails
                 matchInfoId={matchInfoId}
