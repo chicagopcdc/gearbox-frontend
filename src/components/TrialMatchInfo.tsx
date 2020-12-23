@@ -1,5 +1,6 @@
-import React from 'react'
-import { Info } from 'react-feather'
+import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
+import { Info, XCircle } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import { MatchInfo, MatchInfoAlgorithm } from '../model'
 
@@ -83,9 +84,19 @@ function TrialMatchInfo({
   studyTitle,
 }: TrialMatchInfoProps) {
   const matchInfoId = `match-info-${studyId}`
+
+  const [showModal, setShowModal] = useState(false)
+  const openModal = () => setShowModal(true)
+  const closeModal = () => setShowModal(false)
+
   return (
     <>
-      <Info className="mr-2" data-tip data-for={matchInfoId} />
+      <Info
+        className="cursor-pointer mr-2"
+        data-tip
+        data-for={matchInfoId}
+        onClick={openModal}
+      />
       <ReactTooltip
         id={matchInfoId}
         border
@@ -93,14 +104,30 @@ function TrialMatchInfo({
         effect="solid"
         type="light"
       >
-        <h3 className="font-bold pb-2">
-          Eligibility Criteria for {studyTitle}
-        </h3>
-        <MatchInfoDetails
-          matchInfoId={matchInfoId}
-          matchInfoAlgorithm={studyMatchInfo}
-        />
+        <span>Click to see Eligibility Criteria</span>
       </ReactTooltip>
+      {showModal &&
+        ReactDOM.createPortal(
+          <div
+            id="match-info-modal"
+            className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
+            style={{ background: '#cccc' }}
+          >
+            <div className="bg-white p-8">
+              <div className="flex justify-between pb-4">
+                <h3 className="font-bold mr-4">
+                  Eligibility Criteria for {studyTitle}
+                </h3>
+                <XCircle className="cursor-pointer" onClick={closeModal} />
+              </div>
+              <MatchInfoDetails
+                matchInfoId={matchInfoId}
+                matchInfoAlgorithm={studyMatchInfo}
+              />
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   )
 }
