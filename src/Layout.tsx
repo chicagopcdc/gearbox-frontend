@@ -4,15 +4,15 @@ import Footer from './components/Footer'
 import WarningBanner from './components/WarningBanner'
 
 type LayoutProps = {
-  headerProps: HeaderProps
   children: React.ReactNode
+  headerProps: HeaderProps
   hideHeader: boolean
   showExtraFooter: boolean
 }
 
 function Layout({
-  headerProps,
   children,
+  headerProps,
   hideHeader,
   showExtraFooter,
 }: LayoutProps) {
