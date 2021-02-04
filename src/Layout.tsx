@@ -1,6 +1,6 @@
 import React from 'react'
 import Header, { HeaderProps } from './components/Header'
-import Footer, { ExtraFooter } from './components/Footer'
+import Footer from './components/Footer'
 import WarningBanner from './components/WarningBanner'
 
 type LayoutProps = {
@@ -23,10 +23,7 @@ function Layout({
       <main className="flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12">
         {children}
       </main>
-      <footer>
-        {showExtraFooter && <ExtraFooter />}
-        <Footer />
-      </footer>
+      <Footer showExtra={showExtraFooter} />
     </>
   )
 }
