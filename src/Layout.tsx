@@ -1,6 +1,6 @@
 import React from 'react'
-import Authbar, { AuthbarProps } from './components/Authbar'
-import Navbar from './components/Navbar'
+import Header from './components/Header'
+import { AuthbarProps } from './components/Authbar'
 import Footer, { ExtraFooter } from './components/Footer'
 import WarningBanner from './components/WarningBanner'
 
@@ -19,12 +19,7 @@ function Layout({
 }: LayoutProps) {
   return (
     <>
-      {hideHeader || (
-        <header>
-          <Authbar {...authbarProps} />
-          <Navbar />
-        </header>
-      )}
+      {hideHeader || <Header {...authbarProps} />}
       <WarningBanner />
       <main className="flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12">
         {children}
