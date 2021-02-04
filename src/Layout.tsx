@@ -19,8 +19,8 @@ function Layout({
 }: LayoutProps) {
   return (
     <>
-      {hideHeader || <Header {...authbarProps} />}
       <WarningBanner />
+      {hideHeader || <Header {...authbarProps} />}
       <main className="flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12">
         {children}
       </main>
