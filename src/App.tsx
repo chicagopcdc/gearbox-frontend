@@ -153,7 +153,7 @@ function App() {
   return (
     <Router>
       <Layout
-        authbarProps={{ isAuthenticated, username, signout }}
+        headerProps={{ isAuthenticated, username, signout }}
         hideHeader={isLogin}
         showExtraFooter={isLogin}
       >

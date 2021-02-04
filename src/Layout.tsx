@@ -1,31 +1,25 @@
 import React from 'react'
-import Authbar, { AuthbarProps } from './components/Authbar'
-import Navbar from './components/Navbar'
+import Header, { HeaderProps } from './components/Header'
 import Footer, { ExtraFooter } from './components/Footer'
 import WarningBanner from './components/WarningBanner'
 
 type LayoutProps = {
-  authbarProps: AuthbarProps
+  headerProps: HeaderProps
   children: React.ReactNode
   hideHeader: boolean
   showExtraFooter: boolean
 }
 
 function Layout({
-  authbarProps,
+  headerProps,
   children,
   hideHeader,
   showExtraFooter,
 }: LayoutProps) {
   return (
     <>
-      {hideHeader || (
-        <header>
-          <Authbar {...authbarProps} />
-          <Navbar />
-        </header>
-      )}
       <WarningBanner />
+      {hideHeader || <Header {...headerProps} />}
       <main className="flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12">
         {children}
       </main>
