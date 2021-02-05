@@ -60,7 +60,6 @@ const useFakeAuth = (): [
 
 function App() {
   const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
-  const [isLogin, setIsLogin] = useState(false)
 
   // load data
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
@@ -152,20 +151,9 @@ function App() {
 
   return (
     <Router>
-      <Layout
-        headerProps={{ isAuthenticated, username, signout }}
-        hideHeader={isLogin}
-        showExtraFooter={isLogin}
-      >
+      <Layout headerProps={{ isAuthenticated, username, signout }}>
         <Switch>
-          <MyRoute
-            path="/"
-            exact
-            isAuthenticated={isAuthenticated}
-            cb={() => {
-              setIsLogin(false)
-            }}
-          >
+          <MyRoute path="/" exact isAuthenticated={isAuthenticated}>
             <Home
               authenticate={authenticate}
               isAuthenticated={isAuthenticated}
@@ -185,11 +173,7 @@ function App() {
             />
           </MyRoute>
 
-          <MyRoute
-            path="/login"
-            isAuthenticated={isAuthenticated}
-            cb={() => setIsLogin(true)}
-          >
+          <MyRoute path="/login" isAuthenticated={isAuthenticated}>
             <Login authenticate={authenticate} />
           </MyRoute>
 
