@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Button from '../components/Inputs/Button'
-import MatchForm from '../components/MatchForm'
-import MatchResult from '../components/MatchResult'
-import { MatchDetails, MatchFormConfig, MatchFormValues, Study } from '../model'
+import MatchForm, { MatchFormProps } from '../components/MatchForm'
+import MatchResult, { MatchResultProps } from '../components/MatchResult'
 import { fetchFenceAccessToken } from '../utils'
 
 const paragraphs = [
@@ -15,18 +14,8 @@ type HomeProps = {
   authenticate(username: string, cb?: () => void): void
   isAuthenticated: boolean
   isChanging: boolean
-  matchFormProps: {
-    config: MatchFormConfig
-    defaultValues: MatchFormValues
-    values: MatchFormValues
-    onChange(values: MatchFormValues): void
-    signalChange(): void
-  }
-  matchResultProps: {
-    matchDetails: MatchDetails
-    matchIds: number[]
-    studies: Study[]
-  }
+  matchFormProps: MatchFormProps
+  matchResultProps: MatchResultProps
 }
 
 function Home({

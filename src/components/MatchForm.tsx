@@ -5,7 +5,7 @@ import Button from './Inputs/Button'
 import Field from './Inputs/Field'
 import { MatchFormValues, MatchFormConfig } from '../model'
 
-type MatchFormProps = {
+export type MatchFormProps = {
   config: MatchFormConfig
   defaultValues: MatchFormValues
   values: MatchFormValues
