@@ -5,11 +5,6 @@ import MatchForm, { MatchFormProps } from '../components/MatchForm'
 import MatchResult, { MatchResultProps } from '../components/MatchResult'
 import { fetchFenceAccessToken } from '../utils'
 
-const paragraphs = [
-  `A tool built and maintained by the Pediatric Acute Leukemia (PedAL) Group, GEARBOx matches pediatric patients currently on Phase III clinical trials who experience refactory or relapsing disease to new Phase I or Phase II clinical trials based on their personal and clinical data. To see a list of all the trials included in this search, please select "Eligible Trials" above.`,
-  `GEARBOx has compiled both a centralized list of COG-sponsored Phase I and Phase II pediatric acute leukemia trials and a complete index of each study's eligibility criteria. Using these data points, our algorithm matches patients to trials for which they are eligible - streaming the process by which Clinical Research Associates (CRAs) identify and initiate their patients' next step in care.`,
-]
-
 type HomeMatchingPageProps = {
   isChanging: boolean
   matchFormProps: MatchFormProps
@@ -89,26 +84,14 @@ function Home({
     matchFormProps.config.fields !== undefined &&
     Object.keys(matchFormProps.values).length > 0
 
-  return (
-    <>
-      {paragraphs.map((p, i) => (
-        <p className="mb-4" key={i}>
-          {p}
-        </p>
-      ))}
-
-      <hr className="my-8" />
-
-      {isAuthenticated && isMatchFromDataReady ? (
-        <HomeMatchingPage
-          isChanging={isChanging}
-          matchFormProps={matchFormProps}
-          matchResultProps={matchResultProps}
-        />
-      ) : (
-        <HomeLandingPage />
-      )}
-    </>
+  return isAuthenticated && isMatchFromDataReady ? (
+    <HomeMatchingPage
+      isChanging={isChanging}
+      matchFormProps={matchFormProps}
+      matchResultProps={matchResultProps}
+    />
+  ) : (
+    <HomeLandingPage />
   )
 }
 
