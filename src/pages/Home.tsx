@@ -10,12 +10,53 @@ const paragraphs = [
   `GEARBOx has compiled both a centralized list of COG-sponsored Phase I and Phase II pediatric acute leukemia trials and a complete index of each study's eligibility criteria. Using these data points, our algorithm matches patients to trials for which they are eligible - streaming the process by which Clinical Research Associates (CRAs) identify and initiate their patients' next step in care.`,
 ]
 
-type HomeProps = {
-  authenticate(username: string, cb?: () => void): void
-  isAuthenticated: boolean
+type HomeMatchingPageProps = {
   isChanging: boolean
   matchFormProps: MatchFormProps
   matchResultProps: MatchResultProps
+}
+
+type HomeProps = HomeMatchingPageProps & {
+  authenticate(username: string, cb?: () => void): void
+  isAuthenticated: boolean
+}
+
+function HomeLandingPage() {
+  return (
+    <div className="text-center my-32">
+      <p className="text-3xl mb-4">
+        Find matching clinical trials with GEARBOx
+      </p>
+      <Link to="/login">
+        <Button size="large">Log in</Button>
+      </Link>
+    </div>
+  )
+}
+
+function HomeMatchingPage({
+  isChanging,
+  matchFormProps,
+  matchResultProps,
+}: HomeMatchingPageProps) {
+  return (
+    <div className="md:flex md:justify-between">
+      <div className="flex-1 p-4 md:mr-4 lg:mr-8">
+        <h1 className="uppercase text-primary font-bold">
+          Patient Information
+        </h1>
+        <MatchForm {...matchFormProps} />
+      </div>
+      <div
+        className={`flex-1 p-4 md:ml-4 lg:lg-8 ${
+          isChanging ? 'bg-gray-100' : ''
+        }`}
+      >
+        <h1 className="uppercase text-primary font-bold">Open Trials</h1>
+        <MatchResult {...matchResultProps} />
+      </div>
+    </div>
+  )
 }
 
 function Home({
@@ -59,31 +100,13 @@ function Home({
       <hr className="my-8" />
 
       {isAuthenticated && isMatchFromDataReady ? (
-        <div className="md:flex md:justify-between">
-          <div className="flex-1 p-4 md:mr-4 lg:mr-8">
-            <h1 className="uppercase text-primary font-bold">
-              Patient Information
-            </h1>
-            <MatchForm {...matchFormProps} />
-          </div>
-          <div
-            className={`flex-1 p-4 md:ml-4 lg:lg-8 ${
-              isChanging ? 'bg-gray-100' : ''
-            }`}
-          >
-            <h1 className="uppercase text-primary font-bold">Open Trials</h1>
-            <MatchResult {...matchResultProps} />
-          </div>
-        </div>
+        <HomeMatchingPage
+          isChanging={isChanging}
+          matchFormProps={matchFormProps}
+          matchResultProps={matchResultProps}
+        />
       ) : (
-        <div className="text-center my-32">
-          <p className="text-3xl mb-4">
-            Find matching clinical trials with GEARBOx
-          </p>
-          <Link to="/login">
-            <Button size="large">Log in</Button>
-          </Link>
-        </div>
+        <HomeLandingPage />
       )}
     </>
   )
