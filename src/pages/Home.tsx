@@ -22,7 +22,7 @@ type HomeProps = {
     onChange(values: MatchFormValues): void
     signalChange(): void
   }
-  MatchResultProps: {
+  matchResultProps: {
     matchDetails: MatchDetails
     matchIds: number[]
     studies: Study[]
@@ -34,7 +34,7 @@ function Home({
   isAuthenticated,
   isChanging,
   matchFormProps,
-  MatchResultProps,
+  matchResultProps,
 }: HomeProps) {
   const history = useHistory()
   useEffect(() => {
@@ -83,7 +83,7 @@ function Home({
             }`}
           >
             <h1 className="uppercase text-primary font-bold">Open Trials</h1>
-            <MatchResult {...MatchResultProps} />
+            <MatchResult {...matchResultProps} />
           </div>
         </div>
       ) : (
