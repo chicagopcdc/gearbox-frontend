@@ -53,6 +53,7 @@ export type MatchInfo = {
   fieldName: string
   fieldValue: any
   isMatched: boolean
+  operator: 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
 }
 
 export type MatchInfoAlgorithm = {
