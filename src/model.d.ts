@@ -10,6 +10,7 @@ export type EligibilityCriterion = {
   id: number
   fieldId: number
   fieldValue: any
+  operator: 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
 }
 
 export type MatchAlgorithm = {
