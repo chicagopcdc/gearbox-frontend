@@ -68,6 +68,7 @@ export const getMatchDetails = (
               fieldName: field.label || field.name,
               fieldValue: crit.fieldValue,
               isMatched: getIsMatched(crit, values),
+              operator: crit.operator,
             }
 
     return {} as MatchInfo
