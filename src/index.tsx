@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'fontsource-lato/300.css'
-import 'fontsource-lato/400.css'
+import '@fontsource/lato'
 import './index.css'
 import App from './App'
 
