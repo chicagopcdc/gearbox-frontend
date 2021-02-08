@@ -3,7 +3,7 @@ import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
 import { MatchDetails, Study } from '../model'
 
-type MatchResultProps = {
+export type MatchResultProps = {
   matchDetails: MatchDetails
   matchIds: number[]
   studies: Study[]

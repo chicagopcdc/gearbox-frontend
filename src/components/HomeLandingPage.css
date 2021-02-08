@@ -1,0 +1,153 @@
+#beehive {
+  position: absolute;
+  max-height: 67%;
+  top: 10%;
+  left: 0;
+  z-index: -1;
+}
+
+#gear-icon {
+  position: absolute;
+  height: 67%;
+  max-width: 50%;
+  top: 10%;
+  right: -15%;
+  z-index: -1;
+
+  animation-name: spin;
+  animation-delay: 500ms;
+  animation-duration: 2500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(360deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (max-width: 640px) {
+  #gear-icon {
+    top: 25%;
+    right: -25%;
+  }
+}
+
+#section-2-img-container {
+  height: 500px;
+}
+
+#gearbox-logo {
+  position: absolute;
+  width: 300px;
+  top: 35%;
+  left: calc(50% - 150px);
+  z-index: 5;
+}
+
+#laptop-screen {
+  position: absolute;
+  width: 450px;
+  top: 20%;
+  left: calc(50% - 225px);
+  z-index: 4;
+}
+
+#laptop-screen-bg {
+  position: absolute;
+  background-color: white;
+  width: 400px;
+  height: 250px;
+  top: 22%;
+  left: calc(50% - 200px);
+  z-index: 3;
+}
+
+#nci-patient-overlay {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 40%,
+    rgba(255, 255, 255, 1) 66%
+  );
+}
+
+#nci-patient {
+  position: absolute;
+  z-index: -2;
+  max-width: 50%;
+  left: 0;
+}
+
+#nci-clinician-overlay {
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  height: 100%;
+  width: 50%;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 40%,
+    rgba(255, 255, 255, 1) 66%
+  );
+}
+
+#nci-clinician {
+  position: absolute;
+  z-index: -2;
+  max-width: 50%;
+  right: 0;
+}
+
+@media (max-width: 768px) {
+  #section-2-img-container {
+    height: 300px;
+  }
+
+  #gearbox-logo {
+    top: 35%;
+    width: 200px;
+    left: calc(50% - 100px);
+  }
+
+  #laptop-screen {
+    top: 20%;
+    width: 300px;
+    left: calc(50% - 150px);
+  }
+
+  #laptop-screen-bg {
+    top: 22%;
+    width: 267px;
+
+    height: 167px;
+    left: calc(50% - 133px);
+  }
+
+  #nci-patient-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 1) 80%
+    );
+  }
+
+  #nci-clinician-overlay {
+    background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 1) 80%
+    );
+  }
+}
