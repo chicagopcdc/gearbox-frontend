@@ -8,7 +8,8 @@
         {
           "operator": "OR",
           "criteria": [3, 5]
-        }
+        },
+        6
       ]
     }
   },
