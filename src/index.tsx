@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import 'fontsource-bebas-neue'
 import 'fontsource-lato/300.css'
 import 'fontsource-lato/400.css'
 import './index.css'

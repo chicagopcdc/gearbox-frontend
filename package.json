@@ -12,7 +12,6 @@
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
-    "fontsource-bebas-neue": "^3.1.5",
     "fontsource-lato": "^3.1.5",
     "formik": "^2.2.6",
     "react": "^17.0.1",
