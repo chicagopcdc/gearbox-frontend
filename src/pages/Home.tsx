@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
-import Button from '../components/Inputs/Button'
+import { useHistory } from 'react-router-dom'
+import HomeLandingPage from '../components/HomeLandingPage'
 import MatchForm, { MatchFormProps } from '../components/MatchForm'
 import MatchResult, { MatchResultProps } from '../components/MatchResult'
 import { fetchFenceAccessToken } from '../utils'
@@ -14,19 +14,6 @@ type HomeMatchingPageProps = {
 type HomeProps = HomeMatchingPageProps & {
   authenticate(username: string, cb?: () => void): void
   isAuthenticated: boolean
-}
-
-function HomeLandingPage() {
-  return (
-    <div className="text-center my-32">
-      <p className="text-3xl mb-4">
-        Find matching clinical trials with GEARBOx
-      </p>
-      <Link to="/login">
-        <Button size="large">Log in</Button>
-      </Link>
-    </div>
-  )
 }
 
 function HomeMatchingPage({
