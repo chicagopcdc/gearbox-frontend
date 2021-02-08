@@ -7,10 +7,10 @@ import {
 import { getMatchIds, getMatchDetails } from './utils'
 
 const criteria: EligibilityCriterion[] = [
-  { id: 0, fieldId: 0, fieldValue: true },
-  { id: 1, fieldId: 1, fieldValue: false },
-  { id: 2, fieldId: 1, fieldValue: true },
-  { id: 3, fieldId: 2, fieldValue: true },
+  { id: 0, fieldId: 0, fieldValue: true, operator: 'eq' },
+  { id: 1, fieldId: 1, fieldValue: false, operator: 'eq' },
+  { id: 2, fieldId: 1, fieldValue: true, operator: 'eq' },
+  { id: 3, fieldId: 2, fieldValue: 0, operator: 'gt' },
 ]
 const config: MatchFormConfig = {
   groups: [],
@@ -65,7 +65,7 @@ test('getMatchIds for simple OR algorithm', () => {
 test('getMatchIds for nested algorithm', () => {
   const values: MatchFormValues = {
     0: true,
-    2: true,
+    2: 1,
   }
   expect(testHelper(values)).toEqual([1, 2])
 })

@@ -10,6 +10,43 @@ type MatchInfoDetailsProps = {
   level?: number
 }
 
+function MatchInfoString({
+  fieldName,
+  fieldValue,
+  isMatched,
+  operator,
+}: MatchInfo) {
+  let operatorString: string
+  switch (operator) {
+    case 'eq':
+      operatorString = 'is'
+      break
+    case 'gt':
+      operatorString = 'is greater than'
+      break
+    case 'gte':
+      operatorString = 'is greater than/equal to'
+      break
+    case 'lt':
+      operatorString = 'is less than'
+      break
+    case 'lte':
+      operatorString = 'is less than/equal to'
+      break
+    case 'ne':
+      operatorString = 'is no'
+  }
+
+  return (
+    <>
+      {`${fieldName} ${operatorString} `}
+      <span className={isMatched ? 'text-green-700' : 'text-red-700'}>
+        {typeof fieldValue === 'number' ? fieldValue : `"${fieldValue}"`}
+      </span>
+    </>
+  )
+}
+
 function MatchInfoDetails({
   matchInfoId,
   matchInfoAlgorithm,
@@ -40,16 +77,7 @@ function MatchInfoDetails({
               <span className="whitespace-pre">
                 {' '.repeat(level * space)}
               </span>
-              {`${(crit as MatchInfo).fieldName} is `}
-              <span
-                className={
-                  (crit as MatchInfo).isMatched
-                    ? 'text-green-700'
-                    : 'text-red-700'
-                }
-              >
-                {`"${(crit as MatchInfo).fieldValue}"`}
-              </span>
+              <MatchInfoString {...(crit as MatchInfo)} />
             </>
           ) : (
             <MatchInfoDetails

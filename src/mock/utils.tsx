@@ -3,10 +3,10 @@ import latestUserInput from './latestUserInput.json'
 import matchConditions from './matchConditions.json'
 import matchFormConfig from './matchFormConfig.json'
 import studies from './studies.json'
-import { MatchFormValues } from '../model'
+import { EligibilityCriterion, MatchFormValues } from '../model'
 
 export const mockLoadEligibilityCriteria = () =>
-  Promise.resolve(eligibilityCriteria)
+  Promise.resolve(eligibilityCriteria as EligibilityCriterion[])
 
 export const mockLoadLatestUserInput = () =>
   Promise.resolve(latestUserInput).then((fields) =>

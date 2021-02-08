@@ -39,6 +39,26 @@ export const getMatchDetails = (
   { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
+  const getIsMatched = (
+    crit: EligibilityCriterion,
+    values: MatchFormValues
+  ) => {
+    switch (crit.operator) {
+      case 'eq':
+        return crit.fieldValue === values[crit.fieldId]
+      case 'gt':
+        return crit.fieldValue < values[crit.fieldId]
+      case 'gte':
+        return crit.fieldValue <= values[crit.fieldId]
+      case 'lt':
+        return crit.fieldValue > values[crit.fieldId]
+      case 'lte':
+        return crit.fieldValue >= values[crit.fieldId]
+      case 'ne':
+        return crit.fieldValue !== values[crit.fieldId]
+    }
+  }
+
   const getMatchInfo = (critId: number) => {
     for (const crit of criteria)
       if (crit.id === critId)
@@ -47,7 +67,8 @@ export const getMatchDetails = (
             return {
               fieldName: field.label || field.name,
               fieldValue: crit.fieldValue,
-              isMatched: crit.fieldValue === values[crit.fieldId],
+              isMatched: getIsMatched(crit, values),
+              operator: crit.operator,
             }
 
     return {} as MatchInfo
