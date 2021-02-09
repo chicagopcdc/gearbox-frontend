@@ -4,7 +4,7 @@ import TrialMatchInfo from './TrialMatchInfo'
 import { MatchInfoAlgorithm, Study } from '../model'
 
 const styles = {
-  container: 'bg-gray-300 my-4 p-4',
+  container: 'bg-gray-200 my-4 p-4',
   title: 'font-bold text-lg pb-2',
   field: {
     container: 'mb-1',

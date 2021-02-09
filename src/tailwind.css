@@ -14,12 +14,11 @@ body {
 }
 
 .multi-select {
-  --rmsc-main: #63b3ed !important;
+  --rmsc-main: #2563eb !important;
   --rmsc-border: black !important;
   --rmsc-p: 0.25rem !important;
   --rmsc-radius: 0 !important;
   --rmsc-h: 24px !important;
-  --rmsc-gray: #a0aec0 !important;
 }
 
 .multi-select .dropdown-container {
