@@ -37,7 +37,7 @@ function Radio({
     }
   }, [name, onChange, radioValue])
 
-  const baseOptionClassName = 'form-radio border border-solid border-black p-1'
+  const baseOptionClassName = 'border border-solid border-black p-1'
   const optionClassName = disabled
     ? `${baseOptionClassName} cursor-not-allowed bg-gray-200`
     : baseOptionClassName

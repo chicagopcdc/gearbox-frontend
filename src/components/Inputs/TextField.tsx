@@ -25,7 +25,7 @@ function TextField({
   ...attrs
 }: TextFieldProps) {
   const baseClassName =
-    'form-input rounded-none border border-solid border-black p-1 w-full'
+    'rounded-none border border-solid border-black p-1 w-full'
   const readOnlyClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
   const inputAttrs = {
     ...attrs,

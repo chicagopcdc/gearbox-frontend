@@ -19,7 +19,7 @@ function Textarea({
   ...attrs
 }: TextareaProps) {
   const baseClassName =
-    'form-textarea rounded-none border border-solid border-black p-1 block w-full resize-none'
+    'rounded-none border border-solid border-black p-1 block w-full resize-none'
   const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
   const textAreaAttrs = {
     ...attrs,

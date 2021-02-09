@@ -21,7 +21,7 @@ function Select({
   ...attrs
 }: SelectProps) {
   const baseClassName =
-    'form-select rounded-none border border-solid border-black p-1 w-full'
+    'rounded-none border border-solid border-black p-1 w-full'
   const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
   const selectAttrs = {
     ...attrs,

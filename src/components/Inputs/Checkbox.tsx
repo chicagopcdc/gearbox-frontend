@@ -18,8 +18,7 @@ function Checkbox({
 }: CheckboxProps) {
   const checkboxAttrs = {
     ...attrs,
-    className:
-      'form-checkbox rounded-none border border-solid border-black mr-4',
+    className: 'rounded-none border border-solid border-black mr-4',
     id: name,
     name,
     type: 'checkbox',
