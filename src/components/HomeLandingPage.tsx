@@ -106,7 +106,7 @@ function HomeLandingSection4() {
       <div className="lg:flex max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
         <div className="mx-auto lg:mx-0 lg:mr-8">
           <h2 className="leading-tight text-4xl md:text-5xl mb-8 lg:mb-16">
-            Built and maintained by the <strong>LLS PedAL</strong> Group
+            Built and maintained by the <strong>LLS PedAL Initiative</strong>
           </h2>
           <p className="md:text-xl mb-8">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in
