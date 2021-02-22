@@ -28,6 +28,17 @@ export type MatchFormGroupConfig = {
   name: string
 }
 
+export type MatchFormFieldShowIfCriterion = {
+  id: number
+  operator: 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+  value: any
+}
+
+export type MatchFormFieldShowIfCondition = {
+  operator: 'AND' | 'OR'
+  criteria: MatchFormFieldShowIfCriterion[]
+}
+
 export type MatchFormFieldConfig = {
   id: number
   groupId: number
@@ -36,7 +47,7 @@ export type MatchFormFieldConfig = {
   label?: string
   options?: string[]
   defaultValue?: any
-  showIf?: { id: number; value: any }
+  showIf?: MatchFormFieldShowIfCondition
   [key: string]: any
 }
 

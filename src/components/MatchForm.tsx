@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
+import { handleShowIf } from '../utils'
 import { MatchFormValues, MatchFormConfig } from '../model'
 
 export type MatchFormProps = {
@@ -60,22 +61,20 @@ function MatchForm({
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
               if (groupId !== group.id) return undefined
 
-              let hideField = false
+              let showField = true
               if (showIf !== undefined)
-                for (const field of config.fields)
-                  if (showIf.id === field.id) {
-                    hideField = showIf.value !== formik.values[field.id]
-                    break
-                  }
+                showField = handleShowIf(showIf, config.fields, formik.values)
 
-              return hideField ? undefined : (
-                <div className="my-4" key={id}>
-                  <Field
-                    config={{ ...fieldConfig, name: String(id) }}
-                    value={formik.values[id]}
-                    onChange={formik.handleChange}
-                  />
-                </div>
+              return (
+                showField && (
+                  <div className="my-4" key={id}>
+                    <Field
+                      config={{ ...fieldConfig, name: String(id) }}
+                      value={formik.values[id]}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                )
               )
             }
           )}

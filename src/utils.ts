@@ -7,6 +7,9 @@ import {
   MatchInfo,
   MatchInfoAlgorithm,
   MatchDetails,
+  MatchFormFieldConfig,
+  MatchFormFieldShowIfCriterion,
+  MatchFormFieldShowIfCondition,
 } from './model'
 
 export const getMatchIds = (matchDetails: MatchDetails) => {
@@ -101,28 +104,50 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
   return defaultValues
 }
 
+const isShow = (crit: MatchFormFieldShowIfCriterion, value: any) => {
+  switch (crit.operator) {
+    case 'eq':
+      return crit.value === value
+    case 'gt':
+      return crit.value < value
+    case 'gte':
+      return crit.value <= value
+    case 'lt':
+      return crit.value > value
+    case 'lte':
+      return crit.value >= value
+    case 'ne':
+      return crit.value !== value
+  }
+}
+
+export const handleShowIf = (
+  { criteria, operator }: MatchFormFieldShowIfCondition,
+  fields: MatchFormFieldConfig[],
+  values: { [x: string]: any }
+) => {
+  let show = true
+
+  showIfCritCheck: for (const crit of criteria)
+    for (const field of fields)
+      if (crit.id === field.id) {
+        show = isShow(crit, values[field.id])
+
+        if ((operator === 'AND' && !show) || (operator === 'OR' && show))
+          break showIfCritCheck
+      }
+
+  return show
+}
+
 export const clearShowIfField = (
   { fields }: MatchFormConfig,
   defaultValues: MatchFormValues,
   values: MatchFormValues
 ) => {
-  const showIfFieldsById: {
-    [id: number]: { id: number; showIfValue: any }[]
-  } = {}
-  for (const field of fields) {
-    const showIfFields: { id: number; showIfValue: any }[] = []
-    for (const { id, showIf } of fields)
-      if (showIf !== undefined && showIf.id === field.id)
-        showIfFields.push({ id, showIfValue: showIf.value })
-    if (showIfFields.length > 0) showIfFieldsById[field.id] = showIfFields
-  }
-
-  for (const field of fields) {
-    const showIfFields = showIfFieldsById[field.id]
-    if (showIfFields !== undefined)
-      for (const { id, showIfValue } of showIfFields)
-        if (showIfValue !== values[field.id]) values[id] = defaultValues[id]
-  }
+  for (const { id, showIf } of fields)
+    if (showIf !== undefined && !handleShowIf(showIf, fields, values))
+      values[id] = defaultValues[id]
 
   return values
 }
