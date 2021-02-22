@@ -104,40 +104,43 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
   return defaultValues
 }
 
-export const handleShowIf = (
+const checkShowIfCrit = (crit: MatchFormFieldShowIfCriterion, value: any) => {
+  switch (crit.operator) {
+    case 'eq':
+      return crit.value === value
+    case 'gt':
+      return crit.value < value
+    case 'gte':
+      return crit.value <= value
+    case 'lt':
+      return crit.value > value
+    case 'lte':
+      return crit.value >= value
+    case 'ne':
+      return crit.value !== value
+  }
+}
+
+export const getIsFieldShowing = (
   { criteria, operator }: MatchFormFieldShowIfCondition,
   fields: MatchFormFieldConfig[],
   values: { [x: string]: any }
 ) => {
-  const getIsShow = (crit: MatchFormFieldShowIfCriterion, value: any) => {
-    switch (crit.operator) {
-      case 'eq':
-        return crit.value === value
-      case 'gt':
-        return crit.value < value
-      case 'gte':
-        return crit.value <= value
-      case 'lt':
-        return crit.value > value
-      case 'lte':
-        return crit.value >= value
-      case 'ne':
-        return crit.value !== value
-    }
-  }
+  let isShowing = true
 
-  let isShow = true
-
-  showIfCritCheck: for (const crit of criteria)
+  showIfCritLoop: for (const crit of criteria)
     for (const field of fields)
       if (crit.id === field.id) {
-        isShow = getIsShow(crit, values[field.id])
+        isShowing = checkShowIfCrit(crit, values[field.id])
 
-        if ((operator === 'AND' && !isShow) || (operator === 'OR' && isShow))
-          break showIfCritCheck
+        if (
+          (operator === 'AND' && !isShowing) ||
+          (operator === 'OR' && isShowing)
+        )
+          break showIfCritLoop
       }
 
-  return isShow
+  return isShowing
 }
 
 export const clearShowIfField = (
@@ -146,7 +149,7 @@ export const clearShowIfField = (
   values: MatchFormValues
 ) => {
   for (const { id, showIf } of fields)
-    if (showIf !== undefined && !handleShowIf(showIf, fields, values))
+    if (showIf !== undefined && !getIsFieldShowing(showIf, fields, values))
       values[id] = defaultValues[id]
 
   return values
