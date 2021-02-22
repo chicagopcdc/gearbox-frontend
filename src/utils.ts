@@ -104,40 +104,40 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
   return defaultValues
 }
 
-const isShow = (crit: MatchFormFieldShowIfCriterion, value: any) => {
-  switch (crit.operator) {
-    case 'eq':
-      return crit.value === value
-    case 'gt':
-      return crit.value < value
-    case 'gte':
-      return crit.value <= value
-    case 'lt':
-      return crit.value > value
-    case 'lte':
-      return crit.value >= value
-    case 'ne':
-      return crit.value !== value
-  }
-}
-
 export const handleShowIf = (
   { criteria, operator }: MatchFormFieldShowIfCondition,
   fields: MatchFormFieldConfig[],
   values: { [x: string]: any }
 ) => {
-  let show = true
+  const getIsShow = (crit: MatchFormFieldShowIfCriterion, value: any) => {
+    switch (crit.operator) {
+      case 'eq':
+        return crit.value === value
+      case 'gt':
+        return crit.value < value
+      case 'gte':
+        return crit.value <= value
+      case 'lt':
+        return crit.value > value
+      case 'lte':
+        return crit.value >= value
+      case 'ne':
+        return crit.value !== value
+    }
+  }
+
+  let isShow = true
 
   showIfCritCheck: for (const crit of criteria)
     for (const field of fields)
       if (crit.id === field.id) {
-        show = isShow(crit, values[field.id])
+        isShow = getIsShow(crit, values[field.id])
 
-        if ((operator === 'AND' && !show) || (operator === 'OR' && show))
+        if ((operator === 'AND' && !isShow) || (operator === 'OR' && isShow))
           break showIfCritCheck
       }
 
-  return show
+  return isShow
 }
 
 export const clearShowIfField = (
