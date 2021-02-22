@@ -6,11 +6,13 @@ export type Study = {
   registerLinks: { name: string; url: string }[]
 }
 
+type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+
 export type EligibilityCriterion = {
   id: number
   fieldId: number
   fieldValue: any
-  operator: 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+  operator: ComparisonOperator
 }
 
 export type MatchAlgorithm = {
@@ -30,7 +32,7 @@ export type MatchFormGroupConfig = {
 
 export type MatchFormFieldShowIfCriterion = {
   id: number
-  operator: 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+  operator: ComparisonOperator
   value: any
 }
 
@@ -64,7 +66,7 @@ export type MatchInfo = {
   fieldName: string
   fieldValue: any
   isMatched: boolean
-  operator: 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+  operator: ComparisonOperator
 }
 
 export type MatchInfoAlgorithm = {
