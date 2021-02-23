@@ -44,7 +44,7 @@ function Select({
         )}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
-            {option.value}
+            {option.label || option.value}
           </option>
         ))}
       </select>

@@ -63,7 +63,7 @@ function Radio({
                 }
               />
               <label className="mx-2" htmlFor={option.value}>
-                {option.value}
+                {option.label || option.value}
               </label>
             </div>
           ))}

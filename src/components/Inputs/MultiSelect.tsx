@@ -17,7 +17,7 @@ function reshapeToMulti(options: (string | MatchFormFieldOption)[]) {
     typeof option === 'string'
       ? { label: option, value: option }
       : {
-          label: option.value,
+          label: option.label || option.value,
           value: option.value,
         }
   )
