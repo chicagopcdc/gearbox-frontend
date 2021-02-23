@@ -32,7 +32,11 @@
       "type": "select",
       "name": "initDiag",
       "label": "Initial Disease Diagnosis",
-      "options": [{ "value": "foo" }, { "value": "bar" }, { "value": "baz" }],
+      "options": [
+        { "value": "foo", "label": "Foo", "description": "Foo is foo" },
+        { "value": "bar", "label": "Bar" },
+        { "value": "baz", "label": "Baz" }
+      ],
       "placeholder": "Select"
     },
     {
