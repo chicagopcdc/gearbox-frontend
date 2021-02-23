@@ -3,7 +3,11 @@ import latestUserInput from './latestUserInput.json'
 import matchConditions from './matchConditions.json'
 import matchFormConfig from './matchFormConfig.json'
 import studies from './studies.json'
-import { EligibilityCriterion, MatchFormValues } from '../model'
+import {
+  EligibilityCriterion,
+  MatchFormConfig,
+  MatchFormValues,
+} from '../model'
 
 export const mockLoadEligibilityCriteria = () =>
   Promise.resolve(eligibilityCriteria as EligibilityCriterion[])
@@ -18,7 +22,8 @@ export const mockLoadLatestUserInput = () =>
 
 export const mockLoadMatchConditions = () => Promise.resolve(matchConditions)
 
-export const mockLoadMatchFromConfig = () => Promise.resolve(matchFormConfig)
+export const mockLoadMatchFromConfig = () =>
+  Promise.resolve(matchFormConfig as MatchFormConfig)
 
 export const mockLoadStudies = () => Promise.resolve(studies)
 

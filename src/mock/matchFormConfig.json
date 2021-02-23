@@ -67,8 +67,14 @@
       "options": ["foo", "bar", "baz"],
       "placeholder": "Specify all drug allergies",
       "showIf": {
-        "id": 4,
-        "value": "true"
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 4,
+            "operator": "eq",
+            "value": "true"
+          }
+        ]
       }
     },
     {
@@ -87,8 +93,14 @@
       "options": ["foo", "bar", "baz"],
       "placeholder": "Select all prior chemotherapy agents",
       "showIf": {
-        "id": 6,
-        "value": "true"
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 6,
+            "operator": "eq",
+            "value": "true"
+          }
+        ]
       }
     },
     {
@@ -107,8 +119,14 @@
       "options": ["foo", "bar", "baz"],
       "placeholder": "Select all prior radiation modalities",
       "showIf": {
-        "id": 8,
-        "value": "true"
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 8,
+            "operator": "eq",
+            "value": "true"
+          }
+        ]
       }
     },
     {
