@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MatchFormFieldOption } from '../../model'
 
 type SelectProps = {
@@ -12,6 +12,14 @@ type SelectProps = {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
 
+function getDescriptionMap(options: MatchFormFieldOption[]) {
+  const descriptionMap: { [key: string]: string } = {}
+  for (const { value, description } of options)
+    descriptionMap[value] = description || ''
+
+  return descriptionMap
+}
+
 function Select({
   label,
   name,
@@ -19,8 +27,12 @@ function Select({
   placeholder,
   value = '',
   disabled = false,
+  onChange,
   ...attrs
 }: SelectProps) {
+  const [description, setDescription] = useState('')
+  const descriptionMap = getDescriptionMap(options)
+
   const baseClassName =
     'rounded-none border border-solid border-black p-1 w-full'
   const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
@@ -36,7 +48,13 @@ function Select({
   return (
     <div className="flex flex-col">
       {label && <label htmlFor={name || ''}>{label}</label>}
-      <select {...selectAttrs}>
+      <select
+        {...selectAttrs}
+        onChange={(e) => {
+          setDescription(descriptionMap[e.target.value])
+          if (onChange) onChange(e)
+        }}
+      >
         {placeholder && (
           <option value="" hidden>
             {placeholder}
@@ -48,6 +66,9 @@ function Select({
           </option>
         ))}
       </select>
+      {description && (
+        <div className="text-gray-400 text-sm italic pt-1">{description}</div>
+      )}
     </div>
   )
 }
