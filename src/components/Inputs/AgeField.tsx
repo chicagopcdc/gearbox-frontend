@@ -41,7 +41,7 @@ function formatAge(value?: number | '') {
 function parseAge(age: { year?: number; month?: number; day?: number }) {
   const { year, month, day } = age
 
-  return !year && !month && !day
+  return year === undefined && month === undefined && day === undefined
     ? undefined
     : (year || 0) * DAY_IN_YEAR + (month || 0) * DAY_IN_MONTH + (day || 0)
 }
