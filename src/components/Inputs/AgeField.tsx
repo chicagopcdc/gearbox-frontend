@@ -9,19 +9,19 @@ type AgeFieldProps = {
   name?: string
   readOnly?: boolean
   required?: boolean
-  value?: number
+  value?: number | ''
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
 const DAY_IN_YEAR = 365
 const DAY_IN_MONTH = 30
 
-function formatAge(value?: number) {
+function formatAge(value?: number | '') {
   let year
   let month
   let day
 
-  if (value !== undefined) {
+  if (value !== undefined && value !== '') {
     day = value
 
     if (day >= DAY_IN_YEAR) {
