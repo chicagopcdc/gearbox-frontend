@@ -44,7 +44,7 @@ const conditions: MatchCondition[] = [
     },
   },
 ]
-const testHelper = (values: MatchFormValues) =>
+const getMatchIdsTestHelper = (values: MatchFormValues) =>
   getMatchIds(getMatchDetails(criteria, conditions, config, values))
 
 test('getMatchIds for simple AND algorithm', () => {
@@ -52,7 +52,7 @@ test('getMatchIds for simple AND algorithm', () => {
     0: true,
     1: false,
   }
-  expect(testHelper(values)).toEqual([0, 1])
+  expect(getMatchIdsTestHelper(values)).toEqual([0, 1])
 })
 
 test('getMatchIds for simple OR algorithm', () => {
@@ -60,7 +60,7 @@ test('getMatchIds for simple OR algorithm', () => {
     0: false,
     1: true,
   }
-  expect(testHelper(values)).toEqual([1])
+  expect(getMatchIdsTestHelper(values)).toEqual([1])
 })
 
 test('getMatchIds for nested algorithm', () => {
@@ -68,7 +68,7 @@ test('getMatchIds for nested algorithm', () => {
     0: true,
     2: 1,
   }
-  expect(testHelper(values)).toEqual([1, 2])
+  expect(getMatchIdsTestHelper(values)).toEqual([1, 2])
 })
 
 test('getIsFieldShowing for one criterion (eq)', () => {
