@@ -1,9 +1,10 @@
 import React from 'react'
+import { MatchFormFieldOption } from '../../model'
 
 type SelectProps = {
   label?: string
   name?: string
-  options: string[]
+  options: MatchFormFieldOption[]
   placeholder?: string
   disabled?: boolean
   required?: boolean
@@ -42,8 +43,8 @@ function Select({
           </option>
         )}
         {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
+          <option key={option.value} value={option.value}>
+            {option.value}
           </option>
         ))}
       </select>

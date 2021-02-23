@@ -4,12 +4,13 @@ import Select from './Select'
 import TextField from './TextField'
 import Radio from './Radio'
 import MultiSelect from './MultiSelect'
+import { MatchFormFieldOption } from '../../model'
 
 type FieldConfig = {
   type: string
   name: string
   label?: string
-  options?: string[]
+  options?: MatchFormFieldOption[]
   [key: string]: any
 }
 

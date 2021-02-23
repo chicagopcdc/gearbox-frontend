@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import ReactMultiSelect from 'react-multi-select-component'
+import { MatchFormFieldOption } from '../../model'
 
 type MultiSelectProps = {
   label?: string
   name?: string
-  options: string[]
+  options: MatchFormFieldOption[]
   disabled?: boolean
   placeholder?: string
   value?: string[]
   onChange?(event: any): void
 }
 
-function reshapeToMulti(options: string[]) {
-  return options.map((option) => ({
-    label: option,
-    value: option,
-  }))
+function reshapeToMulti(options: (string | MatchFormFieldOption)[]) {
+  return options.map((option) =>
+    typeof option === 'string'
+      ? { label: option, value: option }
+      : {
+          label: option.value,
+          value: option.value,
+        }
+  )
 }
 
 function MultiSelect({
