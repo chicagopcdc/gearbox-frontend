@@ -1,4 +1,5 @@
 import {
+  ComparisonOperator,
   EligibilityCriterion,
   MatchFormConfig,
   MatchFormValues,
@@ -8,7 +9,6 @@ import {
   MatchInfoAlgorithm,
   MatchDetails,
   MatchFormFieldConfig,
-  MatchFormFieldShowIfCriterion,
   MatchFormFieldShowIfCondition,
 } from './model'
 
@@ -36,32 +36,33 @@ export const getMatchIds = (matchDetails: MatchDetails) => {
   return matchIds
 }
 
+const testCriterion = (
+  critOperator: ComparisonOperator,
+  critValue: any,
+  testValue: any
+) => {
+  switch (critOperator) {
+    case 'eq':
+      return critValue === testValue
+    case 'gt':
+      return critValue < testValue
+    case 'gte':
+      return critValue <= testValue
+    case 'lt':
+      return critValue > testValue
+    case 'lte':
+      return critValue >= testValue
+    case 'ne':
+      return critValue !== testValue
+  }
+}
+
 export const getMatchDetails = (
   criteria: EligibilityCriterion[],
   matchConditions: MatchCondition[],
   { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
-  const getIsMatched = (
-    crit: EligibilityCriterion,
-    values: MatchFormValues
-  ) => {
-    switch (crit.operator) {
-      case 'eq':
-        return crit.fieldValue === values[crit.fieldId]
-      case 'gt':
-        return crit.fieldValue < values[crit.fieldId]
-      case 'gte':
-        return crit.fieldValue <= values[crit.fieldId]
-      case 'lt':
-        return crit.fieldValue > values[crit.fieldId]
-      case 'lte':
-        return crit.fieldValue >= values[crit.fieldId]
-      case 'ne':
-        return crit.fieldValue !== values[crit.fieldId]
-    }
-  }
-
   const getMatchInfo = (critId: number) => {
     for (const crit of criteria)
       if (crit.id === critId)
@@ -70,7 +71,11 @@ export const getMatchDetails = (
             return {
               fieldName: field.label || field.name,
               fieldValue: crit.fieldValue,
-              isMatched: getIsMatched(crit, values),
+              isMatched: testCriterion(
+                crit.operator,
+                crit.fieldValue,
+                values[crit.fieldId]
+              ),
               operator: crit.operator,
             }
 
@@ -104,23 +109,6 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
   return defaultValues
 }
 
-const checkShowIfCrit = (crit: MatchFormFieldShowIfCriterion, value: any) => {
-  switch (crit.operator) {
-    case 'eq':
-      return crit.value === value
-    case 'gt':
-      return crit.value < value
-    case 'gte':
-      return crit.value <= value
-    case 'lt':
-      return crit.value > value
-    case 'lte':
-      return crit.value >= value
-    case 'ne':
-      return crit.value !== value
-  }
-}
-
 export const getIsFieldShowing = (
   { criteria, operator }: MatchFormFieldShowIfCondition,
   fields: MatchFormFieldConfig[],
@@ -131,7 +119,7 @@ export const getIsFieldShowing = (
   showIfCritLoop: for (const crit of criteria)
     for (const field of fields)
       if (crit.id === field.id) {
-        isShowing = checkShowIfCrit(crit, values[field.id])
+        isShowing = testCriterion(crit.operator, crit.value, values[field.id])
 
         if (
           (operator === 'AND' && !isShowing) ||
