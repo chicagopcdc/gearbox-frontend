@@ -26,6 +26,7 @@ function formatAge(value?: number | '') {
 
     if (day >= DAY_IN_YEAR) {
       year = Math.floor(day / DAY_IN_YEAR)
+      month = 0
       day -= year * DAY_IN_YEAR
     }
 
