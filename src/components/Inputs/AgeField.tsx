@@ -44,7 +44,7 @@ function AgeInput({ name, value, which, onChange, ...attrs }: AgeInputProps) {
   const inputClassName = 'rounded-none border border-solid border-black p-1'
   const unitClassName = isPlural ? 'pl-2 pr-3' : 'pl-2 pr-4'
   return (
-    <div className="inline-block pb-2">
+    <div className="inline-block mb-1">
       <input
         {...attrs}
         className={inputClassName}
@@ -94,7 +94,7 @@ function AgeField({
   return (
     <>
       {label && <label htmlFor={name}>{label}</label>}
-      <div>
+      <div className="flex flex-wrap justify-between items-center">
         <AgeInput
           {...attrs}
           value={age.year}
@@ -117,6 +117,11 @@ function AgeField({
             }))
           }
         />
+        <div className="text-sm text-gray-400 text-right italic">
+          {value !== undefined && value !== ''
+            ? `Total ${value} ${value < 2 ? 'month' : 'months'}`
+            : `Total ?? month`}
+        </div>
       </div>
     </>
   )
