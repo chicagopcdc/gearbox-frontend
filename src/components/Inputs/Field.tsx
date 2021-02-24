@@ -4,6 +4,7 @@ import Select from './Select'
 import TextField from './TextField'
 import Radio from './Radio'
 import MultiSelect from './MultiSelect'
+import AgeField from './AgeField'
 import { MatchFormFieldOption } from '../../model'
 
 type FieldConfig = {
@@ -37,6 +38,8 @@ function Field({
       return <Radio {...{ options, value, onChange, ...attrs }} />
     case 'multiselect':
       return <MultiSelect {...{ options, value, onChange, ...attrs }} />
+    case 'age':
+      return <AgeField {...{ value, onChange, ...attrs }} />
     default:
       return null
   }
