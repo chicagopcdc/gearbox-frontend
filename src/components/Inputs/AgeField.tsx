@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 type AgeInputProps = AgeFieldProps & {
-  which: 'year' | 'month' | 'day'
+  which: 'year' | 'month'
 }
 
 type AgeFieldProps = {
@@ -13,38 +13,30 @@ type AgeFieldProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const DAY_IN_YEAR = 365
-const DAY_IN_MONTH = 30
+const MONTH_IN_YEAR = 12
 
 function formatAge(value?: number | '') {
   let year
   let month
-  let day
 
   if (value !== undefined && value !== '') {
-    day = value
+    month = value
 
-    if (day >= DAY_IN_YEAR) {
-      year = Math.floor(day / DAY_IN_YEAR)
-      month = 0
-      day -= year * DAY_IN_YEAR
-    }
-
-    if (day >= DAY_IN_MONTH) {
-      month = Math.floor(day / DAY_IN_MONTH)
-      day -= month * DAY_IN_MONTH
+    if (month >= MONTH_IN_YEAR) {
+      year = Math.floor(month / MONTH_IN_YEAR)
+      month -= year * MONTH_IN_YEAR
     }
   }
 
-  return { year, month, day }
+  return { year, month }
 }
 
-function parseAge(age: { year?: number; month?: number; day?: number }) {
-  const { year, month, day } = age
+function parseAge(age: { year?: number; month?: number }) {
+  const { year, month } = age
 
-  return year === undefined && month === undefined && day === undefined
+  return year === undefined && month === undefined
     ? undefined
-    : (year || 0) * DAY_IN_YEAR + (month || 0) * DAY_IN_MONTH + (day || 0)
+    : (year || 0) * MONTH_IN_YEAR + (month || 0)
 }
 
 function AgeInput({ name, value, which, onChange, ...attrs }: AgeInputProps) {
@@ -82,12 +74,7 @@ function AgeField({
 
   useEffect(() => {
     const newAge = formatAge(value)
-    if (
-      age.year !== newAge.year ||
-      age.month !== newAge.month ||
-      age.day !== newAge.day
-    )
-      setAge(newAge)
+    if (age.year !== newAge.year || age.month !== newAge.month) setAge(newAge)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value])
 
@@ -127,17 +114,6 @@ function AgeField({
             setAge((prevAge) => ({
               ...prevAge,
               month: value === '' ? undefined : parseInt(value),
-            }))
-          }
-        />
-        <AgeInput
-          {...attrs}
-          value={age.day}
-          which="day"
-          onChange={({ target: { value } }) =>
-            setAge((prevAge) => ({
-              ...prevAge,
-              day: value === '' ? undefined : parseInt(value),
             }))
           }
         />
