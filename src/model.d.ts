@@ -41,13 +41,19 @@ export type MatchFormFieldShowIfCondition = {
   criteria: MatchFormFieldShowIfCriterion[]
 }
 
+export type MatchFormFieldOption = {
+  value: string
+  label?: string
+  description?: string
+}
+
 export type MatchFormFieldConfig = {
   id: number
   groupId: number
   type: string
   name: string
   label?: string
-  options?: string[]
+  options?: MatchFormFieldOption[]
   defaultValue?: any
   showIf?: MatchFormFieldShowIfCondition
   [key: string]: any
