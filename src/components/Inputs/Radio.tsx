@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { MatchFormFieldOption } from '../../model'
 
 type RadioProps = {
   label?: string
   name?: string
-  options?: string[]
+  options?: MatchFormFieldOption[]
   disabled?: boolean
   required?: boolean
   value?: string
@@ -48,19 +49,21 @@ function Radio({
       {options && (
         <div className="flex flex-wrap justify-between">
           {options.map((option) => (
-            <div key={option}>
+            <div key={option.value}>
               <input
                 {...attrs}
                 className={optionClassName}
-                id={option}
+                id={option.value}
                 name={name}
                 type="radio"
-                value={option}
-                checked={option === radioValue}
-                onChange={disabled ? undefined : () => setRadioValue(option)}
+                value={option.value}
+                checked={option.value === radioValue}
+                onChange={
+                  disabled ? undefined : () => setRadioValue(option.value)
+                }
               />
-              <label className="mx-2" htmlFor={option}>
-                {option}
+              <label className="mx-2" htmlFor={option.value}>
+                {option.label || option.value}
               </label>
             </div>
           ))}

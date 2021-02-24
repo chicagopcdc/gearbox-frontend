@@ -10,7 +10,7 @@ export default {
   ],
 }
 
-const options = ['foo', 'bar', 'baz']
+const options = [{ value: 'foo' }, { value: 'bar' }, { value: 'baz' }]
 
 export const defaultView = () => (
   <Select

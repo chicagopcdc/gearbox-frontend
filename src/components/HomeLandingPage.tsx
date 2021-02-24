@@ -77,7 +77,7 @@ function HomeLandingSection3() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="max-w-screen-xl text-center mx-auto">
-        <div className="flex flex-wrap justify-center mb-8 px-4">
+        <div className="flex flex-wrap items-center justify-center mb-8 px-4">
           <img
             className="sm:w-4/5 md:w-1/2 lg:2/5"
             src={matchScreenshotLeft}
