@@ -98,13 +98,16 @@ function App() {
       const initData = async () => {
         const defaultValues = getDefaultValues(config)
         setDefaultValues({ ...defaultValues })
-        setValues({ ...defaultValues, ...(await mockLoadLatestUserInput()) })
+
+        const latestUserInput = await mockLoadLatestUserInput()
+        const initValues = { ...defaultValues, ...latestUserInput }
+        setValues(initValues)
 
         const matchDetails = getMatchDetails(
           criteria,
           conditions,
           config,
-          defaultValues
+          initValues
         )
         setMatchDetails(matchDetails)
         setMatchIds(getMatchIds(matchDetails))
