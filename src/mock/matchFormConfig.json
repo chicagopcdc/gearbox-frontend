@@ -21,7 +21,7 @@
     {
       "id": 0,
       "groupId": 0,
-      "type": "number",
+      "type": "age",
       "name": "age",
       "label": "Patient Age",
       "min": 0
