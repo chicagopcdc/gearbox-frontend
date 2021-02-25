@@ -53,8 +53,8 @@ function AgeInput({ name, value, which, onChange, ...attrs }: AgeInputProps) {
         name={name}
         type="number"
         min={0}
-        size={5}
         onChange={onChange}
+        style={{ maxWidth: '5rem' }}
       />
       <span className={unitClassName}>
         {isPlural ? `${which}s` : `${which} `}
