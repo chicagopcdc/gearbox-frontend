@@ -143,20 +143,25 @@ function TrialMatchInfo({
             className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
             style={{ background: '#cccc' }}
           >
-            <div className="bg-white p-8">
-              <div className="flex justify-between pb-4">
-                <h3 className="font-bold mr-4">
-                  Eligibility Criteria for {studyTitle}
-                </h3>
-                <XCircle
-                  className="cursor-pointer hover:text-red-700"
-                  onClick={closeModal}
+            <div
+              className="bg-white overflow-scroll"
+              style={{ maxHeight: '95%', maxWidth: '95%' }}
+            >
+              <div className="text-sm sm:text-base p-4 sm:p-8">
+                <div className="flex justify-between pb-4">
+                  <h3 className="font-bold mr-4">
+                    Eligibility Criteria for {studyTitle}
+                  </h3>
+                  <XCircle
+                    className="cursor-pointer hover:text-red-700"
+                    onClick={closeModal}
+                  />
+                </div>
+                <MatchInfoDetails
+                  matchInfoId={matchInfoId}
+                  matchInfoAlgorithm={studyMatchInfo}
                 />
               </div>
-              <MatchInfoDetails
-                matchInfoId={matchInfoId}
-                matchInfoAlgorithm={studyMatchInfo}
-              />
             </div>
           </div>,
           document.body
