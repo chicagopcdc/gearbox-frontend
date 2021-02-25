@@ -19,7 +19,7 @@ function MatchInfoString({
   let operatorString: string
   switch (operator) {
     case 'eq':
-      operatorString = 'is'
+      operatorString = 'is equal to'
       break
     case 'gt':
       operatorString = 'is greater than'
@@ -34,12 +34,12 @@ function MatchInfoString({
       operatorString = 'is less than/equal to'
       break
     case 'ne':
-      operatorString = 'is no'
+      operatorString = 'is not'
   }
 
   return (
     <>
-      {`${fieldName} ${operatorString} `}
+      {fieldName} <span className="italic text-gray-500">{operatorString}</span>{' '}
       <span className={isMatched ? 'text-green-700' : 'text-red-700'}>
         {typeof fieldValue === 'number' ? fieldValue : `"${fieldValue}"`}
       </span>
