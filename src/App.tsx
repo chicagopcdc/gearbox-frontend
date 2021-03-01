@@ -147,9 +147,10 @@ function App() {
       )
       setMatchDetails(matchDetails)
       setMatchIds(getMatchIds(matchDetails))
-      setIsChanging(false)
       mockPostLatestUserInput(newValues)
     }
+
+    setIsChanging(false)
   }
 
   return (

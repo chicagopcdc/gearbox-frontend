@@ -34,12 +34,10 @@ function MatchForm({
     let timeout: NodeJS.Timeout | undefined
     if (timeout !== undefined) clearTimeout(timeout)
 
-    if (formik.dirty) {
-      signalChange()
-      timeout = setTimeout(() => {
-        onChange({ ...formik.values })
-      }, 1000)
-    }
+    signalChange()
+    timeout = setTimeout(() => {
+      onChange({ ...formik.values })
+    }, 1000)
 
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
