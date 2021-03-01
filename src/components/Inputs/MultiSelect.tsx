@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactMultiSelect from 'react-multi-select-component'
 import { MatchFormFieldOption } from '../../model'
 
@@ -32,30 +32,18 @@ function MultiSelect({
     reshapeToMulti(options, value)
   )
 
-  useEffect(() => {
-    const reshaped = reshapeToMulti(options, value)
-    if (JSON.stringify(reshaped) !== JSON.stringify(multiSelected))
-      setMultiSelected(reshaped)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
-
-  useEffect(() => {
-    if (onChange && name) {
-      onChange({
-        target: {
-          name,
-          value: multiSelected.map((selected) => selected.value),
-        },
-      })
-    }
-  }, [multiSelected, name, onChange])
+  function handleChange(selected: MatchFormFieldOption[]) {
+    setMultiSelected(selected)
+    if (onChange && name)
+      onChange({ target: { name, value: selected.map(({ value }) => value) } })
+  }
 
   return (
     <ReactMultiSelect
       {...attrs}
       options={multiOptions}
       value={multiSelected}
-      onChange={setMultiSelected}
+      onChange={handleChange}
       filterOptions={(options, filter) =>
         filter
           ? options.filter(
