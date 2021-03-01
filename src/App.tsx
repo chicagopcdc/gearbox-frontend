@@ -67,12 +67,24 @@ function App() {
   const [config, setConfig] = useState({} as MatchFormConfig)
   useEffect(() => {
     if (isAuthenticated) {
+      // load data at login
       const loadData = async () => {
         setCriteria(await mockLoadEligibilityCriteria())
         setConditions((await mockLoadMatchConditions()) as MatchCondition[])
         setConfig(await mockLoadMatchFromConfig())
       }
       loadData()
+    } else {
+      // clear data at logout
+      const clearData = () => {
+        setCriteria([] as EligibilityCriterion[])
+        setConditions([] as MatchCondition[])
+        setConfig({} as MatchFormConfig)
+        setDefaultValues({} as MatchFormValues)
+        setValues({} as MatchFormValues)
+        setMatchIds([] as number[])
+      }
+      clearData()
     }
   }, [isAuthenticated])
 
@@ -115,21 +127,6 @@ function App() {
       initData()
     }
   }, [criteria, conditions, config])
-
-  // clear data at logout
-  useEffect(() => {
-    if (!isAuthenticated) {
-      const clearData = () => {
-        setCriteria([] as EligibilityCriterion[])
-        setConditions([] as MatchCondition[])
-        setConfig({} as MatchFormConfig)
-        setDefaultValues({} as MatchFormValues)
-        setValues({} as MatchFormValues)
-        setMatchIds([] as number[])
-      }
-      clearData()
-    }
-  }, [isAuthenticated])
 
   // handle MatchForm update
   const [isChanging, setIsChanging] = useState(false)
