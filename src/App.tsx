@@ -64,6 +64,8 @@ function App() {
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
+  const [values, setValues] = useState({} as MatchFormValues)
+
   useEffect(() => {
     if (isAuthenticated) {
       // load data at login
@@ -71,10 +73,12 @@ function App() {
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
         mockLoadMatchFromConfig(),
-      ]).then(([criteria, conditions, config]) => {
+        mockLoadLatestUserInput(),
+      ]).then(([criteria, conditions, config, latestUserInput]) => {
         setCriteria(criteria)
         setConditions(conditions)
         setConfig(config)
+        setValues({ ...defaultValues, ...latestUserInput })
       })
     } else {
       // clear data at logout
@@ -83,21 +87,13 @@ function App() {
       setConfig({} as MatchFormConfig)
       setValues({} as MatchFormValues)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 
   const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
     mockLoadStudies().then(setStudies)
   }, [])
-
-  const [values, setValues] = useState({} as MatchFormValues)
-  useEffect(() => {
-    mockLoadLatestUserInput().then((latestUserInput) => {
-      setValues({ ...defaultValues, ...latestUserInput })
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   // set values derived from states
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, values)
