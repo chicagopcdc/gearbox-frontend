@@ -68,9 +68,15 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       // load data at login
-      mockLoadEligibilityCriteria().then(setCriteria)
-      mockLoadMatchConditions().then(setConditions)
-      mockLoadMatchFromConfig().then(setConfig)
+      Promise.all([
+        mockLoadEligibilityCriteria(),
+        mockLoadMatchConditions(),
+        mockLoadMatchFromConfig(),
+      ]).then(([criteria, conditions, config]) => {
+        setCriteria(criteria)
+        setConditions(conditions)
+        setConfig(config)
+      })
     } else {
       // clear data at logout
       setCriteria([] as EligibilityCriterion[])
