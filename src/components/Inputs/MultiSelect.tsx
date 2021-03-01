@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactMultiSelect from 'react-multi-select-component'
 import { MatchFormFieldOption } from '../../model'
 
@@ -8,19 +8,14 @@ type MultiSelectProps = {
   options: MatchFormFieldOption[]
   disabled?: boolean
   placeholder?: string
-  value?: string[]
+  value?: any[]
   onChange?(event: any): void
 }
 
-function reshapeToMulti(options: (string | MatchFormFieldOption)[]) {
-  return options.map((option) =>
-    typeof option === 'string'
-      ? { label: option, value: option }
-      : {
-          label: option.label || option.value,
-          value: option.value,
-        }
-  )
+function reshapeToMulti(options: MatchFormFieldOption[], value?: any[]) {
+  return value === undefined
+    ? options.map(({ label, value }) => ({ label, value }))
+    : options.filter((option) => value.includes(option.value))
 }
 
 function MultiSelect({
@@ -28,43 +23,31 @@ function MultiSelect({
   name,
   options,
   placeholder,
-  value,
+  value = [],
   onChange,
   ...attrs
 }: MultiSelectProps) {
   const multiOptions = reshapeToMulti(options)
   const [multiSelected, setMultiSelected] = useState(
-    reshapeToMulti(value || [])
+    reshapeToMulti(options, value)
   )
 
-  useEffect(() => {
-    const reshaped = reshapeToMulti(value || [])
-    if (JSON.stringify(reshaped) !== JSON.stringify(multiSelected))
-      setMultiSelected(reshaped)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
-
-  useEffect(() => {
-    if (onChange && name) {
-      onChange({
-        target: {
-          name,
-          value: multiSelected.map((selected) => selected.value),
-        },
-      })
-    }
-  }, [multiSelected, name, onChange])
+  function handleChange(selected: MatchFormFieldOption[]) {
+    setMultiSelected(selected)
+    if (onChange && name)
+      onChange({ target: { name, value: selected.map(({ value }) => value) } })
+  }
 
   return (
     <ReactMultiSelect
       {...attrs}
       options={multiOptions}
       value={multiSelected}
-      onChange={setMultiSelected}
+      onChange={handleChange}
       filterOptions={(options, filter) =>
         filter
           ? options.filter(
-              ({ value }) => value && value.match(new RegExp(filter, 'i'))
+              ({ label }) => label && label.match(new RegExp(filter, 'i'))
             )
           : options
       }

@@ -8,7 +8,7 @@ type SelectProps = {
   placeholder?: string
   disabled?: boolean
   required?: boolean
-  value?: string
+  value?: any
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
 
@@ -52,7 +52,10 @@ function Select({
         {...selectAttrs}
         onChange={(e) => {
           setDescription(descriptionMap[e.target.value])
-          if (onChange) onChange(e)
+          if (onChange)
+            onChange({
+              target: { name, value: e.target.value, type: 'number' },
+            } as React.ChangeEvent<HTMLSelectElement>)
         }}
       >
         {placeholder && (
@@ -62,7 +65,7 @@ function Select({
         )}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
-            {option.label || option.value}
+            {option.label}
           </option>
         ))}
       </select>

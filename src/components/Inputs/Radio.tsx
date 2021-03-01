@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { MatchFormFieldOption } from '../../model'
 
 type RadioProps = {
@@ -7,7 +7,7 @@ type RadioProps = {
   options?: MatchFormFieldOption[]
   disabled?: boolean
   required?: boolean
-  value?: string
+  value?: any
   onChange?(event: any): void
 }
 
@@ -22,21 +22,11 @@ function Radio({
 }: RadioProps) {
   const [radioValue, setRadioValue] = useState(value || undefined)
 
-  useEffect(() => {
-    if (value !== radioValue) setRadioValue(value)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
-
-  useEffect(() => {
-    if (onChange && name) {
-      onChange({
-        target: {
-          name,
-          value: radioValue,
-        },
-      })
-    }
-  }, [name, onChange, radioValue])
+  function handleChange(selected: MatchFormFieldOption[]) {
+    setRadioValue(selected)
+    if (onChange && name)
+      onChange({ target: { name, value: selected || '', type: 'number' } })
+  }
 
   const baseOptionClassName = 'border border-solid border-black p-1'
   const optionClassName = disabled
@@ -59,11 +49,11 @@ function Radio({
                 value={option.value}
                 checked={option.value === radioValue}
                 onChange={
-                  disabled ? undefined : () => setRadioValue(option.value)
+                  disabled ? undefined : () => handleChange(option.value)
                 }
               />
               <label className="mx-2" htmlFor={option.value}>
-                {option.label || option.value}
+                {option.label}
               </label>
             </div>
           ))}
