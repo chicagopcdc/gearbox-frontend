@@ -68,32 +68,23 @@ function App() {
   useEffect(() => {
     if (isAuthenticated) {
       // load data at login
-      const loadData = async () => {
-        setCriteria(await mockLoadEligibilityCriteria())
-        setConditions(await mockLoadMatchConditions())
-        setConfig(await mockLoadMatchFromConfig())
-      }
-      loadData()
+      mockLoadEligibilityCriteria().then(setCriteria)
+      mockLoadMatchConditions().then(setConditions)
+      mockLoadMatchFromConfig().then(setConfig)
     } else {
       // clear data at logout
-      const clearData = () => {
-        setCriteria([] as EligibilityCriterion[])
-        setConditions([] as MatchCondition[])
-        setConfig({} as MatchFormConfig)
-        setDefaultValues({} as MatchFormValues)
-        setValues({} as MatchFormValues)
-        setMatchIds([] as number[])
-      }
-      clearData()
+      setCriteria([] as EligibilityCriterion[])
+      setConditions([] as MatchCondition[])
+      setConfig({} as MatchFormConfig)
+      setDefaultValues({} as MatchFormValues)
+      setValues({} as MatchFormValues)
+      setMatchIds([] as number[])
     }
   }, [isAuthenticated])
 
   const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
-    const loadStudies = async () => {
-      setStudies(await mockLoadStudies())
-    }
-    loadStudies()
+    mockLoadStudies().then(setStudies)
   }, [])
 
   // set states derived from data
@@ -106,12 +97,11 @@ function App() {
       criteria.length > 0 &&
       conditions.length > 0 &&
       config.fields !== undefined
-    ) {
-      const initData = async () => {
+    )
+      mockLoadLatestUserInput().then((latestUserInput) => {
         const defaultValues = getDefaultValues(config)
         setDefaultValues({ ...defaultValues })
 
-        const latestUserInput = await mockLoadLatestUserInput()
         const initValues = { ...defaultValues, ...latestUserInput }
         setValues(initValues)
 
@@ -123,9 +113,7 @@ function App() {
         )
         setMatchDetails(matchDetails)
         setMatchIds(getMatchIds(matchDetails))
-      }
-      initData()
-    }
+      })
   }, [criteria, conditions, config])
 
   // handle MatchForm update
