@@ -63,6 +63,13 @@ export const getMatchDetails = (
   { fields }: MatchFormConfig,
   values: MatchFormValues
 ) => {
+  if (
+    criteria.length === 0 ||
+    matchConditions.length === 0 ||
+    fields === undefined
+  )
+    return {} as MatchDetails
+
   const getMatchInfo = (critId: number) => {
     for (const crit of criteria)
       if (crit.id === critId)
