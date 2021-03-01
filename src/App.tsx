@@ -58,17 +58,19 @@ const useFakeAuth = (): [
 }
 
 function App() {
-  const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
+  const [studies, setStudies] = useState([] as Study[])
+  useEffect(() => {
+    mockLoadStudies().then(setStudies)
+  }, [])
 
-  // load data
+  const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
   const [values, setValues] = useState({} as MatchFormValues)
-
   useEffect(() => {
     if (isAuthenticated) {
-      // load data at login
+      // load data on login
       Promise.all([
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
@@ -81,7 +83,7 @@ function App() {
         setValues({ ...defaultValues, ...latestUserInput })
       })
     } else {
-      // clear data at logout
+      // clear data on logout
       setCriteria([] as EligibilityCriterion[])
       setConditions([] as MatchCondition[])
       setConfig({} as MatchFormConfig)
@@ -90,11 +92,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 
-  const [studies, setStudies] = useState([] as Study[])
-  useEffect(() => {
-    mockLoadStudies().then(setStudies)
-  }, [])
-  // set values derived from states
+  // get values derived from states
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, values)
   const matchIds = getMatchIds(matchDetails)
