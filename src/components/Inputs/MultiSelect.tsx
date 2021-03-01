@@ -8,19 +8,14 @@ type MultiSelectProps = {
   options: MatchFormFieldOption[]
   disabled?: boolean
   placeholder?: string
-  value?: string[]
+  value?: any[]
   onChange?(event: any): void
 }
 
-function reshapeToMulti(options: (string | MatchFormFieldOption)[]) {
-  return options.map((option) =>
-    typeof option === 'string'
-      ? { label: option, value: option }
-      : {
-          label: option.label || option.value,
-          value: option.value,
-        }
-  )
+function reshapeToMulti(options: MatchFormFieldOption[], value?: any[]) {
+  return value === undefined
+    ? options.map(({ label, value }) => ({ label, value }))
+    : options.filter((option) => value.includes(option.value))
 }
 
 function MultiSelect({
@@ -28,17 +23,17 @@ function MultiSelect({
   name,
   options,
   placeholder,
-  value,
+  value = [],
   onChange,
   ...attrs
 }: MultiSelectProps) {
   const multiOptions = reshapeToMulti(options)
   const [multiSelected, setMultiSelected] = useState(
-    reshapeToMulti(value || [])
+    reshapeToMulti(options, value)
   )
 
   useEffect(() => {
-    const reshaped = reshapeToMulti(value || [])
+    const reshaped = reshapeToMulti(options, value)
     if (JSON.stringify(reshaped) !== JSON.stringify(multiSelected))
       setMultiSelected(reshaped)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,7 +59,7 @@ function MultiSelect({
       filterOptions={(options, filter) =>
         filter
           ? options.filter(
-              ({ value }) => value && value.match(new RegExp(filter, 'i'))
+              ({ label }) => label && label.match(new RegExp(filter, 'i'))
             )
           : options
       }

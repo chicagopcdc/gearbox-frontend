@@ -7,7 +7,7 @@ type RadioProps = {
   options?: MatchFormFieldOption[]
   disabled?: boolean
   required?: boolean
-  value?: string
+  value?: any
   onChange?(event: any): void
 }
 
@@ -30,11 +30,8 @@ function Radio({
   useEffect(() => {
     if (onChange && name) {
       onChange({
-        target: {
-          name,
-          value: radioValue,
-        },
-      })
+        target: { name, value: radioValue || '', type: 'number' },
+      } as React.ChangeEvent<HTMLInputElement>)
     }
   }, [name, onChange, radioValue])
 
@@ -63,7 +60,7 @@ function Radio({
                 }
               />
               <label className="mx-2" htmlFor={option.value}>
-                {option.label || option.value}
+                {option.label}
               </label>
             </div>
           ))}
