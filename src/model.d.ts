@@ -42,8 +42,8 @@ export type MatchFormFieldShowIfCondition = {
 }
 
 export type MatchFormFieldOption = {
-  value: string
-  label?: string
+  value: any
+  label: string
   description?: string
 }
 
