@@ -16,7 +16,6 @@ import MyRoute from './components/MyRoute'
 
 import {
   EligibilityCriterion,
-  MatchDetails,
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
@@ -82,9 +81,7 @@ function App() {
       setCriteria([] as EligibilityCriterion[])
       setConditions([] as MatchCondition[])
       setConfig({} as MatchFormConfig)
-      setDefaultValues({} as MatchFormValues)
       setValues({} as MatchFormValues)
-      setMatchIds([] as number[])
     }
   }, [isAuthenticated])
 
@@ -93,34 +90,18 @@ function App() {
     mockLoadStudies().then(setStudies)
   }, [])
 
-  // set states derived from data
-  const [defaultValues, setDefaultValues] = useState({} as MatchFormValues)
   const [values, setValues] = useState({} as MatchFormValues)
-  const [matchIds, setMatchIds] = useState([] as number[])
-  const [matchDetails, setMatchDetails] = useState({} as MatchDetails)
   useEffect(() => {
-    if (
-      criteria.length > 0 &&
-      conditions.length > 0 &&
-      config.fields !== undefined
-    )
-      mockLoadLatestUserInput().then((latestUserInput) => {
-        const defaultValues = getDefaultValues(config)
-        setDefaultValues({ ...defaultValues })
+    mockLoadLatestUserInput().then((latestUserInput) => {
+      setValues({ ...defaultValues, ...latestUserInput })
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-        const initValues = { ...defaultValues, ...latestUserInput }
-        setValues(initValues)
-
-        const matchDetails = getMatchDetails(
-          criteria,
-          conditions,
-          config,
-          initValues
-        )
-        setMatchDetails(matchDetails)
-        setMatchIds(getMatchIds(matchDetails))
-      })
-  }, [criteria, conditions, config])
+  // set values derived from states
+  const defaultValues = getDefaultValues(config)
+  const matchDetails = getMatchDetails(criteria, conditions, config, values)
+  const matchIds = getMatchIds(matchDetails)
 
   // handle MatchForm update
   const [isChanging, setIsChanging] = useState(false)
@@ -130,14 +111,6 @@ function App() {
 
     if (JSON.stringify(newValues) !== JSON.stringify(values)) {
       setValues({ ...newValues })
-      const matchDetails = getMatchDetails(
-        criteria,
-        conditions,
-        config,
-        newValues
-      )
-      setMatchDetails(matchDetails)
-      setMatchIds(getMatchIds(matchDetails))
       mockPostLatestUserInput(newValues)
     }
 
