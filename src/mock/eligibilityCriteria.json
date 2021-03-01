@@ -2,37 +2,37 @@
   {
     "id": 0,
     "fieldId": 3,
-    "fieldValue": "true",
+    "fieldValue": 30,
     "operator": "eq"
   },
   {
     "id": 1,
     "fieldId": 4,
-    "fieldValue": "false",
+    "fieldValue": 41,
     "operator": "eq"
   },
   {
     "id": 2,
     "fieldId": 4,
-    "fieldValue": "true",
+    "fieldValue": 40,
     "operator": "eq"
   },
   {
     "id": 3,
     "fieldId": 6,
-    "fieldValue": "false",
+    "fieldValue": 61,
     "operator": "eq"
   },
   {
     "id": 4,
     "fieldId": 6,
-    "fieldValue": "true",
+    "fieldValue": 60,
     "operator": "eq"
   },
   {
     "id": 5,
     "fieldId": 8,
-    "fieldValue": "true",
+    "fieldValue": 80,
     "operator": "eq"
   },
   {

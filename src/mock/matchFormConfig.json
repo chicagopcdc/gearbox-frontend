@@ -33,9 +33,9 @@
       "name": "initDiag",
       "label": "Initial Disease Diagnosis",
       "options": [
-        { "value": "foo", "label": "Foo", "description": "Foo is foo" },
-        { "value": "bar", "label": "Bar" },
-        { "value": "baz", "label": "Baz" }
+        { "value": 10, "label": "Foo", "description": "Foo is foo" },
+        { "value": 11, "label": "Bar" },
+        { "value": 12, "label": "Baz" }
       ],
       "placeholder": "Select"
     },
@@ -46,9 +46,9 @@
       "name": "cnsInvolvement",
       "label": "CNS Involvement",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 20, "label": "true" },
+        { "value": 21, "label": "false" },
+        { "value": 22, "label": "unknown" }
       ]
     },
     {
@@ -58,9 +58,9 @@
       "type": "radio",
       "label": "History of Autoimmune Disease",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 30, "label": "true" },
+        { "value": 31, "label": "false" },
+        { "value": 32, "label": "unknown" }
       ]
     },
     {
@@ -70,9 +70,9 @@
       "name": "drugAllergiesFlag",
       "label": "Drug Allergies",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 40, "label": "true" },
+        { "value": 41, "label": "false" },
+        { "value": 42, "label": "unknown" }
       ]
     },
     {
@@ -81,9 +81,9 @@
       "type": "multiselect",
       "name": "drugAllergies",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 50, "label": "true" },
+        { "value": 51, "label": "false" },
+        { "value": 52, "label": "unknown" }
       ],
       "placeholder": "Specify all drug allergies",
       "showIf": {
@@ -104,9 +104,9 @@
       "name": "prevChemoFlag",
       "label": "Previous chemotherapy",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 60, "label": "true" },
+        { "value": 61, "label": "false" },
+        { "value": 62, "label": "unknown" }
       ]
     },
     {
@@ -114,7 +114,11 @@
       "groupId": 1,
       "type": "multiselect",
       "name": "prevChemo",
-      "options": [{ "value": "foo" }, { "value": "bar" }, { "value": "baz" }],
+      "options": [
+        { "value": 70, "label": "Foo" },
+        { "value": 71, "label": "Bar" },
+        { "value": 72, "label": "Baz" }
+      ],
       "placeholder": "Select all prior chemotherapy agents",
       "showIf": {
         "operator": "OR",
@@ -134,9 +138,9 @@
       "name": "prevRadFlag",
       "label": "Previous radiation therapy",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 80, "label": "true" },
+        { "value": 81, "label": "false" },
+        { "value": 82, "label": "unknown" }
       ]
     },
     {
@@ -144,7 +148,11 @@
       "groupId": 1,
       "type": "multiselect",
       "name": "prevRad",
-      "options": [{ "value": "foo" }, { "value": "bar" }, { "value": "baz" }],
+      "options": [
+        { "value": 90, "label": "Foo" },
+        { "value": 91, "label": "Bar" },
+        { "value": 92, "label": "Baz" }
+      ],
       "placeholder": "Select all prior radiation modalities",
       "showIf": {
         "operator": "OR",
@@ -164,9 +172,9 @@
       "name": "prevAtra",
       "label": "All-trans retinoid acid (ATRA)",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 100, "label": "true" },
+        { "value": 101, "label": "false" },
+        { "value": 102, "label": "unknown" }
       ]
     },
     {
@@ -176,9 +184,9 @@
       "name": "prevHydroxyurea",
       "label": "Hydroxyurea",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 110, "label": "true" },
+        { "value": 111, "label": "false" },
+        { "value": 112, "label": "unknown" }
       ]
     },
     {
@@ -188,9 +196,9 @@
       "name": "prevSteroids",
       "label": "Corticosteriods",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 120, "label": "true" },
+        { "value": 121, "label": "false" },
+        { "value": 122, "label": "unknown" }
       ]
     },
     {
@@ -200,9 +208,9 @@
       "name": "prevItCyt",
       "label": "IT cytarabin",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 130, "label": "true" },
+        { "value": 131, "label": "false" },
+        { "value": 132, "label": "unknown" }
       ]
     },
     {
@@ -212,9 +220,9 @@
       "name": "prevOther",
       "label": "Other antileukemic therapy",
       "options": [
-        { "value": "true" },
-        { "value": "false" },
-        { "value": "unknown" }
+        { "value": 140, "label": "true" },
+        { "value": 141, "label": "false" },
+        { "value": 142, "label": "unknown" }
       ]
     },
     {
@@ -261,19 +269,19 @@
       "type": "multiselect",
       "name": "biomarkers",
       "options": [
-        { "value": "MECOM(3q26.2)" },
-        { "value": "t(6;9)(p23;q34.1)(DEK-NUP214)" },
-        { "value": "Monosomy 7" },
-        { "value": "Monosomy 5/5q-[ERG1(5q31) deleted]" },
-        { "value": "KMT2A(MLL)(11q23.3)" },
-        { "value": "NUP98(11p15.5)" },
-        { "value": "12p abnormalities (ETV6)" },
-        { "value": "ETS FUS-ERG Fusion" },
-        { "value": "FLT3/ITD+ with alleic ratio > 0.1%" },
-        { "value": "CBFA2T3-GLIS2" },
-        { "value": "RAM phenotype" },
-        { "value": "KAT6A(8p11.21) Fusion" },
-        { "value": "Non-KMT2A MLLT10 Fusions" }
+        { "value": 1900, "label": "MECOM(3q26.2)" },
+        { "value": 1901, "label": "t(6;9)(p23;q34.1)(DEK-NUP214)" },
+        { "value": 1902, "label": "Monosomy 7" },
+        { "value": 1903, "label": "Monosomy 5/5q-[ERG1(5q31) deleted]" },
+        { "value": 1904, "label": "KMT2A(MLL)(11q23.3)" },
+        { "value": 1905, "label": "NUP98(11p15.5)" },
+        { "value": 1906, "label": "12p abnormalities (ETV6)" },
+        { "value": 1907, "label": "ETS FUS-ERG Fusion" },
+        { "value": 1908, "label": "FLT3/ITD+ with alleic ratio > 0.1%" },
+        { "value": 1909, "label": "CBFA2T3-GLIS2" },
+        { "value": 1910, "label": "RAM phenotype" },
+        { "value": 1911, "label": "KAT6A(8p11.21) Fusion" },
+        { "value": 1912, "label": "Non-KMT2A MLLT10 Fusions" }
       ],
       "placeholder": "Select all biomarkers"
     }
