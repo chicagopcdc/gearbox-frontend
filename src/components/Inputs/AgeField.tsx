@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 type AgeInputProps = AgeFieldProps & {
   which: 'year' | 'month'
@@ -72,24 +72,24 @@ function AgeField({
 }: AgeFieldProps) {
   const [age, setAge] = useState(formatAge(value))
 
-  useEffect(() => {
-    const newAge = formatAge(value)
-    if (age.year !== newAge.year || age.month !== newAge.month) setAge(newAge)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value])
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+    which: 'year' | 'month'
+  ) {
+    const newWhich =
+      e.target.value === '' ? undefined : parseInt(e.target.value)
+    const newAge = { ...age, [which]: newWhich }
+    setAge(newAge)
 
-  useEffect(() => {
-    const newValue = parseAge(age)
-    if (onChange && value !== newValue)
+    if (onChange) {
+      const newParsed = parseAge(newAge)
+      const newValue =
+        newParsed !== undefined ? newParsed.toString() : undefined
       onChange({
-        target: {
-          name,
-          value: newValue !== undefined ? newValue.toString() : undefined,
-          type: 'number',
-        },
+        target: { name, value: newValue, type: 'number' },
       } as React.ChangeEvent<HTMLInputElement>)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [age])
+    }
+  }
 
   return (
     <>
@@ -99,23 +99,13 @@ function AgeField({
           {...attrs}
           value={age.year}
           which="year"
-          onChange={({ target: { value } }) =>
-            setAge((prevAge) => ({
-              ...prevAge,
-              year: value === '' ? undefined : parseInt(value),
-            }))
-          }
+          onChange={(e) => handleChange(e, 'year')}
         />
         <AgeInput
           {...attrs}
           value={age.month}
           which="month"
-          onChange={({ target: { value } }) =>
-            setAge((prevAge) => ({
-              ...prevAge,
-              month: value === '' ? undefined : parseInt(value),
-            }))
-          }
+          onChange={(e) => handleChange(e, 'month')}
         />
         <div className="text-sm text-gray-400 text-right italic">
           {value !== undefined && value !== ''
