@@ -10,7 +10,7 @@ type AgeFieldProps = {
   readOnly?: boolean
   required?: boolean
   value?: number | ''
-  onChange?: React.ChangeEventHandler<HTMLInputElement>
+  onChange?(event: any): void
 }
 
 const MONTH_IN_YEAR = 12
@@ -85,9 +85,7 @@ function AgeField({
       const newParsed = parseAge(newAge)
       const newValue =
         newParsed !== undefined ? newParsed.toString() : undefined
-      onChange({
-        target: { name, value: newValue, type: 'number' },
-      } as React.ChangeEvent<HTMLInputElement>)
+      onChange({ target: { name, value: newValue, type: 'number' } })
     }
   }
 
