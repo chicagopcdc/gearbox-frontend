@@ -82,9 +82,7 @@ function AgeField({
     setAge(newAge)
 
     if (onChange) {
-      const newParsed = parseAge(newAge)
-      const newValue =
-        newParsed !== undefined ? newParsed.toString() : undefined
+      const newValue = parseAge(newAge)?.toString()
       onChange({ target: { name, value: newValue, type: 'number' } })
     }
   }
