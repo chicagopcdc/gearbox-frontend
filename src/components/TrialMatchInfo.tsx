@@ -13,6 +13,7 @@ type MatchInfoDetailsProps = {
 function MatchInfoString({
   fieldName,
   fieldValue,
+  fieldValueLabel,
   isMatched,
   operator,
 }: MatchInfo) {
@@ -41,7 +42,11 @@ function MatchInfoString({
     <>
       {fieldName} <span className="italic text-gray-500">{operatorString}</span>{' '}
       <span className={isMatched ? 'text-green-700' : 'text-red-700'}>
-        {typeof fieldValue === 'number' ? fieldValue : `"${fieldValue}"`}
+        {fieldValueLabel !== undefined
+          ? `"${fieldValueLabel}"`
+          : typeof fieldValue === 'number'
+          ? fieldValue
+          : `"${fieldValue}"`}
       </span>
     </>
   )

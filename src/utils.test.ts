@@ -5,7 +5,12 @@ import {
   MatchFormConfig,
   MatchFormFieldShowIfCondition,
 } from './model'
-import { getMatchIds, getMatchDetails, getIsFieldShowing } from './utils'
+import {
+  getMatchIds,
+  getMatchDetails,
+  getIsFieldShowing,
+  getFieldOptionLabelMap,
+} from './utils'
 
 const criteria: EligibilityCriterion[] = [
   { id: 0, fieldId: 0, fieldValue: true, operator: 'eq' },
@@ -133,4 +138,39 @@ test('getIsFieldShowing for multiple criteria (AND)', () => {
 
   const values4: MatchFormValues = { 0: true, 1: true, 2: 1 }
   expect(getIsFieldShowing(showIf, config.fields, values4)).toEqual(false)
+})
+
+test('getFieldOptionLabelMap form config', () => {
+  const config: MatchFormConfig = {
+    groups: [],
+    fields: [
+      {
+        id: 0,
+        groupId: 0,
+        type: 'select',
+        name: 'foobar',
+        options: [
+          { value: 0, label: 'foo' },
+          { value: 1, label: 'bar' },
+        ],
+      },
+      {
+        id: 1,
+        groupId: 0,
+        type: 'number',
+        name: 'baz',
+      },
+      {
+        id: 2,
+        groupId: 0,
+        type: 'radio',
+        name: 'baz',
+        options: [{ value: 0, label: 'baz' }],
+      },
+    ],
+  }
+  expect(getFieldOptionLabelMap(config.fields)).toEqual({
+    0: { 0: 'foo', 1: 'bar' },
+    2: { 0: 'baz' },
+  })
 })
