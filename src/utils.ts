@@ -36,10 +36,10 @@ export const getMatchIds = (matchDetails: MatchDetails) => {
   return matchIds
 }
 
-export const getFieldOptionLabels = (fields: MatchFormFieldConfig[]) => {
+export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
 
-  const fieldOptionLabels = {} as {
+  const fieldOptionLabelMap = {} as {
     [fieldId: number]: { [optionValue: number]: string }
   }
   for (const field of fields)
@@ -47,10 +47,10 @@ export const getFieldOptionLabels = (fields: MatchFormFieldConfig[]) => {
       const optionLabels = {} as { [optionValue: number]: string }
       for (const option of field.options)
         optionLabels[option.value as number] = option.label
-      fieldOptionLabels[field.id] = optionLabels
+      fieldOptionLabelMap[field.id] = optionLabels
     }
 
-  return fieldOptionLabels
+  return fieldOptionLabelMap
 }
 
 const testCriterion = (
@@ -87,7 +87,7 @@ export const getMatchDetails = (
   )
     return {} as MatchDetails
 
-  const fieldOptionLabels = getFieldOptionLabels(fields)
+  const fieldOptionLabelMap = getFieldOptionLabelMap(fields)
 
   const getMatchInfo = (critId: number) => {
     for (const crit of criteria)
@@ -102,7 +102,8 @@ export const getMatchDetails = (
                 crit.fieldValue,
                 values[crit.fieldId]
               ),
-              fieldValueLabel: fieldOptionLabels?.[field.id]?.[crit.fieldValue],
+              fieldValueLabel:
+                fieldOptionLabelMap?.[field.id]?.[crit.fieldValue],
               operator: crit.operator,
             }
 

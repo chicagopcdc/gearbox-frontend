@@ -9,7 +9,7 @@ import {
   getMatchIds,
   getMatchDetails,
   getIsFieldShowing,
-  getFieldOptionLabels,
+  getFieldOptionLabelMap,
 } from './utils'
 
 const criteria: EligibilityCriterion[] = [
@@ -140,7 +140,7 @@ test('getIsFieldShowing for multiple criteria (AND)', () => {
   expect(getIsFieldShowing(showIf, config.fields, values4)).toEqual(false)
 })
 
-test('getFieldOptionLabels form config', () => {
+test('getFieldOptionLabelMap form config', () => {
   const config: MatchFormConfig = {
     groups: [],
     fields: [
@@ -169,7 +169,7 @@ test('getFieldOptionLabels form config', () => {
       },
     ],
   }
-  expect(getFieldOptionLabels(config.fields)).toEqual({
+  expect(getFieldOptionLabelMap(config.fields)).toEqual({
     0: { 0: 'foo', 1: 'bar' },
     2: { 0: 'baz' },
   })
