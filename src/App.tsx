@@ -68,6 +68,14 @@ function App() {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
   const [userInput, setUserInput] = useState({} as MatchFormValues)
+  const updateUserInput = (newFormValues: MatchFormValues) => {
+    const newUserInput = clearShowIfField(config, defaultValues, newFormValues)
+
+    if (JSON.stringify(newUserInput) !== JSON.stringify(userInput)) {
+      setUserInput(newUserInput)
+      mockPostLatestUserInput(newUserInput)
+    }
+  }
   useEffect(() => {
     if (isAuthenticated) {
       // load data on login
@@ -97,20 +105,6 @@ function App() {
   const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
   const matchIds = getMatchIds(matchDetails)
 
-  // handle MatchForm update
-  const [isChanging, setIsChanging] = useState(false)
-  const signalChange = () => setIsChanging(true)
-  const handleMatchFormChange = (newFormValues: MatchFormValues) => {
-    const newUserInput = clearShowIfField(config, defaultValues, newFormValues)
-
-    if (JSON.stringify(newUserInput) !== JSON.stringify(userInput)) {
-      setUserInput(newUserInput)
-      mockPostLatestUserInput(newUserInput)
-    }
-
-    setIsChanging(false)
-  }
-
   return (
     <Router>
       <Layout headerProps={{ isAuthenticated, username, signout }}>
@@ -119,13 +113,11 @@ function App() {
             <Home
               authenticate={authenticate}
               isAuthenticated={isAuthenticated}
-              isChanging={isChanging}
+              updateUserInput={updateUserInput}
               matchFormProps={{
                 config,
                 defaultValues,
                 userInput,
-                onChange: handleMatchFormChange,
-                signalChange,
               }}
               matchResultProps={{
                 matchDetails,

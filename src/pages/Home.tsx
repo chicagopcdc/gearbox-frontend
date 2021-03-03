@@ -13,7 +13,7 @@ type HomeProps = HomeMatchingPageProps & {
 function Home({
   authenticate,
   isAuthenticated,
-  isChanging,
+  updateUserInput,
   matchFormProps,
   matchResultProps,
 }: HomeProps) {
@@ -38,7 +38,7 @@ function Home({
 
   return isAuthenticated ? (
     <HomeMatchingPage
-      isChanging={isChanging}
+      updateUserInput={updateUserInput}
       matchFormProps={matchFormProps}
       matchResultProps={matchResultProps}
     />
