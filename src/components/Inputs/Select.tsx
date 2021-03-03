@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { MatchFormFieldOption } from '../../model'
 
 type SelectProps = {
@@ -12,12 +12,9 @@ type SelectProps = {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
 
-function getDescriptionMap(options: MatchFormFieldOption[]) {
-  const descriptionMap: { [key: string]: string } = {}
+function getDescription(options: MatchFormFieldOption[], currentValue: any) {
   for (const { value, description } of options)
-    descriptionMap[value] = description || ''
-
-  return descriptionMap
+    if (value === currentValue) return description
 }
 
 function Select({
@@ -30,8 +27,7 @@ function Select({
   onChange,
   ...attrs
 }: SelectProps) {
-  const [description, setDescription] = useState('')
-  const descriptionMap = getDescriptionMap(options)
+  const description = getDescription(options, value)
 
   const baseClassName =
     'rounded-none border border-solid border-black p-1 w-full'
@@ -51,7 +47,6 @@ function Select({
       <select
         {...selectAttrs}
         onChange={(e) => {
-          setDescription(descriptionMap[e.target.value])
           if (onChange)
             onChange({
               target: { name, value: e.target.value, type: 'number' },
