@@ -81,9 +81,9 @@
       "type": "multiselect",
       "name": "drugAllergies",
       "options": [
-        { "value": 50, "label": "true" },
-        { "value": 51, "label": "false" },
-        { "value": 52, "label": "unknown" }
+        { "value": 50, "label": "Foo" },
+        { "value": 51, "label": "Bar" },
+        { "value": 52, "label": "Baz" }
       ],
       "placeholder": "Specify all drug allergies",
       "showIf": {
@@ -92,7 +92,7 @@
           {
             "id": 4,
             "operator": "eq",
-            "value": "true"
+            "value": 40
           }
         ]
       }
@@ -126,7 +126,7 @@
           {
             "id": 6,
             "operator": "eq",
-            "value": "true"
+            "value": 60
           }
         ]
       }
@@ -160,7 +160,7 @@
           {
             "id": 8,
             "operator": "eq",
-            "value": "true"
+            "value": 80
           }
         ]
       }
