@@ -22,15 +22,15 @@ function HomeMatchingPage({
   matchResultProps,
 }: HomeMatchingPageProps) {
   return (
-    <div className="md:flex md:justify-between">
-      <div className="flex-1 p-4 md:mr-4 lg:mr-8">
+    <div className="md:flex">
+      <div className="md:w-1/2 p-4 md:pr-8 lg:pr-12">
         <h1 className="uppercase text-primary font-bold">
           Patient Information
         </h1>
         <MatchForm {...matchFormProps} />
       </div>
       <div
-        className={`flex-1 p-4 md:ml-4 lg:lg-8 ${
+        className={`md:w-1/2 p-4 md:pl-8 lg:pl-12 ${
           isChanging ? 'bg-gray-100' : ''
         }`}
       >
