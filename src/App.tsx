@@ -29,12 +29,7 @@ import {
   mockLoadLatestUserInput,
   mockPostLatestUserInput,
 } from './mock/utils'
-import {
-  clearShowIfField,
-  getDefaultValues,
-  getMatchIds,
-  getMatchDetails,
-} from './utils'
+import { getDefaultValues, getMatchIds, getMatchDetails } from './utils'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 const useFakeAuth = (): [
@@ -68,9 +63,7 @@ function App() {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
   const [userInput, setUserInput] = useState({} as MatchFormValues)
-  const updateUserInput = (newFormValues: MatchFormValues) => {
-    const newUserInput = clearShowIfField(config, defaultValues, newFormValues)
-
+  const updateUserInput = (newUserInput: MatchFormValues) => {
     if (JSON.stringify(newUserInput) !== JSON.stringify(userInput)) {
       setUserInput(newUserInput)
       mockPostLatestUserInput(newUserInput)

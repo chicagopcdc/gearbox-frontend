@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
-import { getIsFieldShowing } from '../utils'
+import { clearShowIfField, getIsFieldShowing } from '../utils'
 import { MatchFormValues, MatchFormConfig } from '../model'
 
 export type MatchFormProps = {
@@ -38,7 +38,7 @@ function MatchForm({
 
     signalChange()
     timeout = setTimeout(() => {
-      onChange({ ...formik.values })
+      onChange(clearShowIfField(config, defaultValues, { ...formik.values }))
     }, 1000)
 
     return () => {
