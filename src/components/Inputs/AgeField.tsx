@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 type AgeInputProps = AgeFieldProps & {
   which: 'year' | 'month'
@@ -70,19 +70,15 @@ function AgeField({
   onChange,
   ...attrs
 }: AgeFieldProps) {
-  const [age, setAge] = useState(formatAge(value))
-
+  const age = formatAge(value)
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement>,
     which: 'year' | 'month'
   ) {
-    const newWhich =
-      e.target.value === '' ? undefined : parseInt(e.target.value)
-    const newAge = { ...age, [which]: newWhich }
-    setAge(newAge)
-
     if (onChange) {
-      const newValue = parseAge(newAge)?.toString()
+      const newWhich =
+        e.target.value === '' ? undefined : parseInt(e.target.value)
+      const newValue = parseAge({ ...age, [which]: newWhich })?.toString()
       onChange({ target: { name, value: newValue, type: 'number' } })
     }
   }
