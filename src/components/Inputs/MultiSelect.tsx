@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ReactMultiSelect from 'react-multi-select-component'
 import { MatchFormFieldOption } from '../../model'
 
@@ -28,12 +28,7 @@ function MultiSelect({
   ...attrs
 }: MultiSelectProps) {
   const multiOptions = reshapeToMulti(options)
-  const [multiSelected, setMultiSelected] = useState(
-    reshapeToMulti(options, value)
-  )
-
   function handleChange(selected: MatchFormFieldOption[]) {
-    setMultiSelected(selected)
     if (onChange && name)
       onChange({ target: { name, value: selected.map(({ value }) => value) } })
   }
@@ -42,7 +37,7 @@ function MultiSelect({
     <ReactMultiSelect
       {...attrs}
       options={multiOptions}
-      value={multiSelected}
+      value={reshapeToMulti(options, value)}
       onChange={handleChange}
       filterOptions={(options, filter) =>
         filter
