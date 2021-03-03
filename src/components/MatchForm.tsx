@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
@@ -21,14 +21,15 @@ function MatchForm({
   onChange,
   signalChange,
 }: MatchFormProps) {
-  const [triggerReset, setTriggerReset] = useState(false)
   const formik = useFormik({
-    initialValues: { ...values },
+    initialValues: { ...defaultValues },
     onSubmit() {},
-    onReset() {
-      setTriggerReset(true)
-    },
   })
+
+  useEffect(() => {
+    formik.setValues({ ...values })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
@@ -43,13 +44,6 @@ function MatchForm({
       if (timeout !== undefined) clearTimeout(timeout)
     }
   }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (triggerReset) {
-      formik.setValues(defaultValues)
-      setTriggerReset(false)
-    }
-  }, [triggerReset]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <form onReset={formik.handleReset}>
