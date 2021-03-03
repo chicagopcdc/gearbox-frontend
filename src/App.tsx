@@ -67,7 +67,7 @@ function App() {
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
-  const [values, setValues] = useState({} as MatchFormValues)
+  const [userInput, setUserInput] = useState({} as MatchFormValues)
   useEffect(() => {
     if (isAuthenticated) {
       // load data on login
@@ -80,32 +80,32 @@ function App() {
         setCriteria(criteria)
         setConditions(conditions)
         setConfig(config)
-        setValues({ ...defaultValues, ...latestUserInput })
+        setUserInput(latestUserInput)
       })
     } else {
       // clear data on logout
       setCriteria([] as EligibilityCriterion[])
       setConditions([] as MatchCondition[])
       setConfig({} as MatchFormConfig)
-      setValues({} as MatchFormValues)
+      setUserInput({} as MatchFormValues)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 
   // get values derived from states
   const defaultValues = getDefaultValues(config)
-  const matchDetails = getMatchDetails(criteria, conditions, config, values)
+  const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
   const matchIds = getMatchIds(matchDetails)
 
   // handle MatchForm update
   const [isChanging, setIsChanging] = useState(false)
   const signalChange = () => setIsChanging(true)
   const handleMatchFormChange = (newFormValues: MatchFormValues) => {
-    const newValues = clearShowIfField(config, defaultValues, newFormValues)
+    const newUserInput = clearShowIfField(config, defaultValues, newFormValues)
 
-    if (JSON.stringify(newValues) !== JSON.stringify(values)) {
-      setValues({ ...newValues })
-      mockPostLatestUserInput(newValues)
+    if (JSON.stringify(newUserInput) !== JSON.stringify(userInput)) {
+      setUserInput(newUserInput)
+      mockPostLatestUserInput(newUserInput)
     }
 
     setIsChanging(false)
@@ -123,7 +123,7 @@ function App() {
               matchFormProps={{
                 config,
                 defaultValues,
-                values,
+                userInput,
                 onChange: handleMatchFormChange,
                 signalChange,
               }}

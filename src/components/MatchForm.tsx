@@ -9,7 +9,7 @@ import { MatchFormValues, MatchFormConfig } from '../model'
 export type MatchFormProps = {
   config: MatchFormConfig
   defaultValues: MatchFormValues
-  values: MatchFormValues
+  userInput: MatchFormValues
   onChange(value: MatchFormValues): void
   signalChange(): void
 }
@@ -17,7 +17,7 @@ export type MatchFormProps = {
 function MatchForm({
   config,
   defaultValues,
-  values,
+  userInput,
   onChange,
   signalChange,
 }: MatchFormProps) {
@@ -27,7 +27,8 @@ function MatchForm({
   })
 
   useEffect(() => {
-    formik.setValues({ ...values })
+    formik.setValues({ ...userInput })
+    console.log(formik)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

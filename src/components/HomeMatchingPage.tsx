@@ -15,7 +15,7 @@ function HomeMatchingPage({
 }: HomeMatchingPageProps) {
   const isMatchDataReady =
     matchFormProps.config.fields !== undefined &&
-    Object.keys(matchFormProps.values).length > 0
+    Object.keys(matchFormProps.userInput).length > 0
 
   return isMatchDataReady ? (
     <div className="md:flex">
