@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { MatchFormFieldOption } from '../../model'
 
 type RadioProps = {
@@ -20,10 +20,7 @@ function Radio({
   onChange,
   ...attrs
 }: RadioProps) {
-  const [radioValue, setRadioValue] = useState(value || undefined)
-
   function handleChange(selected: MatchFormFieldOption[]) {
-    setRadioValue(selected)
     if (onChange && name)
       onChange({ target: { name, value: selected || '', type: 'number' } })
   }
@@ -47,7 +44,7 @@ function Radio({
                 name={name}
                 type="radio"
                 value={option.value}
-                checked={option.value === radioValue}
+                checked={option.value === value}
                 onChange={
                   disabled ? undefined : () => handleChange(option.value)
                 }
