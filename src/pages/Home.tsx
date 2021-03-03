@@ -6,16 +6,15 @@ import HomeMatchingPage, {
 } from '../components/HomeMatchingPage'
 import { fetchFenceAccessToken } from '../utils'
 
-type HomeProps = HomeMatchingPageProps & {
+type HomeProps = {
   authenticate(username: string, cb?: () => void): void
   isAuthenticated: boolean
+  homeMatchingPageProps: HomeMatchingPageProps
 }
 function Home({
   authenticate,
   isAuthenticated,
-  updateUserInput,
-  matchFormProps,
-  matchResultProps,
+  homeMatchingPageProps,
 }: HomeProps) {
   const history = useHistory()
   useEffect(() => {
@@ -37,11 +36,7 @@ function Home({
   }, [])
 
   return isAuthenticated ? (
-    <HomeMatchingPage
-      updateUserInput={updateUserInput}
-      matchFormProps={matchFormProps}
-      matchResultProps={matchResultProps}
-    />
+    <HomeMatchingPage {...homeMatchingPageProps} />
   ) : (
     <HomeLandingPage />
   )

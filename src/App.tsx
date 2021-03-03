@@ -113,16 +113,14 @@ function App() {
             <Home
               authenticate={authenticate}
               isAuthenticated={isAuthenticated}
-              updateUserInput={updateUserInput}
-              matchFormProps={{
+              homeMatchingPageProps={{
                 config,
                 defaultValues,
                 userInput,
-              }}
-              matchResultProps={{
                 matchDetails,
                 matchIds,
                 studies,
+                updateUserInput,
               }}
             />
           </MyRoute>

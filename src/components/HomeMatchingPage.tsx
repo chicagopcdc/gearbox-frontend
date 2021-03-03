@@ -1,22 +1,26 @@
 import React, { useState } from 'react'
-import { MatchFormConfig, MatchFormValues } from '../model'
+import { MatchDetails, MatchFormConfig, MatchFormValues, Study } from '../model'
 import MatchForm from './MatchForm'
-import MatchResult, { MatchResultProps } from './MatchResult'
+import MatchResult from './MatchResult'
 
 export type HomeMatchingPageProps = {
+  config: MatchFormConfig
+  defaultValues: MatchFormValues
+  userInput: MatchFormValues
+  matchDetails: MatchDetails
+  matchIds: number[]
+  studies: Study[]
   updateUserInput(values: MatchFormValues): void
-  matchFormProps: {
-    config: MatchFormConfig
-    defaultValues: MatchFormValues
-    userInput: MatchFormValues
-  }
-  matchResultProps: MatchResultProps
 }
 
 function HomeMatchingPage({
+  config,
+  defaultValues,
+  userInput,
+  matchDetails,
+  matchIds,
+  studies,
   updateUserInput,
-  matchFormProps,
-  matchResultProps,
 }: HomeMatchingPageProps) {
   const [isChanging, setIsChanging] = useState(false)
   const signalChange = () => setIsChanging(true)
@@ -26,8 +30,7 @@ function HomeMatchingPage({
   }
 
   const isMatchDataReady =
-    matchFormProps.config.fields !== undefined &&
-    Object.keys(matchFormProps.userInput).length > 0
+    config.fields !== undefined && Object.keys(userInput).length > 0
 
   return isMatchDataReady ? (
     <div className="md:flex">
@@ -36,16 +39,14 @@ function HomeMatchingPage({
           Patient Information
         </h1>
         <MatchForm
-          {...matchFormProps}
-          onChange={onChange}
-          signalChange={signalChange}
+          {...{ config, defaultValues, userInput, onChange, signalChange }}
         />
       </div>
       <div
         className={`md:w-1/2 p-4 lg:px-8 ${isChanging ? 'bg-gray-100' : ''}`}
       >
         <h1 className="uppercase text-primary font-bold">Open Trials</h1>
-        <MatchResult {...matchResultProps} />
+        <MatchResult {...{ matchDetails, matchIds, studies }} />
       </div>
     </div>
   ) : (
