@@ -1,46 +1,15 @@
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import HomeLandingPage from '../components/HomeLandingPage'
-import MatchForm, { MatchFormProps } from '../components/MatchForm'
-import MatchResult, { MatchResultProps } from '../components/MatchResult'
+import HomeMatchingPage, {
+  HomeMatchingPageProps,
+} from '../components/HomeMatchingPage'
 import { fetchFenceAccessToken } from '../utils'
-
-type HomeMatchingPageProps = {
-  isChanging: boolean
-  matchFormProps: MatchFormProps
-  matchResultProps: MatchResultProps
-}
 
 type HomeProps = HomeMatchingPageProps & {
   authenticate(username: string, cb?: () => void): void
   isAuthenticated: boolean
 }
-
-function HomeMatchingPage({
-  isChanging,
-  matchFormProps,
-  matchResultProps,
-}: HomeMatchingPageProps) {
-  return (
-    <div className="md:flex">
-      <div className="md:w-1/2 p-4 md:pr-8 lg:pr-12">
-        <h1 className="uppercase text-primary font-bold">
-          Patient Information
-        </h1>
-        <MatchForm {...matchFormProps} />
-      </div>
-      <div
-        className={`md:w-1/2 p-4 md:pl-8 lg:pl-12 ${
-          isChanging ? 'bg-gray-100' : ''
-        }`}
-      >
-        <h1 className="uppercase text-primary font-bold">Open Trials</h1>
-        <MatchResult {...matchResultProps} />
-      </div>
-    </div>
-  )
-}
-
 function Home({
   authenticate,
   isAuthenticated,
