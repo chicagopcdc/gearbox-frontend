@@ -89,13 +89,13 @@ function AgeField({
       <div className="flex flex-wrap justify-between items-center">
         <AgeInput
           {...attrs}
-          value={age.year}
+          value={age.year || ''}
           which="year"
           onChange={(e) => handleChange(e, 'year')}
         />
         <AgeInput
           {...attrs}
-          value={age.month}
+          value={age.month || ''}
           which="month"
           onChange={(e) => handleChange(e, 'month')}
         />
