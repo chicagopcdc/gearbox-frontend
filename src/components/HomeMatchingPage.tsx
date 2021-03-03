@@ -13,7 +13,11 @@ function HomeMatchingPage({
   matchFormProps,
   matchResultProps,
 }: HomeMatchingPageProps) {
-  return (
+  const isMatchDataReady =
+    matchFormProps.config.fields !== undefined &&
+    Object.keys(matchFormProps.values).length > 0
+
+  return isMatchDataReady ? (
     <div className="md:flex">
       <div className="md:w-1/2 p-4 md:pr-8 lg:pr-12">
         <h1 className="uppercase text-primary font-bold">
@@ -30,6 +34,8 @@ function HomeMatchingPage({
         <MatchResult {...matchResultProps} />
       </div>
     </div>
+  ) : (
+    <div>Loading...</div>
   )
 }
 

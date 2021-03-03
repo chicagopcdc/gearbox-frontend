@@ -36,11 +36,7 @@ function Home({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const isMatchFromDataReady =
-    matchFormProps.config.fields !== undefined &&
-    Object.keys(matchFormProps.values).length > 0
-
-  return isAuthenticated && isMatchFromDataReady ? (
+  return isAuthenticated ? (
     <HomeMatchingPage
       isChanging={isChanging}
       matchFormProps={matchFormProps}
