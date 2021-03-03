@@ -6,6 +6,7 @@ module.exports = {
         2: '2 2 0%',
       },
       width: {
+        '1/2': '50%',
         'screen-lg': '1024px',
       },
       maxWidth: {
