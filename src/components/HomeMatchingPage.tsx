@@ -28,11 +28,6 @@ function HomeMatchingPage({
   updateUserInput,
 }: HomeMatchingPageProps) {
   const [isUpdating, setIsUpdating] = useState(false)
-  const signalChange = () => setIsUpdating(true)
-  const onChange = (newFormValues: MatchFormValues) => {
-    updateUserInput(newFormValues)
-    setIsUpdating(false)
-  }
 
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
@@ -47,7 +42,13 @@ function HomeMatchingPage({
           Patient Information
         </h1>
         <MatchForm
-          {...{ config, defaultValues, userInput, onChange, signalChange }}
+          {...{
+            config,
+            defaultValues,
+            userInput,
+            updateUserInput,
+            setIsUpdating,
+          }}
         />
       </div>
       <div

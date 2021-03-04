@@ -10,16 +10,16 @@ export type MatchFormProps = {
   config: MatchFormConfig
   defaultValues: MatchFormValues
   userInput: MatchFormValues
-  onChange(value: MatchFormValues): void
-  signalChange(): void
+  updateUserInput(values: MatchFormValues): void
+  setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function MatchForm({
   config,
   defaultValues,
   userInput,
-  onChange,
-  signalChange,
+  updateUserInput,
+  setIsUpdating,
 }: MatchFormProps) {
   const formik = useFormik({
     initialValues: { ...defaultValues },
@@ -36,9 +36,11 @@ function MatchForm({
     let timeout: NodeJS.Timeout | undefined
     if (timeout !== undefined) clearTimeout(timeout)
 
-    signalChange()
+    setIsUpdating(true)
     timeout = setTimeout(() => {
-      onChange(clearShowIfField(config, defaultValues, { ...formik.values }))
+      const newValues = { ...formik.values }
+      updateUserInput(clearShowIfField(config, defaultValues, newValues))
+      setIsUpdating(false)
     }, 1000)
 
     return () => {
