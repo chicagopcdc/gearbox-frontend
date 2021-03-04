@@ -8,6 +8,7 @@ import {
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
+  Study,
 } from '../model'
 
 export const mockLoadEligibilityCriteria = () =>
@@ -27,7 +28,7 @@ export const mockLoadMatchConditions = () =>
 export const mockLoadMatchFromConfig = () =>
   Promise.resolve(matchFormConfig as MatchFormConfig)
 
-export const mockLoadStudies = () => Promise.resolve(studies)
+export const mockLoadStudies = () => Promise.resolve(studies as Study[])
 
 export const mockPostLatestUserInput = (values: MatchFormValues) => {
   const userInput = Object.keys(values).reduce((acc, id) => {
