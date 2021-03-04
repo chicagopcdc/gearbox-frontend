@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import MatchForm from './MatchForm'
+import MatchResult from './MatchResult'
 import {
   EligibilityCriterion,
   MatchCondition,
@@ -7,8 +9,6 @@ import {
   Study,
 } from '../model'
 import { getDefaultValues, getMatchDetails, getMatchIds } from '../utils'
-import MatchForm from './MatchForm'
-import MatchResult from './MatchResult'
 
 export type HomeMatchingPageProps = {
   conditions: MatchCondition[]
@@ -27,11 +27,11 @@ function HomeMatchingPage({
   userInput,
   updateUserInput,
 }: HomeMatchingPageProps) {
-  const [isChanging, setIsChanging] = useState(false)
-  const signalChange = () => setIsChanging(true)
+  const [isUpdating, setIsUpdating] = useState(false)
+  const signalChange = () => setIsUpdating(true)
   const onChange = (newFormValues: MatchFormValues) => {
     updateUserInput(newFormValues)
-    setIsChanging(false)
+    setIsUpdating(false)
   }
 
   const defaultValues = getDefaultValues(config)
@@ -51,7 +51,7 @@ function HomeMatchingPage({
         />
       </div>
       <div
-        className={`md:w-1/2 p-4 lg:px-8 ${isChanging ? 'bg-gray-100' : ''}`}
+        className={`md:w-1/2 p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}
       >
         <h1 className="uppercase text-primary font-bold">Open Trials</h1>
         <MatchResult {...{ matchDetails, matchIds, studies }} />
