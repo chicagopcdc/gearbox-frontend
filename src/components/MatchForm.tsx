@@ -28,7 +28,6 @@ function MatchForm({
 
   useEffect(() => {
     formik.setValues({ ...userInput })
-    console.log(formik)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
