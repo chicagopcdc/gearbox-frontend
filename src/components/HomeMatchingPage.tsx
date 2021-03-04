@@ -1,25 +1,30 @@
 import React, { useState } from 'react'
-import { MatchDetails, MatchFormConfig, MatchFormValues, Study } from '../model'
+import {
+  EligibilityCriterion,
+  MatchCondition,
+  MatchFormConfig,
+  MatchFormValues,
+  Study,
+} from '../model'
+import { getDefaultValues, getMatchDetails, getMatchIds } from '../utils'
 import MatchForm from './MatchForm'
 import MatchResult from './MatchResult'
 
 export type HomeMatchingPageProps = {
+  conditions: MatchCondition[]
   config: MatchFormConfig
-  defaultValues: MatchFormValues
-  userInput: MatchFormValues
-  matchDetails: MatchDetails
-  matchIds: number[]
+  criteria: EligibilityCriterion[]
   studies: Study[]
+  userInput: MatchFormValues
   updateUserInput(values: MatchFormValues): void
 }
 
 function HomeMatchingPage({
+  conditions,
   config,
-  defaultValues,
-  userInput,
-  matchDetails,
-  matchIds,
+  criteria,
   studies,
+  userInput,
   updateUserInput,
 }: HomeMatchingPageProps) {
   const [isChanging, setIsChanging] = useState(false)
@@ -29,6 +34,9 @@ function HomeMatchingPage({
     setIsChanging(false)
   }
 
+  const defaultValues = getDefaultValues(config)
+  const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
+  const matchIds = getMatchIds(matchDetails)
   const isMatchDataReady =
     config.fields !== undefined && Object.keys(userInput).length > 0
 

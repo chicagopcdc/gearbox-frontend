@@ -29,7 +29,6 @@ import {
   mockLoadLatestUserInput,
   mockPostLatestUserInput,
 } from './mock/utils'
-import { getDefaultValues, getMatchIds, getMatchDetails } from './utils'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 const useFakeAuth = (): [
@@ -93,11 +92,6 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated])
 
-  // get values derived from states
-  const defaultValues = getDefaultValues(config)
-  const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
-  const matchIds = getMatchIds(matchDetails)
-
   return (
     <Router>
       <Layout headerProps={{ isAuthenticated, username, signout }}>
@@ -107,12 +101,11 @@ function App() {
               authenticate={authenticate}
               isAuthenticated={isAuthenticated}
               homeMatchingPageProps={{
+                conditions,
                 config,
-                defaultValues,
-                userInput,
-                matchDetails,
-                matchIds,
+                criteria,
                 studies,
+                userInput,
                 updateUserInput,
               }}
             />
