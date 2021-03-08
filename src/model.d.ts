@@ -72,7 +72,7 @@ export type MatchInfo = {
   fieldName: string
   fieldValue: any
   fieldValueLabel?: string
-  isMatched: boolean
+  isMatched?: boolean
   operator: ComparisonOperator
 }
 
