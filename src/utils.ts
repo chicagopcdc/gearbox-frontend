@@ -97,11 +97,14 @@ export const getMatchDetails = (
             return {
               fieldName: field.label || field.name,
               fieldValue: crit.fieldValue,
-              isMatched: testCriterion(
-                crit.operator,
-                crit.fieldValue,
-                values[crit.fieldId]
-              ),
+              isMatched:
+                values[crit.fieldId] === undefined
+                  ? undefined
+                  : testCriterion(
+                      crit.operator,
+                      crit.fieldValue,
+                      values[crit.fieldId]
+                    ),
               fieldValueLabel:
                 fieldOptionLabelMap?.[field.id]?.[crit.fieldValue],
               operator: crit.operator,
