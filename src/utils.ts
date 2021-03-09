@@ -13,19 +13,18 @@ import {
 } from './model'
 
 export const getMatchGroups = (matchDetails: MatchDetails) => {
-  const getMatchStatus = (algorithm: MatchInfoAlgorithm, depth: number = 0) => {
+  const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
     const hasStatus = { true: false, undefined: false, false: false }
     for (const matchInfoOrAlgo of algorithm.criteria) {
       const matchStatus = matchInfoOrAlgo.hasOwnProperty('isMatched')
         ? (matchInfoOrAlgo as MatchInfo).isMatched
-        : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm, depth + 1)
+        : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
 
       hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
     }
 
     switch (algorithm.operator) {
       case 'AND':
-        if (depth === 0 && !hasStatus.true) return false
         if (hasStatus.false) return false
         if (hasStatus.undefined) return undefined
         return true
