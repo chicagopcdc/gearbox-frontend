@@ -38,10 +38,17 @@ function MatchInfoString({
       operatorString = 'is not'
   }
 
+  const valueStringClassName =
+    isMatched === undefined
+      ? 'text-gray-700'
+      : isMatched
+      ? 'text-green-700'
+      : 'text-red-700'
+
   return (
     <>
       {fieldName} <span className="italic text-gray-500">{operatorString}</span>{' '}
-      <span className={isMatched ? 'text-green-700' : 'text-red-700'}>
+      <span className={valueStringClassName}>
         {fieldValueLabel !== undefined
           ? `"${fieldValueLabel}"`
           : typeof fieldValue === 'number'

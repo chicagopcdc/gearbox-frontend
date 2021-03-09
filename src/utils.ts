@@ -12,28 +12,45 @@ import {
   MatchFormFieldShowIfCondition,
 } from './model'
 
-export const getMatchIds = (matchDetails: MatchDetails) => {
-  const matchIds: number[] = []
-  if (Object.keys(matchDetails).length === 0) return matchIds
-
-  const isMatch = (algorithm: MatchInfoAlgorithm): boolean => {
-    const handler = (matchInfoOrAlgo: MatchInfo | MatchInfoAlgorithm) =>
-      matchInfoOrAlgo.hasOwnProperty('isMatched')
+export const getMatchGroups = (matchDetails: MatchDetails) => {
+  const getMatchStatus = (algorithm: MatchInfoAlgorithm, depth: number = 0) => {
+    const hasStatus = { true: false, undefined: false, false: false }
+    for (const matchInfoOrAlgo of algorithm.criteria) {
+      const matchStatus = matchInfoOrAlgo.hasOwnProperty('isMatched')
         ? (matchInfoOrAlgo as MatchInfo).isMatched
-        : isMatch(matchInfoOrAlgo as MatchInfoAlgorithm)
+        : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm, depth + 1)
+
+      hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
+    }
 
     switch (algorithm.operator) {
       case 'AND':
-        return algorithm.criteria.every(handler)
+        if (depth === 0 && !hasStatus.true) return false
+        if (hasStatus.false) return false
+        if (hasStatus.undefined) return undefined
+        return true
       case 'OR':
-        return algorithm.criteria.some(handler)
+        if (!hasStatus.false && !hasStatus.true) return undefined
+        return hasStatus.true
     }
   }
 
+  const matched: number[] = []
+  const partiallyMatched: number[] = []
+  const unmatched: number[] = []
   for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
-    if (isMatch(studyMatchDetail)) matchIds.push(parseInt(studyId))
+    switch (getMatchStatus(studyMatchDetail)) {
+      case true:
+        matched.push(parseInt(studyId))
+        break
+      case undefined:
+        partiallyMatched.push(parseInt(studyId))
+        break
+      case false:
+        unmatched.push(parseInt(studyId))
+    }
 
-  return matchIds
+  return { matched, partiallyMatched, unmatched }
 }
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
@@ -97,11 +114,15 @@ export const getMatchDetails = (
             return {
               fieldName: field.label || field.name,
               fieldValue: crit.fieldValue,
-              isMatched: testCriterion(
-                crit.operator,
-                crit.fieldValue,
-                values[crit.fieldId]
-              ),
+              isMatched:
+                values[crit.fieldId] === undefined ||
+                values[crit.fieldId] === ''
+                  ? undefined
+                  : testCriterion(
+                      crit.operator,
+                      crit.fieldValue,
+                      values[crit.fieldId]
+                    ),
               fieldValueLabel:
                 fieldOptionLabelMap?.[field.id]?.[crit.fieldValue],
               operator: crit.operator,
