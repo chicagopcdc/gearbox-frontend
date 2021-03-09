@@ -6,7 +6,6 @@ import {
   MatchFormFieldShowIfCondition,
 } from './model'
 import {
-  getMatchIds,
   getMatchDetails,
   getMatchGroups,
   getIsFieldShowing,
@@ -50,33 +49,6 @@ const conditions: MatchCondition[] = [
     },
   },
 ]
-const getMatchIdsTestHelper = (values: MatchFormValues) =>
-  getMatchIds(getMatchDetails(criteria, conditions, config, values))
-
-test('getMatchIds for simple AND algorithm', () => {
-  const values: MatchFormValues = {
-    0: true,
-    1: false,
-  }
-  expect(getMatchIdsTestHelper(values)).toEqual([0, 1])
-})
-
-test('getMatchIds for simple OR algorithm', () => {
-  const values: MatchFormValues = {
-    0: false,
-    1: true,
-  }
-  expect(getMatchIdsTestHelper(values)).toEqual([1])
-})
-
-test('getMatchIds for nested algorithm', () => {
-  const values: MatchFormValues = {
-    0: true,
-    2: 1,
-  }
-  expect(getMatchIdsTestHelper(values)).toEqual([1, 2])
-})
-
 const getMatchGroupsTestHelper = (values: MatchFormValues) =>
   getMatchGroups(getMatchDetails(criteria, conditions, config, values))
 

@@ -53,30 +53,6 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
   return { matched, partiallyMatched, unmatched }
 }
 
-export const getMatchIds = (matchDetails: MatchDetails) => {
-  const matchIds: number[] = []
-  if (Object.keys(matchDetails).length === 0) return matchIds
-
-  const isMatch = (algorithm: MatchInfoAlgorithm): boolean => {
-    const handler = (matchInfoOrAlgo: MatchInfo | MatchInfoAlgorithm) =>
-      matchInfoOrAlgo.hasOwnProperty('isMatched')
-        ? (matchInfoOrAlgo as MatchInfo).isMatched
-        : isMatch(matchInfoOrAlgo as MatchInfoAlgorithm)
-
-    switch (algorithm.operator) {
-      case 'AND':
-        return algorithm.criteria.every(handler)
-      case 'OR':
-        return algorithm.criteria.some(handler)
-    }
-  }
-
-  for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
-    if (isMatch(studyMatchDetail)) matchIds.push(parseInt(studyId))
-
-  return matchIds
-}
-
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
 
