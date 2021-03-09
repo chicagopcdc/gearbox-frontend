@@ -36,7 +36,7 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
   }
 
   const matched: number[] = []
-  const partiallyMatched: number[] = []
+  const undetermined: number[] = []
   const unmatched: number[] = []
   for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
     switch (getMatchStatus(studyMatchDetail)) {
@@ -44,13 +44,13 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
         matched.push(parseInt(studyId))
         break
       case undefined:
-        partiallyMatched.push(parseInt(studyId))
+        undetermined.push(parseInt(studyId))
         break
       case false:
         unmatched.push(parseInt(studyId))
     }
 
-  return { matched, partiallyMatched, unmatched }
+  return { matched, undetermined, unmatched }
 }
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
