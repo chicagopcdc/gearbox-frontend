@@ -7,14 +7,14 @@ export type MatchResultProps = {
   matchDetails: MatchDetails
   matchGroups: {
     matched: number[]
-    partiallyMatched: number[]
+    undetermined: number[]
     unmatched: number[]
   }
   studies: Study[]
 }
 
 function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
-  const { matched, partiallyMatched, unmatched } = matchGroups
+  const { matched, undetermined, unmatched } = matchGroups
 
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study
@@ -30,8 +30,8 @@ function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
           />
         ))}
       </DropdownSection>
-      <DropdownSection name={`Partially matched (${partiallyMatched.length})`}>
-        {partiallyMatched.map((id) => (
+      <DropdownSection name={`Undetermined (${undetermined.length})`}>
+        {undetermined.map((id) => (
           <TrialCard
             matchInfoAlgorithm={matchDetails[id]}
             study={studyById[id]}

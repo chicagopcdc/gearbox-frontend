@@ -13,19 +13,18 @@ import {
 } from './model'
 
 export const getMatchGroups = (matchDetails: MatchDetails) => {
-  const getMatchStatus = (algorithm: MatchInfoAlgorithm, depth: number = 0) => {
+  const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
     const hasStatus = { true: false, undefined: false, false: false }
     for (const matchInfoOrAlgo of algorithm.criteria) {
       const matchStatus = matchInfoOrAlgo.hasOwnProperty('isMatched')
         ? (matchInfoOrAlgo as MatchInfo).isMatched
-        : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm, depth + 1)
+        : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
 
       hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
     }
 
     switch (algorithm.operator) {
       case 'AND':
-        if (depth === 0 && !hasStatus.true) return false
         if (hasStatus.false) return false
         if (hasStatus.undefined) return undefined
         return true
@@ -36,7 +35,7 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
   }
 
   const matched: number[] = []
-  const partiallyMatched: number[] = []
+  const undetermined: number[] = []
   const unmatched: number[] = []
   for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
     switch (getMatchStatus(studyMatchDetail)) {
@@ -44,13 +43,13 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
         matched.push(parseInt(studyId))
         break
       case undefined:
-        partiallyMatched.push(parseInt(studyId))
+        undetermined.push(parseInt(studyId))
         break
       case false:
         unmatched.push(parseInt(studyId))
     }
 
-  return { matched, partiallyMatched, unmatched }
+  return { matched, undetermined, unmatched }
 }
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {

@@ -61,7 +61,7 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [0, 1],
-      partiallyMatched: [],
+      undetermined: [],
       unmatched: [2],
     })
   })
@@ -73,7 +73,7 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [1],
-      partiallyMatched: [],
+      undetermined: [],
       unmatched: [0, 2],
     })
   })
@@ -85,7 +85,16 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [1, 2],
-      partiallyMatched: [0],
+      undetermined: [0],
+      unmatched: [],
+    })
+  })
+
+  test('for no input', () => {
+    const values: MatchFormValues = {}
+    expect(getMatchGroupsTestHelper(values)).toEqual({
+      matched: [],
+      undetermined: [0, 1, 2],
       unmatched: [],
     })
   })
