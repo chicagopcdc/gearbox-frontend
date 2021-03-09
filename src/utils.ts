@@ -12,6 +12,47 @@ import {
   MatchFormFieldShowIfCondition,
 } from './model'
 
+export const getMatchGroups = (matchDetails: MatchDetails) => {
+  const getMatchStatus = (algorithm: MatchInfoAlgorithm, depth: number = 0) => {
+    const hasStatus = { true: false, undefined: false, false: false }
+    for (const matchInfoOrAlgo of algorithm.criteria) {
+      const matchStatus = matchInfoOrAlgo.hasOwnProperty('isMatched')
+        ? (matchInfoOrAlgo as MatchInfo).isMatched
+        : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm, depth + 1)
+
+      hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
+    }
+
+    switch (algorithm.operator) {
+      case 'AND':
+        if (depth === 0 && !hasStatus.true) return false
+        if (hasStatus.false) return false
+        if (hasStatus.undefined) return undefined
+        return true
+      case 'OR':
+        if (!hasStatus.false && !hasStatus.true) return undefined
+        return hasStatus.true
+    }
+  }
+
+  const matched: number[] = []
+  const partiallyMatched: number[] = []
+  const unmatched: number[] = []
+  for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
+    switch (getMatchStatus(studyMatchDetail)) {
+      case true:
+        matched.push(parseInt(studyId))
+        break
+      case undefined:
+        partiallyMatched.push(parseInt(studyId))
+        break
+      case false:
+        unmatched.push(parseInt(studyId))
+    }
+
+  return { matched, partiallyMatched, unmatched }
+}
+
 export const getMatchIds = (matchDetails: MatchDetails) => {
   const matchIds: number[] = []
   if (Object.keys(matchDetails).length === 0) return matchIds
@@ -98,7 +139,8 @@ export const getMatchDetails = (
               fieldName: field.label || field.name,
               fieldValue: crit.fieldValue,
               isMatched:
-                values[crit.fieldId] === undefined
+                values[crit.fieldId] === undefined ||
+                values[crit.fieldId] === ''
                   ? undefined
                   : testCriterion(
                       crit.operator,
