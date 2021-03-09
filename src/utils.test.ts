@@ -89,6 +89,15 @@ describe('getMatchGroups', () => {
       unmatched: [],
     })
   })
+
+  test('for no input', () => {
+    const values: MatchFormValues = {}
+    expect(getMatchGroupsTestHelper(values)).toEqual({
+      matched: [],
+      undetermined: [0, 1, 2],
+      unmatched: [],
+    })
+  })
 })
 
 describe('getIsFieldShowing', () => {
