@@ -8,6 +8,7 @@ import {
 import {
   getMatchIds,
   getMatchDetails,
+  getMatchGroups,
   getIsFieldShowing,
   getFieldOptionLabelMap,
 } from './utils'
@@ -74,6 +75,45 @@ test('getMatchIds for nested algorithm', () => {
     2: 1,
   }
   expect(getMatchIdsTestHelper(values)).toEqual([1, 2])
+})
+
+const getMatchGroupsTestHelper = (values: MatchFormValues) =>
+  getMatchGroups(getMatchDetails(criteria, conditions, config, values))
+
+test('getMatchGroups for simple AND algorithm', () => {
+  const values: MatchFormValues = {
+    0: true,
+    1: false,
+  }
+  expect(getMatchGroupsTestHelper(values)).toEqual({
+    matched: [0, 1],
+    partiallyMatched: [],
+    unmatched: [2],
+  })
+})
+
+test('getMatchGroups for simple OR algorithm', () => {
+  const values: MatchFormValues = {
+    0: false,
+    1: true,
+  }
+  expect(getMatchGroupsTestHelper(values)).toEqual({
+    matched: [1],
+    partiallyMatched: [],
+    unmatched: [0, 2],
+  })
+})
+
+test('getMatchGroups for nested algorithm', () => {
+  const values: MatchFormValues = {
+    0: true,
+    2: 1,
+  }
+  expect(getMatchGroupsTestHelper(values)).toEqual({
+    matched: [1, 2],
+    partiallyMatched: [0],
+    unmatched: [],
+  })
 })
 
 test('getIsFieldShowing for one criterion (eq)', () => {
