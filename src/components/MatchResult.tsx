@@ -30,7 +30,7 @@ function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
           />
         ))}
       </DropdownSection>
-      <DropdownSection name={`Partially matched (${matched.length})`}>
+      <DropdownSection name={`Partially matched (${partiallyMatched.length})`}>
         {partiallyMatched.map((id) => (
           <TrialCard
             matchInfoAlgorithm={matchDetails[id]}
