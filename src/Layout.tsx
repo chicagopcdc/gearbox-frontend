@@ -23,7 +23,7 @@ function Layout({ children, headerProps }: LayoutProps) {
       <WarningBanner />
       {isLoginPage || <Header {...headerProps} />}
       <main className={mainClassName}>{children}</main>
-      <Footer showExtra={isLoginPage} />
+      <Footer />
     </>
   )
 }
