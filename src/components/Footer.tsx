@@ -10,14 +10,14 @@ function Footer() {
       <img
         src={uchicagoBSDlogo}
         alt="University of Chicago Biological Sciences Division logo"
-        style={{ maxHeight: '100px' }}
+        style={{ maxHeight: '80px' }}
       />
       <img
         src={volchenboumLabLogo}
         alt="Volchenboum Lab logo"
-        style={{ maxHeight: '100px' }}
+        style={{ maxHeight: '80px' }}
       />
-      <img src={pedalLogo} alt="PedAL logo" style={{ maxHeight: '100px' }} />
+      <img src={pedalLogo} alt="PedAL logo" style={{ maxHeight: '80px' }} />
     </footer>
   )
 }
