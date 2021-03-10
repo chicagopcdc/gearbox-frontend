@@ -1,7 +1,7 @@
 import React from 'react'
 
 import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
-import volchenboumLabLogo from '../assets/volchenboum-lab-logo.png'
+import pcdcLogo from '../assets/pcdc-logo.png'
 import pedalLogo from '../assets/pedal-logo.svg'
 
 function Footer() {
@@ -13,8 +13,8 @@ function Footer() {
         style={{ maxHeight: '80px' }}
       />
       <img
-        src={volchenboumLabLogo}
-        alt="Volchenboum Lab logo"
+        src={pcdcLogo}
+        alt="Pediatric Center Data Commons logo"
         style={{ maxHeight: '80px' }}
       />
       <img src={pedalLogo} alt="PedAL logo" style={{ maxHeight: '80px' }} />
