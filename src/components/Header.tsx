@@ -15,7 +15,7 @@ export type HeaderProps = {
 }
 
 function Header({ isAuthenticated, username, signout }: HeaderProps) {
-  const [isExtraSmall, setIsExtraSmall] = useState(false)
+  const [isExtraSmall, setIsExtraSmall] = useState(window.outerWidth <= 380)
   function onResize() {
     if (window.outerWidth <= 380 && !isExtraSmall) setIsExtraSmall(true)
     else if (window.outerWidth > 380 && isExtraSmall) setIsExtraSmall(false)
