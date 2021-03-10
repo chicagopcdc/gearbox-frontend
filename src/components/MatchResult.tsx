@@ -1,21 +1,32 @@
 import React from 'react'
 import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
-import { MatchDetails, Study } from '../model'
+import {
+  EligibilityCriterion,
+  MatchCondition,
+  MatchFormConfig,
+  MatchFormValues,
+  Study,
+} from '../model'
+import { getMatchDetails, getMatchGroups } from '../utils'
 
 export type MatchResultProps = {
-  matchDetails: MatchDetails
-  matchGroups: {
-    matched: number[]
-    undetermined: number[]
-    unmatched: number[]
-  }
+  conditions: MatchCondition[]
+  config: MatchFormConfig
+  criteria: EligibilityCriterion[]
   studies: Study[]
+  userInput: MatchFormValues
 }
 
-function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
-  const { matched, undetermined, unmatched } = matchGroups
-
+function MatchResult({
+  criteria,
+  conditions,
+  config,
+  studies,
+  userInput,
+}: MatchResultProps) {
+  const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
+  const { matched, undetermined, unmatched } = getMatchGroups(matchDetails)
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study
 

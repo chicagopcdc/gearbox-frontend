@@ -8,7 +8,6 @@ import {
   MatchFormValues,
   Study,
 } from '../model'
-import { getMatchDetails, getMatchGroups } from '../utils'
 
 export type HomeMatchingPageProps = {
   conditions: MatchCondition[]
@@ -29,8 +28,6 @@ function HomeMatchingPage({
 }: HomeMatchingPageProps) {
   const [isUpdating, setIsUpdating] = useState(false)
 
-  const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
-  const matchGroups = getMatchGroups(matchDetails)
   const isMatchDataReady =
     config.fields !== undefined && Object.keys(userInput).length > 0
 
@@ -46,7 +43,9 @@ function HomeMatchingPage({
         className={`md:w-1/2 p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}
       >
         <h1 className="uppercase text-primary font-bold">Open Trials</h1>
-        <MatchResult {...{ matchDetails, matchGroups, studies }} />
+        <MatchResult
+          {...{ criteria, conditions, config, studies, userInput }}
+        />
       </div>
     </div>
   ) : (
