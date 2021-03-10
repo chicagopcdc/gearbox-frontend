@@ -3,12 +3,11 @@ import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
-import { clearShowIfField, getIsFieldShowing } from '../utils'
+import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
 import { MatchFormValues, MatchFormConfig } from '../model'
 
 export type MatchFormProps = {
   config: MatchFormConfig
-  defaultValues: MatchFormValues
   userInput: MatchFormValues
   updateUserInput(values: MatchFormValues): void
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,11 +15,11 @@ export type MatchFormProps = {
 
 function MatchForm({
   config,
-  defaultValues,
   userInput,
   updateUserInput,
   setIsUpdating,
 }: MatchFormProps) {
+  const defaultValues = getDefaultValues(config)
   const formik = useFormik({
     initialValues: { ...defaultValues },
     onSubmit() {},
