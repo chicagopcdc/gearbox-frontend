@@ -1,74 +1,50 @@
 [
   {
-    "id": 0,
-    "title": "AML 1020",
-    "group": "COG",
-    "location": "CHOP (Philadelphia)",
-    "registerLinks": [
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      }
-    ]
-  },
-  {
     "id": 1,
-    "title": "AML 1021",
-    "group": "COG",
-    "location": "CHOP (Philadelphia)",
-    "registerLinks": [
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      },
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      }
-    ]
+    "title": "APAL2020SC",
+    "group": "",
+    "location": ""
   },
   {
     "id": 2,
-    "title": "AML 1022",
-    "group": "COG",
-    "location": "CHOP (Philadelphia)",
-    "registerLinks": [
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      }
-    ]
+    "title": "AAML2112",
+    "group": "",
+    "location": ""
   },
   {
     "id": 3,
-    "title": "AML 1023",
-    "group": "COG",
-    "location": "CHOP (Philadelphia)",
-    "registerLinks": [
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      },
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      },
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      }
-    ]
+    "title": "APAL2020B",
+    "group": "",
+    "location": ""
   },
   {
     "id": 4,
-    "title": "AML 1024",
-    "group": "COG",
-    "location": "CHOP (Philadelphia)",
-    "registerLinks": [
-      {
-        "name": "Visit website",
-        "url": "about:blank"
-      }
-    ]
+    "title": "APAL2020C",
+    "group": "",
+    "location": ""
+  },
+  {
+    "id": 5,
+    "title": "APAL2020D",
+    "group": "",
+    "location": ""
+  },
+  {
+    "id": 6,
+    "title": "AAML20XX",
+    "group": "",
+    "location": ""
+  },
+  {
+    "id": 7,
+    "title": "APAL2020F",
+    "group": "",
+    "location": ""
+  },
+  {
+    "id": 8,
+    "title": "APAL2020G",
+    "group": "",
+    "location": ""
   }
 ]

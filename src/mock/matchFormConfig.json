@@ -19,7 +19,7 @@
   ],
   "fields": [
     {
-      "id": 0,
+      "id": 1,
       "groupId": 0,
       "type": "age",
       "name": "age",
@@ -27,263 +27,467 @@
       "min": 0
     },
     {
-      "id": 1,
+      "id": 18,
       "groupId": 0,
-      "type": "select",
-      "name": "initDiag",
-      "label": "Initial Disease Diagnosis",
-      "options": [
-        { "value": 10, "label": "Foo", "description": "Foo is foo" },
-        { "value": 11, "label": "Bar" },
-        { "value": 12, "label": "Baz" }
-      ],
-      "placeholder": "Select"
+      "type": "number",
+      "name": "weight",
+      "label": "What is the patient's current weight (in kg)?",
+      "min": 0
     },
     {
       "id": 2,
       "groupId": 0,
-      "type": "radio",
-      "name": "cnsInvolvement",
-      "label": "CNS Involvement",
+      "type": "select",
+      "name": "currDisease",
+      "label": "What is the patient's current disease?",
       "options": [
-        { "value": 20, "label": "true" },
-        { "value": 21, "label": "false" },
-        { "value": 22, "label": "unknown" }
-      ]
+        {
+          "value": 26,
+          "label": "AML",
+          "description": "Acute Myeloid Leukemia"
+        },
+        {
+          "value": 27,
+          "label": "tAML",
+          "description": "treatment-related AML"
+        },
+        { "value": 28, "label": "DS AML", "description": "Down syndrome AML" },
+        {
+          "value": 30,
+          "label": "MPAL",
+          "description": "Mixed-phenotype acute leukemia"
+        },
+        {
+          "value": 31,
+          "label": "ALL",
+          "description": "Acute Lymphoblastic Leukemia"
+        },
+        {
+          "value": 32,
+          "label": "T-ALL",
+          "description": "T-cell acute lymphoblastic leukemia"
+        },
+        { "value": 33, "label": "KMT2A", "description": "KMT2A-rearrangement" },
+        {
+          "value": 34,
+          "label": "MDS",
+          "description": "Myelodysplastic syndromes"
+        },
+        {
+          "value": 35,
+          "label": "ETP-ALL",
+          "description": "Early T-cell precursor acute lymphoblastic leukemia"
+        },
+        {
+          "value": 36,
+          "label": "APL",
+          "description": "Acute promyelocytic leukemia"
+        },
+        {
+          "value": 37,
+          "label": "JMML",
+          "description": "Juvenile myelomonocytic leukemia"
+        },
+        {
+          "value": 42,
+          "label": "B-ALL",
+          "description": "B-cell acute lymphoblastic leukemia (B-ALL)"
+        }
+      ],
+      "placeholder": "Select"
     },
     {
-      "id": 3,
+      "id": 30,
       "groupId": 0,
-      "name": "aiDisease",
+      "name": "phase2",
       "type": "radio",
-      "label": "History of Autoimmune Disease",
+      "label": "Is is phase 2?",
       "options": [
-        { "value": 30, "label": "true" },
-        { "value": 31, "label": "false" },
-        { "value": 32, "label": "unknown" }
-      ]
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ],
+      "showIf": {
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 2,
+            "value": 28,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 4,
       "groupId": 0,
       "type": "radio",
-      "name": "drugAllergiesFlag",
-      "label": "Drug Allergies",
+      "name": "refractory",
+      "label": "Is the patient currently refractory?",
       "options": [
-        { "value": 40, "label": "true" },
-        { "value": 41, "label": "false" },
-        { "value": 42, "label": "unknown" }
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
       ]
+    },
+    {
+      "id": 8,
+      "groupId": 0,
+      "type": "number",
+      "name": "relapseEvents",
+      "label": "How many relapses (or suspected relapses) of the disease (including the current if any) has the patient experienced?",
+      "min": 0
+    },
+    {
+      "id": 3,
+      "groupId": 0,
+      "type": "radio",
+      "name": "relapse",
+      "label": "Is the patient currently in relapse (or suspected relapse)?",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 8,
+            "value": 1,
+            "operator": "gte"
+          }
+        ]
+      }
     },
     {
       "id": 5,
       "groupId": 0,
-      "type": "multiselect",
-      "name": "drugAllergies",
-      "options": [
-        { "value": 50, "label": "Foo" },
-        { "value": 51, "label": "Bar" },
-        { "value": 52, "label": "Baz" }
-      ],
-      "placeholder": "Specify all drug allergies",
+      "type": "number",
+      "name": "blastPerc",
+      "label": "What is the most recent measurement of the patient's % blasts?",
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
       "showIf": {
         "operator": "OR",
         "criteria": [
           {
             "id": 4,
-            "operator": "eq",
-            "value": 40
+            "value": 2,
+            "operator": "eq"
+          },
+          {
+            "id": 3,
+            "value": 2,
+            "operator": "eq"
           }
         ]
       }
     },
     {
       "id": 6,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevChemoFlag",
-      "label": "Previous chemotherapy",
-      "options": [
-        { "value": 60, "label": "true" },
-        { "value": 61, "label": "false" },
-        { "value": 62, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 7,
-      "groupId": 1,
-      "type": "multiselect",
-      "name": "prevChemo",
-      "options": [
-        { "value": 70, "label": "Foo" },
-        { "value": 71, "label": "Bar" },
-        { "value": 72, "label": "Baz" }
-      ],
-      "placeholder": "Select all prior chemotherapy agents",
-      "showIf": {
-        "operator": "OR",
-        "criteria": [
-          {
-            "id": 6,
-            "operator": "eq",
-            "value": 60
-          }
-        ]
-      }
-    },
-    {
-      "id": 8,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevRadFlag",
-      "label": "Previous radiation therapy",
-      "options": [
-        { "value": 80, "label": "true" },
-        { "value": 81, "label": "false" },
-        { "value": 82, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 9,
-      "groupId": 1,
-      "type": "multiselect",
-      "name": "prevRad",
-      "options": [
-        { "value": 90, "label": "Foo" },
-        { "value": 91, "label": "Bar" },
-        { "value": 92, "label": "Baz" }
-      ],
-      "placeholder": "Select all prior radiation modalities",
-      "showIf": {
-        "operator": "OR",
-        "criteria": [
-          {
-            "id": 8,
-            "operator": "eq",
-            "value": 80
-          }
-        ]
-      }
-    },
-    {
-      "id": 10,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevAtra",
-      "label": "All-trans retinoid acid (ATRA)",
-      "options": [
-        { "value": 100, "label": "true" },
-        { "value": 101, "label": "false" },
-        { "value": 102, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 11,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevHydroxyurea",
-      "label": "Hydroxyurea",
-      "options": [
-        { "value": 110, "label": "true" },
-        { "value": 111, "label": "false" },
-        { "value": 112, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 12,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevSteroids",
-      "label": "Corticosteriods",
-      "options": [
-        { "value": 120, "label": "true" },
-        { "value": 121, "label": "false" },
-        { "value": 122, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 13,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevItCyt",
-      "label": "IT cytarabin",
-      "options": [
-        { "value": 130, "label": "true" },
-        { "value": 131, "label": "false" },
-        { "value": 132, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 14,
-      "groupId": 1,
-      "type": "radio",
-      "name": "prevOther",
-      "label": "Other antileukemic therapy",
-      "options": [
-        { "value": 140, "label": "true" },
-        { "value": 141, "label": "false" },
-        { "value": 142, "label": "unknown" }
-      ]
-    },
-    {
-      "id": 15,
-      "groupId": 2,
+      "groupId": 0,
       "type": "number",
-      "name": "lvEf",
-      "label": "Left Ventricular Ejection Fraction (%)",
+      "name": "blastPerc2",
+      "label": "BM blasts percent by 2 tests",
       "min": 0,
       "max": 100,
       "step": 0.1
     },
     {
-      "id": 16,
-      "groupId": 2,
+      "id": 7,
+      "groupId": 0,
       "type": "number",
-      "name": "secrumCr",
-      "label": "Baseline serum creatinine (mg/dL)",
+      "name": "blastPerc7",
+      "label": "BM blast percent increase 7d apart",
       "min": 0,
-      "max": 999,
+      "max": 100,
       "step": 0.1
     },
     {
-      "id": 17,
-      "groupId": 2,
+      "id": 9,
+      "groupId": 0,
       "type": "number",
-      "name": "astRecent",
-      "label": "Most recent AST (U/L)",
-      "min": 0,
-      "max": 999
+      "name": "chemoCycles",
+      "label": "How many chemo cycle?",
+      "min": 0
     },
     {
-      "id": 18,
-      "groupId": 2,
+      "id": 10,
+      "groupId": 0,
       "type": "number",
-      "name": "altRecent",
-      "label": "Most recent ALT (U/L)",
+      "name": "blastPercInd",
+      "label": "induction blast percent",
       "min": 0,
-      "max": 999
+      "max": 100,
+      "step": 0.1
+    },
+    {
+      "id": 11,
+      "groupId": 0,
+      "type": "number",
+      "name": "blastPercEnrollmen",
+      "label": "blasts percent at enrollment",
+      "min": 0,
+      "max": 100,
+      "step": 0.1
+    },
+    {
+      "id": 12,
+      "groupId": 0,
+      "type": "radio",
+      "name": "mslnExpression",
+      "label": "MSLN expression at enrollment",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 13,
+      "groupId": 0,
+      "type": "radio",
+      "name": "eSelectin",
+      "label": "E-selectin",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 14,
+      "groupId": 0,
+      "type": "number",
+      "name": "N days without HU",
+      "label": "N days without HU",
+      "min": 0
+    },
+    {
+      "id": 15,
+      "groupId": 0,
+      "type": "number",
+      "name": "N days without LDAC",
+      "label": "N days without LDAC",
+      "min": 0
+    },
+    {
+      "id": 16,
+      "groupId": 0,
+      "type": "number",
+      "name": "ALT, as factor of ULN (=45 U/L)",
+      "label": "alanine transaminase, as factor of ULN (=45 U/L)",
+      "min": 0.1
+    },
+    {
+      "id": 17,
+      "groupId": 0,
+      "type": "radio",
+      "name": "alt_leukemia",
+      "label": "ALT related to leukemia involvement",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
     },
     {
       "id": 19,
-      "groupId": 3,
-      "type": "multiselect",
-      "name": "biomarkers",
+      "groupId": 0,
+      "type": "number",
+      "name": "antracin",
+      "label": "anthracycline dose in weight/surface-area (mg/m2)",
+      "min": 0.1
+    },
+    {
+      "id": 20,
+      "groupId": 0,
+      "type": "radio",
+      "name": "prior G4 SOS",
+      "label": "prior G4 SOS",
       "options": [
-        { "value": 1900, "label": "MECOM(3q26.2)" },
-        { "value": 1901, "label": "t(6;9)(p23;q34.1)(DEK-NUP214)" },
-        { "value": 1902, "label": "Monosomy 7" },
-        { "value": 1903, "label": "Monosomy 5/5q-[ERG1(5q31) deleted]" },
-        { "value": 1904, "label": "KMT2A(MLL)(11q23.3)" },
-        { "value": 1905, "label": "NUP98(11p15.5)" },
-        { "value": 1906, "label": "12p abnormalities (ETV6)" },
-        { "value": 1907, "label": "ETS FUS-ERG Fusion" },
-        { "value": 1908, "label": "FLT3/ITD+ with alleic ratio > 0.1%" },
-        { "value": 1909, "label": "CBFA2T3-GLIS2" },
-        { "value": 1910, "label": "RAM phenotype" },
-        { "value": 1911, "label": "KAT6A(8p11.21) Fusion" },
-        { "value": 1912, "label": "Non-KMT2A MLLT10 Fusions" }
-      ],
-      "placeholder": "Select all biomarkers"
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 21,
+      "groupId": 0,
+      "type": "radio",
+      "name": "isolated EMD",
+      "label": "isolated EMD",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 22,
+      "groupId": 0,
+      "type": "number",
+      "name": "N days without steroids",
+      "label": "N days without steroids",
+      "min": 0
+    },
+    {
+      "id": 23,
+      "groupId": 0,
+      "type": "radio",
+      "name": "no waiting period for ITs",
+      "label": "no waiting period for ITs",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 24,
+      "groupId": 0,
+      "type": "number",
+      "name": "direct billirubin as factor of ULN (universal ULN)",
+      "label": "direct billirubin as factor of ULN (universal ULN)",
+      "min": 0.1
+    },
+    {
+      "id": 25,
+      "groupId": 0,
+      "type": "radio",
+      "name": "any liver abnormality is due to leukemia infiltrate",
+      "label": "any liver abnormality is due to leukemia infiltrate",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 26,
+      "groupId": 0,
+      "type": "radio",
+      "name": "any EMD is isolated (if present)",
+      "label": "any EMD is isolated (if present)",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 27,
+      "groupId": 0,
+      "type": "radio",
+      "name": "adequate BM function (ie refectory to platelets is an exclusion)",
+      "label": "adequate BM function (ie refectory to platelets is an exclusion)",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 28,
+      "groupId": 0,
+      "type": "radio",
+      "name": "no mention if ITs",
+      "label": "no mention if ITs",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 29,
+      "groupId": 0,
+      "type": "number",
+      "name": "% blasts, central flow after re-induction for a 2nd relapse",
+      "label": "% blasts, central flow after re-induction for a 2nd relapse",
+      "min": 0.1
+    },
+    {
+      "id": 31,
+      "groupId": 0,
+      "type": "radio",
+      "name": "isolated EMD including CNS",
+      "label": "isolated EMD including CNS",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 32,
+      "groupId": 0,
+      "type": "number",
+      "name": "N days without ITs",
+      "label": "N days without ITs",
+      "min": 0
+    },
+    {
+      "id": 33,
+      "groupId": 0,
+      "type": "radio",
+      "name": "isolated CNS is excluded",
+      "label": "isolated CNS is excluded",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 34,
+      "groupId": 0,
+      "type": "radio",
+      "name": "blasts identified by morphology and confirmed by MDF",
+      "label": "blasts identified by morphology and confirmed by MDF",
+      "options": [
+        { "value": 2, "label": "true", "description": "" },
+        { "value": 9, "label": "false", "description": "" },
+        { "value": 29, "label": "unknown", "description": "" }
+      ]
+    },
+    {
+      "id": 35,
+      "groupId": 0,
+      "type": "number",
+      "name": "direct billirubin",
+      "label": "direct billirubin as factor of ULN for age",
+      "min": 0.1
+    },
+    {
+      "id": 36,
+      "groupId": 0,
+      "type": "number",
+      "name": "conjugated bilirubin as factor or ULN (universal ULN)",
+      "label": "conjugated bilirubin as factor or ULN (universal ULN)",
+      "min": 0.1
+    },
+    {
+      "id": 37,
+      "groupId": 0,
+      "type": "number",
+      "name": "alanine transaminase (U/L)",
+      "label": "alanine transaminase (U/L)",
+      "min": 0.1
+    },
+    {
+      "id": 38,
+      "groupId": 0,
+      "type": "radio",
+      "name": "Does the patient have CNS disease?",
+      "label": "Does the patient have CNS disease?",
+      "options": [
+        { "value": 39, "label": "CNS 1", "description": "" },
+        { "value": 40, "label": "CNS 2", "description": "" },
+        { "value": 41, "label": "CNS 3", "description": "" }
+      ]
     }
   ]
 }
