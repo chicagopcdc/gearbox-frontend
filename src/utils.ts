@@ -29,8 +29,9 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
         if (hasStatus.undefined) return undefined
         return true
       case 'OR':
-        if (!hasStatus.false && !hasStatus.true) return undefined
-        return hasStatus.true
+        if (hasStatus.true) return true
+        if (hasStatus.undefined) return undefined
+        return false
     }
   }
 
