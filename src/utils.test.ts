@@ -61,8 +61,8 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [0, 1],
-      undetermined: [],
-      unmatched: [2],
+      undetermined: [2],
+      unmatched: [],
     })
   })
 
@@ -78,7 +78,7 @@ describe('getMatchGroups', () => {
     })
   })
 
-  test('for nested algorithm', () => {
+  test('for nested algorithm 1', () => {
     const values: MatchFormValues = {
       0: true,
       2: 1,
@@ -87,6 +87,18 @@ describe('getMatchGroups', () => {
       matched: [1, 2],
       undetermined: [0],
       unmatched: [],
+    })
+  })
+
+  test('for nested algorithm 2', () => {
+    const values: MatchFormValues = {
+      1: false,
+      2: 0,
+    }
+    expect(getMatchGroupsTestHelper(values)).toEqual({
+      matched: [],
+      undetermined: [0, 1],
+      unmatched: [2],
     })
   })
 
