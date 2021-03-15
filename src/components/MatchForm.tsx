@@ -48,8 +48,12 @@ function MatchForm({
 
   return (
     <form onReset={formik.handleReset}>
-      {config.groups.map((group) => (
-        <DropdownSection key={group.id} name={group.name || 'General'}>
+      {config.groups.map((group, i) => (
+        <DropdownSection
+          key={group.id}
+          name={group.name || 'General'}
+          isCollapsedAtStart={i !== 0}
+        >
           {config.fields.map(
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
               if (groupId !== group.id) return undefined
