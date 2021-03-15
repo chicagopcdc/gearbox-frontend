@@ -4,10 +4,15 @@ import { ChevronUp, ChevronDown } from 'react-feather'
 type DropdownSectionProps = {
   name: string
   children: React.ReactNode
+  isCollapsedAtStart?: boolean
 }
 
-function DropdownSection({ name, children }: DropdownSectionProps) {
-  const [isDropDownOpen, setIsDropDownOpen] = useState(true)
+function DropdownSection({
+  name,
+  children,
+  isCollapsedAtStart,
+}: DropdownSectionProps) {
+  const [isDropDownOpen, setIsDropDownOpen] = useState(!isCollapsedAtStart)
   const handleOpen = (e: React.SyntheticEvent) => {
     e.preventDefault()
     setIsDropDownOpen(true)
