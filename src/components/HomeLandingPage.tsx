@@ -28,8 +28,12 @@ function HomeLandingSection1() {
             Instantly.
           </h1>
           <p className="max-w-xs sm:max-w-md sm:text-lg md:text-xl mr-16 sm:mr-0 mb-16">
-            Let GEARBOx help you and expedite the process to identify and
-            initiate your patients' next step in care.
+            GEARBOx{' '}
+            <span className="text-xs text-gray-400">
+              Genomic Eligibility Algorithm at Relapse for Better Outcomes
+            </span>{' '}
+            helps you rapidly match patients with relapsed or refractory disease
+            to appropriate clinical trials.
           </p>
           <Link to="/">
             <Button size="large">Register</Button>
@@ -109,15 +113,16 @@ function HomeLandingSection4() {
             Built and maintained by the <strong>LLS PedAL Initiative</strong>
           </h2>
           <p className="md:text-xl mb-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in
-            sollicitudin nisl. Cras elit metus, malesuada gravida elementum ac,
-            molestie.
+            The Leukemia & Lymphoma Society PedAL initiative is working to usher
+            in a new era of treatment for relapsed and refractory pediatric
+            leukemias. GEARBOx is part of the data infrastructure projects of
+            the PedAL initiative.
           </p>
           <Link to="/about" className="block underline text-primary md:text-xl">
             Learn more about LLS PedAL initiative
           </Link>
         </div>
-        <div className="mt-12 md:mt-24 mx-auto">
+        <div className="mt-12 md:mt-24 mx-auto md:min-w-1/2">
           <img src={pedalGraphic} alt="CI19 PedAL graphic" />
         </div>
       </div>
