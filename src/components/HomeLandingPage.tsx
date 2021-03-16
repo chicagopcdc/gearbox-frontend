@@ -118,9 +118,14 @@ function HomeLandingSection4() {
             leukemias. GEARBOx is part of the data infrastructure projects of
             the PedAL initiative.
           </p>
-          <Link to="/about" className="block underline text-primary md:text-xl">
+          <a
+            className="block underline text-primary md:text-xl"
+            href="https://www.lls.org/childrens-initiative/pedal"
+            target="_blank"
+            rel="noreferrer"
+          >
             Learn more about LLS PedAL initiative
-          </Link>
+          </a>
         </div>
         <div className="mt-12 md:mt-24 mx-auto md:min-w-1/2">
           <img src={pedalGraphic} alt="CI19 PedAL graphic" />
