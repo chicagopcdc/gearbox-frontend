@@ -2,7 +2,7 @@
   {
     "id": 1,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -122,13 +122,13 @@
   {
     "id": 21,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
     "id": 22,
     "fieldId": 1,
-    "fieldValue": 12,
+    "fieldValue": 1,
     "operator": "gt"
   },
   {
@@ -224,7 +224,7 @@
   {
     "id": 38,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -362,7 +362,7 @@
   {
     "id": 63,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -500,7 +500,7 @@
   {
     "id": 86,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -626,13 +626,13 @@
   {
     "id": 107,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
     "id": 108,
     "fieldId": 1,
-    "fieldValue": 1,
+    "fieldValue": 0,
     "operator": "gt"
   },
   {
