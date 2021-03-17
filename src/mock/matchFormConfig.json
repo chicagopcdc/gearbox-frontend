@@ -203,14 +203,12 @@
     {
       "id": 6,
       "groupId": 4,
-      "type": "radio",
+      "type": "number",
       "name": "blastPerc2",
-      "label": "Was percentage of BM blasts confirmed by 2 tests (e.g. FISH and Flow)?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ],
+      "label": "BM blasts percent by 2 tests",  
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -229,15 +227,14 @@
     },
     {
       "id": 7,
-      "groupId": 4,
-      "type": "radio",
+      "groupId": 0,
+      "type": "number",
       "name": "blastPerc7",
-      "label": "Does percentage of BM blasts represent a 1 log increase from tests taken 7 days apart?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ],      "showIf": {
+      "label": "BM blast percent increase 7d apart",  
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "showIf": {
         "operator": "AND",
         "criteria": [
           {
