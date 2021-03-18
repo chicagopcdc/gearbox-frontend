@@ -654,5 +654,31 @@
         }
       ]
     }
+  },
+  {
+    "studyId": 9,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [
+        257,
+        {
+          "operator": "OR",
+          "criteria": [
+            250,
+            251,
+            252,
+            253,
+            254
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            255,
+            256
+          ]
+        }
+      ]
+    }
   }
 ]
