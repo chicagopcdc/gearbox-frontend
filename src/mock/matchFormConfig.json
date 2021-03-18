@@ -431,36 +431,6 @@
       ]
     },
     {
-      "id": 28,
-      "groupId": 1,
-      "type": "radio",
-      "name": "Has the patient received intrathecal chemo (IT)?",
-      "label": "Has the patient received intrathecal chemo (IT)?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ]
-    },
-    {
-      "id": 32,
-      "groupId": 1,
-      "type": "number",
-      "name": "Days since last dose of intrathecal chemo (IT)",
-      "label": "Days since last dose of intrathecal chemo (IT)",
-      "min": 0,
-      "showIf": {
-        "operator": "OR",
-        "criteria": [
-          {
-            "id": 28,
-            "value": 2,
-            "operator": "eq"
-          }
-        ]
-      }
-    },
-    {
       "id": 33,
       "groupId": 4,
       "type": "radio",

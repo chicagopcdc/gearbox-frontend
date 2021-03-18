@@ -444,12 +444,6 @@
     "operator": "eq"
   },
   {
-    "id": 77,
-    "fieldId": 28,
-    "fieldValue": 2,
-    "operator": "eq"
-  },
-  {
     "id": 78,
     "fieldId": 14,
     "fieldValue": 14,
@@ -588,12 +582,6 @@
     "operator": "gte"
   },
   {
-    "id": 101,
-    "fieldId": 32,
-    "fieldValue": 7,
-    "operator": "gte"
-  },
-  {
     "id": 102,
     "fieldId": 3,
     "fieldValue": 2,
@@ -664,12 +652,6 @@
     "fieldId": 14,
     "fieldValue": 14,
     "operator": "gte"
-  },
-  {
-    "id": 114,
-    "fieldId": 28,
-    "fieldValue": 2,
-    "operator": "eq"
   },
   {
     "id": 115,
