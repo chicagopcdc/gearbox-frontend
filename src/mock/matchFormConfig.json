@@ -398,8 +398,8 @@
       "id": 24,
       "groupId": 2,
       "type": "number",
-      "name": "Direct bilirubin as factor of ULN (universal ULN)",
-      "label": "Direct bilirubin, in multiples of universal ULN",
+      "name": "Direct bilirubin",
+      "label": "Direct bilirubin",
       "min": 0.1
     },
     {
@@ -412,7 +412,22 @@
         { "value": 2, "label": "Yes", "description": "" },
         { "value": 9, "label": "No", "description": "" },
         { "value": 29, "label": "Not sure", "description": "" }
-      ]
+      ],
+      "showIf": {
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 37,
+            "value": 135,
+            "operator": "gt"
+          },
+          {
+            "id": 24,
+            "value": 2,
+            "operator": "gt"
+          }
+        ]
+      }
     },
     {
       "id": 26,
