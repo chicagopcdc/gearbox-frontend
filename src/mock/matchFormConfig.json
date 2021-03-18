@@ -310,8 +310,8 @@
       "id": 14,
       "groupId": 1,
       "type": "number",
-      "name": "Days since last dose of hydroxyurea (HU)",
-      "label": "Days since last dose of hydroxyurea (HU)",
+      "name": "Days with any cytotoxic agent with exeption of hydroxyurea (HU)",
+      "label": "Days with any cytotoxic agent with exeption of hydroxyurea (HU)",
       "min": 0
     },
     {
