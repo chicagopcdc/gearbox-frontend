@@ -486,12 +486,6 @@
     "operator": "gte"
   },
   {
-    "id": 85,
-    "fieldId": 29,
-    "fieldValue": 1,
-    "operator": "gt"
-  },
-  {
     "id": 86,
     "fieldId": 1,
     "fieldValue": 22,
