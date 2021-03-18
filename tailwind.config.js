@@ -12,6 +12,9 @@ module.exports = {
       maxWidth: {
         '3/5': '60%',
       },
+      minWidth: {
+        '1/2': '50%',
+      },
       fontFamily: {
         display: 'Bebas neue',
         body: 'Lato',
