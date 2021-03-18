@@ -2,7 +2,7 @@
   {
     "id": 1,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -122,13 +122,13 @@
   {
     "id": 21,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
     "id": 22,
     "fieldId": 1,
-    "fieldValue": 12,
+    "fieldValue": 1,
     "operator": "gt"
   },
   {
@@ -224,7 +224,7 @@
   {
     "id": 38,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -318,12 +318,6 @@
     "operator": "eq"
   },
   {
-    "id": 54,
-    "fieldId": 21,
-    "fieldValue": 9,
-    "operator": "eq"
-  },
-  {
     "id": 55,
     "fieldId": 14,
     "fieldValue": 14,
@@ -334,12 +328,6 @@
     "fieldId": 2,
     "fieldValue": 14,
     "operator": "gte"
-  },
-  {
-    "id": 57,
-    "fieldId": 23,
-    "fieldValue": 2,
-    "operator": "eq"
   },
   {
     "id": 58,
@@ -374,7 +362,7 @@
   {
     "id": 63,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -456,12 +444,6 @@
     "operator": "eq"
   },
   {
-    "id": 77,
-    "fieldId": 28,
-    "fieldValue": 2,
-    "operator": "eq"
-  },
-  {
     "id": 78,
     "fieldId": 14,
     "fieldValue": 14,
@@ -512,7 +494,7 @@
   {
     "id": 86,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
@@ -600,12 +582,6 @@
     "operator": "gte"
   },
   {
-    "id": 101,
-    "fieldId": 32,
-    "fieldValue": 7,
-    "operator": "gte"
-  },
-  {
     "id": 102,
     "fieldId": 3,
     "fieldValue": 2,
@@ -638,13 +614,13 @@
   {
     "id": 107,
     "fieldId": 1,
-    "fieldValue": 264,
+    "fieldValue": 22,
     "operator": "lt"
   },
   {
     "id": 108,
     "fieldId": 1,
-    "fieldValue": 1,
+    "fieldValue": 0,
     "operator": "gt"
   },
   {
@@ -676,12 +652,6 @@
     "fieldId": 14,
     "fieldValue": 14,
     "operator": "gte"
-  },
-  {
-    "id": 114,
-    "fieldId": 28,
-    "fieldValue": 2,
-    "operator": "eq"
   },
   {
     "id": 115,
