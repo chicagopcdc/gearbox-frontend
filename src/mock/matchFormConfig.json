@@ -201,6 +201,26 @@
       "step": 0.1
     },
     {
+      "id": 10,
+      "groupId": 0,
+      "type": "number",
+      "name": "blastPercInd",
+      "label": "induction blast percent",  
+      "min": 0,
+      "max": 100,
+      "step": 0.1
+    },
+    {
+      "id": 11,
+      "groupId": 0,
+      "type": "number",
+      "name": "blastPercEnrollmen",
+      "label": "blasts percent at enrollment",  
+      "min": 0,
+      "max": 100,
+      "step": 0.1
+    },
+    {
       "id": 6,
       "groupId": 4,
       "type": "number",
