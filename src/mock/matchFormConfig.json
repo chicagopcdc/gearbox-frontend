@@ -55,10 +55,10 @@
           "label": "Treatment-related acute myeloid leukemia (tAML)",
           "description": "treatment-related AML"
         },
-        { 
-          "value": 28, 
-          "label": "Down syndrome acute myeloid leukemia (DS AML)", 
-          "description": "Down syndrome AML" 
+        {
+          "value": 28,
+          "label": "Down syndrome acute myeloid leukemia (DS AML)",
+          "description": "Down syndrome AML"
         },
         {
           "value": 30,
@@ -75,10 +75,10 @@
           "label": "T-cell acute lymphoblastic leukemia (T-ALL)",
           "description": "T-cell acute lymphoblastic leukemia"
         },
-        { 
-          "value": 33, 
-          "label": "KMT2A acute lymphoblastic leukemia", 
-          "description": "KMT2A acute lymphoblastic leukemia" 
+        {
+          "value": 33,
+          "label": "KMT2A acute lymphoblastic leukemia",
+          "description": "KMT2A acute lymphoblastic leukemia"
         },
         {
           "value": 34,
@@ -205,7 +205,7 @@
       "groupId": 0,
       "type": "number",
       "name": "blastPercInd",
-      "label": "induction blast percent",  
+      "label": "induction blast percent",
       "min": 0,
       "max": 100,
       "step": 0.1
@@ -215,7 +215,7 @@
       "groupId": 0,
       "type": "number",
       "name": "blastPercEnrollmen",
-      "label": "blasts percent at enrollment",  
+      "label": "blasts percent at enrollment",
       "min": 0,
       "max": 100,
       "step": 0.1
@@ -225,7 +225,7 @@
       "groupId": 4,
       "type": "number",
       "name": "blastPerc2",
-      "label": "BM blasts percent by 2 tests",  
+      "label": "BM blasts percent by 2 tests",
       "min": 0,
       "max": 100,
       "step": 0.1,
@@ -250,7 +250,7 @@
       "groupId": 0,
       "type": "number",
       "name": "blastPerc7",
-      "label": "BM blast percent increase 7d apart",  
+      "label": "BM blast percent increase 7d apart",
       "min": 0,
       "max": 100,
       "step": 0.1,
@@ -328,7 +328,8 @@
       "type": "number",
       "name": "Alanine transaminase (ALT), in IU/L",
       "label": "Alanine transaminase (ALT), in IU/L",
-      "min": 0.1
+      "min": 0.1,
+      "step": 0.1
     },
     {
       "id": 16,
@@ -336,7 +337,8 @@
       "type": "number",
       "name": "Alanine transaminase (ALT), as factor of ULN (=45 IU/L)",
       "label": "Alanine transaminase (ALT), in multiples of ULN (=45 IU/L)",
-      "min": 0.1
+      "min": 0.1,
+      "step": 0.1
     },
     {
       "id": 17,
@@ -364,7 +366,8 @@
       "type": "number",
       "name": "anthracycline dose",
       "label": "Anthracycline dose in weight/surface-area (mg/m2)",
-      "min": 0.1
+      "min": 0.1,
+      "step": 0.1
     },
     {
       "id": 20,
@@ -384,7 +387,8 @@
       "type": "number",
       "name": "Conjugated bilirubin, in multiples of ULN",
       "label": "Conjugated bilirubin, in multiples of ULN",
-      "min": 0.1
+      "min": 0.1,
+      "step": 0.1
     },
     {
       "id": 35,
@@ -392,7 +396,8 @@
       "type": "number",
       "name": "direct bilirubin",
       "label": "Direct bilirubin, in multiples of age-dependent ULN",
-      "min": 0.1
+      "min": 0.1,
+      "step": 0.1
     },
     {
       "id": 24,
@@ -400,7 +405,8 @@
       "type": "number",
       "name": "Direct bilirubin",
       "label": "Direct bilirubin",
-      "min": 0.1
+      "min": 0.1,
+      "step": 0.1
     },
     {
       "id": 25,
