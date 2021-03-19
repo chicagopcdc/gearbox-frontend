@@ -748,5 +748,53 @@
     "fieldId": 9,
     "fieldValue": 1,
     "operator": "gte"
+  },
+  {
+    "id": 250,
+    "fieldId": 2,
+    "fieldValue": 31,
+    "operator": "eq"
+  },
+  {
+    "id": 251,
+    "fieldId": 2,
+    "fieldValue": 35,
+    "operator": "eq"
+  },
+  {
+    "id": 252,
+    "fieldId": 2,
+    "fieldValue": 42,
+    "operator": "eq"
+  },
+  {
+    "id": 253,
+    "fieldId": 2,
+    "fieldValue": 32,
+    "operator": "eq"
+  },
+  {
+    "id": 254,
+    "fieldId": 2,
+    "fieldValue": 33,
+    "operator": "eq"
+  },
+  {
+    "id": 255,
+    "fieldId": 8,
+    "fieldValue": 1,
+    "operator": "gte"
+  },
+  {
+    "id": 256,
+    "fieldId": 4,
+    "fieldValue": 2,
+    "operator": "eq"
+  },
+  {
+    "id": 257,
+    "fieldId": 19,
+    "fieldValue": 400,
+    "operator": "lt"
   }
 ]
