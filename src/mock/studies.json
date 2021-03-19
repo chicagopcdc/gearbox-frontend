@@ -2,55 +2,181 @@
   {
     "id": 1,
     "title": "APAL2020SC",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": "https://clinicaltrials.gov/ct2/show/NCT04726241"
+      }
+    ],
+    "description": "This study aims to use clinical and biological characteristics of acute leukemias to screen for patient eligibility for available pediatric leukemia sub-trials. Testing bone marrow and blood from patients with leukemia that has come back after treatment or is difficult to treat may provide information about the patient's leukemia that is important when deciding how to best treat it, and may help doctors find better ways to diagnose and treat leukemia in children, adolescents, and young adults."
   },
   {
     "id": 2,
     "title": "AAML2112",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 3,
     "title": "APAL2020B",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 4,
     "title": "APAL2020C",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 5,
     "title": "APAL2020D",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 6,
     "title": "AAML20XX",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 7,
     "title": "APAL2020F",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 8,
     "title": "APAL2020G",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "LLS", 
+        "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
+      }, 
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   },
   {
     "id": 9,
     "title": "T2017-002",
-    "group": "",
-    "location": ""
+    "locations": [],
+    "links": [
+      {
+        "name": "COG", 
+        "href": "https://open.ctsu.org/open/logonForm.open"
+      }, 
+      {
+        "name": "TACL",
+        "href": "https://tacl.chla.usc.edu/tacl/#!/Page/257"
+      },
+      {
+        "name": "clinical Trials", 
+        "href": ""
+      }
+    ],
+    "description": "abc"
   }
 ]
