@@ -7,7 +7,7 @@ const styles = {
   container: 'bg-gray-200 my-4 p-4',
   title: 'font-bold text-lg pb-2',
   field: {
-    container: 'mb-1',
+    container: 'mb-2',
     title: 'font-bold inline pr-2',
   },
 }
@@ -47,29 +47,35 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
 
       <div className={isDropDownOpen ? 'pt-4' : 'hidden'}>
         <div className={styles.field.container}>
-          <h3 className={styles.field.title}>Research group</h3>
-          {study.group}
+          <h3 className={styles.field.title}>Description</h3>
+          <p>{study.description}</p>
         </div>
         <div className={styles.field.container}>
-          <h3 className={styles.field.title}>Location</h3>
-          {study.location}
+          <h3 className={styles.field.title}>Locations</h3>
+          <ul className="list-disc">
+            {study.locations.map((location) => (
+              <li key={location}>{location}</li>
+            ))}
+          </ul>
         </div>
-        <details className={styles.field.container}>
-          <summary>
-            <h3 className={styles.field.title}>Registration information</h3>
-          </summary>
-          {study.registerLinks?.map((link, i) => (
-            <a
-              className="block text-blue-700"
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={i}
-            >
-              {link.name}
-            </a>
-          ))}
-        </details>
+        <div className={styles.field.container}>
+          <h3 className={styles.field.title}>Links</h3>
+          <ul className="list-disc ml-8">
+            {study.links.map(({ name, href }) => (
+              <li>
+                <a
+                  className="block text-blue-700"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={name}
+                >
+                  {name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   )
