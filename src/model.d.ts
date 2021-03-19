@@ -1,9 +1,9 @@
 export type Study = {
   id: number
   title: string
-  group: string
-  location: string
-  registerLinks: { name: string; url: string }[]
+  description: string
+  locations: string[]
+  links: { name: string; href: string }[]
 }
 
 type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
