@@ -251,18 +251,6 @@
       }
     },
     {
-      "id": 34,
-      "groupId": 4,
-      "type": "radio",
-      "name": "blasts identified by morphology and confirmed by MDF",
-      "label": "Were blasts identified by morphology and confirmed by multidimensional flow cytometry (MDF)?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ]
-    },
-    {
       "id": 12,
       "groupId": 3,
       "type": "radio",
