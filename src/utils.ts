@@ -104,31 +104,31 @@ export const getMatchDetails = (
   )
     return {} as MatchDetails
 
+  const critById: { [id: number]: EligibilityCriterion } = {}
+  for (const crit of criteria) critById[crit.id] = crit
+
+  const fieldById: { [id: number]: MatchFormFieldConfig } = {}
+  for (const field of fields) fieldById[field.id] = field
+
   const fieldOptionLabelMap = getFieldOptionLabelMap(fields)
 
   const getMatchInfo = (critId: number) => {
-    for (const crit of criteria)
-      if (crit.id === critId)
-        for (const field of fields)
-          if (field.id === crit.fieldId)
-            return {
-              fieldName: field.label || field.name,
-              fieldValue: crit.fieldValue,
-              isMatched:
-                values[crit.fieldId] === undefined ||
-                values[crit.fieldId] === ''
-                  ? undefined
-                  : testCriterion(
-                      crit.operator,
-                      crit.fieldValue,
-                      values[crit.fieldId]
-                    ),
-              fieldValueLabel:
-                fieldOptionLabelMap?.[field.id]?.[crit.fieldValue],
-              operator: crit.operator,
-            }
+    const crit = critById[critId]
+    if (crit === undefined) return {} as MatchInfo
 
-    return {} as MatchInfo
+    const field = fieldById[crit.fieldId]
+    if (field === undefined) return {} as MatchInfo
+
+    return {
+      fieldName: field.label || field.name,
+      fieldValue: crit.fieldValue,
+      isMatched:
+        values[crit.fieldId] === undefined || values[crit.fieldId] === ''
+          ? undefined
+          : testCriterion(crit.operator, crit.fieldValue, values[crit.fieldId]),
+      fieldValueLabel: fieldOptionLabelMap?.[field.id]?.[crit.fieldValue],
+      operator: crit.operator,
+    }
   }
 
   const parseAlgorithm = (algorithm: MatchAlgorithm): MatchInfoAlgorithm => ({
