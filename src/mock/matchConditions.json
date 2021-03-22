@@ -512,15 +512,40 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [124, 125, 126, 127, 130]
+              "criteria": [
+                125,
+                126,
+                135,
+                {
+                  "operator": "OR",
+                  "criteria": [
+                    {
+                      "operator": "AND",
+                      "criteria": [
+                        124,
+                        130
+                      ]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [
+                        123,
+                        131
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             {
               "operator": "AND",
-              "criteria": [123, 125, 126, 127, 131]
-            },
-            {
-              "operator": "AND",
-              "criteria": [122, 128, 129, 131]
+              "criteria": [
+                122,
+                128, 
+                129, 
+                131, 
+                134
+              ]
             }
           ]
         }

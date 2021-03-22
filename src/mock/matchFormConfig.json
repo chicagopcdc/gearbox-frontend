@@ -237,7 +237,7 @@
       "id": 6,
       "groupId": 4,
       "type": "number",
-      "name": "blastPercmethod",
+      "name": "blastPercMethod",
       "label": "Most recent blast percentage measured by how many methods (e.g. Flow, FISH, etc.)?",
       "min": 0,
       "showIf": {
