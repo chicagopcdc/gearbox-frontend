@@ -185,21 +185,18 @@
       "criteria": [
         38,
         39,
-        {
-          "operator": "OR",
-          "criteria": [60, 61, 62]
-        },
         47,
-        52,
-        53,
-        55,
-        56,
-        58,
-        59,
         {
           "operator": "OR",
           "criteria": [48, 49]
         },
+        52,
+        53,
+        54,
+        55,
+        56,
+        58,
+        59,
         {
           "operator": "OR",
           "criteria": [
@@ -207,6 +204,7 @@
               "operator": "AND",
               "criteria": [
                 41,
+                42,
                 {
                   "operator": "OR",
                   "criteria": [40, 50, 51]
