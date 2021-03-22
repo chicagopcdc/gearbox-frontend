@@ -258,37 +258,62 @@
             {
               "operator": "AND",
               "criteria": [
-                71,
+                72,
+                83,
+                138,
                 {
                   "operator": "OR",
-                  "criteria": [82, 83, 84]
+                  "criteria": [69, 70, 64, 65, 66, 67, 68]
                 }
               ]
             },
-            72
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            69,
-            70,
             {
               "operator": "AND",
               "criteria": [
+                71,
+                74,
                 {
                   "operator": "OR",
-                  "criteria": [
-                    72,
-                    {
-                      "operator": "AND",
-                      "criteria": [71, 73]
-                    }
-                  ]
+                  "criteria": [69, 70]
                 },
                 {
                   "operator": "OR",
+                  "criteria": [
+                    82,
+                    {
+                      "operator": "AND",
+                      "criteria": [83, 139]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [84, 139, 140]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "operator": "AND",
+              "criteria": [
+                71,
+                73
+                {
+                  "operator": "OR",
                   "criteria": [64, 65, 66, 67, 68]
+                },
+                {
+                  "operator": "OR",
+                  "criteria": [
+                    82,
+                    {
+                      "operator": "AND",
+                      "criteria": [83, 139]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [84, 139, 140]
+                    }
+                  ]
                 }
               ]
             }

@@ -469,9 +469,9 @@
   },
   {
     "id": 83,
-    "fieldId": 6,
-    "fieldValue": 2,
-    "operator": "eq"
+    "fieldId": 5,
+    "fieldValue": 1,
+    "operator": "gte"
   },
   {
     "id": 84,
@@ -766,6 +766,24 @@
     "fieldId": 39,
     "fieldValue": 2,
     "operator": "eq"
+  },
+  {
+    "id": 138,
+    "fieldId": 39,
+    "fieldValue": 1,
+    "operator": "gte"
+  },
+  {
+    "id": 139,
+    "fieldId": 6,
+    "fieldValue": 2,
+    "operator": "eq"
+  },
+  {
+    "id": 140,
+    "fieldId": 5,
+    "fieldValue": 0.1,
+    "operator": "gte"
   },
   {
     "id": 250,
