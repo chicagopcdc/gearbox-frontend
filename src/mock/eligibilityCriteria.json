@@ -102,12 +102,6 @@
     "operator": "gte"
   },
   {
-    "id": 18,
-    "fieldId": 10,
-    "fieldValue": 1,
-    "operator": "gte"
-  },
-  {
     "id": 19,
     "fieldId": 9,
     "fieldValue": 2,

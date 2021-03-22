@@ -27,11 +27,11 @@
                           "criteria": [
                             {
                               "operator": "AND",
-                              "criteria": [15, 18, 19]
+                              "criteria": [15, 19]
                             },
                             {
                               "operator": "AND",
-                              "criteria": [20, 11, 16, 18]
+                              "criteria": [20, 11, 16]
                             }
                           ]
                         }
@@ -325,11 +325,11 @@
                           "criteria": [
                             {
                               "operator": "AND",
-                              "criteria": [15, 18, 19]
+                              "criteria": [15, 19]
                             },
                             {
                               "operator": "AND",
-                              "criteria": [20, 11, 16, 18]
+                              "criteria": [20, 11, 16]
                             }
                           ]
                         }
@@ -555,11 +555,11 @@
                           "criteria": [
                             {
                               "operator": "AND",
-                              "criteria": [15, 18, 19]
+                              "criteria": [15, 19]
                             },
                             {
                               "operator": "AND",
-                              "criteria": [20, 11, 16, 18]
+                              "criteria": [20, 11, 16]
                             }
                           ]
                         }
