@@ -131,6 +131,14 @@
       }
     },
     {
+      "id": 39,
+      "groupId": 4,
+      "type": "number",
+      "name": "refractoryEvents",
+      "label": "How many confirmed or suspected refractory, including the current, has the patient experienced?",
+      "min": 0
+    },
+    {
       "id": 4,
       "groupId": 4,
       "type": "radio",
@@ -140,22 +148,14 @@
         { "value": 2, "label": "Yes", "description": "" },
         { "value": 9, "label": "No", "description": "" },
         { "value": 29, "label": "Not sure", "description": "" }
-      ]
-    },
-    {
-      "id": 9,
-      "groupId": 4,
-      "type": "number",
-      "name": "chemoCycles",
-      "label": "Current disease is refractory to how many induction cycles?",
-      "min": 0,
+      ],
       "showIf": {
-        "operator": "OR",
+        "operator": "AND",
         "criteria": [
           {
-            "id": 4,
-            "value": 2,
-            "operator": "eq"
+            "id": 39,
+            "value": 1,
+            "operator": "gte"
           }
         ]
       }
@@ -190,7 +190,7 @@
         ]
       }
     },
-    {
+     {
       "id": 5,
       "groupId": 4,
       "type": "number",
@@ -198,29 +198,55 @@
       "label": "What is the most recent measurement of the patient's percentage of BM blasts?",
       "min": 0,
       "max": 100,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 4,
+            "value": 2,
+            "operator": "eq"
+          },
+          {
+            "id": 3,
+            "value": 2,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "groupId": 4,
+      "type": "number",
+      "name": "chemoCycles",
+      "label": "Current disease is refractory to how many induction cycles?",
+      "min": 0,
+      "showIf": {
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 4,
+            "value": 2,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 6,
       "groupId": 4,
       "type": "number",
-      "name": "blastPerc2",
-      "label": "BM blasts percent by 2 tests",
+      "name": "blastPercmethod",
+      "label": "Most recent blast percentage measured by how many methods (e.g. Flow, FISH, etc.)?",
       "min": 0,
-      "max": 100,
-      "step": 0.1,
       "showIf": {
         "operator": "AND",
         "criteria": [
           {
-            "id": 5,
-            "value": 5,
-            "operator": "lt"
-          },
-          {
-            "id": 5,
-            "value": 1,
-            "operator": "gte"
+            "id": 3,
+            "value": 2,
+            "operator": "eq"
           }
         ]
       }
@@ -228,24 +254,21 @@
     {
       "id": 7,
       "groupId": 0,
-      "type": "number",
+      "type": "radio",
       "name": "blastPerc7",
-      "label": "BM blast percent increase 7d apart",
-      "min": 0,
-      "max": 100,
-      "step": 0.1,
+      "label": "Does most recent blast percentage measurement represent a 1 log increase from a measurement 7 days prior?",
+      "options": [
+        { "value": 2, "label": "Yes", "description": "" },
+        { "value": 9, "label": "No", "description": "" },
+        { "value": 29, "label": "Not sure", "description": "" }
+      ],
       "showIf": {
         "operator": "AND",
         "criteria": [
           {
-            "id": 5,
-            "value": 1,
-            "operator": "lt"
-          },
-          {
-            "id": 5,
-            "value": 0.1,
-            "operator": "gte"
+            "id": 3,
+            "value": 2,
+            "operator": "eq"
           }
         ]
       }

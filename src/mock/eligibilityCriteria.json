@@ -74,14 +74,14 @@
   {
     "id": 13,
     "fieldId": 6,
-    "fieldValue": 1,
-    "operator": "gte"
+    "fieldValue": 2,
+    "operator": "eq"
   },
   {
     "id": 14,
     "fieldId": 7,
-    "fieldValue": 0.1,
-    "operator": "gte"
+    "fieldValue": 2,
+    "operator": "eq"
   },
   {
     "id": 15,
@@ -344,14 +344,14 @@
   {
     "id": 61,
     "fieldId": 6,
-    "fieldValue": 1,
-    "operator": "gte"
+    "fieldValue": 2,
+    "operator": "eq"
   },
   {
     "id": 62,
     "fieldId": 7,
-    "fieldValue": 0.1,
-    "operator": "gte"
+    "fieldValue": 2,
+    "operator": "eq"
   },
   {
     "id": 63,
@@ -470,14 +470,14 @@
   {
     "id": 83,
     "fieldId": 6,
-    "fieldValue": 1,
-    "operator": "gte"
+    "fieldValue": 2,
+    "operator": "eq"
   },
   {
     "id": 84,
     "fieldId": 7,
-    "fieldValue": 0.1,
-    "operator": "gte"
+    "fieldValue": 2,
+    "operator": "eq"
   },
   {
     "id": 86,
