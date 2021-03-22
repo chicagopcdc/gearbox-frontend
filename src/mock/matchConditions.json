@@ -432,6 +432,10 @@
       "criteria": [
         86,
         95,
+        {
+          "operator": "OR",
+          "criteria": [96, 97]
+        }
         98,
         99,
         100,
@@ -443,25 +447,22 @@
               "criteria": [
                 {
                   "operator": "OR",
-                  "criteria": [88, 89, 90]
+                  "criteria": [
+                    88, 
+                    89, 
+                    90
+                  ]
                 },
                 {
                   "operator": "OR",
-                  "criteria": [102, 103]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                87,
-                {
-                  "operator": "OR",
                   "criteria": [
-                    103,
                     {
                       "operator": "AND",
-                      "criteria": [102, 104]
+                      "criteria": [102, 105]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [103, 136]
                     }
                   ]
                 }
@@ -469,7 +470,18 @@
             },
             {
               "operator": "AND",
-              "criteria": [92, 104]
+              "criteria": [
+                {
+                  "operator": "OR",
+                  "criteria": [87, 92]
+                },
+                102,
+                104
+              ]
+            },
+            {
+              "operator": "AND",
+              "criteria": [87, 103, 136]
             },
             {
               "operator": "AND",
@@ -477,13 +489,13 @@
             },
             {
               "operator": "AND",
-              "criteria": [91, 103]
+              "criteria": [91, 103, 137]
+            },
+            {
+              "operator": "AND",
+              "criteria": [88, 94]
             }
           ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [96, 97]
         }
       ]
     }

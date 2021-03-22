@@ -755,8 +755,18 @@
     "fieldValue": 2,
     "operator": "eq"
   },
-
-
+  {
+    "id": 136,
+    "fieldId": 39,
+    "fieldValue": 1,
+    "operator": "gte"
+  },
+  {
+    "id": 137,
+    "fieldId": 39,
+    "fieldValue": 2,
+    "operator": "eq"
+  },
   {
     "id": 250,
     "fieldId": 2,
