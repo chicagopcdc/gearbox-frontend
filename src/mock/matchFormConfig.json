@@ -27,7 +27,7 @@
       "groupId": 1,
       "type": "age",
       "name": "age",
-      "label": "What is the patient’s current age (in years)?",
+      "label": "What is the patient's current age (in years)?",
       "min": 0
     },
     {
