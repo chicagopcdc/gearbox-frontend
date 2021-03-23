@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
@@ -30,16 +30,19 @@ function MatchForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const formEl = useRef<HTMLFormElement>(null)
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
     if (timeout !== undefined) clearTimeout(timeout)
 
-    setIsUpdating(true)
-    timeout = setTimeout(() => {
-      const newValues = { ...formik.values }
-      updateUserInput(clearShowIfField(config, defaultValues, newValues))
-      setIsUpdating(false)
-    }, 1000)
+    if (formEl?.current?.reportValidity()) {
+      setIsUpdating(true)
+      timeout = setTimeout(() => {
+        const newValues = { ...formik.values }
+        updateUserInput(clearShowIfField(config, defaultValues, newValues))
+        setIsUpdating(false)
+      }, 1000)
+    } else setIsUpdating(false)
 
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
@@ -47,7 +50,7 @@ function MatchForm({
   }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <form onReset={formik.handleReset}>
+    <form ref={formEl} onReset={formik.handleReset}>
       {config.groups.map((group, i) => (
         <DropdownSection
           key={group.id}
