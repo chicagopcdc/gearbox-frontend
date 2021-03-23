@@ -1,30 +1,30 @@
 {
   "groups": [
     {
-      "id": 0,
+      "id": 1,
       "name": "Demographics"
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Disease"
     },
     {
-      "id": 1,
+      "id": 2,
       "name": "Prior treatment therapies"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "Organ function"
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "Biomarkers"
     }
   ],
   "fields": [
     {
       "id": 1,
-      "groupId": 0,
+      "groupId": 1,
       "type": "age",
       "name": "age",
       "label": "What is the patient's current age?",
@@ -32,7 +32,7 @@
     },
     {
       "id": 18,
-      "groupId": 0,
+      "groupId": 1,
       "type": "number",
       "name": "weight",
       "label": "What is the patient's current weight (in kg)?",
@@ -40,7 +40,7 @@
     },
     {
       "id": 2,
-      "groupId": 4,
+      "groupId": 5,
       "type": "select",
       "name": "currDisease",
       "label": "What is the patient's current disease?",
@@ -110,7 +110,7 @@
     },
     {
       "id": 30,
-      "groupId": 0,
+      "groupId": 1,
       "name": "phase2",
       "type": "radio",
       "label": "Is is phase 2?",
@@ -132,7 +132,7 @@
     },
     {
       "id": 4,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "refractory",
       "label": "Is the patient's disease currently refractory?",
@@ -144,7 +144,7 @@
     },
     {
       "id": 9,
-      "groupId": 4,
+      "groupId": 5,
       "type": "number",
       "name": "chemoCycles",
       "label": "Current disease is refractory to how many induction cycles?",
@@ -162,7 +162,7 @@
     },
     {
       "id": 8,
-      "groupId": 4,
+      "groupId": 5,
       "type": "number",
       "name": "relapseEvents",
       "label": "How many confirmed or suspected relapses, including the current, has the patient experienced?",
@@ -170,7 +170,7 @@
     },
     {
       "id": 3,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "relapse",
       "label": "Is the patient currently in relapse (or suspected relapse)?",
@@ -192,7 +192,7 @@
     },
     {
       "id": 5,
-      "groupId": 4,
+      "groupId": 5,
       "type": "number",
       "name": "blastPerc",
       "label": "What is the most recent measurement of the patient's percentage of BM blasts?",
@@ -202,7 +202,7 @@
     },
     {
       "id": 10,
-      "groupId": 0,
+      "groupId": 1,
       "type": "number",
       "name": "blastPercInd",
       "label": "induction blast percent",
@@ -212,7 +212,7 @@
     },
     {
       "id": 11,
-      "groupId": 0,
+      "groupId": 1,
       "type": "number",
       "name": "blastPercEnrollmen",
       "label": "blasts percent at enrollment",
@@ -222,7 +222,7 @@
     },
     {
       "id": 6,
-      "groupId": 4,
+      "groupId": 5,
       "type": "number",
       "name": "blastPerc2",
       "label": "BM blasts percent by 2 tests",
@@ -247,7 +247,7 @@
     },
     {
       "id": 7,
-      "groupId": 0,
+      "groupId": 1,
       "type": "number",
       "name": "blastPerc7",
       "label": "BM blast percent increase 7d apart",
@@ -272,7 +272,7 @@
     },
     {
       "id": 34,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "blasts identified by morphology and confirmed by MDF",
       "label": "Were blasts identified by morphology and confirmed by multidimensional flow cytometry (MDF)?",
@@ -284,7 +284,7 @@
     },
     {
       "id": 12,
-      "groupId": 3,
+      "groupId": 4,
       "type": "radio",
       "name": "mslnExpression",
       "label": "MSLN expression",
@@ -296,7 +296,7 @@
     },
     {
       "id": 13,
-      "groupId": 3,
+      "groupId": 4,
       "type": "radio",
       "name": "eSelectin",
       "label": "E-selectin expression",
@@ -308,7 +308,7 @@
     },
     {
       "id": 14,
-      "groupId": 1,
+      "groupId": 2,
       "type": "number",
       "name": "Days with any cytotoxic agent with exeption of hydroxyurea (HU)",
       "label": "Days with any cytotoxic agent with exeption of hydroxyurea (HU)",
@@ -316,7 +316,7 @@
     },
     {
       "id": 15,
-      "groupId": 1,
+      "groupId": 2,
       "type": "number",
       "name": "Days since last dose of low-dose cytarabine (LDAC)",
       "label": "Days since last dose of low-dose cytarabine (LDAC)",
@@ -324,7 +324,7 @@
     },
     {
       "id": 37,
-      "groupId": 2,
+      "groupId": 3,
       "type": "number",
       "name": "Alanine transaminase (ALT), in IU/L",
       "label": "Alanine transaminase (ALT), in IU/L",
@@ -333,7 +333,7 @@
     },
     {
       "id": 16,
-      "groupId": 2,
+      "groupId": 3,
       "type": "number",
       "name": "Alanine transaminase (ALT), as factor of ULN (=45 IU/L)",
       "label": "Alanine transaminase (ALT), in multiples of ULN (=45 IU/L)",
@@ -342,7 +342,7 @@
     },
     {
       "id": 17,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "alt_leukemia",
       "label": "Is reported Alanine transaminase (ALT) level related to leukemia involvement?",
@@ -354,7 +354,7 @@
     },
     {
       "id": 22,
-      "groupId": 1,
+      "groupId": 2,
       "type": "number",
       "name": "Days since last dose of steroids",
       "label": "Days since last dose of steroids",
@@ -362,7 +362,7 @@
     },
     {
       "id": 19,
-      "groupId": 1,
+      "groupId": 2,
       "type": "number",
       "name": "anthracycline dose",
       "label": "Anthracycline dose in weight/surface-area (mg/m2)",
@@ -371,7 +371,7 @@
     },
     {
       "id": 20,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "Has the patient experienced Grade 4 Sinusoidal Obstructive Syndrome (SOS)?",
       "label": "Has the patient experienced Grade 4 Sinusoidal Obstructive Syndrome (SOS)?",
@@ -383,7 +383,7 @@
     },
     {
       "id": 36,
-      "groupId": 2,
+      "groupId": 3,
       "type": "number",
       "name": "Conjugated bilirubin, in multiples of ULN",
       "label": "Conjugated bilirubin, in multiples of ULN",
@@ -392,7 +392,7 @@
     },
     {
       "id": 35,
-      "groupId": 2,
+      "groupId": 3,
       "type": "number",
       "name": "direct bilirubin",
       "label": "Direct bilirubin, in multiples of age-dependent ULN",
@@ -401,7 +401,7 @@
     },
     {
       "id": 24,
-      "groupId": 2,
+      "groupId": 3,
       "type": "number",
       "name": "Direct bilirubin",
       "label": "Direct bilirubin",
@@ -410,7 +410,7 @@
     },
     {
       "id": 25,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "Does the patient have leukemic infiltration of the liver?",
       "label": "Does the patient have leukemic infiltration of the liver?",
@@ -437,7 +437,7 @@
     },
     {
       "id": 26,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "Does the patient have isolated EMD?",
       "label": "Does the patient have isolated EMD?",
@@ -449,7 +449,7 @@
     },
     {
       "id": 27,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "Does the patient have adequate BM function?",
       "label": "Does the patient have adequate BM function?",
@@ -461,7 +461,7 @@
     },
     {
       "id": 31,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "isolated EMD including CNS",
       "label": "Does the patient have isolated EMD (including CNS)?",
@@ -473,7 +473,7 @@
     },
     {
       "id": 33,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "Does the patient have isolated CNS?",
       "label": "Does the patient have isolated CNS?",
@@ -485,7 +485,7 @@
     },
     {
       "id": 38,
-      "groupId": 4,
+      "groupId": 5,
       "type": "radio",
       "name": "Does the patient have CNS disease?",
       "label": "Does the patient have CNS disease?",
