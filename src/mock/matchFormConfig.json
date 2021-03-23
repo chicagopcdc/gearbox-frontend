@@ -10,7 +10,7 @@
     },
     {
       "id": 2,
-      "name": "Prior treatment therapies"
+      "name": "Prior treatment"
     },
     {
       "id": 3,
@@ -113,7 +113,7 @@
       "groupId": 5,
       "type": "number",
       "name": "refractoryEvents",
-      "label": "How many confirmed or suspected refractory, including the current, has the patient experienced?",
+      "label": "How many occurrences of refractory disease, including the current, has the patient experienced?",
       "min": 0
     },
     {
@@ -134,6 +134,24 @@
             "id": 39,
             "value": 1,
             "operator": "gte"
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "groupId": 5,
+      "type": "number",
+      "name": "chemoCycles",
+      "label": "Current disease is refractory to how many induction cycles?",
+      "min": 0,
+      "showIf": {
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 4,
+            "value": 2,
+            "operator": "eq"
           }
         ]
       }
@@ -187,24 +205,6 @@
           },
           {
             "id": 3,
-            "value": 2,
-            "operator": "eq"
-          }
-        ]
-      }
-    },
-    {
-      "id": 9,
-      "groupId": 5,
-      "type": "number",
-      "name": "chemoCycles",
-      "label": "Current disease is refractory to how many induction cycles?",
-      "min": 0,
-      "showIf": {
-        "operator": "OR",
-        "criteria": [
-          {
-            "id": 4,
             "value": 2,
             "operator": "eq"
           }
@@ -334,7 +334,7 @@
       "groupId": 2,
       "type": "number",
       "name": "anthracycline dose",
-      "label": "Anthracycline dose in weight/surface-area (mg/m2)",
+      "label": "Cumulative anthracycline dose (in mg/m2)",
       "min": 0.1,
       "step": 0.1
     },
