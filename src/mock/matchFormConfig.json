@@ -267,16 +267,16 @@
       "id": 14,
       "groupId": 2,
       "type": "number",
-      "name": "Days with any cytotoxic agent with exeption of hydroxyurea (HU)",
-      "label": "Days with any cytotoxic agent with exeption of hydroxyurea (HU)",
+      "name": "Days since last dose of any cytotoxic agent (with exception of hydroxyurea)",
+      "label": "Days since last dose of any cytotoxic agent (with exception of hydroxyurea)",
       "min": 0
     },
     {
       "id": 15,
       "groupId": 2,
       "type": "number",
-      "name": "Days since last dose of low-dose cytarabine (LDAC)",
-      "label": "Days since last dose of low-dose cytarabine (LDAC)",
+      "name": "Days since last dose of any cytotoxic agent (with exception of low-dose cytarabine)",
+      "label": "Days since last dose of any cytotoxic agent (with exception of low-dose cytarabine)",
       "min": 0
     },
     {
