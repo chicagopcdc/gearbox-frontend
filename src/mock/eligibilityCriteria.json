@@ -522,12 +522,6 @@
     "operator": "eq"
   },
   {
-    "id": 94,
-    "fieldId": 30,
-    "fieldValue": 2,
-    "operator": "eq"
-  },
-  {
     "id": 95,
     "fieldId": 5,
     "fieldValue": 5,
