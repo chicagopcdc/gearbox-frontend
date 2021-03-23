@@ -27,7 +27,7 @@
       "groupId": 1,
       "type": "age",
       "name": "age",
-      "label": "What is the patient's current age?",
+      "label": "What is the patient’s current age (in years)?",
       "min": 0
     },
     {
@@ -107,28 +107,6 @@
         }
       ],
       "placeholder": "Select"
-    },
-    {
-      "id": 30,
-      "groupId": 1,
-      "name": "phase2",
-      "type": "radio",
-      "label": "Is is phase 2?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ],
-      "showIf": {
-        "operator": "OR",
-        "criteria": [
-          {
-            "id": 2,
-            "value": 28,
-            "operator": "eq"
-          }
-        ]
-      }
     },
     {
       "id": 39,

@@ -444,10 +444,6 @@
             {
               "operator": "AND",
               "criteria": [91, 103, 137]
-            },
-            {
-              "operator": "AND",
-              "criteria": [88, 94]
             }
           ]
         }
