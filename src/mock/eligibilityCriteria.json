@@ -205,7 +205,7 @@
   },
   {
     "id": 35,
-    "fieldId": 35,
+    "fieldId": 24,
     "fieldValue": 1.5,
     "operator": "lt"
   },
@@ -439,7 +439,7 @@
   },
   {
     "id": 79,
-    "fieldId": 36,
+    "fieldId": 24,
     "fieldValue": 1.5,
     "operator": "lt"
   },
