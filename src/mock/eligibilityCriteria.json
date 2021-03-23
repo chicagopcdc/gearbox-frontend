@@ -774,6 +774,30 @@
     "operator": "gte"
   },
   {
+    "id": 141,
+    "fieldId": 39,
+    "fieldValue": 1,
+    "operator": "gte"
+  },
+  {
+    "id": 142,
+    "fieldId": 2,
+    "fieldValue": 27,
+    "operator": "eq"
+  },
+  {
+    "id": 143,
+    "fieldId": 2,
+    "fieldValue": 28,
+    "operator": "eq"
+  },
+  {
+    "id": 144,
+    "fieldId": 2,
+    "fieldValue": 37,
+    "operator": "eq"
+  },
+  {
     "id": 250,
     "fieldId": 2,
     "fieldValue": 31,
