@@ -23,7 +23,7 @@
               "operator": "AND",
               "criteria": [
                 10,
-                16
+                16,
                 {
                   "operator": "OR",
                   "criteria": [6, 7, 8]
@@ -269,7 +269,7 @@
               "operator": "AND",
               "criteria": [
                 71,
-                73
+                73,
                 {
                   "operator": "OR",
                   "criteria": [64, 65, 66, 67, 68]
@@ -433,7 +433,7 @@
         {
           "operator": "OR",
           "criteria": [96, 97]
-        }
+        },
         98,
         99,
         100,
