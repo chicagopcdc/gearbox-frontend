@@ -289,15 +289,6 @@
       "step": 0.1
     },
     {
-      "id": 16,
-      "groupId": 3,
-      "type": "number",
-      "name": "Alanine transaminase (ALT), as factor of ULN (=45 IU/L)",
-      "label": "Alanine transaminase (ALT), in multiples of ULN (=45 IU/L)",
-      "min": 0.1,
-      "step": 0.1
-    },
-    {
       "id": 17,
       "groupId": 3,
       "type": "radio",
@@ -339,29 +330,11 @@
       ]
     },
     {
-      "id": 36,
-      "groupId": 3,
-      "type": "number",
-      "name": "Conjugated bilirubin, in multiples of ULN",
-      "label": "Conjugated bilirubin, in multiples of ULN",
-      "min": 0.1,
-      "step": 0.1
-    },
-    {
-      "id": 35,
-      "groupId": 3,
-      "type": "number",
-      "name": "direct bilirubin",
-      "label": "Direct bilirubin, in multiples of age-dependent ULN",
-      "min": 0.1,
-      "step": 0.1
-    },
-    {
       "id": 24,
       "groupId": 3,
       "type": "number",
-      "name": "Direct bilirubin",
-      "label": "Direct bilirubin",
+      "name": "Direct bilirubin (in mg/dL)",
+      "label": "Direct bilirubin (in mg/dL)",
       "min": 0.1,
       "step": 0.1
     },
