@@ -47,63 +47,51 @@
       "options": [
         {
           "value": 26,
-          "label": "Acute myeloid leukemia (AML)",
-          "description": "Acute myeloid leukemia"
+          "label": "Acute myeloid leukemia (AML)"
         },
         {
           "value": 27,
-          "label": "Treatment-related acute myeloid leukemia (tAML)",
-          "description": "treatment-related AML"
+          "label": "Treatment-related acute myeloid leukemia (tAML)"
         },
         {
           "value": 28,
-          "label": "Down syndrome acute myeloid leukemia (DS AML)",
-          "description": "Down syndrome AML"
+          "label": "Down syndrome acute myeloid leukemia (DS AML)"
         },
         {
           "value": 30,
-          "label": "Mixed-phenotype acute leukemia (MPAL)",
-          "description": "Mixed-phenotype acute leukemia"
+          "label": "Mixed-phenotype acute leukemia (MPAL)"
         },
         {
           "value": 31,
-          "label": "Acute lymphoblastic leukemia (ALL)",
-          "description": "Acute lymphoblastic leukemia"
+          "label": "Acute lymphoblastic leukemia (ALL)"
         },
         {
           "value": 32,
-          "label": "T-cell acute lymphoblastic leukemia (T-ALL)",
-          "description": "T-cell acute lymphoblastic leukemia"
+          "label": "T-cell acute lymphoblastic leukemia (T-ALL)"
         },
         {
           "value": 33,
-          "label": "KMT2A acute lymphoblastic leukemia",
-          "description": "KMT2A acute lymphoblastic leukemia"
+          "label": "KMT2A acute lymphoblastic leukemia"
         },
         {
           "value": 34,
-          "label": "Myelodysplastic syndromes (MDS)",
-          "description": "Myelodysplastic syndromes"
+          "label": "Myelodysplastic syndromes (MDS)"
         },
         {
           "value": 35,
-          "label": "Early T-cell precursor acute lymphoblastic leukemia (ETP-ALL)",
-          "description": "Early T-cell precursor acute lymphoblastic leukemia"
+          "label": "Early T-cell precursor acute lymphoblastic leukemia (ETP-ALL)"
         },
         {
           "value": 36,
-          "label": "Acute promyelocytic leukemia (APL)",
-          "description": "Acute promyelocytic leukemia"
+          "label": "Acute promyelocytic leukemia (APL)"
         },
         {
           "value": 37,
-          "label": "Juvenile myelomonocytic leukemia (JMML)",
-          "description": "Juvenile myelomonocytic leukemia"
+          "label": "Juvenile myelomonocytic leukemia (JMML)"
         },
         {
           "value": 42,
-          "label": "B-cell acute lymphoblastic leukemia (B-ALL)",
-          "description": "B-cell acute lymphoblastic leukemia (B-ALL)"
+          "label": "B-cell acute lymphoblastic leukemia (B-ALL)"
         }
       ],
       "placeholder": "Select"
