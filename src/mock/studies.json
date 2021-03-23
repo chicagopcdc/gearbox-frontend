@@ -5,15 +5,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT04726241"
       }
     ],
@@ -25,15 +25,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -45,15 +45,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -65,15 +65,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -85,15 +85,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -105,15 +105,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -125,15 +125,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -145,15 +145,15 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
+        "name": "Oncology Patient Enrollment Network (OPEN)",
         "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
+      },
       {
-        "name": "LLS", 
+        "name": "LLS Clinical Trial Support Center",
         "href": "https://www.lls.org/article/clinical-trial-support-center-ctsc-portal-for-healthcare-providers"
-      }, 
+      },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
@@ -165,15 +165,11 @@
     "locations": [],
     "links": [
       {
-        "name": "COG", 
-        "href": "https://open.ctsu.org/open/logonForm.open"
-      }, 
-      {
-        "name": "TACL",
+        "name": "Therapeutic Advances in Childhood Leukemia & Lymphoma (TACL)",
         "href": "https://tacl.chla.usc.edu/tacl/#!/Page/257"
       },
       {
-        "name": "clinical Trials", 
+        "name": "ClinicalTrials.gov",
         "href": ""
       }
     ],
