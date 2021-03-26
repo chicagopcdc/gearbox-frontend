@@ -8,19 +8,19 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
-    "@types/node": "^14.14.31",
-    "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.1",
+    "@types/node": "^14.14.36",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
     "@types/react-router-dom": "^5.1.7",
     "formik": "^2.2.6",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
-    "react-multi-select-component": "^3.1.5",
+    "react-multi-select-component": "^3.1.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
-    "react-tooltip": "^4.2.15",
-    "typescript": "^4.2.2"
+    "react-tooltip": "^4.2.17",
+    "typescript": "^4.2.3"
   },
   "scripts": {
     "prestart": "postcss src/tailwind.css -o src/index.css",
@@ -53,13 +53,13 @@
     "@storybook/addon-actions": "^6.1.21",
     "@storybook/addon-links": "^6.1.21",
     "@storybook/addons": "^6.1.21",
-    "@storybook/preset-create-react-app": "^3.1.6",
+    "@storybook/preset-create-react-app": "^3.1.7",
     "@storybook/react": "^6.1.21",
     "@tailwindcss/forms": "^0.2.1",
-    "autoprefixer": "^10.2.4",
-    "postcss": "^8.2.7",
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.8",
     "postcss-cli": "^8.3.1",
     "prettier": "^2.2.1",
-    "tailwindcss": "^2.0.3"
+    "tailwindcss": "^2.0.4"
   }
 }
