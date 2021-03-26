@@ -298,7 +298,17 @@
         { "value": 2, "label": "Yes", "description": "" },
         { "value": 9, "label": "No", "description": "" },
         { "value": 29, "label": "Not sure", "description": "" }
-      ]
+      ],
+      "showIf": {
+        "operator": "OR",
+        "criteria": [
+          {
+            "id": 37,
+            "value": 135,
+            "operator": "gt"
+          }
+        ]
+      }
     },
     {
       "id": 22,
