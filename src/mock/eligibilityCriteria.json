@@ -213,7 +213,7 @@
     "id": 36,
     "fieldId": 37,
     "fieldValue": 135,
-    "operator": "lt"
+    "operator": "lte"
   },
   {
     "id": 37,
