@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Info, XCircle } from 'react-feather'
 import ReactTooltip from 'react-tooltip'

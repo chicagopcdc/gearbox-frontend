@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from './Inputs/Button'
 import gearboxLogo from '../assets/gearbox-logo.svg'

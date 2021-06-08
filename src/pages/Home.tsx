@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import HomeLandingPage from '../components/HomeLandingPage'
 import HomeMatchingPage, {

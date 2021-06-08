@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 type AgeInputProps = AgeFieldProps & {
   which: 'year' | 'month'

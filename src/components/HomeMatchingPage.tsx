@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import MatchForm from './MatchForm'
 import MatchResult from './MatchResult'
 import {

@@ -1,4 +1,3 @@
-import React from 'react'
 import AgeField from './AgeField'
 import '../../index.css'
 

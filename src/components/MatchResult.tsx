@@ -1,4 +1,3 @@
-import React from 'react'
 import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
 import {

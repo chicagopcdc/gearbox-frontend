@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactMultiSelect from 'react-multi-select-component'
 import { MatchFormFieldOption } from '../../model'
 

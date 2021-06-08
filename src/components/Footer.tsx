@@ -1,5 +1,3 @@
-import React from 'react'
-
 import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
 import pcdcLogo from '../assets/pcdc-logo.png'
 import pedalLogo from '../assets/pedal-logo.svg'

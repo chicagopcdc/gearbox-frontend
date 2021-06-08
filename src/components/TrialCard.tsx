@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ChevronUp, ChevronDown } from 'react-feather'
 import TrialMatchInfo from './TrialMatchInfo'
 import { MatchInfoAlgorithm, Study } from '../model'

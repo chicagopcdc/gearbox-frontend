@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import { useLocation } from 'react-router-dom'
 import Header, { HeaderProps } from './components/Header'
 import Footer from './components/Footer'

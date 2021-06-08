@@ -1,4 +1,3 @@
-import React from 'react'
 import Box from '../components/Box'
 import TrialCard from '../components/TrialCard'
 import { Study } from '../model'

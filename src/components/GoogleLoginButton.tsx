@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from './Inputs/Button'
 import googleLogo from '../assets/google-logo.svg'
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 
 const styles = {
   box: 'border-2 border-solid border-black my-4 md:mx-4',

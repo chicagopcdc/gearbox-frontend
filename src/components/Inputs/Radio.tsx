@@ -1,4 +1,3 @@
-import React from 'react'
 import { MatchFormFieldOption } from '../../model'
 
 type RadioProps = {

@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import type React from 'react'
+import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'

@@ -1,4 +1,3 @@
-import React from 'react'
 import WarningIcon from '../assets/warning-24px.svg'
 
 function WarningBanner() {
