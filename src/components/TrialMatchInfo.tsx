@@ -84,7 +84,7 @@ function MatchInfoDetails({
               <br />
             </>
           )}
-          {crit.hasOwnProperty('fieldName') ? (
+          {Object.prototype.hasOwnProperty.call(crit, 'fieldName') ? (
             <>
               <span className="whitespace-pre">
                 {' '.repeat(level * space)}

@@ -16,7 +16,10 @@ export const getMatchGroups = (matchDetails: MatchDetails) => {
   const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
     const hasStatus = { true: false, undefined: false, false: false }
     for (const matchInfoOrAlgo of algorithm.criteria) {
-      const matchStatus = matchInfoOrAlgo.hasOwnProperty('isMatched')
+      const matchStatus = Object.prototype.hasOwnProperty.call(
+        matchInfoOrAlgo,
+        'isMatched'
+      )
         ? (matchInfoOrAlgo as MatchInfo).isMatched
         : getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
 
