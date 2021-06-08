@@ -23,6 +23,7 @@ function MatchForm({
   const defaultValues = getDefaultValues(config)
   const formik = useFormik({
     initialValues: { ...defaultValues },
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     onSubmit() {},
   })
 
@@ -59,6 +60,7 @@ function MatchForm({
           isCollapsedAtStart={i !== 0}
         >
           {config.fields.map(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
               if (groupId !== group.id) return undefined
 
