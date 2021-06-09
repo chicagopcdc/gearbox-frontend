@@ -22,6 +22,7 @@ function LoginForm({ onLogin }: LoginFormProps) {
         <TextField
           label="Username"
           name="username"
+          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           required
           onChange={(e) => setUsername(e.target.value)}
