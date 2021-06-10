@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import ReactDOM from 'react-dom'
 import { Info, XCircle } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import { MatchInfo, MatchInfoAlgorithm } from '../model'
@@ -149,43 +148,41 @@ function TrialMatchInfo({
       >
         <span>Click to see Eligibility Criteria</span>
       </ReactTooltip>
-      {showModal &&
-        ReactDOM.createPortal(
+      {showModal && (
+        <div
+          id="match-info-modal"
+          className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
+          style={{ background: '#cccc' }}
+          aria-labelledby="eligibility-criteria-dialog-title"
+        >
           <div
-            id="match-info-modal"
-            className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
-            style={{ background: '#cccc' }}
-            aria-labelledby="eligibility-criteria-dialog-title"
+            className="bg-white overflow-scroll"
+            style={{ maxHeight: '95%', maxWidth: '95%' }}
           >
-            <div
-              className="bg-white overflow-scroll"
-              style={{ maxHeight: '95%', maxWidth: '95%' }}
-            >
-              <div className="text-sm sm:text-base p-4 sm:p-8">
-                <div className="flex justify-between border-b pb-4 mb-4">
-                  <h3
-                    id="eligibility-criteria-dialog-title"
-                    className="font-bold mr-4"
-                  >
-                    Eligibility Criteria for {studyTitle}
-                  </h3>
-                  <button
-                    className="hover:text-red-700"
-                    onClick={closeModal}
-                    aria-label="Close Eligibility Criteria dialog"
-                  >
-                    <XCircle />
-                  </button>
-                </div>
-                <MatchInfoDetails
-                  matchInfoId={matchInfoId}
-                  matchInfoAlgorithm={studyMatchInfo}
-                />
+            <div className="text-sm sm:text-base p-4 sm:p-8">
+              <div className="flex justify-between border-b pb-4 mb-4">
+                <h3
+                  id="eligibility-criteria-dialog-title"
+                  className="font-bold mr-4"
+                >
+                  Eligibility Criteria for {studyTitle}
+                </h3>
+                <button
+                  className="hover:text-red-700"
+                  onClick={closeModal}
+                  aria-label="Close Eligibility Criteria dialog"
+                >
+                  <XCircle />
+                </button>
               </div>
+              <MatchInfoDetails
+                matchInfoId={matchInfoId}
+                matchInfoAlgorithm={studyMatchInfo}
+              />
             </div>
-          </div>,
-          document.body
-        )}
+          </div>
+        </div>
+      )}
     </>
   )
 }
