@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from './Inputs/Button'
+import LinkButton from './Inputs/LinkButton'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 
 const navItems = [
@@ -41,9 +42,9 @@ function Header({ isAuthenticated, username, signout }: HeaderProps) {
               </Button>
             </>
           ) : (
-            <NavLink className="flex" to="/login">
-              <Button size="small">Log in</Button>
-            </NavLink>
+            <LinkButton to="/login" size="small">
+              Log in
+            </LinkButton>
           )}
         </div>
         <nav className="flex justify-between">

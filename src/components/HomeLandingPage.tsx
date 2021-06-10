@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Button from './Inputs/Button'
+import LinkButton from './Inputs/LinkButton'
 import './HomeLandingPage.css'
 
 import gearboxLogo from '../assets/gearbox-logo.svg'
@@ -34,9 +34,9 @@ function HomeLandingSection1() {
             helps you rapidly match patients with relapsed or refractory disease
             to appropriate clinical trials.
           </p>
-          <Link to="/">
-            <Button size="large">Register</Button>
-          </Link>
+          <LinkButton to="/" size="large">
+            Register
+          </LinkButton>
           <p className="mt-4">
             Already a registered user?
             <Link to="/login" className="text-primary underline ml-2">
@@ -140,9 +140,9 @@ function HomeLandingSection5() {
       <p className="text-xl sm:text-2xl md:text-3xl mb-8">
         Find matching clinical trials with GEARBOx
       </p>
-      <Link to="/">
-        <Button size="large">Register</Button>
-      </Link>
+      <LinkButton to="/" size="large">
+        Register
+      </LinkButton>
       <p className="mt-4">
         Already a registered user?
         <Link to="/login" className="text-primary underline ml-2">
