@@ -16,11 +16,9 @@ function Login({ authenticate }: LoginProps) {
 
   return (
     <div className="flex flex-col h-full align-center justify-center max-w-sm mx-auto">
-      <img src={gearboxLogo} alt="GEARBOx logo" />
+      <img src={gearboxLogo} alt="GEARBOx logo" className="mb-12" />
 
-      <div className="mt-12 mb-4 mx-12">
-        <GoogleLoginButton onClick={initFenceOAuth} />
-      </div>
+      <LoginForm onLogin={handleLogin} />
 
       <div className="flex items-center my-4 mx-12">
         <hr className="flex-1 border-gray-500 mr-4" />
@@ -28,7 +26,9 @@ function Login({ authenticate }: LoginProps) {
         <hr className="flex-1 border-gray-500 ml-4" />
       </div>
 
-      <LoginForm onLogin={handleLogin} />
+      <div className="mb-4 mx-12">
+        <GoogleLoginButton onClick={initFenceOAuth} />
+      </div>
     </div>
   )
 }
