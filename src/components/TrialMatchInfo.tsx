@@ -130,6 +130,21 @@ function TrialMatchInfo({
   useEffect(() => {
     return closeModal
   }, [])
+  useEffect(() => {
+    function closeModalOnEscape(e: KeyboardEvent) {
+      if (showModal && e.key === 'Escape') closeModal()
+    }
+    let isMissingEventListener = true
+
+    if (isMissingEventListener && showModal) {
+      window.addEventListener('keydown', closeModalOnEscape)
+      isMissingEventListener = false
+    }
+
+    return () => {
+      window.removeEventListener('keydown', closeModalOnEscape)
+    }
+  }, [showModal])
 
   return (
     <>
