@@ -36,7 +36,7 @@ function DropdownSection({
           </button>
         )}
       </div>
-      <div className={isDropDownOpen ? 'mx-2' : 'hidden'}>{children}</div>
+      {isDropDownOpen && <div className="mx-2">{children}</div>}
     </section>
   )
 }

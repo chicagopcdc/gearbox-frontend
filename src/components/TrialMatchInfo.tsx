@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Info, XCircle } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import { MatchInfo, MatchInfoAlgorithm } from '../model'
@@ -127,6 +127,9 @@ function TrialMatchInfo({
   const [showModal, setShowModal] = useState(false)
   const openModal = () => setShowModal(true)
   const closeModal = () => setShowModal(false)
+  useEffect(() => {
+    return closeModal
+  }, [])
 
   return (
     <>
