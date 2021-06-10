@@ -27,11 +27,11 @@ function DropdownSection({
       <div className="flex py-2 justify-between border-b border-solid border-black">
         <h2 className="font-bold">{name}</h2>
         {isDropDownOpen ? (
-          <button onClick={handleClose}>
+          <button onClick={handleClose} aria-label="Collapse dropdown">
             <ChevronUp color="#C00" />
           </button>
         ) : (
-          <button onClick={handleOpen}>
+          <button onClick={handleOpen} aria-label="Expand dropdown">
             <ChevronDown />
           </button>
         )}
