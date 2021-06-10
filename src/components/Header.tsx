@@ -40,28 +40,32 @@ export type HeaderProps = {
 
 function Header({ isAuthenticated, username, signout }: HeaderProps) {
   const screenSize = useScreenSize()
+  const isSmallScreeen = ['2xs', 'xs', 'sm'].includes(screenSize)
+  const authElement = (
+    <div className="flex justify-end mb-2 md:mb-0">
+      {isAuthenticated ? (
+        <>
+          {username !== '' && (
+            <div className="flex items-center text-sm pr-4">
+              Hello,&nbsp;<span className="font-bold">{username}</span>
+            </div>
+          )}
+          <Button size="small" onClick={() => signout()}>
+            Log out
+          </Button>
+        </>
+      ) : (
+        <LinkButton to="/login" size="small">
+          Log in
+        </LinkButton>
+      )}
+    </div>
+  )
 
   return (
     <header>
-      <div className="flex-row-reverse md:flex justify-between border-b border-solid border-primary">
-        <div className="flex justify-end mb-2 md:mb-0">
-          {isAuthenticated ? (
-            <>
-              {username !== '' && (
-                <div className="flex items-center text-sm pr-4">
-                  Hello,&nbsp;<span className="font-bold">{username}</span>
-                </div>
-              )}
-              <Button size="small" onClick={() => signout()}>
-                Log out
-              </Button>
-            </>
-          ) : (
-            <LinkButton to="/login" size="small">
-              Log in
-            </LinkButton>
-          )}
-        </div>
+      <div className="flex-row md:flex justify-between border-b border-solid border-primary">
+        {isSmallScreeen && authElement}
         <nav className="flex justify-between">
           <div>
             <NavLink to="/">
@@ -88,6 +92,7 @@ function Header({ isAuthenticated, username, signout }: HeaderProps) {
             ))}
           </div>
         </nav>
+        {!isSmallScreeen && authElement}
       </div>
     </header>
   )
