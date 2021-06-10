@@ -4,6 +4,29 @@ import Button from './Inputs/Button'
 import LinkButton from './Inputs/LinkButton'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 
+function getScreenSize(width: number) {
+  if (width < 381) return '2xs'
+  if (width < 640) return 'xs'
+  if (width < 768) return 'sm'
+  if (width < 1024) return 'md'
+  if (width < 1280) return 'lg'
+  if (width < 1536) return 'xl'
+  return '2xl'
+}
+
+function useScreenSize() {
+  const [screenSize, setScreenSize] = useState(getScreenSize(window.outerWidth))
+  function onResize() {
+    const newScreenSize = getScreenSize(window.outerWidth)
+    if (screenSize !== newScreenSize) setScreenSize(newScreenSize)
+  }
+  useEffect(() => {
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  })
+  return screenSize
+}
+
 const navItems = [
   { name: 'ABOUT GEARBOx', path: '/about' },
   { name: 'USER GUIDE', path: '/guide' },
@@ -16,15 +39,7 @@ export type HeaderProps = {
 }
 
 function Header({ isAuthenticated, username, signout }: HeaderProps) {
-  const [isExtraSmall, setIsExtraSmall] = useState(window.outerWidth <= 380)
-  function onResize() {
-    if (window.outerWidth <= 380 && !isExtraSmall) setIsExtraSmall(true)
-    else if (window.outerWidth > 380 && isExtraSmall) setIsExtraSmall(false)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  })
+  const screenSize = useScreenSize()
 
   return (
     <header>
@@ -54,7 +69,7 @@ function Header({ isAuthenticated, username, signout }: HeaderProps) {
                 src={gearboxLogo}
                 alt="GEARBOx logo"
                 className={`absolute bg-white px-1 mx-4 ${
-                  isExtraSmall ? 'mt-6' : 'mt-2'
+                  screenSize === '2xs' ? 'mt-6' : 'mt-2'
                 }`}
                 style={{ maxHeight: '48px' }}
               />
