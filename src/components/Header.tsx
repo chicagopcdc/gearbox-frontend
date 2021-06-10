@@ -68,13 +68,15 @@ function Header({ isAuthenticated, username, signout }: HeaderProps) {
         {isSmallScreeen && authElement}
         <nav className="flex justify-between">
           <div>
-            <NavLink to="/">
+            <NavLink
+              to="/"
+              className={`absolute bg-white px-1 mx-4 ${
+                screenSize === '2xs' ? 'mt-6' : 'mt-2'
+              }`}
+            >
               <img
                 src={gearboxLogo}
                 alt="GEARBOx logo"
-                className={`absolute bg-white px-1 mx-4 ${
-                  screenSize === '2xs' ? 'mt-6' : 'mt-2'
-                }`}
                 style={{ maxHeight: '48px' }}
               />
             </NavLink>
