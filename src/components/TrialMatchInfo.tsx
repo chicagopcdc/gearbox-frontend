@@ -131,14 +131,14 @@ function TrialMatchInfo({
 
   return (
     <>
-      <Info
-        className={`cursor-pointer mr-2 ${
-          showModal ? 'text-red-700' : 'hover:text-red-700'
-        }`}
+      <button
+        className={`mr-2 ${showModal ? 'text-red-700' : 'hover:text-red-700'}`}
+        onClick={openModal}
         data-tip
         data-for={matchInfoId}
-        onClick={openModal}
-      />
+      >
+        <Info />
+      </button>
       <ReactTooltip
         id={matchInfoId}
         border
@@ -164,10 +164,9 @@ function TrialMatchInfo({
                   <h3 className="font-bold mr-4">
                     Eligibility Criteria for {studyTitle}
                   </h3>
-                  <XCircle
-                    className="cursor-pointer hover:text-red-700"
-                    onClick={closeModal}
-                  />
+                  <button className="hover:text-red-700" onClick={closeModal}>
+                    <XCircle />
+                  </button>
                 </div>
                 <MatchInfoDetails
                   matchInfoId={matchInfoId}
