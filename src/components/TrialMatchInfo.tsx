@@ -145,7 +145,9 @@ function TrialMatchInfo({
           id="match-info-modal"
           className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
           style={{ background: '#cccc' }}
+          role="dialog"
           aria-labelledby="eligibility-criteria-dialog-title"
+          aria-modal="true"
         >
           <div
             className="bg-white overflow-scroll"
