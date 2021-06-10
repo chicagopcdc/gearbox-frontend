@@ -139,16 +139,8 @@ function TrialMatchInfo({
       >
         <Info />
       </button>
-      <ReactTooltip
-        id={matchInfoId}
-        border
-        borderColor="black"
-        effect="solid"
-        type="light"
-      >
-        <span>Click to see Eligibility Criteria</span>
-      </ReactTooltip>
-      {showModal && (
+
+      {showModal ? (
         <div
           id="match-info-modal"
           className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
@@ -182,6 +174,16 @@ function TrialMatchInfo({
             </div>
           </div>
         </div>
+      ) : (
+        <ReactTooltip
+          id={matchInfoId}
+          border
+          borderColor="black"
+          effect="solid"
+          type="light"
+        >
+          <span>Click to see Eligibility Criteria</span>
+        </ReactTooltip>
       )}
     </>
   )
