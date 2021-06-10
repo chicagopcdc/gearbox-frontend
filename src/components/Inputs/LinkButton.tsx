@@ -33,7 +33,7 @@ function LinkButton({
       : size === 'small'
       ? 'px-2 py-1 text-xs'
       : ''
-  const className = `inline-block text-center tracking-wider uppercase ${blockClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
+  const className = `inline-flex items-center tracking-wider uppercase ${blockClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
 
   return to.startsWith('http') ? (
     <a className={className} href={to} target="_blank" rel="noreferrer">
