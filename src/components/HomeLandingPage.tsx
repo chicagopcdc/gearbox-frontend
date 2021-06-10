@@ -65,10 +65,7 @@ function HomeLandingSection2() {
         <h2 className="text-gray-500 text-3xl sm:text-4xl lg:text-5xl mb-8">
           <strong>Connect. Share. Cure.</strong>
         </h2>
-        <Link
-          to="/about"
-          className="block underline text-primary text-md md:text-xl"
-        >
+        <Link to="/about" className="underline text-primary text-md md:text-xl">
           Learn more about GEARBOx
         </Link>
       </div>
@@ -92,10 +89,7 @@ function HomeLandingSection3() {
             alt="Match form screenshot right"
           />
         </div>
-        <Link
-          to="/guide"
-          className="block underline text-primary text-md md:text-xl"
-        >
+        <Link to="/guide" className="underline text-primary text-md md:text-xl">
           Learn how to use GEARBOx
         </Link>
       </div>
@@ -118,7 +112,7 @@ function HomeLandingSection4() {
             the PedAL initiative.
           </p>
           <a
-            className="block underline text-primary md:text-xl"
+            className="underline text-primary md:text-xl"
             href="https://www.lls.org/childrens-initiative/pedal"
             target="_blank"
             rel="noreferrer"
