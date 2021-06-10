@@ -136,6 +136,7 @@ function TrialMatchInfo({
         onClick={openModal}
         data-tip
         data-for={matchInfoId}
+        aria-label="Open Eligibility Criteria dialog"
       >
         <Info />
       </button>
@@ -154,6 +155,7 @@ function TrialMatchInfo({
             id="match-info-modal"
             className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
             style={{ background: '#cccc' }}
+            aria-labelledby="eligibility-criteria-dialog-title"
           >
             <div
               className="bg-white overflow-scroll"
@@ -161,10 +163,17 @@ function TrialMatchInfo({
             >
               <div className="text-sm sm:text-base p-4 sm:p-8">
                 <div className="flex justify-between border-b pb-4 mb-4">
-                  <h3 className="font-bold mr-4">
+                  <h3
+                    id="eligibility-criteria-dialog-title"
+                    className="font-bold mr-4"
+                  >
                     Eligibility Criteria for {studyTitle}
                   </h3>
-                  <button className="hover:text-red-700" onClick={closeModal}>
+                  <button
+                    className="hover:text-red-700"
+                    onClick={closeModal}
+                    aria-label="Close Eligibility Criteria dialog"
+                  >
                     <XCircle />
                   </button>
                 </div>
