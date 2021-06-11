@@ -1,7 +1,31 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from './Inputs/Button'
+import LinkButton from './Inputs/LinkButton'
 import gearboxLogo from '../assets/gearbox-logo.svg'
+
+function getScreenSize(width: number) {
+  if (width < 381) return '2xs'
+  if (width < 640) return 'xs'
+  if (width < 768) return 'sm'
+  if (width < 1024) return 'md'
+  if (width < 1280) return 'lg'
+  if (width < 1536) return 'xl'
+  return '2xl'
+}
+
+function useScreenSize() {
+  const [screenSize, setScreenSize] = useState(getScreenSize(window.outerWidth))
+  function onResize() {
+    const newScreenSize = getScreenSize(window.outerWidth)
+    if (screenSize !== newScreenSize) setScreenSize(newScreenSize)
+  }
+  useEffect(() => {
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  })
+  return screenSize
+}
 
 const navItems = [
   { name: 'ABOUT GEARBOx', path: '/about' },
@@ -15,46 +39,44 @@ export type HeaderProps = {
 }
 
 function Header({ isAuthenticated, username, signout }: HeaderProps) {
-  const [isExtraSmall, setIsExtraSmall] = useState(window.outerWidth <= 380)
-  function onResize() {
-    if (window.outerWidth <= 380 && !isExtraSmall) setIsExtraSmall(true)
-    else if (window.outerWidth > 380 && isExtraSmall) setIsExtraSmall(false)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  })
+  const screenSize = useScreenSize()
+  const isSmallScreeen = ['2xs', 'xs', 'sm'].includes(screenSize)
+  const authElement = (
+    <div className="flex justify-end mb-2 md:mb-0">
+      {isAuthenticated ? (
+        <>
+          {username !== '' && (
+            <div className="flex items-center text-sm pr-4">
+              Hello,&nbsp;<span className="font-bold">{username}</span>
+            </div>
+          )}
+          <Button size="small" onClick={() => signout()}>
+            Log out
+          </Button>
+        </>
+      ) : (
+        <LinkButton to="/login" size="small">
+          Log in
+        </LinkButton>
+      )}
+    </div>
+  )
 
   return (
     <header>
-      <div className="flex-row-reverse md:flex justify-between border-b border-solid border-primary">
-        <div className="flex justify-end mb-2 md:mb-0">
-          {isAuthenticated ? (
-            <>
-              {username !== '' && (
-                <div className="flex items-center text-sm pr-4">
-                  Hello,&nbsp;<span className="font-bold">{username}</span>
-                </div>
-              )}
-              <Button size="small" onClick={() => signout()}>
-                Log out
-              </Button>
-            </>
-          ) : (
-            <NavLink className="flex" to="/login">
-              <Button size="small">Log in</Button>
-            </NavLink>
-          )}
-        </div>
+      <div className="flex-row md:flex justify-between border-b border-solid border-primary">
+        {isSmallScreeen && authElement}
         <nav className="flex justify-between">
           <div>
-            <NavLink to="/">
+            <NavLink
+              to="/"
+              className={`absolute bg-white px-1 mx-4 ${
+                screenSize === '2xs' ? 'mt-6' : 'mt-2'
+              }`}
+            >
               <img
                 src={gearboxLogo}
                 alt="GEARBOx logo"
-                className={`absolute bg-white px-1 mx-4 ${
-                  isExtraSmall ? 'mt-6' : 'mt-2'
-                }`}
                 style={{ maxHeight: '48px' }}
               />
             </NavLink>
@@ -72,6 +94,7 @@ function Header({ isAuthenticated, username, signout }: HeaderProps) {
             ))}
           </div>
         </nav>
+        {!isSmallScreeen && authElement}
       </div>
     </header>
   )

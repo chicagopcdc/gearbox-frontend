@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import Button from './Inputs/Button'
+import LinkButton from './Inputs/LinkButton'
 import './HomeLandingPage.css'
 
 import gearboxLogo from '../assets/gearbox-logo.svg'
@@ -34,9 +34,9 @@ function HomeLandingSection1() {
             helps you rapidly match patients with relapsed or refractory disease
             to appropriate clinical trials.
           </p>
-          <Link to="/">
-            <Button size="large">Register</Button>
-          </Link>
+          <LinkButton to="/" size="large">
+            Register
+          </LinkButton>
           <p className="mt-4">
             Already a registered user?
             <Link to="/login" className="text-primary underline ml-2">
@@ -65,10 +65,7 @@ function HomeLandingSection2() {
         <h2 className="text-gray-500 text-3xl sm:text-4xl lg:text-5xl mb-8">
           <strong>Connect. Share. Cure.</strong>
         </h2>
-        <Link
-          to="/about"
-          className="block underline text-primary text-md md:text-xl"
-        >
+        <Link to="/about" className="underline text-primary text-md md:text-xl">
           Learn more about GEARBOx
         </Link>
       </div>
@@ -92,10 +89,7 @@ function HomeLandingSection3() {
             alt="Match form screenshot right"
           />
         </div>
-        <Link
-          to="/guide"
-          className="block underline text-primary text-md md:text-xl"
-        >
+        <Link to="/guide" className="underline text-primary text-md md:text-xl">
           Learn how to use GEARBOx
         </Link>
       </div>
@@ -118,7 +112,7 @@ function HomeLandingSection4() {
             the PedAL initiative.
           </p>
           <a
-            className="block underline text-primary md:text-xl"
+            className="underline text-primary md:text-xl"
             href="https://www.lls.org/childrens-initiative/pedal"
             target="_blank"
             rel="noreferrer"
@@ -140,9 +134,9 @@ function HomeLandingSection5() {
       <p className="text-xl sm:text-2xl md:text-3xl mb-8">
         Find matching clinical trials with GEARBOx
       </p>
-      <Link to="/">
-        <Button size="large">Register</Button>
-      </Link>
+      <LinkButton to="/" size="large">
+        Register
+      </LinkButton>
       <p className="mt-4">
         Already a registered user?
         <Link to="/login" className="text-primary underline ml-2">

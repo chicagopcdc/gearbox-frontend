@@ -13,6 +13,11 @@ body {
   flex-direction: column;
 }
 
+:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #2563eb, 0 0 0 3px white;
+}
+
 input:invalid.touched {
   border-color: #f87171;
   --tw-ring-color: #f87171;

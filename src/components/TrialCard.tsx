@@ -34,11 +34,19 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             />
           )}
           {isDropDownOpen ? (
-            <button type="button" onClick={handleClose}>
+            <button
+              type="button"
+              onClick={handleClose}
+              aria-label="Collapse trial card"
+            >
               <ChevronUp color="#C00" />
             </button>
           ) : (
-            <button type="button" onClick={handleOpen}>
+            <button
+              type="button"
+              onClick={handleOpen}
+              aria-label="Expand trial card"
+            >
               <ChevronDown />
             </button>
           )}

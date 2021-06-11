@@ -21,6 +21,7 @@
   },
   "plugins": ["jsx-a11y", "react", "@typescript-eslint"],
   "rules": {
+    "jsx-a11y/accessible-emoji": "off",
     "jsx-a11y/label-has-associated-control": [
       "error",
       {
@@ -29,6 +30,7 @@
         }
       }
     ],
+    "jsx-a11y/no-onchange": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off"
   }
