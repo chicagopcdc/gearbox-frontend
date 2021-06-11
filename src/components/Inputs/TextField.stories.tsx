@@ -12,7 +12,6 @@ export default {
 export const defaultView = () => (
   <TextField
     label="default text field"
-    autoFocus
     placeholder="some text"
     onChange={(e) => console.log(e.target.value)}
   />
@@ -21,7 +20,6 @@ export const defaultView = () => (
 export const withPattern = () => (
   <TextField
     label="default text field"
-    autoFocus
     pattern="\d{7}"
     placeholder="e.g. 1234567"
     onChange={(e) => console.log(e.target.value)}
