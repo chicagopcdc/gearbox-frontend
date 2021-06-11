@@ -23,7 +23,7 @@ input:invalid.touched {
   --tw-ring-color: #f87171;
 }
 
-.multi-select {
+.rmsc {
   --rmsc-main: #2563eb !important;
   --rmsc-border: black !important;
   --rmsc-p: 0.25rem !important;
@@ -31,27 +31,27 @@ input:invalid.touched {
   --rmsc-h: 24px !important;
 }
 
-.multi-select .dropdown-container {
+.rmsc .dropdown-container {
   @apply p-1;
 }
 
-.multi-select .dropdown-content {
+.rmsc .dropdown-content {
   @apply border border-solid border-black pt-0 left-0;
 }
 
-.multi-select .dropdown-container .dropdown-heading-value > span {
+.rmsc .dropdown-container .dropdown-heading-value > span {
   @apply align-baseline;
 }
 
-.multi-select .dropdown-container .panel-content {
+.rmsc .dropdown-container .panel-content {
   @apply shadow-none;
 }
 
-.multi-select .dropdown-container .select-panel > div {
+.rmsc .dropdown-container .select-panel > div {
   @apply border-none p-1;
 }
 
-.multi-select .dropdown-container .select-item input {
+.rmsc .dropdown-container .select-item input {
   @apply hidden;
 }
 
