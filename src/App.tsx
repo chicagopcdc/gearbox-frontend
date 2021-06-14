@@ -11,6 +11,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
+import Terms from './pages/Terms'
 import Trials from './pages/Trials'
 import MyRoute from './components/MyRoute'
 
@@ -125,6 +126,10 @@ function App() {
 
           <Route path="/about">
             <About />
+          </Route>
+
+          <Route path="/terms" exact>
+            <Terms />
           </Route>
 
           <Route path="*">
