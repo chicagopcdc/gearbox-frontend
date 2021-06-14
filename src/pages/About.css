@@ -1,0 +1,14 @@
+#about-page-splash {
+  background: linear-gradient(
+      270deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.8) 40%,
+      rgba(255, 255, 255, 1) 60%
+    ),
+    url(../assets/nci-clinician.jpg);
+  background-blend-mode: lighten;
+  background-size: auto, auto 100%;
+  background-position: right;
+  background-repeat: no-repeat;
+  min-height: 400px;
+}
