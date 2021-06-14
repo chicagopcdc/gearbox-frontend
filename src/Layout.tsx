@@ -1,4 +1,5 @@
 import type React from 'react'
+import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header, { HeaderProps } from './components/Header'
 import Footer from './components/Footer'
@@ -11,6 +12,10 @@ type LayoutProps = {
 
 function Layout({ children, headerProps }: LayoutProps) {
   const location = useLocation()
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   const isHomePage = location.pathname === '/'
   const isLoginPage = location.pathname === '/login'
   const isHomeLandingPage = isHomePage && !headerProps.isAuthenticated
