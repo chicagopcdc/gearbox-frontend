@@ -124,7 +124,7 @@ function App() {
             <Trials studies={studies} />
           </Route>
 
-          <Route path="/about">
+          <Route path="/about" exact>
             <About />
           </Route>
 
