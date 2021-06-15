@@ -112,15 +112,15 @@ function App() {
             />
           </MyRoute>
 
-          <MyRoute path="/login" isAuthenticated={isAuthenticated}>
+          <MyRoute path="/login" exact isAuthenticated={isAuthenticated}>
             <Login authenticate={authenticate} />
           </MyRoute>
 
-          <Route path="/guide">
+          <Route path="/guide" exact>
             <Guide />
           </Route>
 
-          <Route path="/trials">
+          <Route path="/trials" exact>
             <Trials studies={studies} />
           </Route>
 
