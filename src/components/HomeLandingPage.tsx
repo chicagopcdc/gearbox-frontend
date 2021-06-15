@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import LinkButton from './Inputs/LinkButton'
+import LinkButton from './LinkButton'
 import './HomeLandingPage.css'
 
 import gearboxLogo from '../assets/gearbox-logo.svg'

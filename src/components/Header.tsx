@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from './Inputs/Button'
-import LinkButton from './Inputs/LinkButton'
+import LinkButton from './LinkButton'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 
 function getScreenSize(width: number) {
