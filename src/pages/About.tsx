@@ -1,5 +1,6 @@
 import type React from 'react'
 import { Link } from 'react-router-dom'
+import LinkExternal from '../components/LinkExternal'
 import './About.css'
 
 function AboutPageSplash() {
@@ -81,14 +82,12 @@ function About() {
           criteria, including inclusion and exclusion criteria, will be
           abstracted from the trial protocols. Location information and
           enrollment status will be obtained from{' '}
-          <a
+          <LinkExternal
             className="underline text-primary"
-            href="https://clinicaltrials.gov/"
-            target="_blank"
-            rel="noreferrer"
+            to="https://clinicaltrials.gov/"
           >
             ClinicalTrials.gov
-          </a>{' '}
+          </LinkExternal>{' '}
           and the project sponsors. This information will be periodically
           updated to ensure that the records are up to date.
         </p>
@@ -104,24 +103,20 @@ function About() {
       <AboutPageSection title="Get regular updates">
         <ul className="list-disc ml-8">
           <li>
-            <a
+            <LinkExternal
               className="underline text-primary"
-              href="https://www.lls.org/childrens-initiative/pedal"
-              target="_black"
-              rel="noopenner"
+              to="https://www.lls.org/childrens-initiative/pedal"
             >
               LLS Pedal Initiative
-            </a>
+            </LinkExternal>
           </li>
           <li>
-            <a
+            <LinkExternal
               className="underline text-primary"
-              href="http://sam.am/PCDCnews"
-              target="_black"
-              rel="noopenner"
+              to="http://sam.am/PCDCnews"
             >
               Pediatric Cancer Data Commons newsletter
-            </a>
+            </LinkExternal>
           </li>
         </ul>
       </AboutPageSection>

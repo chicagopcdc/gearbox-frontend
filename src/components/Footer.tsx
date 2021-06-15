@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
 import pcdcLogo from '../assets/pcdc-logo.png'
 import pedalLogo from '../assets/pedal-logo.svg'
+import LinkExternal from './LinkExternal'
 
 function Footer() {
   return (
@@ -52,13 +53,9 @@ function Footer() {
             </li>
             •
             <li className="mx-2 inline underline">
-              <a
-                href="https://commons.cri.uchicago.edu/contact/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <LinkExternal to="https://commons.cri.uchicago.edu/contact/">
                 Contact Us
-              </a>
+              </LinkExternal>
             </li>
           </ul>
         </div>

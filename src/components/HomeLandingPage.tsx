@@ -11,6 +11,7 @@ import nciClinician from '../assets/nci-clinician.jpg'
 import nciPatient from '../assets/nci-patient.jpg'
 import pedalBeehives from '../assets/pedal-beehives.png'
 import pedalGraphic from '../assets/CI19-pedal-graphic.png'
+import LinkExternal from './LinkExternal'
 
 function HomeLandingSection1() {
   return (
@@ -111,14 +112,12 @@ function HomeLandingSection4() {
             leukemias. GEARBOx is part of the data infrastructure projects of
             the PedAL initiative.
           </p>
-          <a
+          <LinkExternal
             className="underline text-primary md:text-xl"
-            href="https://www.lls.org/childrens-initiative/pedal"
-            target="_blank"
-            rel="noreferrer"
+            to="https://www.lls.org/childrens-initiative/pedal"
           >
             Learn more about LLS PedAL initiative
-          </a>
+          </LinkExternal>
         </div>
         <div className="mt-12 md:mt-24 mx-auto md:min-w-1/2">
           <img src={pedalGraphic} alt="CI19 PedAL graphic" />

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import LinkExternal from '../components/LinkExternal'
 
 function Terms() {
   return (
@@ -23,14 +24,12 @@ function Terms() {
         the Leukemia & Lymphoma Society (LLS) as part of the LLS Children’s
         Initiative - LLS PedAL: Precision Medicine for Pediatric Acute Leukemia.
         For more information on PedAL please visit{' '}
-        <a
+        <LinkExternal
           className="text-primary underline"
-          href="https://www.lls.org/childrens-initiative/pedal"
-          target="_blank"
-          rel="noreferrer"
+          to="https://www.lls.org/childrens-initiative/pedal"
         >
           www.lls.org/childrens-initiative/pedal
-        </a>
+        </LinkExternal>
         .
       </p>
       <p className="mb-4">
