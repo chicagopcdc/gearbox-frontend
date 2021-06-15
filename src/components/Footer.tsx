@@ -15,7 +15,7 @@ function Footer() {
         >
           <img
             src={uchicagoBSDlogo}
-            alt="University of Chicago Biological Sciences Division logo"
+            alt="University of Chicago Biological Sciences Division"
             style={{ maxHeight: '60px' }}
           />
         </a>
@@ -27,7 +27,7 @@ function Footer() {
         >
           <img
             src={pcdcLogo}
-            alt="Pediatric Center Data Commons logo"
+            alt="Pediatric Center Data Commons"
             style={{ maxHeight: '60px' }}
           />
         </a>
@@ -37,7 +37,7 @@ function Footer() {
           target="_blank"
           rel="noreferrer"
         >
-          <img src={pedalLogo} alt="PedAL logo" style={{ maxHeight: '60px' }} />
+          <img src={pedalLogo} alt="PedAL" style={{ maxHeight: '60px' }} />
         </a>
       </section>
       <section className="text-center text-sm">
