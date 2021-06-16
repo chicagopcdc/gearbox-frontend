@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import uchicagoBSDlogo from '../assets/uchicago-BSD-logo.jpg'
+import uchicagoLogo from '../assets/uchicago-logo.svg'
 import pcdcLogo from '../assets/pcdc-logo.png'
 import pedalLogo from '../assets/pedal-logo.svg'
 import LinkExternal from './LinkExternal'
@@ -15,8 +15,8 @@ function Footer() {
           rel="noreferrer"
         >
           <img
-            src={uchicagoBSDlogo}
-            alt="University of Chicago Biological Sciences Division"
+            src={uchicagoLogo}
+            alt="University of Chicago"
             style={{ maxHeight: '60px' }}
           />
         </a>
