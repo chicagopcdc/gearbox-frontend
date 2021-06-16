@@ -17,7 +17,7 @@ function Footer() {
           <img
             src={uchicagoLogo}
             alt="University of Chicago"
-            style={{ maxHeight: '60px' }}
+            style={{ maxHeight: '60px', padding: '6px' }}
           />
         </a>
         <a
