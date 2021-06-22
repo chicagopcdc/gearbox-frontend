@@ -95,7 +95,7 @@ function App() {
 
   return (
     <Router>
-      <Layout headerProps={{ isAuthenticated, username, signout }}>
+      <Layout {...{ isAuthenticated, username, signout }}>
         <Switch>
           <MyRoute path="/" exact isAuthenticated={isAuthenticated}>
             <Home

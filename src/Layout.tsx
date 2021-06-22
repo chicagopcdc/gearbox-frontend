@@ -1,16 +1,18 @@
 import type React from 'react'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import Header, { HeaderProps } from './components/Header'
+import Header from './components/Header'
 import Footer from './components/Footer'
 import WarningBanner from './components/WarningBanner'
 
 type LayoutProps = {
   children: React.ReactNode
-  headerProps: HeaderProps
+  isAuthenticated: boolean
+  username: string
+  signout: (cb?: (() => void) | undefined) => void
 }
 
-function Layout({ children, headerProps }: LayoutProps) {
+function Layout({ children, isAuthenticated, username, signout }: LayoutProps) {
   const location = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -18,7 +20,7 @@ function Layout({ children, headerProps }: LayoutProps) {
 
   const isHomePage = location.pathname === '/'
   const isLoginPage = location.pathname === '/login'
-  const isHomeLandingPage = isHomePage && !headerProps.isAuthenticated
+  const isHomeLandingPage = isHomePage && !isAuthenticated
   const mainClassName = isHomeLandingPage
     ? ''
     : 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12'
@@ -26,7 +28,7 @@ function Layout({ children, headerProps }: LayoutProps) {
   return (
     <>
       <WarningBanner />
-      {isLoginPage || <Header {...headerProps} />}
+      {isLoginPage || <Header {...{ isAuthenticated, username, signout }} />}
       <main className={mainClassName}>{children}</main>
       <Footer />
     </>
