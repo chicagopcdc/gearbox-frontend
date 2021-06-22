@@ -53,6 +53,12 @@ function Footer() {
             </li>
             •
             <li className="mx-2 inline underline">
+              <LinkExternal to="https://commons.cri.uchicago.edu/wp-content/uploads/2021/04/PCDC-Privacy-Notice.pdf">
+                Privacy Notice
+              </LinkExternal>
+            </li>
+            •
+            <li className="mx-2 inline underline">
               <LinkExternal to="https://commons.cri.uchicago.edu/contact/">
                 Contact Us
               </LinkExternal>
