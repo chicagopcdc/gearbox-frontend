@@ -1,31 +1,8 @@
-import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import Button from './Inputs/Button'
 import LinkButton from './LinkButton'
 import gearboxLogo from '../assets/gearbox-logo.svg'
-
-function getScreenSize(width: number) {
-  if (width < 381) return '2xs'
-  if (width < 640) return 'xs'
-  if (width < 768) return 'sm'
-  if (width < 1024) return 'md'
-  if (width < 1280) return 'lg'
-  if (width < 1536) return 'xl'
-  return '2xl'
-}
-
-function useScreenSize() {
-  const [screenSize, setScreenSize] = useState(getScreenSize(window.outerWidth))
-  function onResize() {
-    const newScreenSize = getScreenSize(window.outerWidth)
-    if (screenSize !== newScreenSize) setScreenSize(newScreenSize)
-  }
-  useEffect(() => {
-    window.addEventListener('resize', onResize)
-    return () => window.removeEventListener('resize', onResize)
-  })
-  return screenSize
-}
+import useScreenSize from '../hooks/useScreenSize'
 
 const navItems = [
   { name: 'ABOUT GEARBOx', path: '/about' },
