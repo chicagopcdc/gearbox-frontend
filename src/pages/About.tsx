@@ -100,6 +100,18 @@ function About() {
           for appropriate use of information on this site and limitations.
         </p>
       </AboutPageSection>
+      <AboutPageSection title="Privacy notice">
+        <p className="mb-4">
+          <LinkExternal
+            className="underline text-primary"
+            to="https://commons.cri.uchicago.edu/wp-content/uploads/2021/04/PCDC-Privacy-Notice.pdf"
+          >
+            Read this Privacy Notice
+          </LinkExternal>{' '}
+          to find out how the Pediatric Cancer Data Commons uses the personal
+          data collected from you when you visit the GEARBOx website.
+        </p>
+      </AboutPageSection>
       <AboutPageSection title="Get regular updates">
         <ul className="list-disc ml-8">
           <li>
