@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom'
-import LinkButton from './LinkButton'
+import LinkButton from '../../components/LinkButton'
+import LinkExternal from '../../components/LinkExternal'
+import gearboxLogo from '../../assets/gearbox-logo.svg'
+import gearIcon from '../../assets/gear-icon.svg'
+import laptopScreen from '../../assets/laptop-screen.png'
+import matchScreenshotLeft from '../../assets/match-screenshot-left.png'
+import matchScreenshotRight from '../../assets/match-screenshot-right.png'
+import nciClinician from '../../assets/nci-clinician.jpg'
+import nciPatient from '../../assets/nci-patient.jpg'
+import pedalBeehives from '../../assets/pedal-beehives.png'
+import pedalGraphic from '../../assets/CI19-pedal-graphic.png'
 import './HomeLandingPage.css'
-
-import gearboxLogo from '../assets/gearbox-logo.svg'
-import gearIcon from '../assets/gear-icon.svg'
-import laptopScreen from '../assets/laptop-screen.png'
-import matchScreenshotLeft from '../assets/match-screenshot-left.png'
-import matchScreenshotRight from '../assets/match-screenshot-right.png'
-import nciClinician from '../assets/nci-clinician.jpg'
-import nciPatient from '../assets/nci-patient.jpg'
-import pedalBeehives from '../assets/pedal-beehives.png'
-import pedalGraphic from '../assets/CI19-pedal-graphic.png'
-import LinkExternal from './LinkExternal'
 
 function HomeLandingSection1() {
   return (

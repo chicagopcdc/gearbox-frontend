@@ -1,10 +1,8 @@
 import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import HomeLandingPage from '../components/HomeLandingPage'
-import HomeMatchingPage, {
-  HomeMatchingPageProps,
-} from '../components/HomeMatchingPage'
-import { fetchFenceAccessToken } from '../utils'
+import { fetchFenceAccessToken } from '../../utils'
+import HomeLandingPage from './HomeLandingPage'
+import HomeMatchingPage, { HomeMatchingPageProps } from './HomeMatchingPage'
 
 type HomeProps = {
   authenticate(username: string, cb?: () => void): void

@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import MatchForm from './MatchForm'
-import MatchResult from './MatchResult'
+import MatchForm from '../../components/MatchForm'
+import MatchResult from '../../components/MatchResult'
 import {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
   Study,
-} from '../model'
+} from '../../model'
 
 export type HomeMatchingPageProps = {
   conditions: MatchCondition[]

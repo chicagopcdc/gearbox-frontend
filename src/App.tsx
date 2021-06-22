@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import Layout from './Layout'
-import Home from './pages/Home'
+import Home from './pages/Home/Page'
 import About from './pages/About'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
