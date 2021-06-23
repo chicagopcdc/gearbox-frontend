@@ -73,8 +73,8 @@ function HomeMatchingPage({
         </section>
       </>
     ) : (
-      <div className="flex">
-        <section className="w-1/2 p-4 lg:px-8">
+      <div className="flex h-screen">
+        <section className="h-full overflow-scroll w-1/2 p-4 lg:px-8">
           <h1 className="uppercase text-primary font-bold">
             Patient Information
           </h1>
@@ -83,7 +83,9 @@ function HomeMatchingPage({
           />
         </section>
         <section
-          className={`w-1/2 p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}
+          className={`h-full overflow-scroll w-1/2 p-4 lg:px-8 ${
+            isUpdating ? 'bg-gray-100' : ''
+          }`}
         >
           <h1 className="uppercase text-primary font-bold">Open Trials</h1>
           <MatchResult
