@@ -33,20 +33,20 @@ function HomeMatchingPage({
 
   return isMatchDataReady ? (
     <div className="md:flex">
-      <div className="md:w-1/2 p-4 lg:px-8">
+      <section className="md:w-1/2 p-4 lg:px-8">
         <h1 className="uppercase text-primary font-bold">
           Patient Information
         </h1>
         <MatchForm {...{ config, userInput, updateUserInput, setIsUpdating }} />
-      </div>
-      <div
+      </section>
+      <section
         className={`md:w-1/2 p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}
       >
         <h1 className="uppercase text-primary font-bold">Open Trials</h1>
         <MatchResult
           {...{ criteria, conditions, config, studies, userInput }}
         />
-      </div>
+      </section>
     </div>
   ) : (
     <div>Loading...</div>
