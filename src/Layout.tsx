@@ -24,13 +24,14 @@ function Layout({ children, isAuthenticated, username, signout }: LayoutProps) {
   const mainClassName = isHomeLandingPage
     ? ''
     : 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12'
+  const isHomeMatchingPage = isHomePage && isAuthenticated
 
   return (
     <>
       <WarningBanner />
       {isLoginPage || <Header {...{ isAuthenticated, username, signout }} />}
       <main className={mainClassName}>{children}</main>
-      <Footer />
+      {isHomeMatchingPage || <Footer />}
     </>
   )
 }
