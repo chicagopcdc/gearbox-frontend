@@ -34,7 +34,7 @@ function HomeMatchingPage({
     config.fields !== undefined && Object.keys(userInput).length > 0
 
   const screenSize = useScreenSize()
-  const [view, setView] = useState('form')
+  const [view, setView] = useState<'form' | 'result'>('form')
 
   return isMatchDataReady ? (
     screenSize.smAndDown ? (
