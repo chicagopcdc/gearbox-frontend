@@ -37,8 +37,8 @@ function HomeMatchingPage({
   const [view, setView] = useState('form')
 
   return isMatchDataReady ? (
-    <>
-      {screenSize.smAndDown && (
+    screenSize.smAndDown ? (
+      <>
         <div className="flex justify-center sticky top-0 bg-white">
           <Button
             size="small"
@@ -57,10 +57,8 @@ function HomeMatchingPage({
             Open Trials
           </Button>
         </div>
-      )}
-      <div className="md:flex">
-        {(screenSize.mdAndUp || view === 'form') && (
-          <section className="md:w-1/2 p-4 lg:px-8">
+        {view === 'form' && (
+          <section className="p-4 lg:px-8">
             <h1 className="uppercase text-primary font-bold">
               Patient Information
             </h1>
@@ -69,20 +67,36 @@ function HomeMatchingPage({
             />
           </section>
         )}
-        {(screenSize.mdAndUp || view === 'result') && (
-          <section
-            className={`md:w-1/2 p-4 lg:px-8 ${
-              isUpdating ? 'bg-gray-100' : ''
-            }`}
-          >
+        {view === 'result' && (
+          <section className={`p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}>
             <h1 className="uppercase text-primary font-bold">Open Trials</h1>
             <MatchResult
               {...{ criteria, conditions, config, studies, userInput }}
             />
           </section>
         )}
+      </>
+    ) : (
+      <div className="flex">
+        <section className="w-1/2 p-4 lg:px-8">
+          <h1 className="uppercase text-primary font-bold">
+            Patient Information
+          </h1>
+          <MatchForm
+            {...{ config, userInput, updateUserInput, setIsUpdating }}
+          />
+        </section>
+
+        <section
+          className={`w-1/2 p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}
+        >
+          <h1 className="uppercase text-primary font-bold">Open Trials</h1>
+          <MatchResult
+            {...{ criteria, conditions, config, studies, userInput }}
+          />
+        </section>
       </div>
-    </>
+    )
   ) : (
     <div>Loading...</div>
   )
