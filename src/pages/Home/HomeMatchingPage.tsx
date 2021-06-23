@@ -59,9 +59,6 @@ function HomeMatchingPage({
         </div>
         {view === 'form' && (
           <section className="p-4 lg:px-8">
-            <h1 className="uppercase text-primary font-bold">
-              Patient Information
-            </h1>
             <MatchForm
               {...{ config, userInput, updateUserInput, setIsUpdating }}
             />
@@ -69,7 +66,6 @@ function HomeMatchingPage({
         )}
         {view === 'result' && (
           <section className={`p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}>
-            <h1 className="uppercase text-primary font-bold">Open Trials</h1>
             <MatchResult
               {...{ criteria, conditions, config, studies, userInput }}
             />
