@@ -74,8 +74,8 @@ function HomeMatchingPage({
       </>
     ) : (
       <div className="flex h-screen">
-        <section className="h-full overflow-scroll w-1/2 p-4 lg:px-8">
-          <h1 className="uppercase text-primary font-bold">
+        <section className="h-full overflow-scroll w-1/2 mt-4 pb-4 px-4 lg:px-8">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold py-2">
             Patient Information
           </h1>
           <MatchForm
@@ -83,11 +83,13 @@ function HomeMatchingPage({
           />
         </section>
         <section
-          className={`h-full overflow-scroll w-1/2 p-4 lg:px-8 ${
+          className={`h-full overflow-scroll w-1/2 mt-4 pb-4 px-4 lg:px-8 ${
             isUpdating ? 'bg-gray-100' : ''
           }`}
         >
-          <h1 className="uppercase text-primary font-bold">Open Trials</h1>
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold py-2">
+            Open Trials
+          </h1>
           <MatchResult
             {...{ criteria, conditions, config, studies, userInput }}
           />
