@@ -57,20 +57,20 @@ function HomeMatchingPage({
             Open Trials
           </Button>
         </div>
-        {view === 'form' && (
-          <section className="p-4 lg:px-8">
-            <MatchForm
-              {...{ config, userInput, updateUserInput, setIsUpdating }}
-            />
-          </section>
-        )}
-        {view === 'result' && (
-          <section className={`p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}>
-            <MatchResult
-              {...{ criteria, conditions, config, studies, userInput }}
-            />
-          </section>
-        )}
+        <section className={`p-4 lg:px-8 ${view === 'form' ? '' : 'hidden'} `}>
+          <MatchForm
+            {...{ config, userInput, updateUserInput, setIsUpdating }}
+          />
+        </section>
+        <section
+          className={`p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''} ${
+            view === 'result' ? '' : 'hidden'
+          } `}
+        >
+          <MatchResult
+            {...{ criteria, conditions, config, studies, userInput }}
+          />
+        </section>
       </>
     ) : (
       <div className="flex">
@@ -82,7 +82,6 @@ function HomeMatchingPage({
             {...{ config, userInput, updateUserInput, setIsUpdating }}
           />
         </section>
-
         <section
           className={`w-1/2 p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''}`}
         >
