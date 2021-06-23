@@ -73,26 +73,28 @@ function HomeMatchingPage({
         </section>
       </>
     ) : (
-      <div className="flex h-screen">
-        <section className="h-full overflow-scroll w-1/2 mt-4 pb-4 px-4 lg:px-8">
-          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold py-2">
+      <div className="flex h-screen pb-8">
+        <section className="h-full overflow-scroll w-1/2">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2">
             Patient Information
           </h1>
-          <MatchForm
-            {...{ config, userInput, updateUserInput, setIsUpdating }}
-          />
+          <div className="px-4 lg:px-8 pb-4">
+            <MatchForm
+              {...{ config, userInput, updateUserInput, setIsUpdating }}
+            />
+          </div>
         </section>
-        <section
-          className={`h-full overflow-scroll w-1/2 mt-4 pb-4 px-4 lg:px-8 ${
-            isUpdating ? 'bg-gray-100' : ''
-          }`}
-        >
-          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold py-2">
+        <section className="h-full overflow-scroll w-1/2">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2">
             Open Trials
           </h1>
-          <MatchResult
-            {...{ criteria, conditions, config, studies, userInput }}
-          />
+          <div
+            className={`px-4 lg:px-8 pb-4 ${isUpdating ? 'bg-gray-100' : ''}`}
+          >
+            <MatchResult
+              {...{ criteria, conditions, config, studies, userInput }}
+            />
+          </div>
         </section>
       </div>
     )
