@@ -1,33 +1,26 @@
-import { useHistory } from 'react-router-dom'
-import LoginForm from '../components/LoginForm'
 import GoogleLoginButton from '../components/GoogleLoginButton'
 import { initFenceOAuth } from '../utils'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 
-type LoginProps = {
-  authenticate(username: string, cb?: () => void): void
-}
-
-function Login({ authenticate }: LoginProps) {
-  const history = useHistory()
-  function handleLogin(values: { username: string; password?: string }) {
-    authenticate(values.username, () => history.replace('/'))
-  }
-
+function Login() {
   return (
-    <div className="flex flex-col h-full align-center justify-center max-w-sm mx-auto">
-      <img src={gearboxLogo} alt="GEARBOx logo" className="mb-12" />
+    <div className="flex h-full items-center justify-center">
+      <div className="border border-gray border-solid px-4 sm:px-8 pt-12 pb-20 sm:pb-28">
+        <div className="flex justify-center mb-4">
+          <img
+            src={gearboxLogo}
+            alt="GEARBOx logo"
+            style={{ height: '40px' }}
+          />
+        </div>
+        <h1 className="mb-16 text-lg text-center">Log in to your account</h1>
 
-      <LoginForm onLogin={handleLogin} />
-
-      <div className="flex items-center my-4 mx-12">
-        <hr className="flex-1 border-gray-500 mr-4" />
-        <span className="text-sm uppercase">or</span>
-        <hr className="flex-1 border-gray-500 ml-4" />
-      </div>
-
-      <div className="mb-4 mx-12">
-        <GoogleLoginButton onClick={initFenceOAuth} />
+        <div className="mb-4">
+          <GoogleLoginButton onClick={initFenceOAuth} />
+        </div>
+        <p className="text-sm">
+          If this is your first time, you will be asked to register.
+        </p>
       </div>
     </div>
   )
