@@ -14,7 +14,7 @@ import Login from './pages/Login'
 import Terms from './pages/Terms'
 import Trials from './pages/Trials'
 import MyRoute from './components/MyRoute'
-
+import useFakeAuth from './hooks/useFakeAuth'
 import {
   EligibilityCriterion,
   MatchCondition,
@@ -30,27 +30,6 @@ import {
   mockLoadLatestUserInput,
   mockPostLatestUserInput,
 } from './mock/utils'
-
-// useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
-const useFakeAuth = (): [
-  boolean,
-  string,
-  (username: string, cb?: () => void) => void,
-  (cb?: () => void) => void
-] => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [username, setUsername] = useState('')
-  const authenticate = (username: string, cb?: () => void) => {
-    setIsAuthenticated(true)
-    setUsername(username)
-    if (cb) setTimeout(cb, 100) // fake async
-  }
-  const signout = (cb?: () => void) => {
-    setIsAuthenticated(false)
-    if (cb) setTimeout(cb, 100)
-  }
-  return [isAuthenticated, username, authenticate, signout]
-}
 
 function App() {
   const [studies, setStudies] = useState([] as Study[])
