@@ -34,15 +34,9 @@ function HomeLandingSection1() {
             helps you rapidly match patients with relapsed or refractory disease
             to appropriate clinical trials.
           </p>
-          <LinkButton to="/" size="large">
-            Register
+          <LinkButton to="/login" size="large">
+            Get started
           </LinkButton>
-          <p className="mt-4">
-            Already a registered user?
-            <Link to="/login" className="text-primary underline ml-2">
-              Log in
-            </Link>
-          </p>
         </div>
       </div>
     </section>
@@ -132,15 +126,9 @@ function HomeLandingSection5() {
       <p className="text-xl sm:text-2xl md:text-3xl mb-8">
         Find matching clinical trials with GEARBOx
       </p>
-      <LinkButton to="/" size="large">
-        Register
+      <LinkButton to="/login" size="large">
+        Get started
       </LinkButton>
-      <p className="mt-4">
-        Already a registered user?
-        <Link to="/login" className="text-primary underline ml-2">
-          Log in
-        </Link>
-      </p>
     </section>
   )
 }
