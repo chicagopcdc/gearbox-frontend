@@ -14,7 +14,7 @@ import Login from './pages/Login'
 import Terms from './pages/Terms'
 import Trials from './pages/Trials'
 import MyRoute from './components/MyRoute'
-import useFakeAuth from './hooks/useFakeAuth'
+import useAuth from './hooks/useAuth'
 import {
   EligibilityCriterion,
   MatchCondition,
@@ -37,7 +37,7 @@ function App() {
     mockLoadStudies().then(setStudies)
   }, [])
 
-  const [isAuthenticated, username, authenticate, signout] = useFakeAuth()
+  const [isAuthenticated, username, authenticate, signout] = useAuth()
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)

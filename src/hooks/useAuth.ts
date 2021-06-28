@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
-export default function useFakeAuth(): [
+export default function useAuth(): [
   boolean,
   string,
   (username: string, cb?: () => void) => void,
