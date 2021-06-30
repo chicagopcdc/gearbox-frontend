@@ -1,17 +1,17 @@
 import { useState } from 'react'
-import Button from '../../components/Inputs/Button'
-import MatchForm from '../../components/MatchForm'
-import MatchResult from '../../components/MatchResult'
-import useScreenSize from '../../hooks/useScreenSize'
+import Button from '../components/Inputs/Button'
+import MatchForm from '../components/MatchForm'
+import MatchResult from '../components/MatchResult'
+import useScreenSize from '../hooks/useScreenSize'
 import {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
   Study,
-} from '../../model'
+} from '../model'
 
-export type HomeMatchingPageProps = {
+export type MatchingProps = {
   conditions: MatchCondition[]
   config: MatchFormConfig
   criteria: EligibilityCriterion[]
@@ -20,14 +20,14 @@ export type HomeMatchingPageProps = {
   updateUserInput(values: MatchFormValues): void
 }
 
-function HomeMatchingPage({
+function Matching({
   conditions,
   config,
   criteria,
   studies,
   userInput,
   updateUserInput,
-}: HomeMatchingPageProps) {
+}: MatchingProps) {
   const [isUpdating, setIsUpdating] = useState(false)
 
   const isMatchDataReady =
@@ -103,4 +103,4 @@ function HomeMatchingPage({
   )
 }
 
-export default HomeMatchingPage
+export default Matching

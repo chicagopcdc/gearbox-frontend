@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom'
 
 import Layout from './Layout'
-import HomeMatchingPage from './pages/Home/HomeMatchingPage'
-import HomeLandingPage from './pages/Home/HomeLandingPage'
 import About from './pages/About'
 import Guide from './pages/Guide'
+import Matching from './pages/Matching'
+import Landing from './pages/Landing'
 import Login from './pages/Login'
 import Terms from './pages/Terms'
 import Trials from './pages/Trials'
@@ -98,7 +98,7 @@ function App() {
         <Switch>
           <Route path="/" exact>
             {isAuthenticated ? (
-              <HomeMatchingPage
+              <Matching
                 {...{
                   conditions,
                   config,
@@ -109,7 +109,7 @@ function App() {
                 }}
               />
             ) : (
-              <HomeLandingPage />
+              <Landing />
             )}
           </Route>
 

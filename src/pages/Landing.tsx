@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom'
-import LinkButton from '../../components/LinkButton'
-import LinkExternal from '../../components/LinkExternal'
-import gearboxLogo from '../../assets/gearbox-logo.svg'
-import gearIcon from '../../assets/gear-icon.svg'
-import laptopScreen from '../../assets/laptop-screen.png'
-import matchScreenshotLeft from '../../assets/match-screenshot-left.png'
-import matchScreenshotRight from '../../assets/match-screenshot-right.png'
-import nciClinician from '../../assets/nci-clinician.jpg'
-import nciPatient from '../../assets/nci-patient.jpg'
-import pedalBeehives from '../../assets/pedal-beehives.png'
-import pedalGraphic from '../../assets/CI19-pedal-graphic.png'
-import './HomeLandingPage.css'
+import LinkButton from '../components/LinkButton'
+import LinkExternal from '../components/LinkExternal'
+import gearboxLogo from '../assets/gearbox-logo.svg'
+import gearIcon from '../assets/gear-icon.svg'
+import laptopScreen from '../assets/laptop-screen.png'
+import matchScreenshotLeft from '../assets/match-screenshot-left.png'
+import matchScreenshotRight from '../assets/match-screenshot-right.png'
+import nciClinician from '../assets/nci-clinician.jpg'
+import nciPatient from '../assets/nci-patient.jpg'
+import pedalBeehives from '../assets/pedal-beehives.png'
+import pedalGraphic from '../assets/CI19-pedal-graphic.png'
+import './Landing.css'
 
-function HomeLandingSection1() {
+function LandingSection1() {
   return (
     <section className="relative overflow-x-hidden px-4">
       <img id="beehive" src={pedalBeehives} alt="Beehive background graphic" />
@@ -43,7 +43,7 @@ function HomeLandingSection1() {
   )
 }
 
-function HomeLandingSection2() {
+function LandingSection2() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="w-full text-center">
@@ -67,7 +67,7 @@ function HomeLandingSection2() {
   )
 }
 
-function HomeLandingSection3() {
+function LandingSection3() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="max-w-screen-xl text-center mx-auto">
@@ -91,7 +91,7 @@ function HomeLandingSection3() {
   )
 }
 
-function HomeLandingSection4() {
+function LandingSection4() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="lg:flex max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
@@ -120,7 +120,7 @@ function HomeLandingSection4() {
   )
 }
 
-function HomeLandingSection5() {
+function LandingSection5() {
   return (
     <section className="text-center my-16 md:my-32 px-4">
       <p className="text-xl sm:text-2xl md:text-3xl mb-8">
@@ -133,16 +133,16 @@ function HomeLandingSection5() {
   )
 }
 
-function HomeLandingPage() {
+function Landing() {
   return (
     <>
-      <HomeLandingSection1 />
-      <HomeLandingSection2 />
-      <HomeLandingSection3 />
-      <HomeLandingSection4 />
-      <HomeLandingSection5 />
+      <LandingSection1 />
+      <LandingSection2 />
+      <LandingSection3 />
+      <LandingSection4 />
+      <LandingSection5 />
     </>
   )
 }
 
-export default HomeLandingPage
+export default Landing
