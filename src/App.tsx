@@ -93,7 +93,7 @@ function App() {
   }, [isAuthenticated])
 
   return (
-    <Router>
+    <Router basename={process.env?.PUBLIC_URL}>
       <Layout {...{ isAuthenticated, username, onLogout: handleLogout }}>
         <Switch>
           <MyRoute path="/" exact isAuthenticated={isAuthenticated}>
