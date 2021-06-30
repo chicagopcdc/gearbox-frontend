@@ -224,6 +224,14 @@ export const fetchFenceAccessToken = (code: string) => {
     .then(({ access_token }) => access_token)
 }
 
+export function handleFenceLogout() {
+  window.location.assign(
+    `/user/logout?next=${window.location.origin}${
+      process.env.NODE_ENV === 'development' ? '/dev.html/' : '/'
+    }`
+  )
+}
+
 export function handleGoogleLogin() {
   window.location.assign(
     `/user/login/google?redirect=${window.location.origin}${
