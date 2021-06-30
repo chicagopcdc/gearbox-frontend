@@ -12,11 +12,11 @@ export default function useAuth(): [
   const authenticate = (username: string, cb?: () => void) => {
     setIsAuthenticated(true)
     setUsername(username)
-    if (cb) setTimeout(cb, 100) // fake async
+    if (cb) cb()
   }
   const signout = (cb?: () => void) => {
     setIsAuthenticated(false)
-    if (cb) setTimeout(cb, 100)
+    if (cb) cb()
   }
   return [isAuthenticated, username, authenticate, signout]
 }
