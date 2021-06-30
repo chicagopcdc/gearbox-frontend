@@ -12,10 +12,10 @@ const navItems = [
 export type HeaderProps = {
   isAuthenticated: boolean
   username: string
-  signout: (cb?: () => void) => void
+  onLogout: () => void
 }
 
-function Header({ isAuthenticated, username, signout }: HeaderProps) {
+function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
   const screenSize = useScreenSize()
   const authElement = (
     <div className="flex justify-end mb-2 md:mb-0">
@@ -26,7 +26,7 @@ function Header({ isAuthenticated, username, signout }: HeaderProps) {
               Hello,&nbsp;<span className="font-bold">{username}</span>
             </div>
           )}
-          <Button size="small" onClick={() => signout()}>
+          <Button size="small" onClick={onLogout}>
             Log out
           </Button>
         </>
