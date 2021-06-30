@@ -196,13 +196,11 @@ export const clearShowIfField = (
 }
 
 export function handleFenceLogout() {
-  window.location.assign(`/user/logout?next=${window.location.origin}`)
+  window.location.assign(`/user/logout?next=${window.location.href}`)
 }
 
 export function handleGoogleLogin() {
-  window.location.assign(
-    `/user/login/google?redirect=${window.location.origin}`
-  )
+  window.location.assign(`/user/login/google?redirect=${window.location.href}`)
 }
 
 export function fetchUserInfo() {
