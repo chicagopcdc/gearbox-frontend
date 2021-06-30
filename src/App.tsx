@@ -110,9 +110,9 @@ function App() {
             />
           </MyRoute>
 
-          <MyRoute path="/login" exact isAuthenticated={isAuthenticated}>
-            <Login />
-          </MyRoute>
+          <Route path="/login" exact>
+            {isAuthenticated ? <Redirect to="/" /> : <Login />}
+          </Route>
 
           <Route path="/guide" exact>
             <Guide />
