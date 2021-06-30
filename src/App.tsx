@@ -15,7 +15,7 @@ import Terms from './pages/Terms'
 import Trials from './pages/Trials'
 import MyRoute from './components/MyRoute'
 import useAuth from './hooks/useAuth'
-import { fetchUserInfo } from './utils'
+import { fetchUserInfo, handleFenceLogout } from './utils'
 import {
   EligibilityCriterion,
   MatchCondition,
@@ -54,6 +54,9 @@ function App() {
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  function handleLogout() {
+    signout(handleFenceLogout)
+  }
 
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
@@ -91,7 +94,7 @@ function App() {
 
   return (
     <Router>
-      <Layout {...{ isAuthenticated, username, signout }}>
+      <Layout {...{ isAuthenticated, username, onLogout: handleLogout }}>
         <Switch>
           <MyRoute path="/" exact isAuthenticated={isAuthenticated}>
             <Home

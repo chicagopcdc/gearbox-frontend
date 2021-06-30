@@ -9,10 +9,15 @@ type LayoutProps = {
   children: React.ReactNode
   isAuthenticated: boolean
   username: string
-  signout: (cb?: (() => void) | undefined) => void
+  onLogout: () => void
 }
 
-function Layout({ children, isAuthenticated, username, signout }: LayoutProps) {
+function Layout({
+  children,
+  isAuthenticated,
+  username,
+  onLogout,
+}: LayoutProps) {
   const location = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -29,7 +34,7 @@ function Layout({ children, isAuthenticated, username, signout }: LayoutProps) {
   return (
     <>
       <WarningBanner />
-      {isLoginPage || <Header {...{ isAuthenticated, username, signout }} />}
+      {isLoginPage || <Header {...{ isAuthenticated, username, onLogout }} />}
       <main className={mainClassName}>{children}</main>
       {isHomeMatchingPage || <Footer />}
     </>
