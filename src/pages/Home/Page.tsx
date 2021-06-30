@@ -14,12 +14,18 @@ function Home({
   homeMatchingPageProps,
 }: HomeProps) {
   useEffect(() => {
-    fetchUserInfo()
-      .then(({ username }) => {
-        if (username === undefined) throw new Error('Error: Missing username!')
-        authenticate(username)
-      })
-      .catch(console.error)
+    if (
+      !isAuthenticated &&
+      (window.document.referrer === '' ||
+        new URL(window.document.referrer).origin !== window.location.origin)
+    )
+      fetchUserInfo()
+        .then(({ username }) => {
+          if (username === undefined)
+            throw new Error('Error: Missing username!')
+          authenticate(username)
+        })
+        .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
