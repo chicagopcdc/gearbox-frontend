@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom'
 
 import Layout from './Layout'
-import Home from './pages/Home/Page'
+import HomeMatchingPage from './pages/Home/HomeMatchingPage'
+import HomeLandingPage from './pages/Home/HomeLandingPage'
 import About from './pages/About'
 import Guide from './pages/Guide'
 import Login from './pages/Login'
 import Terms from './pages/Terms'
 import Trials from './pages/Trials'
-import MyRoute from './components/MyRoute'
 import useAuth from './hooks/useAuth'
 import { fetchUserInfo, handleFenceLogout } from './utils'
 import {
@@ -96,19 +96,22 @@ function App() {
     <Router basename={process.env?.PUBLIC_URL}>
       <Layout {...{ isAuthenticated, username, onLogout: handleLogout }}>
         <Switch>
-          <MyRoute path="/" exact isAuthenticated={isAuthenticated}>
-            <Home
-              isAuthenticated={isAuthenticated}
-              homeMatchingPageProps={{
-                conditions,
-                config,
-                criteria,
-                studies,
-                userInput,
-                updateUserInput,
-              }}
-            />
-          </MyRoute>
+          <Route path="/" exact>
+            {isAuthenticated ? (
+              <HomeMatchingPage
+                {...{
+                  conditions,
+                  config,
+                  criteria,
+                  studies,
+                  userInput,
+                  updateUserInput,
+                }}
+              />
+            ) : (
+              <HomeLandingPage />
+            )}
+          </Route>
 
           <Route path="/login" exact>
             {isAuthenticated ? <Redirect to="/" /> : <Login />}
