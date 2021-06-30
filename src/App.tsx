@@ -15,6 +15,7 @@ import Terms from './pages/Terms'
 import Trials from './pages/Trials'
 import MyRoute from './components/MyRoute'
 import useAuth from './hooks/useAuth'
+import { fetchUserInfo } from './utils'
 import {
   EligibilityCriterion,
   MatchCondition,
@@ -38,6 +39,22 @@ function App() {
   }, [])
 
   const [isAuthenticated, username, authenticate, signout] = useAuth()
+  useEffect(() => {
+    if (
+      !isAuthenticated &&
+      (window.document.referrer === '' ||
+        new URL(window.document.referrer).origin !== window.location.origin)
+    )
+      fetchUserInfo()
+        .then(({ username }) => {
+          if (username === undefined)
+            throw new Error('Error: Missing username!')
+          authenticate(username)
+        })
+        .catch(console.error)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
@@ -78,7 +95,6 @@ function App() {
         <Switch>
           <MyRoute path="/" exact isAuthenticated={isAuthenticated}>
             <Home
-              authenticate={authenticate}
               isAuthenticated={isAuthenticated}
               homeMatchingPageProps={{
                 conditions,
