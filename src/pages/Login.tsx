@@ -1,5 +1,5 @@
 import GoogleLoginButton from '../components/GoogleLoginButton'
-import { initFenceOAuth } from '../utils'
+import { handleGoogleLogin } from '../utils'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 
 function Login() {
@@ -16,7 +16,7 @@ function Login() {
         <h1 className="mb-16 text-lg text-center">Log in to your account</h1>
 
         <div className="mb-4">
-          <GoogleLoginButton onClick={initFenceOAuth} />
+          <GoogleLoginButton onClick={handleGoogleLogin} />
         </div>
         <p className="text-sm">
           If this is your first time, you will be asked to register.
