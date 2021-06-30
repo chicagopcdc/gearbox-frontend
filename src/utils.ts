@@ -223,3 +223,11 @@ export const fetchFenceAccessToken = (code: string) => {
     .then((response) => response.json())
     .then(({ access_token }) => access_token)
 }
+
+export function handleGoogleLogin() {
+  window.location.assign(
+    `/user/login/google?redirect=${window.location.origin}${
+      process.env.NODE_ENV === 'development' ? '/dev.html/' : '/'
+    }`
+  )
+}
