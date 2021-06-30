@@ -7,13 +7,13 @@ import {
 } from 'react-router-dom'
 
 import Layout from './Layout'
-import About from './pages/About'
-import Guide from './pages/Guide'
-import Matching from './pages/Matching'
-import Landing from './pages/Landing'
-import Login from './pages/Login'
-import Terms from './pages/Terms'
-import Trials from './pages/Trials'
+import AboutPage from './pages/AboutPage'
+import GuidePage from './pages/GuidePage'
+import MatchingPage from './pages/MatchingPage'
+import LandingPage from './pages/LandingPage'
+import LoginPage from './pages/LoginPage'
+import TermsPage from './pages/TermsPage'
+import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
 import { fetchUserInfo, handleFenceLogout } from './utils'
 import {
@@ -98,7 +98,7 @@ function App() {
         <Switch>
           <Route path="/" exact>
             {isAuthenticated ? (
-              <Matching
+              <MatchingPage
                 {...{
                   conditions,
                   config,
@@ -109,28 +109,28 @@ function App() {
                 }}
               />
             ) : (
-              <Landing />
+              <LandingPage />
             )}
           </Route>
 
           <Route path="/login" exact>
-            {isAuthenticated ? <Redirect to="/" /> : <Login />}
+            {isAuthenticated ? <Redirect to="/" /> : <LoginPage />}
           </Route>
 
           <Route path="/guide" exact>
-            <Guide />
+            <GuidePage />
           </Route>
 
           <Route path="/trials" exact>
-            <Trials studies={studies} />
+            <TrialsPage studies={studies} />
           </Route>
 
           <Route path="/about" exact>
-            <About />
+            <AboutPage />
           </Route>
 
           <Route path="/terms" exact>
-            <Terms />
+            <TermsPage />
           </Route>
 
           <Route path="*">

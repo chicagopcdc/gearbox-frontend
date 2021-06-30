@@ -11,7 +11,7 @@ import {
   Study,
 } from '../model'
 
-export type MatchingProps = {
+export type MatchingPageProps = {
   conditions: MatchCondition[]
   config: MatchFormConfig
   criteria: EligibilityCriterion[]
@@ -20,14 +20,14 @@ export type MatchingProps = {
   updateUserInput(values: MatchFormValues): void
 }
 
-function Matching({
+function MatchingPage({
   conditions,
   config,
   criteria,
   studies,
   userInput,
   updateUserInput,
-}: MatchingProps) {
+}: MatchingPageProps) {
   const [isUpdating, setIsUpdating] = useState(false)
 
   const isMatchDataReady =
@@ -103,4 +103,4 @@ function Matching({
   )
 }
 
-export default Matching
+export default MatchingPage

@@ -2,7 +2,7 @@ import GoogleLoginButton from '../components/GoogleLoginButton'
 import { handleGoogleLogin } from '../utils'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 
-function Login() {
+function LoginPage() {
   return (
     <div className="flex h-full items-center justify-center">
       <div className="border border-gray border-solid px-4 sm:px-8 pt-12 pb-20 sm:pb-28">
@@ -26,4 +26,4 @@ function Login() {
   )
 }
 
-export default Login
+export default LoginPage

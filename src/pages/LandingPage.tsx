@@ -10,9 +10,9 @@ import nciClinician from '../assets/nci-clinician.jpg'
 import nciPatient from '../assets/nci-patient.jpg'
 import pedalBeehives from '../assets/pedal-beehives.png'
 import pedalGraphic from '../assets/CI19-pedal-graphic.png'
-import './Landing.css'
+import './LandingPage.css'
 
-function LandingSection1() {
+function LandingPageSection1() {
   return (
     <section className="relative overflow-x-hidden px-4">
       <img id="beehive" src={pedalBeehives} alt="Beehive background graphic" />
@@ -43,7 +43,7 @@ function LandingSection1() {
   )
 }
 
-function LandingSection2() {
+function LandingPageSection2() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="w-full text-center">
@@ -67,7 +67,7 @@ function LandingSection2() {
   )
 }
 
-function LandingSection3() {
+function LandingPageSection3() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="max-w-screen-xl text-center mx-auto">
@@ -91,7 +91,7 @@ function LandingSection3() {
   )
 }
 
-function LandingSection4() {
+function LandingPageSection4() {
   return (
     <section className="min-h-screen flex items-center my-16">
       <div className="lg:flex max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
@@ -120,7 +120,7 @@ function LandingSection4() {
   )
 }
 
-function LandingSection5() {
+function LandingPageSection5() {
   return (
     <section className="text-center my-16 md:my-32 px-4">
       <p className="text-xl sm:text-2xl md:text-3xl mb-8">
@@ -133,16 +133,16 @@ function LandingSection5() {
   )
 }
 
-function Landing() {
+function LandingPage() {
   return (
     <>
-      <LandingSection1 />
-      <LandingSection2 />
-      <LandingSection3 />
-      <LandingSection4 />
-      <LandingSection5 />
+      <LandingPageSection1 />
+      <LandingPageSection2 />
+      <LandingPageSection3 />
+      <LandingPageSection4 />
+      <LandingPageSection5 />
     </>
   )
 }
 
-export default Landing
+export default LandingPage

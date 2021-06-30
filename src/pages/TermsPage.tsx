@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import LinkExternal from '../components/LinkExternal'
 
-function Terms() {
+function TermsPage() {
   return (
     <div className="my-8 text-lg">
       <h1 className="font-bold text-primary text-3xl mb-8">
@@ -90,4 +90,4 @@ function Terms() {
   )
 }
 
-export default Terms
+export default TermsPage

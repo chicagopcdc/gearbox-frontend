@@ -1,7 +1,7 @@
 import type React from 'react'
 import { Link } from 'react-router-dom'
 import LinkExternal from '../components/LinkExternal'
-import './About.css'
+import './AboutPage.css'
 
 function AboutPageSplash() {
   return (
@@ -37,7 +37,7 @@ function AboutPageSection({
   )
 }
 
-function About() {
+function AboutPage() {
   return (
     <div className="my-8 text-lg">
       <h1 className="font-bold text-primary text-3xl mb-8">About GEARBOx</h1>
@@ -136,4 +136,4 @@ function About() {
   )
 }
 
-export default About
+export default AboutPage
