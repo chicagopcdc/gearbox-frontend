@@ -196,18 +196,12 @@ export const clearShowIfField = (
 }
 
 export function handleFenceLogout() {
-  window.location.assign(
-    `/user/logout?next=${window.location.origin}${
-      process.env.NODE_ENV === 'development' ? '/dev.html/' : '/'
-    }`
-  )
+  window.location.assign(`/user/logout?next=${window.location.origin}`)
 }
 
 export function handleGoogleLogin() {
   window.location.assign(
-    `/user/login/google?redirect=${window.location.origin}${
-      process.env.NODE_ENV === 'development' ? '/dev.html/' : '/'
-    }`
+    `/user/login/google?redirect=${window.location.origin}`
   )
 }
 
