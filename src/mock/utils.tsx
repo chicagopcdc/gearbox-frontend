@@ -3,7 +3,7 @@ import latestUserInput from './latestUserInput.json'
 import matchConditions from './matchConditions.json'
 import matchFormConfig from './matchFormConfig.json'
 import studies from './studies.json'
-import {
+import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,

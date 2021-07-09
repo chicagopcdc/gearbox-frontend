@@ -1,6 +1,6 @@
 import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
-import {
+import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,

@@ -3,7 +3,7 @@ import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchResult from '../components/MatchResult'
 import useScreenSize from '../hooks/useScreenSize'
-import {
+import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,

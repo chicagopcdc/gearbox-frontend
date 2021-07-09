@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Info, XCircle } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
-import { MatchInfo, MatchInfoAlgorithm } from '../model'
+import type { MatchInfo, MatchInfoAlgorithm } from '../model'
 
 type MatchInfoDetailsProps = {
   matchInfoId: string

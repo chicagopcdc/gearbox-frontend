@@ -16,7 +16,7 @@ import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
 import { fetchUserInfo, handleFenceLogout } from './utils'
-import {
+import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,

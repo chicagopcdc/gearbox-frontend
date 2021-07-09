@@ -1,5 +1,5 @@
 import type React from 'react'
-import { MatchFormFieldOption } from '../../model'
+import type { MatchFormFieldOption } from '../../model'
 
 type SelectProps = {
   label?: string | React.ReactNode

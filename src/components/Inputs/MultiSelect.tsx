@@ -1,5 +1,5 @@
 import ReactMultiSelect from 'react-multi-select-component'
-import { MatchFormFieldOption } from '../../model'
+import type { MatchFormFieldOption } from '../../model'
 
 type MultiSelectProps = {
   label?: string

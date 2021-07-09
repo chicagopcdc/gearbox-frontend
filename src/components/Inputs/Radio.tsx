@@ -1,4 +1,4 @@
-import { MatchFormFieldOption } from '../../model'
+import type { MatchFormFieldOption } from '../../model'
 
 type RadioProps = {
   label?: string | React.ReactNode

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ChevronUp, ChevronDown } from 'react-feather'
 import TrialMatchInfo from './TrialMatchInfo'
-import { MatchInfoAlgorithm, Study } from '../model'
+import type { MatchInfoAlgorithm, Study } from '../model'
 
 const styles = {
   container: 'bg-gray-200 my-4 p-4',

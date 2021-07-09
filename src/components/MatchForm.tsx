@@ -5,7 +5,7 @@ import DropdownSection from './DropdownSection'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
 import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
-import { MatchFormValues, MatchFormConfig } from '../model'
+import type { MatchFormValues, MatchFormConfig } from '../model'
 
 export type MatchFormProps = {
   config: MatchFormConfig
