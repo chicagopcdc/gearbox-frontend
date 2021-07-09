@@ -2,7 +2,7 @@ import type React from 'react'
 import { useState } from 'react'
 
 type TextFieldProps = {
-  label?: string
+  label?: string | React.ReactNode
   name?: string
   type?: 'text' | 'password' | 'number'
   autoFocus?: boolean

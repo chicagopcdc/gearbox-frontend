@@ -1,7 +1,7 @@
 import type React from 'react'
 
 type CheckboxProps = {
-  label?: string
+  label?: string | React.ReactNode
   name?: string
   checked?: boolean
   readOnly?: boolean

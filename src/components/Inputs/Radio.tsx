@@ -1,7 +1,7 @@
 import { MatchFormFieldOption } from '../../model'
 
 type RadioProps = {
-  label?: string
+  label?: string | React.ReactNode
   name?: string
   options?: MatchFormFieldOption[]
   disabled?: boolean

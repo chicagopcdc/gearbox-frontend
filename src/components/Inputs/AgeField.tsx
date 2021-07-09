@@ -5,7 +5,7 @@ type AgeInputProps = AgeFieldProps & {
 }
 
 type AgeFieldProps = {
-  label?: string
+  label?: string | React.ReactNode
   name?: string
   readOnly?: boolean
   required?: boolean

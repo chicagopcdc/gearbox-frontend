@@ -1,7 +1,7 @@
 import type React from 'react'
 
 type TextareaProps = {
-  label?: string
+  label?: string | React.ReactNode
   name?: string
   disabled?: boolean
   placeholder?: string

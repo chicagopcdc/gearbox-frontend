@@ -8,7 +8,7 @@ import { MatchFormFieldOption } from '../../model'
 type FieldConfig = {
   type: string
   name: string
-  label?: string
+  label?: string | React.ReactNode
   options?: MatchFormFieldOption[]
   [key: string]: any
 }
@@ -20,24 +20,36 @@ type FieldProps = {
 }
 
 function Field({
-  config: { type, options = [], ...attrs },
+  config: { type, options = [], label, ...attrs },
   value,
   onChange,
 }: FieldProps) {
   switch (type) {
     case 'text':
     case 'number':
-      return <TextField {...{ type, value, onChange, ...attrs }} />
+      return <TextField {...{ type, value, onChange, label, ...attrs }} />
     case 'checkbox':
-      return <Checkbox {...{ checekd: !!value, onChange, ...attrs }} />
+      return <Checkbox {...{ checekd: !!value, onChange, label, ...attrs }} />
     case 'select':
-      return <Select {...{ options, value, onChange, ...attrs }} />
+      return <Select {...{ options, value, onChange, label, ...attrs }} />
     case 'radio':
-      return <Radio {...{ options, value, onChange, ...attrs }} />
+      return <Radio {...{ options, value, onChange, label, ...attrs }} />
     case 'multiselect':
-      return <MultiSelect {...{ options, value, onChange, ...attrs }} />
+      return (
+        <MultiSelect
+          {...{
+            options,
+            value,
+            onChange,
+            label: label as string,
+            ...attrs,
+          }}
+        />
+      )
     case 'age':
-      return <TextField {...{ type: 'number', value, onChange, ...attrs }} />
+      return (
+        <TextField {...{ type: 'number', value, onChange, label, ...attrs }} />
+      )
     default:
       return null
   }

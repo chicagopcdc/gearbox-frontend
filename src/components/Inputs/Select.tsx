@@ -2,7 +2,7 @@ import type React from 'react'
 import { MatchFormFieldOption } from '../../model'
 
 type SelectProps = {
-  label?: string
+  label?: string | React.ReactNode
   name?: string
   options: MatchFormFieldOption[]
   placeholder?: string
