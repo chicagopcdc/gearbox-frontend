@@ -29,7 +29,7 @@ function Field({
     case 'number':
       return <TextField {...{ type, value, onChange, label, ...attrs }} />
     case 'checkbox':
-      return <Checkbox {...{ checekd: !!value, onChange, label, ...attrs }} />
+      return <Checkbox {...{ checked: !!value, onChange, label, ...attrs }} />
     case 'select':
       return <Select {...{ options, value, onChange, label, ...attrs }} />
     case 'radio':
