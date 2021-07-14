@@ -5,19 +5,17 @@ import { UserData } from '../model'
 export default function useAuth(): [
   boolean,
   string,
-  (user: UserData, cb?: () => void) => void,
-  (cb?: () => void) => void
+  (user: UserData) => void,
+  () => void
 ] {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userData, setUserData] = useState<UserData>()
-  const authenticate = (user: UserData, cb?: () => void) => {
+  function authenticate(user: UserData) {
     setIsAuthenticated(true)
     setUserData(user)
-    if (cb) cb()
   }
-  const signout = (cb?: () => void) => {
+  function signout() {
     setIsAuthenticated(false)
-    if (cb) cb()
 
     // perform fence logout
     window.location.assign(`/user/logout?next=${window.location.href}`)
