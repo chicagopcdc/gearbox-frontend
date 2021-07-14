@@ -11,6 +11,7 @@ import type {
   MatchFormFieldConfig,
   MatchFormFieldShowIfCondition,
   RegisterUserInput,
+  UserData,
 } from './model'
 
 export const getMatchGroups = (matchDetails: MatchDetails) => {
@@ -207,7 +208,7 @@ export function handleGoogleLogin() {
 export function fetchUserData() {
   return fetch('/user/user/').then((res) => {
     if (!res.ok) throw new Error('Error: Failed to fetch user information!')
-    return res.json()
+    return res.json() as Promise<UserData>
   })
 }
 
