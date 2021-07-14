@@ -40,7 +40,7 @@ function App() {
     mockLoadStudies().then(setStudies)
   }, [])
 
-  const [isAuthenticated, user, authenticate, signout] = useAuth()
+  const { isAuthenticated, user, authenticate, signout } = useAuth()
   const [isRegistered, setIsRegistered] = useState(false)
   useEffect(() => {
     if (!isAuthenticated)
