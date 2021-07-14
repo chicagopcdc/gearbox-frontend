@@ -51,7 +51,7 @@ function App() {
         .then((user) => {
           if (user.username === undefined)
             throw new Error('Error: Missing username!')
-          authenticate(user.username)
+          authenticate(user)
           setIsRegistered(user.authz?.['/portal']?.length > 0)
           setDocsTobeReviewed(user.docs_to_be_reviewed ?? [])
         })
