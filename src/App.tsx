@@ -46,11 +46,7 @@ function App() {
     []
   )
   useEffect(() => {
-    if (
-      !isAuthenticated &&
-      (window.document.referrer === '' ||
-        new URL(window.document.referrer).origin !== window.location.origin)
-    )
+    if (!isAuthenticated)
       fetchUserData()
         .then((user) => {
           if (user.username === undefined)
