@@ -197,10 +197,6 @@ export const clearShowIfField = (
   return values
 }
 
-export function handleFenceLogout() {
-  window.location.assign(`/user/logout?next=${window.location.href}`)
-}
-
 export function handleGoogleLogin() {
   window.location.assign(`/user/login/google?redirect=${window.location.href}`)
 }

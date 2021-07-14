@@ -18,6 +18,9 @@ export default function useAuth(): [
   const signout = (cb?: () => void) => {
     setIsAuthenticated(false)
     if (cb) cb()
+
+    // perform fence logout
+    window.location.assign(`/user/logout?next=${window.location.href}`)
   }
   return [isAuthenticated, username, authenticate, signout]
 }

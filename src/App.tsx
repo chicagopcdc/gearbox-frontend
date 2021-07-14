@@ -16,7 +16,7 @@ import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
-import { fetchUserData, handleFenceLogout } from './utils'
+import { fetchUserData } from './utils'
 import type {
   EligibilityCriterion,
   MatchCondition,
@@ -58,9 +58,6 @@ function App() {
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  function handleLogout() {
-    signout(handleFenceLogout)
-  }
   function handleRegister() {
     setIsRegistered(true)
   }
@@ -101,7 +98,7 @@ function App() {
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
-      <Layout {...{ isAuthenticated, username, onLogout: handleLogout }}>
+      <Layout {...{ isAuthenticated, username, onLogout: signout }}>
         <Switch>
           <Route path="/" exact>
             {isAuthenticated ? (
