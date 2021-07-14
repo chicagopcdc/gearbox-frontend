@@ -10,6 +10,7 @@ import type {
   MatchDetails,
   MatchFormFieldConfig,
   MatchFormFieldShowIfCondition,
+  RegisterUserInput,
 } from './model'
 
 export const getMatchGroups = (matchDetails: MatchDetails) => {
@@ -208,4 +209,32 @@ export function fetchUserInfo() {
     if (!res.ok) throw new Error('Error: Failed to fetch user information!')
     return res.json()
   })
+}
+
+export async function registerUser({
+  reviewStatus,
+  ...userInformation
+}: RegisterUserInput) {
+  const userResponse = await fetch('/user/user', {
+    body: JSON.stringify(userInformation),
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    method: 'PUT',
+  })
+  if (!userResponse.ok) throw new Error('Failed to update user information.')
+
+  if (Object.values(reviewStatus).filter(Boolean).length > 0) {
+    const documentsResponse = await fetch('/user/user/documents', {
+      body: JSON.stringify(reviewStatus),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
+    if (!documentsResponse.ok)
+      throw new Error('Failed to update document review status.')
+  }
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import RegisterForm from '../components/RegisterForm'
 import gearboxLogo from '../assets/gearbox-logo.svg'
+import { registerUser } from '../utils'
 import type { RegisterDocument, RegisterUserInput } from '../model'
 
 type RegisterPageProps = {
@@ -11,40 +12,13 @@ type RegisterPageProps = {
 function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
   const [isError, setIsError] = useState(false)
 
-  async function handleRegister({
-    reviewStatus,
-    ...userInformation
-  }: RegisterUserInput) {
-    try {
-      const userResponse = await fetch('/user/user', {
-        body: JSON.stringify(userInformation),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'PUT',
+  function handleRegister(userInput: RegisterUserInput) {
+    registerUser(userInput)
+      .then(onRegister)
+      .catch((e) => {
+        setIsError(true)
+        console.error(e)
       })
-      if (!userResponse.ok)
-        throw new Error('Failed to update user information.')
-
-      if (Object.values(reviewStatus).filter(Boolean).length > 0) {
-        const documentsResponse = await fetch('/user/user/documents', {
-          body: JSON.stringify(reviewStatus),
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        })
-        if (!documentsResponse.ok)
-          throw new Error('Failed to update document review status.')
-      }
-
-      onRegister()
-    } catch (e) {
-      setIsError(true)
-      console.error(e)
-    }
   }
 
   return (
