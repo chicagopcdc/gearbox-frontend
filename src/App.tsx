@@ -16,7 +16,7 @@ import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
-import { fetchUserInfo, handleFenceLogout } from './utils'
+import { fetchUserData, handleFenceLogout } from './utils'
 import type {
   EligibilityCriterion,
   MatchCondition,
@@ -51,7 +51,7 @@ function App() {
       (window.document.referrer === '' ||
         new URL(window.document.referrer).origin !== window.location.origin)
     )
-      fetchUserInfo()
+      fetchUserData()
         .then((user) => {
           if (user.username === undefined)
             throw new Error('Error: Missing username!')
