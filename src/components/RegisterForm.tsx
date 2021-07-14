@@ -83,7 +83,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     reviewStatus: {},
   }
 
-  for (const { id, name, formatted } of docsToBeReviewed) {
+  for (const { id, name, formatted, required } of docsToBeReviewed) {
     fieldsConfig.push({
       type: 'checkbox',
       name: `reviewStatus.${id}`,
@@ -95,6 +95,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
           </LinkExternal>
         </>
       ),
+      required,
     })
 
     initialValues.reviewStatus[id] = false
