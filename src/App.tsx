@@ -16,12 +16,13 @@ import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
-import { fetchUserData } from './utils'
+import { fetchUserData, registerUser } from './utils'
 import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
+  RegisterUserInput,
   Study,
 } from './model'
 import {
@@ -53,8 +54,8 @@ function App() {
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  function handleRegister() {
-    setIsRegistered(true)
+  function handleRegister(userInput: RegisterUserInput) {
+    return registerUser(userInput).then(() => setIsRegistered(true))
   }
 
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])

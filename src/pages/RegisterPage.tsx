@@ -1,24 +1,21 @@
 import { useState } from 'react'
 import RegisterForm from '../components/RegisterForm'
 import gearboxLogo from '../assets/gearbox-logo.svg'
-import { registerUser } from '../utils'
 import type { RegisterDocument, RegisterUserInput } from '../model'
 
 type RegisterPageProps = {
   docsToBeReviewed: RegisterDocument[]
-  onRegister: () => void
+  onRegister: (userInput: RegisterUserInput) => Promise<void>
 }
 
 function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
   const [isError, setIsError] = useState(false)
 
   function handleRegister(userInput: RegisterUserInput) {
-    registerUser(userInput)
-      .then(onRegister)
-      .catch((e) => {
-        setIsError(true)
-        console.error(e)
-      })
+    onRegister(userInput).catch((e) => {
+      setIsError(true)
+      console.error(e)
+    })
   }
 
   return (
