@@ -82,3 +82,33 @@ export type MatchInfoAlgorithm = {
 }
 
 export type MatchDetails = { [id: number]: MatchInfoAlgorithm }
+
+export type RegisterDocument = {
+  formatted: string
+  id: number
+  name: string
+  required: boolean
+  raw?: string
+  type?: string
+  version?: number
+}
+
+export type RegisterFormFieldConfig = {
+  type: string
+  name: string
+  label?: string | React.ReactNode
+  options?: { value: string; label: string }[]
+  showIf?: { name: string; value: any }
+  [key: string]: any
+}
+
+export type RegisterUserInput = {
+  firstName: string
+  lastName: string
+  institution: string
+  role: string
+  roleOther?: string
+  reviewStatus: {
+    [id: number]: boolean
+  }
+}
