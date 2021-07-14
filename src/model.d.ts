@@ -112,3 +112,15 @@ export type RegisterUserInput = {
     [id: number]: boolean
   }
 }
+
+type UserData = {
+  authz: {
+    [path: string]: {
+      method: string
+      service: string
+    }[]
+  }
+  docs_to_be_reviewed: RegisterDocument[]
+  username: string
+  [key: string]: any
+}
