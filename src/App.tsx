@@ -22,7 +22,6 @@ import type {
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
-  RegisterDocument,
   Study,
 } from './model'
 import {
@@ -40,11 +39,8 @@ function App() {
     mockLoadStudies().then(setStudies)
   }, [])
 
-  const [isAuthenticated, username, authenticate, signout] = useAuth()
+  const [isAuthenticated, user, authenticate, signout] = useAuth()
   const [isRegistered, setIsRegistered] = useState(false)
-  const [docsToBeReviewed, setDocsTobeReviewed] = useState<RegisterDocument[]>(
-    []
-  )
   useEffect(() => {
     if (!isAuthenticated)
       fetchUserData()
@@ -53,7 +49,6 @@ function App() {
             throw new Error('Error: Missing username!')
           authenticate(user)
           setIsRegistered(user.authz?.['/portal']?.length > 0)
-          setDocsTobeReviewed(user.docs_to_be_reviewed ?? [])
         })
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -98,7 +93,11 @@ function App() {
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
-      <Layout {...{ isAuthenticated, username, onLogout: signout }}>
+      <Layout
+        isAuthenticated={isAuthenticated}
+        username={user?.username ?? ''}
+        onLogout={signout}
+      >
         <Switch>
           <Route path="/" exact>
             {isAuthenticated ? (
@@ -128,7 +127,7 @@ function App() {
           <Route path="/register" exact>
             {isAuthenticated && !isRegistered ? (
               <RegisterPage
-                docsToBeReviewed={docsToBeReviewed}
+                docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
                 onRegister={handleRegister}
               />
             ) : (

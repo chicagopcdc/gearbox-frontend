@@ -4,7 +4,7 @@ import { UserData } from '../model'
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 export default function useAuth(): [
   boolean,
-  string,
+  UserData | undefined,
   (user: UserData) => void,
   () => void
 ] {
@@ -20,5 +20,5 @@ export default function useAuth(): [
     // perform fence logout
     window.location.assign(`/user/logout?next=${window.location.href}`)
   }
-  return [isAuthenticated, userData?.username ?? '', authenticate, signout]
+  return [isAuthenticated, userData, authenticate, signout]
 }
