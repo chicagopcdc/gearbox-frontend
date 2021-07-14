@@ -12,6 +12,7 @@ import GuidePage from './pages/GuidePage'
 import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
@@ -21,6 +22,7 @@ import type {
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
+  RegisterDocument,
   Study,
 } from './model'
 import {
@@ -39,6 +41,10 @@ function App() {
   }, [])
 
   const [isAuthenticated, username, authenticate, signout] = useAuth()
+  const [isRegistered, setIsRegistered] = useState(false)
+  const [docsToBeReviewed, setDocsTobeReviewed] = useState<RegisterDocument[]>(
+    []
+  )
   useEffect(() => {
     if (
       !isAuthenticated &&
@@ -46,16 +52,21 @@ function App() {
         new URL(window.document.referrer).origin !== window.location.origin)
     )
       fetchUserInfo()
-        .then(({ username }) => {
-          if (username === undefined)
+        .then((user) => {
+          if (user.username === undefined)
             throw new Error('Error: Missing username!')
-          authenticate(username)
+          authenticate(user.username)
+          setIsRegistered(user.authz?.['/portal']?.length > 0)
+          setDocsTobeReviewed(user.docs_to_be_reviewed ?? [])
         })
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   function handleLogout() {
     signout(handleFenceLogout)
+  }
+  function handleRegister() {
+    setIsRegistered(true)
   }
 
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
@@ -69,7 +80,7 @@ function App() {
     }
   }
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && isRegistered) {
       // load data on login
       Promise.all([
         mockLoadEligibilityCriteria(),
@@ -90,7 +101,7 @@ function App() {
       setUserInput({} as MatchFormValues)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated])
+  }, [isAuthenticated, isRegistered])
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
@@ -98,16 +109,20 @@ function App() {
         <Switch>
           <Route path="/" exact>
             {isAuthenticated ? (
-              <MatchingPage
-                {...{
-                  conditions,
-                  config,
-                  criteria,
-                  studies,
-                  userInput,
-                  updateUserInput,
-                }}
-              />
+              isRegistered ? (
+                <MatchingPage
+                  {...{
+                    conditions,
+                    config,
+                    criteria,
+                    studies,
+                    userInput,
+                    updateUserInput,
+                  }}
+                />
+              ) : (
+                <Redirect to="/register" />
+              )
             ) : (
               <LandingPage />
             )}
@@ -115,6 +130,17 @@ function App() {
 
           <Route path="/login" exact>
             {isAuthenticated ? <Redirect to="/" /> : <LoginPage />}
+          </Route>
+
+          <Route path="/register" exact>
+            {isAuthenticated && !isRegistered ? (
+              <RegisterPage
+                docsToBeReviewed={docsToBeReviewed}
+                onRegister={handleRegister}
+              />
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
 
           <Route path="/guide" exact>
