@@ -9,10 +9,10 @@ export default function useAuth(): [
   (cb?: () => void) => void
 ] {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [username, setUsername] = useState('')
+  const [userData, setUserData] = useState<UserData>()
   const authenticate = (user: UserData, cb?: () => void) => {
     setIsAuthenticated(true)
-    setUsername(user.username)
+    setUserData(user)
     if (cb) cb()
   }
   const signout = (cb?: () => void) => {
@@ -22,5 +22,5 @@ export default function useAuth(): [
     // perform fence logout
     window.location.assign(`/user/logout?next=${window.location.href}`)
   }
-  return [isAuthenticated, username, authenticate, signout]
+  return [isAuthenticated, userData?.username ?? '', authenticate, signout]
 }
