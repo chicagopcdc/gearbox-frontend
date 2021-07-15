@@ -1,13 +1,19 @@
-import Box from '../components/Box'
 import TrialCard from '../components/TrialCard'
 import type { Study } from '../model'
 
-const TrialsPage = ({ studies }: { studies?: Study[] }) => (
-  <Box name="Complete List of Trials" innerClassName="max-w-md m-auto">
-    {(studies || []).map((study, i) => (
-      <TrialCard study={study} key={i}></TrialCard>
-    ))}
-  </Box>
-)
+function TrialsPage({ studies }: { studies?: Study[] }) {
+  return (
+    <div className="my-8 text-lg">
+      <h1 className="font-bold text-primary text-3xl mb-8">
+        Open clinical trials
+      </h1>
+      <div>
+        {(studies || []).map((study, i) => (
+          <TrialCard study={study} key={i}></TrialCard>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default TrialsPage
