@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RegisterInput, UserData } from '../model'
+import { fetchUserData } from '../utils'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 export default function useAuth(): {
@@ -48,10 +49,24 @@ export default function useAuth(): {
     // perform fence logout
     window.location.assign(`/user/logout?next=${window.location.href}`)
   }
+
+  const isAuthenticated = userData !== undefined
+  useEffect(() => {
+    if (!isAuthenticated)
+      fetchUserData()
+        .then((user) => {
+          if (user.username === undefined)
+            throw new Error('Error: Missing username!')
+          authenticate(user)
+        })
+        .catch(console.error)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return {
-    isAuthenticated: userData !== undefined,
+    isAuthenticated,
     isRegistered:
-      userData !== undefined && userData.authz?.['/portal']?.length > 0,
+      isAuthenticated && (userData?.authz?.['/portal'] ?? [])?.length > 0,
     user: userData,
     authenticate,
     register,

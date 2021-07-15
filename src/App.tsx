@@ -16,7 +16,6 @@ import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
-import { fetchUserData } from './utils'
 import type {
   EligibilityCriterion,
   MatchCondition,
@@ -39,25 +38,7 @@ function App() {
     mockLoadStudies().then(setStudies)
   }, [])
 
-  const {
-    isAuthenticated,
-    isRegistered,
-    user,
-    authenticate,
-    register,
-    signout,
-  } = useAuth()
-  useEffect(() => {
-    if (!isAuthenticated)
-      fetchUserData()
-        .then((user) => {
-          if (user.username === undefined)
-            throw new Error('Error: Missing username!')
-          authenticate(user)
-        })
-        .catch(console.error)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { isAuthenticated, isRegistered, user, register, signout } = useAuth()
 
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
