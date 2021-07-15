@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { RegisterInput, UserData } from '../model'
 
-// useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 export default function useAuth(): {
   isAuthenticated: boolean
   isRegistered: boolean
