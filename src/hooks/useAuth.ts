@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { RegisterInput, UserData } from '../model'
-import { fetchUserData } from '../utils'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 export default function useAuth(): {
@@ -50,7 +49,12 @@ export default function useAuth(): {
   const isAuthenticated = userData !== undefined
   useEffect(() => {
     if (!isAuthenticated)
-      fetchUserData()
+      fetch('/user/user/')
+        .then((res) => {
+          if (!res.ok)
+            throw new Error('Error: Failed to fetch user information!')
+          return res.json() as Promise<UserData>
+        })
         .then((user) => {
           if (user.username === undefined)
             throw new Error('Error: Missing username!')
