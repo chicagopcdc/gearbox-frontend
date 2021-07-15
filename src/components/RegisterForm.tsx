@@ -6,12 +6,12 @@ import Field from './Inputs/Field'
 import type {
   RegisterFormFieldConfig,
   RegisterDocument,
-  RegisterUserInput,
+  RegisterInput,
 } from '../model'
 
 export type RegisterFormProps = {
   docsToBeReviewed: RegisterDocument[]
-  onRegister: (userInput: RegisterUserInput) => void
+  onRegister: (input: RegisterInput) => void
 }
 
 function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
@@ -74,7 +74,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     },
   ]
 
-  const initialValues: RegisterUserInput = {
+  const initialValues: RegisterInput = {
     firstName: '',
     lastName: '',
     institution: '',
@@ -107,10 +107,10 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
   const formik = useFormik({
     initialValues,
     enableReinitialize: true,
-    onSubmit: ({ role, roleOther, ...userInput }) => {
+    onSubmit: ({ role, roleOther, ...otherValues }) => {
       setIsSubmitting(true)
       onRegister({
-        ...userInput,
+        ...otherValues,
         role: role === 'other' && roleOther !== undefined ? roleOther : role,
       })
     },
