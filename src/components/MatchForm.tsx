@@ -9,15 +9,15 @@ import type { MatchFormValues, MatchFormConfig } from '../model'
 
 export type MatchFormProps = {
   config: MatchFormConfig
-  userInput: MatchFormValues
-  updateUserInput(values: MatchFormValues): void
+  matchInput: MatchFormValues
+  updateMatchInput(values: MatchFormValues): void
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function MatchForm({
   config,
-  userInput,
-  updateUserInput,
+  matchInput,
+  updateMatchInput,
   setIsUpdating,
 }: MatchFormProps) {
   const defaultValues = getDefaultValues(config)
@@ -28,7 +28,7 @@ function MatchForm({
   })
 
   useEffect(() => {
-    formik.setValues({ ...userInput })
+    formik.setValues({ ...matchInput })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -41,7 +41,7 @@ function MatchForm({
       setIsUpdating(true)
       timeout = setTimeout(() => {
         const newValues = { ...formik.values }
-        updateUserInput(clearShowIfField(config, defaultValues, newValues))
+        updateMatchInput(clearShowIfField(config, defaultValues, newValues))
         setIsUpdating(false)
       }, 1000)
     } else setIsUpdating(false)

@@ -13,18 +13,18 @@ export type MatchResultProps = {
   conditions: MatchCondition[]
   config: MatchFormConfig
   criteria: EligibilityCriterion[]
+  matchInput: MatchFormValues
   studies: Study[]
-  userInput: MatchFormValues
 }
 
 function MatchResult({
   criteria,
   conditions,
   config,
+  matchInput,
   studies,
-  userInput,
 }: MatchResultProps) {
-  const matchDetails = getMatchDetails(criteria, conditions, config, userInput)
+  const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
   const { matched, undetermined, unmatched } = getMatchGroups(matchDetails)
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study

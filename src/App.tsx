@@ -29,8 +29,8 @@ import {
   mockLoadMatchConditions,
   mockLoadMatchFromConfig,
   mockLoadStudies,
-  mockLoadLatestUserInput,
-  mockPostLatestUserInput,
+  mockLoadLatestMatchInput,
+  mockPostLatestMatchInput,
 } from './mock/utils'
 
 function App() {
@@ -62,11 +62,11 @@ function App() {
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
-  const [userInput, setUserInput] = useState({} as MatchFormValues)
-  const updateUserInput = (newUserInput: MatchFormValues) => {
-    if (JSON.stringify(newUserInput) !== JSON.stringify(userInput)) {
-      setUserInput(newUserInput)
-      mockPostLatestUserInput(newUserInput)
+  const [matchInput, setMatchInput] = useState({} as MatchFormValues)
+  const updateMatchInput = (newMatchInput: MatchFormValues) => {
+    if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
+      setMatchInput(newMatchInput)
+      mockPostLatestMatchInput(newMatchInput)
     }
   }
   useEffect(() => {
@@ -76,19 +76,19 @@ function App() {
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
         mockLoadMatchFromConfig(),
-        mockLoadLatestUserInput(),
-      ]).then(([criteria, conditions, config, latestUserInput]) => {
+        mockLoadLatestMatchInput(),
+      ]).then(([criteria, conditions, config, latestMatchInput]) => {
         setCriteria(criteria)
         setConditions(conditions)
         setConfig(config)
-        setUserInput(latestUserInput)
+        setMatchInput(latestMatchInput)
       })
     } else {
       // clear data on logout
       setCriteria([] as EligibilityCriterion[])
       setConditions([] as MatchCondition[])
       setConfig({} as MatchFormConfig)
-      setUserInput({} as MatchFormValues)
+      setMatchInput({} as MatchFormValues)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, isRegistered])
@@ -110,8 +110,8 @@ function App() {
                     config,
                     criteria,
                     studies,
-                    userInput,
-                    updateUserInput,
+                    matchInput,
+                    updateMatchInput,
                   }}
                 />
               ) : (

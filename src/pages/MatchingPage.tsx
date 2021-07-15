@@ -16,8 +16,8 @@ export type MatchingPageProps = {
   config: MatchFormConfig
   criteria: EligibilityCriterion[]
   studies: Study[]
-  userInput: MatchFormValues
-  updateUserInput(values: MatchFormValues): void
+  matchInput: MatchFormValues
+  updateMatchInput(values: MatchFormValues): void
 }
 
 function MatchingPage({
@@ -25,13 +25,13 @@ function MatchingPage({
   config,
   criteria,
   studies,
-  userInput,
-  updateUserInput,
+  matchInput,
+  updateMatchInput,
 }: MatchingPageProps) {
   const [isUpdating, setIsUpdating] = useState(false)
 
   const isMatchDataReady =
-    config.fields !== undefined && Object.keys(userInput).length > 0
+    config.fields !== undefined && Object.keys(matchInput).length > 0
 
   const screenSize = useScreenSize()
   const [view, setView] = useState<'form' | 'result'>('form')
@@ -59,7 +59,7 @@ function MatchingPage({
         </div>
         <section className={`p-4 lg:px-8 ${view === 'form' ? '' : 'hidden'} `}>
           <MatchForm
-            {...{ config, userInput, updateUserInput, setIsUpdating }}
+            {...{ config, matchInput, updateMatchInput, setIsUpdating }}
           />
         </section>
         <section
@@ -68,7 +68,7 @@ function MatchingPage({
           } `}
         >
           <MatchResult
-            {...{ criteria, conditions, config, studies, userInput }}
+            {...{ criteria, conditions, config, studies, matchInput }}
           />
         </section>
       </>
@@ -80,7 +80,7 @@ function MatchingPage({
           </h1>
           <div className="px-4 lg:px-8 pb-4">
             <MatchForm
-              {...{ config, userInput, updateUserInput, setIsUpdating }}
+              {...{ config, matchInput, updateMatchInput, setIsUpdating }}
             />
           </div>
         </section>
@@ -92,7 +92,7 @@ function MatchingPage({
             className={`px-4 lg:px-8 pb-4 ${isUpdating ? 'bg-gray-100' : ''}`}
           >
             <MatchResult
-              {...{ criteria, conditions, config, studies, userInput }}
+              {...{ criteria, conditions, config, matchInput, studies }}
             />
           </div>
         </section>

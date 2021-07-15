@@ -1,5 +1,5 @@
 import eligibilityCriteria from './eligibilityCriteria.json'
-import latestUserInput from './latestUserInput.json'
+import latestMatchInput from './latestMatchInput.json'
 import matchConditions from './matchConditions.json'
 import matchFormConfig from './matchFormConfig.json'
 import studies from './studies.json'
@@ -14,8 +14,8 @@ import type {
 export const mockLoadEligibilityCriteria = () =>
   Promise.resolve(eligibilityCriteria as EligibilityCriterion[])
 
-export const mockLoadLatestUserInput = () =>
-  Promise.resolve(latestUserInput).then((fields) =>
+export const mockLoadLatestMatchInput = () =>
+  Promise.resolve(latestMatchInput).then((fields) =>
     fields.reduce(
       (acc, { id, value }) => ({ ...acc, [id]: value }),
       {} as MatchFormValues
@@ -30,14 +30,14 @@ export const mockLoadMatchFromConfig = () =>
 
 export const mockLoadStudies = () => Promise.resolve(studies as Study[])
 
-export const mockPostLatestUserInput = (values: MatchFormValues) => {
-  const userInput = Object.keys(values).reduce((acc, id) => {
+export const mockPostLatestMatchInput = (values: MatchFormValues) => {
+  const matchInput = Object.keys(values).reduce((acc, id) => {
     const value = values[Number(id)]
     return value === undefined || (Array.isArray(value) && value.length === 0)
       ? acc
       : [...acc, { id: Number(id), value }]
   }, [] as { id: number; value: any }[])
-  console.log(JSON.stringify(userInput))
+  console.log(JSON.stringify(matchInput))
 
   return Promise.resolve({ status: 200 })
 }
