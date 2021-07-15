@@ -10,8 +10,6 @@ import type {
   MatchDetails,
   MatchFormFieldConfig,
   MatchFormFieldShowIfCondition,
-  RegisterUserInput,
-  UserData,
 } from './model'
 
 export const getMatchGroups = (matchDetails: MatchDetails) => {
