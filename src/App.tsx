@@ -16,13 +16,12 @@ import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
 import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
-import { fetchUserData, registerUser } from './utils'
+import { fetchUserData } from './utils'
 import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,
   MatchFormValues,
-  RegisterUserInput,
   Study,
 } from './model'
 import {
@@ -40,8 +39,14 @@ function App() {
     mockLoadStudies().then(setStudies)
   }, [])
 
-  const { isAuthenticated, user, authenticate, signout } = useAuth()
-  const [isRegistered, setIsRegistered] = useState(false)
+  const {
+    isAuthenticated,
+    isRegistered,
+    user,
+    authenticate,
+    register,
+    signout,
+  } = useAuth()
   useEffect(() => {
     if (!isAuthenticated)
       fetchUserData()
@@ -49,14 +54,10 @@ function App() {
           if (user.username === undefined)
             throw new Error('Error: Missing username!')
           authenticate(user)
-          setIsRegistered(user.authz?.['/portal']?.length > 0)
         })
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  function handleRegister(userInput: RegisterUserInput) {
-    return registerUser(userInput).then(() => setIsRegistered(true))
-  }
 
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
@@ -129,7 +130,7 @@ function App() {
             {isAuthenticated && !isRegistered ? (
               <RegisterPage
                 docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
-                onRegister={handleRegister}
+                onRegister={register}
               />
             ) : (
               <Redirect to="/" />
