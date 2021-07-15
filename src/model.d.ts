@@ -113,7 +113,7 @@ export type RegisterInput = {
   }
 }
 
-type UserData = {
+export type UserData = {
   authz: {
     [path: string]: {
       method: string
