@@ -12,9 +12,6 @@ export default function useAuth(): {
   signout: () => void
 } {
   const [userData, setUserData] = useState<UserData>()
-  function authenticate(user: UserData) {
-    setUserData(user)
-  }
   async function register({ reviewStatus, ...userInformation }: RegisterInput) {
     const userResponse = await fetch('/user/user', {
       body: JSON.stringify(userInformation),
@@ -57,7 +54,7 @@ export default function useAuth(): {
         .then((user) => {
           if (user.username === undefined)
             throw new Error('Error: Missing username!')
-          authenticate(user)
+          setUserData(user)
         })
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,7 +65,7 @@ export default function useAuth(): {
     isRegistered:
       isAuthenticated && (userData?.authz?.['/portal'] ?? [])?.length > 0,
     user: userData,
-    authenticate,
+    authenticate: setUserData,
     register,
     signout,
   }
