@@ -54,11 +54,7 @@ export default function useAuth(): {
             throw new Error('Error: Failed to fetch user information!')
           return res.json() as Promise<UserData>
         })
-        .then((user) => {
-          if (user.username === undefined)
-            throw new Error('Error: Missing username!')
-          setUserData(user)
-        })
+        .then(setUserData)
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
