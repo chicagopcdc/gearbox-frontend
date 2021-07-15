@@ -33,12 +33,12 @@ import {
 } from './mock/utils'
 
 function App() {
+  const { isAuthenticated, isRegistered, user, register, signout } = useAuth()
+
   const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
     mockLoadStudies().then(setStudies)
   }, [])
-
-  const { isAuthenticated, isRegistered, user, register, signout } = useAuth()
 
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
