@@ -39,6 +39,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
       name: 'role',
       label: 'Role',
       required: true,
+      placeholder: 'Select your role...',
       options: [
         {
           value: 'physician',
@@ -78,7 +79,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     firstName: '',
     lastName: '',
     institution: '',
-    role: 'physician',
+    role: '',
     roleOther: '',
     reviewStatus: {},
   }
