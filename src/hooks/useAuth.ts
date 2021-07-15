@@ -6,7 +6,6 @@ export default function useAuth(): {
   isAuthenticated: boolean
   isRegistered: boolean
   user?: UserData
-  authenticate: (user: UserData) => void
   register: (input: RegisterInput) => Promise<void>
   signout: () => void
 } {
@@ -69,7 +68,6 @@ export default function useAuth(): {
     isRegistered:
       isAuthenticated && (userData?.authz?.['/portal'] ?? [])?.length > 0,
     user: userData,
-    authenticate: setUserData,
     register,
     signout,
   }
