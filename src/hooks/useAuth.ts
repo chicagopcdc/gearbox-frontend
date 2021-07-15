@@ -16,6 +16,7 @@ export default function useAuth(): {
   }
   function signout() {
     setIsAuthenticated(false)
+    setUserData(undefined)
 
     // perform fence logout
     window.location.assign(`/user/logout?next=${window.location.href}`)
