@@ -200,10 +200,3 @@ export const clearShowIfField = (
 export function handleGoogleLogin() {
   window.location.assign(`/user/login/google?redirect=${window.location.href}`)
 }
-
-export function fetchUserData() {
-  return fetch('/user/user/').then((res) => {
-    if (!res.ok) throw new Error('Error: Failed to fetch user information!')
-    return res.json() as Promise<UserData>
-  })
-}
