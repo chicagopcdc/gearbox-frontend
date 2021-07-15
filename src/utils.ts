@@ -196,7 +196,3 @@ export const clearShowIfField = (
 
   return values
 }
-
-export function handleGoogleLogin() {
-  window.location.assign(`/user/login/google?redirect=${window.location.href}`)
-}

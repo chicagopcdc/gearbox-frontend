@@ -1,6 +1,9 @@
 import Button from './Inputs/Button'
 import googleLogo from '../assets/google-logo.svg'
-import { handleGoogleLogin } from '../utils'
+
+function handleGoogleLogin() {
+  window.location.assign(`/user/login/google?redirect=${window.location.href}`)
+}
 
 function GoogleLoginButton() {
   return (
