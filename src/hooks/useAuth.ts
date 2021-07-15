@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RegisterUserInput, UserData } from '../model'
+import { RegisterInput, UserData } from '../model'
 
 // useFakeAuth inspired by https://reacttraining.com/react-router/web/example/auth-workflow
 export default function useAuth(): {
@@ -7,17 +7,14 @@ export default function useAuth(): {
   isRegistered: boolean
   user?: UserData
   authenticate: (user: UserData) => void
-  register: (input: RegisterUserInput) => Promise<void>
+  register: (input: RegisterInput) => Promise<void>
   signout: () => void
 } {
   const [userData, setUserData] = useState<UserData>()
   function authenticate(user: UserData) {
     setUserData(user)
   }
-  async function register({
-    reviewStatus,
-    ...userInformation
-  }: RegisterUserInput) {
+  async function register({ reviewStatus, ...userInformation }: RegisterInput) {
     const userResponse = await fetch('/user/user', {
       body: JSON.stringify(userInformation),
       headers: {

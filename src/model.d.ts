@@ -102,7 +102,7 @@ export type RegisterFormFieldConfig = {
   [key: string]: any
 }
 
-export type RegisterUserInput = {
+export type RegisterInput = {
   firstName: string
   lastName: string
   institution: string
