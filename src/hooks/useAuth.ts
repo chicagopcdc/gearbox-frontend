@@ -8,18 +8,20 @@ export default function useAuth(): {
   authenticate: (user: UserData) => void
   signout: () => void
 } {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userData, setUserData] = useState<UserData>()
   function authenticate(user: UserData) {
-    setIsAuthenticated(true)
     setUserData(user)
   }
   function signout() {
-    setIsAuthenticated(false)
     setUserData(undefined)
 
     // perform fence logout
     window.location.assign(`/user/logout?next=${window.location.href}`)
   }
-  return { isAuthenticated, user: userData, authenticate, signout }
+  return {
+    isAuthenticated: userData !== undefined,
+    user: userData,
+    authenticate,
+    signout,
+  }
 }
