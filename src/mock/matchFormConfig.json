@@ -5,19 +5,19 @@
       "name": "Demographics"
     },
     {
-      "id": 5,
+      "id": 2,
       "name": "Disease"
     },
     {
-      "id": 2,
-      "name": "Prior treatment"
-    },
-    {
       "id": 3,
-      "name": "Organ function"
+      "name": "Treatment and Exposure"
     },
     {
       "id": 4,
+      "name": "Organ Function"
+    },
+    {
+      "id": 5,
       "name": "Biomarkers"
     }
   ],
@@ -31,7 +31,7 @@
       "min": 0
     },
     {
-      "id": 18,
+      "id": 2,
       "groupId": 1,
       "type": "number",
       "name": "weight",
@@ -39,161 +39,45 @@
       "min": 0
     },
     {
-      "id": 2,
-      "groupId": 5,
-      "type": "select",
-      "name": "currDisease",
-      "label": "What is the patient's current disease?",
+      "id": 3,
+      "groupId": 1,
+      "type": "radio",
+      "name": "sex",
+      "label": "What is the patient's biological sex?",
       "options": [
-        {
-          "value": 26,
-          "label": "Acute myeloid leukemia (AML)"
-        },
-        {
-          "value": 27,
-          "label": "Treatment-related acute myeloid leukemia (tAML)"
-        },
-        {
-          "value": 28,
-          "label": "Down syndrome acute myeloid leukemia (DS AML)"
-        },
-        {
-          "value": 30,
-          "label": "Mixed-phenotype acute leukemia (MPAL)"
-        },
-        {
-          "value": 31,
-          "label": "Acute lymphoblastic leukemia (ALL)"
-        },
-        {
-          "value": 32,
-          "label": "T-cell acute lymphoblastic leukemia (T-ALL)"
-        },
-        {
-          "value": 33,
-          "label": "KMT2A acute lymphoblastic leukemia"
-        },
-        {
-          "value": 34,
-          "label": "Myelodysplastic syndromes (MDS)"
-        },
-        {
-          "value": 35,
-          "label": "Early T-cell precursor acute lymphoblastic leukemia (ETP-ALL)"
-        },
-        {
-          "value": 36,
-          "label": "Acute promyelocytic leukemia (APL)"
-        },
-        {
-          "value": 37,
-          "label": "Juvenile myelomonocytic leukemia (JMML)"
-        },
-        {
-          "value": 42,
-          "label": "B-cell acute lymphoblastic leukemia (B-ALL)"
-        }
-      ],
-      "placeholder": "Select"
-    },
-    {
-      "id": 39,
-      "groupId": 5,
-      "type": "number",
-      "name": "refractoryEvents",
-      "label": "How many occurrences of refractory disease, including the current, has the patient experienced?",
-      "min": 0
+        { "value": 1, "label": "Male", "description": "" },
+        { "value": 2, "label": "Female", "description": "" }
+      ]
     },
     {
       "id": 4,
-      "groupId": 5,
+      "groupId": 1,
       "type": "radio",
-      "name": "refractory",
-      "label": "Is the patient's disease currently refractory?",
+      "name": "reproductive_potential",
+      "label": "Has the patient reached reproductive potential?",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ],
-      "showIf": {
-        "operator": "AND",
-        "criteria": [
-          {
-            "id": 39,
-            "value": 1,
-            "operator": "gte"
-          }
-        ]
-      }
-    },
-    {
-      "id": 9,
-      "groupId": 5,
-      "type": "number",
-      "name": "chemoCycles",
-      "label": "Current disease is refractory to how many induction cycles?",
-      "min": 0,
-      "showIf": {
-        "operator": "OR",
-        "criteria": [
-          {
-            "id": 4,
-            "value": 2,
-            "operator": "eq"
-          }
-        ]
-      }
-    },
-    {
-      "id": 8,
-      "groupId": 5,
-      "type": "number",
-      "name": "relapseEvents",
-      "label": "How many confirmed or suspected relapses, including the current, has the patient experienced?",
-      "min": 0
-    },
-    {
-      "id": 3,
-      "groupId": 5,
-      "type": "radio",
-      "name": "relapse",
-      "label": "Is the patient currently in relapse (or suspected relapse)?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ],
-      "showIf": {
-        "operator": "AND",
-        "criteria": [
-          {
-            "id": 8,
-            "value": 1,
-            "operator": "gte"
-          }
-        ]
-      }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
     },
     {
       "id": 5,
-      "groupId": 5,
-      "type": "number",
-      "name": "blastPerc",
-      "label": "What is the most recent measurement of the patient's percentage of BM blasts?",
-      "min": 0,
-      "max": 100,
-      "step": 0.1,
+      "groupId": 1,
+      "type": "radio",
+      "name": "contraceptive_use",
+      "label": "If the patient is sexually active, do they agree to use an effective contraceptive method or abstinence for the duration of their study participation?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
       "showIf": {
-        "operator": "OR",
+        "operator": "AND",
         "criteria": [
           {
             "id": 4,
-            "value": 2,
-            "operator": "eq"
-          },
-          {
-            "id": 3,
-            "value": 2,
+            "value": 3,
             "operator": "eq"
           }
         ]
@@ -201,17 +85,26 @@
     },
     {
       "id": 6,
-      "groupId": 5,
-      "type": "number",
-      "name": "blastPercMethod",
-      "label": "Most recent blast percentage measured by how many methods (e.g. Flow, FISH, etc.)?",
-      "min": 0,
+      "groupId": 1,
+      "type": "radio",
+      "name": "pregnant",
+      "label": "Is the patient currently pregnant?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
       "showIf": {
         "operator": "AND",
         "criteria": [
           {
             "id": 3,
             "value": 2,
+            "operator": "eq"
+          },
+          {
+            "id": 4,
+            "value": 3,
             "operator": "eq"
           }
         ]
@@ -221,12 +114,12 @@
       "id": 7,
       "groupId": 1,
       "type": "radio",
-      "name": "blastPerc7",
-      "label": "Does most recent blast percentage measurement represent a 1 log increase from a measurement 7 days prior?",
+      "name": "breastfeeding",
+      "label": "Is the patient lactating and planning on breastfeeding their infant(s)?",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ],
       "showIf": {
         "operator": "AND",
@@ -235,204 +128,887 @@
             "id": 3,
             "value": 2,
             "operator": "eq"
+          },
+          {
+            "id": 4,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 8,
+      "groupId": 2,
+      "type": "select",
+      "name": "diagnosis",
+      "label": "What is the patient's current diagnosis?",
+      "options": [
+        {
+          "value": 6,
+          "label": "Acute promyelocytic leukemia (APL)"
+        },
+        {
+          "value": 7,
+          "label": "Acute myeloid leukemia (AML)"
+        },
+        {
+          "value": 8,
+          "label": "Down syndrome acute myeloid leukemia (DS AML)"
+        },
+        {
+          "value": 9,
+          "label": "B-cell acute lymphoblastic leukemia (B-ALL)"
+        },
+        {
+          "value": 10,
+          "label": "Juvenile myelomonocytic leukemia (JMML)"
+        },
+        {
+          "value": 11,
+          "label": "Mixed-phenotype acute leukemia (MPAL)"
+        },
+        {
+          "value": 12,
+          "label": "Myelodysplastic syndromes (MDS)"
+        },
+        {
+          "value": 13,
+          "label": "Myelodysplastic syndrome (MDS) who have progressed to AML"
+        },
+        {
+          "value": 14,
+          "label": "Treatment-related acute myeloid leukemia (tAML)"
+        },
+        {
+          "value": 15,
+          "label": "T-cell acute lymphoblastic leukemia (T-ALL)"
+        }
+      ],
+      "placeholder": "Select"
+    },
+    {
+      "id": 9,
+      "groupId": 2,
+      "type": "radio",
+      "name": "ever_refractory",
+      "label": "Does the patient currently have, or have they in the past had, refractory disease?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 10,
+      "groupId": 2,
+      "type": "number",
+      "name": "count_refractory",
+      "label": "How many occurrences of refractory disease, including the current if applicable?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 9,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 11,
+      "groupId": 2,
+      "type": "radio",
+      "name": "current_refractory",
+      "label": "Is the patient's disease currently refractory?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 9,
+            "value": 3,
+            "operator": "eq"
           }
         ]
       }
     },
     {
       "id": 12,
-      "groupId": 4,
-      "type": "radio",
-      "name": "mslnExpression",
-      "label": "MSLN expression",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ]
+      "groupId": 2,
+      "type": "number",
+      "name": "current_refractory_num_cycles",
+      "label": "Current disease is refractory to how many induction cycles?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 11,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 13,
-      "groupId": 4,
+      "groupId": 2,
       "type": "radio",
-      "name": "eSelectin",
-      "label": "E-selectin expression",
+      "name": "ever_relapse",
+      "label": "Does the patient currently have, or have they in the past had, confirmed or suspected relapse disease?",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ]
     },
     {
       "id": 14,
       "groupId": 2,
       "type": "number",
-      "name": "Days since last dose of any cytotoxic agent (with exception of hydroxyurea)",
-      "label": "Days since last dose of any cytotoxic agent (with exception of hydroxyurea)",
-      "min": 0
+      "name": "count_relapse",
+      "label": "How many confirmed or suspected relapses, including the current if applicable?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 13,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 15,
       "groupId": 2,
-      "type": "number",
-      "name": "Days since last dose of any cytotoxic agent (with exception of low-dose cytarabine)",
-      "label": "Days since last dose of any cytotoxic agent (with exception of low-dose cytarabine)",
-      "min": 0
-    },
-    {
-      "id": 37,
-      "groupId": 3,
-      "type": "number",
-      "name": "Alanine transaminase (ALT), in IU/L",
-      "label": "Alanine transaminase (ALT), in IU/L",
-      "min": 0.1,
-      "step": 0.1
-    },
-    {
-      "id": 17,
-      "groupId": 3,
       "type": "radio",
-      "name": "alt_leukemia",
-      "label": "Is reported Alanine transaminase (ALT) level related to leukemia involvement?",
+      "name": "current_relapse",
+      "label": "Is the patient currently in relapse (or suspected relapse)?",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ],
       "showIf": {
-        "operator": "OR",
+        "operator": "AND",
         "criteria": [
           {
-            "id": 37,
-            "value": 135,
-            "operator": "gt"
+            "id": 13,
+            "value": 3,
+            "operator": "eq"
           }
         ]
       }
     },
     {
-      "id": 22,
+      "id": 16,
+      "groupId": 2,
+      "type": "radio",
+      "name": "bm_recent",
+      "label": "Was the patient able to provide a recent bone marrow draw?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 15,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 17,
       "groupId": 2,
       "type": "number",
-      "name": "Days since last dose of steroids",
-      "label": "Days since last dose of steroids",
-      "min": 0
+      "name": "bm_recent_blast_pct_meas",
+      "label": "What is the most recent measure of the patient's bone marrow blast percentage?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 16,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 18,
+      "groupId": 2,
+      "type": "number",
+      "name": "bm_recent_blast_methods",
+      "label": "The most recent measure of bone marrow blast percentage was confirmed by how many methods (e.g. Flow, FISH, etc.)?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 16,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 19,
       "groupId": 2,
-      "type": "number",
-      "name": "anthracycline dose",
-      "label": "Cumulative anthracycline dose (in mg/m2)",
-      "min": 0.1,
-      "step": 0.1
-    },
-    {
-      "id": 20,
-      "groupId": 5,
       "type": "radio",
-      "name": "Has the patient experienced Grade 4 Sinusoidal Obstructive Syndrome (SOS)?",
-      "label": "Has the patient experienced Grade 4 Sinusoidal Obstructive Syndrome (SOS)?",
+      "name": "bm_recent_blast_log_increase",
+      "label": "Does the most recent bone marrow blast percentage measurement represent a 1 log increase from a measurement 7 days prior?",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
-      ]
-    },
-    {
-      "id": 24,
-      "groupId": 3,
-      "type": "number",
-      "name": "Direct bilirubin (in mg/dL)",
-      "label": "Direct bilirubin (in mg/dL)",
-      "min": 0.1,
-      "step": 0.1
-    },
-    {
-      "id": 25,
-      "groupId": 3,
-      "type": "radio",
-      "name": "Does the patient have leukemic infiltration of the liver?",
-      "label": "Does the patient have leukemic infiltration of the liver?",
-      "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ],
       "showIf": {
-        "operator": "OR",
+        "operator": "AND",
         "criteria": [
           {
-            "id": 37,
-            "value": 135,
-            "operator": "gt"
-          },
-          {
-            "id": 24,
-            "value": 2,
-            "operator": "gt"
+            "id": 16,
+            "value": 3,
+            "operator": "eq"
           }
         ]
       }
     },
     {
-      "id": 26,
-      "groupId": 5,
+      "id": 20,
+      "groupId": 2,
+      "type": "number",
+      "name": "periph_blood_blasts",
+      "label": "What is the patient's most recent peripheral blood absolute blast count measurement (in cells/microliter)?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 16,
+            "value": 4,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 21,
+      "groupId": 2,
       "type": "radio",
-      "name": "Does the patient have isolated EMD?",
-      "label": "Does the patient have isolated EMD?",
+      "name": "corneal_epitheliopathy",
+      "label": "Has the patient had a diagnosis of corneal epitheliopathy or any eye disorder that may predispose the patient to corneal epitheliopathy?",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 22,
+      "groupId": 2,
+      "type": "select",
+      "name": "cns_status",
+      "label": "What is the patient's CNS status?",
+      "options": [
+        {
+          "value": 19,
+          "label": "CNS 1"
+        },
+        {
+          "value": 20,
+          "label": "CNS 2"
+        },
+        {
+          "value": 21,
+          "label": "CNS 3"
+        },
+        {
+          "value": 5,
+          "label": "Not sure"
+        }
+      ],
+      "placeholder": "Select"
+    },
+    {
+      "id": 23,
+      "groupId": 2,
+      "type": "radio",
+      "name": "cns3_asymptomatic",
+      "label": "Is CNS disease asymptomatic?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 22,
+            "value": 21,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 24,
+      "groupId": 2,
+      "type": "number",
+      "name": "ecog",
+      "label": "What is the patient's ECOG score?",
+      "min": 0
+    },
+    {
+      "id": 25,
+      "groupId": 2,
+      "type": "radio",
+      "name": "other_curative_therapy",
+      "label": "For patient's currect disease state, is there any known curative therapy or therapy proven to prolong survival with an acceptable quality of life?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 26,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_down_syndrome",
+      "label": "Has the patient been diagnosed with: Down syndrome",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ]
     },
     {
       "id": 27,
-      "groupId": 5,
+      "groupId": 2,
       "type": "radio",
-      "name": "Does the patient have adequate BM function?",
-      "label": "Does the patient have adequate BM function?",
+      "name": "diag_iso_emd",
+      "label": "Has the patient been diagnosed with: isolated extramedullary disease",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 28,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_iso_cns",
+      "label": "Has the patient been diagnosed with: isolated CNS",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 29,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_iso_testes",
+      "label": "Has the patient been diagnosed with: isolated testicular relapse",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 30,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_fanconi",
+      "label": "Has the patient been diagnosed with: Fanconi anemia",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ]
     },
     {
       "id": 31,
-      "groupId": 5,
+      "groupId": 2,
       "type": "radio",
-      "name": "isolated EMD including CNS",
-      "label": "Does the patient have isolated EMD (including CNS)?",
+      "name": "diag_kostmann",
+      "label": "Has the patient been diagnosed with: Kostmann syndrome",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 32,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_shwachman",
+      "label": "Has the patient been diagnosed with: Shwachman syndrome",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ]
     },
     {
       "id": 33,
-      "groupId": 5,
+      "groupId": 2,
       "type": "radio",
-      "name": "Does the patient have isolated CNS?",
-      "label": "Does the patient have isolated CNS?",
+      "name": "diag_cong_bmf",
+      "label": "Has the patient been diagnosed with: other known congenital bone marrow failure syndrome",
       "options": [
-        { "value": 2, "label": "Yes", "description": "" },
-        { "value": 9, "label": "No", "description": "" },
-        { "value": 29, "label": "Not sure", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 34,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_malabsoption",
+      "label": "Has the patient been diagnosed with: malabsorption syndrome",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 35,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_hiv",
+      "label": "Has the patient been diagnosed with: human immunodeficiency virus (HIV) infection",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 36,
+      "groupId": 2,
+      "type": "radio",
+      "name": "hist_g4_vod_sos",
+      "label": "Does the patient have a documented history of Grade 4 VOD/SOS (veno-occlusive disease/sinusoidal obstructive syndrome)?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 37,
+      "groupId": 2,
+      "type": "radio",
+      "name": "active_infection",
+      "label": "Does the patient have documented active, uncontrolled infection?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ]
     },
     {
       "id": 38,
+      "groupId": 2,
+      "type": "radio",
+      "name": "refractory_transfusion",
+      "label": "Is the patient known to be refractory to red blood cells or platelet transfusions",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 39,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_cytotoxic_chemo",
+      "label": "How many days have elapsed since the patient's last exposure to: cytotoxic chemotherapy (not including intrathecal cytotoxic chemotherapy, hydroxyurea, or corticosteroids)",
+      "min": 0
+    },
+    {
+      "id": 40,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_corticosteroids",
+      "label": "How many days have elapsed since the patient's last exposure to: corticosteroids (if used to modify immune adverse events related to prior therapy)",
+      "min": 0
+    },
+    {
+      "id": 41,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_anticancer",
+      "label": "How many days have elapsed since the patient's last exposure to: anti-cancer agents not known to be myelosuppressive",
+      "min": 0
+    },
+    {
+      "id": 42,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_antibody_drug_conj",
+      "label": "How many days have elapsed since the patient's last exposure to: antibody-drug conjugate",
+      "min": 0
+    },
+    {
+      "id": 43,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_interleukins",
+      "label": "How many days have elapsed since the patient's last exposure to: Interleukins, Interferons and Cytokines (not including Hematopoietic Growth Factors)",
+      "min": 0
+    },
+    {
+      "id": 44,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_long_acting_gf",
+      "label": "How many days have elapsed since the patient's last exposure to: Long-acting growth factor (eg, pegfilgrastim)",
+      "min": 0
+    },
+    {
+      "id": 45,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_short_acting_gf",
+      "label": "How many days have elapsed since the patient's last exposure to: Short-acting growth factor",
+      "min": 0
+    },
+    {
+      "id": 46,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_local_pall_rt",
+      "label": "How many days have elapsed since the patient's last exposure to: Local palliative radiotherapy (RT), small port",
+      "min": 0
+    },
+    {
+      "id": 47,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_craniospatial_rt",
+      "label": "How many days have elapsed since the patient's last exposure to: Craniospinal radiotherapy (RT)",
+      "min": 0
+    },
+    {
+      "id": 48,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_pelvic_rt",
+      "label": "How many days have elapsed since the patient's last exposure to: Pelvic radiotherapy (RT), if >= 50% pelvis is exposed",
+      "min": 0
+    },
+    {
+      "id": 49,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_tbi",
+      "label": "How many days have elapsed since the patient's last exposure to: Total Body Irradiation (TBI)",
+      "min": 0
+    },
+    {
+      "id": 50,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_other_bm_radiation",
+      "label": "How many days have elapsed since the patient's last exposure to: Other substantial BM radiation",
+      "min": 0
+    },
+    {
+      "id": 51,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_allogeneic_transpl",
+      "label": "How many days have elapsed since the patient's last exposure to: Allogeneic (non-autologous) bone marrow or stem cell transplant",
+      "min": 0
+    },
+    {
+      "id": 52,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_autologous_sci",
+      "label": "How many days have elapsed since the patient's last exposure to: Autologous stem cell infusion",
+      "min": 0
+    },
+    {
+      "id": 53,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_dli",
+      "label": "How many days have elapsed since the patient's last exposure to: DLI (donor lymphocyte infusion) or any type of cellular therapy (eg, modified T cells, NK cells, dendritic cells, etc.)",
+      "min": 0
+    },
+    {
+      "id": 54,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_cyp2d6",
+      "label": "How many days have elapsed since the patient's last exposure to: Strong inhibitors of CYP2D6",
+      "min": 0
+    },
+    {
+      "id": 55,
+      "groupId": 3,
+      "type": "number",
+      "name": "weight",
+      "label": "exp_cyp3a4",
+      "min": 0
+    },
+    {
+      "id": 56,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_grapefruit_orange_starfruit",
+      "label": "How many days have elapsed since the patient's last consumption of: grapefruit, grapefruit products, Seville oranges (including marmalade containing Seville oranges) or starfruit",
+      "min": 0
+    },
+    {
+      "id": 57,
+      "groupId": 3,
+      "type": "number",
+      "name": "cumul_radiation_mediastinum",
+      "label": "How much cumulative radiation to the mediastinum (in Gy) has the patient received?",
+      "min": 0
+    },
+    {
+      "id": 58,
+      "groupId": 3,
+      "type": "radio",
+      "name": "gvhd",
+      "label": "Has the patient demonstrated evidence of GVHD?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 59,
+      "groupId": 3,
+      "type": "radio",
+      "name": "planned_non_protocol_therapy",
+      "label": "Are there plans to administer any type of non-protocol prescribed anti-cancer therapy?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 60,
+      "groupId": 3,
+      "type": "radio",
+      "name": "other_investigational_drug",
+      "label": "Is the patient currently receiving an investigational drug?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 61,
+      "groupId": 3,
+      "type": "radio",
+      "name": "lv_systolic_dysfunction_meds",
+      "label": "Is the patient receiving medications for treatment of left ventricular systolic dysfunction?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 62,
+      "groupId": 3,
+      "type": "radio",
+      "name": "prior_solid_organ_transpl",
+      "label": "Has the patient received a prior solid organ transplantation?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 63,
+      "groupId": 3,
+      "type": "radio",
+      "name": "exp_uproleselan",
+      "label": "Has the patient had prior exposure to: uproleselan",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 64,
+      "groupId": 3,
+      "type": "radio",
+      "name": "exp_venetoclax",
+      "label": "Has the patient has prior exposure to: venetoclax",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 65,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_ef",
+      "label": "What is the patient's most recent measure of: Ejection Fration (EF) (in %)",
+      "min": 0
+    },
+    {
+      "id": 66,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_sf",
+      "label": "What is the patient's most recent measure of: Shortening Fraction (SF) (in %)",
+      "min": 0
+    },
+    {
+      "id": 67,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_qtcb",
+      "label": "What is the patient's most recent measure of: Corrected QT using the Bazett formula (QTcB) interval (in msec)",
+      "min": 0
+    },
+    {
+      "id": 68,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_gfr",
+      "label": "What is the patient's most recent measure of: GFR (in mL/min/1.73 m2)",
+      "min": 0
+    },
+    {
+      "id": 69,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_serum_creat",
+      "label": "What is the patient's most recent measure of: Serum creatinine (in mg/dL)",
+      "min": 0
+    },
+    {
+      "id": 70,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_dbili_mgdl",
+      "label": "What is the patient's most recent measure of: Direct bilirubin (in mg/dL)",
+      "min": 0
+    },
+    {
+      "id": 71,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_dbili_uln",
+      "label": "What is the patient's most recent measure of: Direct bilirubin (in ULN)",
+      "min": 0
+    },
+    {
+      "id": 72,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_bili_uln",
+      "label": "What is the patient's most recent measure of: Bilirubin (sum of conjugated + unconjugated) (in ULN for age)",
+      "min": 0
+    },
+    {
+      "id": 73,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_alt_ul",
+      "label": "What is the patient's most recent measure of: SGPT (ALT) (in U/L)",
+      "min": 0
+    },
+    {
+      "id": 74,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_alt_uln",
+      "label": "What is the patient's most recent measure of: SGPT (ALT) (in ULN)",
+      "min": 0
+    },
+    {
+      "id": 75,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_albumin",
+      "label": "What is the patient's most recent measure of: Albumin (in g/dL)",
+      "min": 0
+    },
+    {
+      "id": 76,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_wbc",
+      "label": "What is the patient's most recent measure of: White blood cells (WBC) (in count/mm3)",
+      "min": 0
+    },
+    {
+      "id": 77,
       "groupId": 5,
       "type": "radio",
-      "name": "Does the patient have CNS disease?",
-      "label": "Does the patient have CNS disease?",
+      "name": "expression_msln",
+      "label": "Is there evidence of MSLN expression?",
       "options": [
-        { "value": 39, "label": "CNS 1", "description": "" },
-        { "value": 40, "label": "CNS 2", "description": "" },
-        { "value": 41, "label": "CNS 3", "description": "" }
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 78,
+      "groupId": 5,
+      "type": "radio",
+      "name": "expression_cd123",
+      "label": "Is there evidence of CD123 expression?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 79,
+      "groupId": 5,
+      "type": "radio",
+      "name": "expression_eselectin",
+      "label": "Is there evidence of E-selectin expression?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
       ]
     }
   ]
