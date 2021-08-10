@@ -59,7 +59,7 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
           <NavLink
             to="/"
             className="absolute bg-white px-1 mt-3 z-20"
-            style={{ left: 'calc(50vw - 72px)' }}
+            style={{ left: 'calc(50vw - 64px)' }}
             onClick={showMenu ? toggleMenu : undefined}
           >
             <img
