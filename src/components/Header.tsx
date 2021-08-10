@@ -11,7 +11,7 @@ const navItems = [
   { name: 'USER GUIDE', path: '/guide' },
 ]
 
-export type HeaderProps = {
+type HeaderProps = {
   isAuthenticated: boolean
   username: string
   onLogout: () => void
