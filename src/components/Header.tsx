@@ -58,14 +58,14 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
           )}
           <NavLink
             to="/"
-            className="absolute bg-white px-1 mt-2 z-20"
+            className="absolute bg-white px-1 mt-3 z-20"
             style={{ left: 'calc(50vw - 72px)' }}
             onClick={showMenu ? toggleMenu : undefined}
           >
             <img
               src={gearboxLogo}
               alt="GEARBOx logo"
-              style={{ maxHeight: '48px' }}
+              style={{ maxHeight: '40px' }}
             />
           </NavLink>
         </nav>
