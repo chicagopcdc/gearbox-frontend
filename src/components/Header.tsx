@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import Button from './Inputs/Button'
+import { Menu, X } from 'react-feather'
 import LinkButton from './LinkButton'
+import { UserActionButton, UserActionCard } from './UserAction'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 import useScreenSize from '../hooks/useScreenSize'
 
@@ -17,18 +19,37 @@ export type HeaderProps = {
 
 function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
   const screenSize = useScreenSize()
+  const [showUserAction, setShowUserAction] = useState(false)
+  const [showMenu, setShowMenu] = useState(false)
+  function toggleUserAction() {
+    setShowUserAction(!showUserAction)
+    setShowMenu(false)
+  }
+  function toggleMenu() {
+    setShowMenu(!showMenu)
+    setShowUserAction(false)
+  }
+
   const authElement = (
-    <div className="flex justify-end mb-2 md:mb-0">
+    <div className="flex justify-end">
       {isAuthenticated ? (
         <>
-          {username !== '' && (
-            <div className="flex items-center text-sm pr-4">
-              Hello,&nbsp;<span className="font-bold">{username}</span>
-            </div>
+          <UserActionButton
+            className="z-20 mx-4 mt-3"
+            isActive={showUserAction}
+            onClick={toggleUserAction}
+          />
+          {showUserAction && (
+            <UserActionCard
+              className={`absolute z-10 ${
+                screenSize.mdAndUp
+                  ? 'border border-gray-300 mt-16 mx-4'
+                  : 'border-t border-primary mt-10 pt-6 w-full'
+              }`}
+              username={username}
+              onLogout={onLogout}
+            />
           )}
-          <Button size="small" onClick={onLogout}>
-            Log out
-          </Button>
         </>
       ) : (
         <LinkButton to="/login" size="small">
@@ -39,30 +60,59 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
   )
 
   return (
-    <header>
-      <div className="flex-row md:flex justify-between border-b border-solid border-primary">
-        {screenSize.smAndDown && authElement}
-        <nav className="flex justify-between">
-          <div>
-            <NavLink
-              to="/"
-              className={`absolute bg-white px-1 mx-4 ${
-                screenSize.current === '2xs' ? 'mt-6' : 'mt-2'
-              }`}
-            >
-              <img
-                src={gearboxLogo}
-                alt="GEARBOx logo"
-                style={{ maxHeight: '48px' }}
-              />
-            </NavLink>
-          </div>
+    <header className="flex justify-between border-b border-solid border-primary">
+      {screenSize.smAndDown ? (
+        <nav style={{ minHeight: '40px' }}>
+          <button
+            className="flex absolute text-primary p-2"
+            onClick={toggleMenu}
+          >
+            {showMenu ? <X /> : <Menu />}
+            <span className="mx-2">Menu</span>
+          </button>
+          {showMenu && (
+            <div className="absolute bg-white border-t border-primary shadow-md pt-6 pb-4 text-center mt-10 w-full z-10">
+              {navItems.map(({ path, name }) => (
+                <NavLink
+                  key={path}
+                  to={path}
+                  className="hover:bg-red-100 text-xs text-primary hover:text-secondary text-center py-3 px-2 block w-full"
+                  activeClassName="font-bold text-secondary bg-red-100"
+                  onClick={toggleMenu}
+                >
+                  {name}
+                </NavLink>
+              ))}
+            </div>
+          )}
+          <NavLink
+            to="/"
+            className="absolute bg-white px-1 mt-2 z-20"
+            style={{ left: 'calc(50vw - 72px)' }}
+            onClick={showMenu ? toggleMenu : undefined}
+          >
+            <img
+              src={gearboxLogo}
+              alt="GEARBOx logo"
+              style={{ maxHeight: '48px' }}
+            />
+          </NavLink>
+        </nav>
+      ) : (
+        <nav>
+          <NavLink to="/" className="absolute bg-white px-1 mx-4 mt-2 z-20 ">
+            <img
+              src={gearboxLogo}
+              alt="GEARBOx logo"
+              style={{ maxHeight: '48px' }}
+            />
+          </NavLink>
           <div className="flex" style={{ marginLeft: '180px' }}>
             {navItems.map(({ path, name }) => (
               <NavLink
                 key={path}
                 to={path}
-                className="text-xs text-primary hover:text-secondary text-center py-3 px-2 md:px-4"
+                className="text-xs text-primary hover:text-secondary text-center py-3 px-4"
                 activeClassName="font-bold text-secondary"
               >
                 {name}
@@ -70,8 +120,8 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
             ))}
           </div>
         </nav>
-        {screenSize.mdAndUp && authElement}
-      </div>
+      )}
+      {authElement}
     </header>
   )
 }
