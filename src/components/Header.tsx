@@ -35,7 +35,7 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
       {screenSize.smAndDown ? (
         <nav style={{ minHeight: '40px' }}>
           <button
-            className="flex absolute text-primary p-2"
+            className="flex items-center absolute text-primary text-sm p-2"
             onClick={toggleMenu}
           >
             {showMenu ? <X /> : <Menu />}
