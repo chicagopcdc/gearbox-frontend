@@ -30,35 +30,6 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
     setShowUserAction(false)
   }
 
-  const authElement = (
-    <div className="flex justify-end">
-      {isAuthenticated ? (
-        <>
-          <UserActionButton
-            className="z-20 mx-4 mt-3"
-            isActive={showUserAction}
-            onClick={toggleUserAction}
-          />
-          {showUserAction && (
-            <UserActionCard
-              className={`absolute z-10 ${
-                screenSize.mdAndUp
-                  ? 'border border-gray-300 mt-16 mx-4'
-                  : 'border-t border-primary mt-10 pt-6 w-full'
-              }`}
-              username={username}
-              onLogout={onLogout}
-            />
-          )}
-        </>
-      ) : (
-        <LinkButton to="/login" size="small">
-          Log in
-        </LinkButton>
-      )}
-    </div>
-  )
-
   return (
     <header className="flex justify-between border-b border-solid border-primary">
       {screenSize.smAndDown ? (
@@ -121,7 +92,30 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
           </div>
         </nav>
       )}
-      {authElement}
+      {isAuthenticated ? (
+        <div className="flex justify-end">
+          <UserActionButton
+            className="z-20 mx-4 mt-3"
+            isActive={showUserAction}
+            onClick={toggleUserAction}
+          />
+          {showUserAction && (
+            <UserActionCard
+              className={`absolute z-10 ${
+                screenSize.smAndDown
+                  ? 'border-t border-primary mt-10 pt-6 w-full'
+                  : 'border border-gray-300 mt-16 mx-4'
+              }`}
+              username={username}
+              onLogout={onLogout}
+            />
+          )}
+        </div>
+      ) : (
+        <LinkButton to="/login" size="small">
+          Log in
+        </LinkButton>
+      )}
     </header>
   )
 }
