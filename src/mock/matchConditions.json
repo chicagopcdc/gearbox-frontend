@@ -2,607 +2,85 @@
   {
     "studyId": 1,
     "algorithm": {
-      "operator": "AND",
+      "operator": "OR",
       "criteria": [
-        1,
         {
-          "operator": "OR",
+          "operator": "AND",
           "criteria": [
-            12,
+            2,
             {
-              "operator": "AND",
-              "criteria": [13, 14, 146]
+              "operator": "OR",
+              "criteria": [
+                {
+                  "operator": "AND",
+                  "criteria": [
+                    12,
+                    7
+                  ]
+                },
+                {
+                  "operator": "AND",
+                  "criteria": [
+                    13,
+                    8
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        3,
+        {
+          "operator": "AND",
+          "criteria": [
+            4,
+            {
+              "operator": "OR",
+              "criteria": [
+                {
+                  "operator": "AND",
+                  "criteria": [
+                    12,
+                    7
+                  ]
+                },
+                {
+                  "operator": "AND",
+                  "criteria": [
+                    13,
+                    8
+                  ]
+                }
+              ]
             }
           ]
         },
         {
-          "operator": "OR",
+          "operator": "AND",
           "criteria": [
-            9,
-            {
-              "operator": "AND",
-              "criteria": [
-                10,
-                16,
-                {
-                  "operator": "OR",
-                  "criteria": [6, 7, 8]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                10,
-                17,
-                {
-                  "operator": "OR",
-                  "criteria": [20, 145]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                3,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [16, 10]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [15, 132]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [2, 4, 5, 18, 19]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [16, 10]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [11, 133]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 2,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        21,
-        22,
-        31,
-        32,
-        33,
-        34,
-        35,
-        36,
-        37,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [24, 25, 26]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [27, 30]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [28, 141]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [23, 142, 143, 144]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [27, 29]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [28, 141]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 3,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        38,
-        39,
-        47,
-        {
-          "operator": "OR",
-          "criteria": [48, 49]
-        },
-        52,
-        53,
-        54,
-        55,
-        56,
-        58,
-        59,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                41,
-                42,
-                {
-                  "operator": "OR",
-                  "criteria": [40, 50, 51]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [50, 51, 40, 43, 44]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [42, 45]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [42, 46]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 4,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        63,
-        75,
-        76,
-        78,
-        79,
-        80,
-        81,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                72,
-                83,
-                138,
-                {
-                  "operator": "OR",
-                  "criteria": [69, 70, 64, 65, 66, 67, 68]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                71,
-                74,
-                {
-                  "operator": "OR",
-                  "criteria": [69, 70]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    82,
-                    {
-                      "operator": "AND",
-                      "criteria": [83, 139]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [84, 139, 140]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                71,
-                73,
-                {
-                  "operator": "OR",
-                  "criteria": [64, 65, 66, 67, 68]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    82,
-                    {
-                      "operator": "AND",
-                      "criteria": [83, 139]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [84, 139, 140]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 5,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        1,
-        {
-          "operator": "OR",
-          "criteria": [
-            12,
-            {
-              "operator": "AND",
-              "criteria": [13, 14, 146]
-            }
+            5,
+            13,
+            8
           ]
         },
         {
-          "operator": "OR",
+          "operator": "AND",
           "criteria": [
-            9,
-            {
-              "operator": "AND",
-              "criteria": [
-                10,
-                16,
-                {
-                  "operator": "OR",
-                  "criteria": [6, 7, 8]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                10,
-                17,
-                {
-                  "operator": "OR",
-                  "criteria": [20, 145]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                3,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [16, 10]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [15, 132]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [2, 4, 5, 18, 19]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [16, 10]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [11, 133]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 6,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        86,
-        95,
-        {
-          "operator": "OR",
-          "criteria": [96, 97]
-        },
-        98,
-        99,
-        100,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [88, 89, 90]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [102, 105]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [103, 136]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [87, 92]
-                },
-                102,
-                104
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [87, 103, 136]
-            },
-            {
-              "operator": "AND",
-              "criteria": [93, 102, 106]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 103, 137]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 7,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        108,
-        107,
-        109,
-        110,
-        111,
-        112,
-        113,
-        115,
-        116,
-        117,
-        {
-          "operator": "OR",
-          "criteria": [118, 119, 120, 121]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                125,
-                126,
-                135,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [124, 130]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [123, 131]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [122, 128, 129, 131, 134]
-            }
-          ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 8,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        1,
-        {
-          "operator": "OR",
-          "criteria": [
-            12,
-            {
-              "operator": "AND",
-              "criteria": [13, 14, 146]
-            }
+            6,
+            13,
+            8,
+            9
           ]
         },
         {
-          "operator": "OR",
+          "operator": "AND",
           "criteria": [
-            9,
-            {
-              "operator": "AND",
-              "criteria": [
-                10,
-                16,
-                {
-                  "operator": "OR",
-                  "criteria": [6, 7, 8]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                10,
-                17,
-                {
-                  "operator": "OR",
-                  "criteria": [20, 145]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                3,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [16, 10]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [15, 132]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                {
-                  "operator": "OR",
-                  "criteria": [2, 4, 5, 18, 19]
-                },
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [16, 10]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [11, 133]
-                    }
-                  ]
-                }
-              ]
-            }
+            6,
+            13,
+            8,
+            10,
+            11
           ]
-        }
-      ]
-    }
-  },
-  {
-    "studyId": 9,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        257,
-        {
-          "operator": "OR",
-          "criteria": [250, 251, 252, 253, 254]
-        },
-        {
-          "operator": "OR",
-          "criteria": [255, 256]
         }
       ]
     }

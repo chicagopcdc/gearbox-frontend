@@ -183,6 +183,18 @@
         {
           "value": 15,
           "label": "T-cell acute lymphoblastic leukemia (T-ALL)"
+        },
+        {
+          "value": 16,
+          "label": "Acute lymphoblastic leukemia (ALL)"
+        },
+        {
+          "value": 17,
+          "label": "KMT2A acute lymphoblastic leukemia"
+        },
+        {
+          "value": 18,
+          "label": "Early T-cell precursor acute lymphoblastic leukemia (ETP-ALL)"
         }
       ],
       "placeholder": "Select"
@@ -1005,6 +1017,18 @@
       "type": "radio",
       "name": "expression_eselectin",
       "label": "Is there evidence of E-selectin expression?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 80,
+      "groupId": 5,
+      "type": "radio",
+      "name": "expression_kmt2ar",
+      "label": "Is there evidence of KMT2A rearrangement (KMT2Ar)?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
