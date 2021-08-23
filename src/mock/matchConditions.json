@@ -2,87 +2,93 @@
   {
     "studyId": 1,
     "algorithm": {
-      "operator": "OR",
-      "criteria": [
-        {
           "operator": "AND",
           "criteria": [
-            2,
+            1,
             {
               "operator": "OR",
               "criteria": [
                 {
                   "operator": "AND",
                   "criteria": [
-                    12,
-                    7
+                    2,
+                    {
+                      "operator": "OR",
+                      "criteria": [
+                        {
+                          "operator": "AND",
+                          "criteria": [
+                            12,
+                            7
+                          ]
+                        },
+                        {
+                          "operator": "AND",
+                          "criteria": [
+                            13,
+                            8
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                3,
+                {
+                  "operator": "AND",
+                  "criteria": [
+                    4,
+                    {
+                      "operator": "OR",
+                      "criteria": [
+                        {
+                          "operator": "AND",
+                          "criteria": [
+                            12,
+                            7
+                          ]
+                        },
+                        {
+                          "operator": "AND",
+                          "criteria": [
+                            13,
+                            8
+                          ]
+                        }
+                      ]
+                    }
                   ]
                 },
                 {
                   "operator": "AND",
                   "criteria": [
+                    5,
                     13,
                     8
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        3,
-        {
-          "operator": "AND",
-          "criteria": [
-            4,
-            {
-              "operator": "OR",
-              "criteria": [
-                {
-                  "operator": "AND",
-                  "criteria": [
-                    12,
-                    7
                   ]
                 },
                 {
                   "operator": "AND",
                   "criteria": [
+                    6,
                     13,
-                    8
+                    8,
+                    9
+                  ]
+                },
+                {
+                  "operator": "AND",
+                  "criteria": [
+                    6,
+                    13,
+                    8,
+                    10,
+                    11
                   ]
                 }
               ]
             }
           ]
-        },
-        {
-          "operator": "AND",
-          "criteria": [
-            5,
-            13,
-            8
-          ]
-        },
-        {
-          "operator": "AND",
-          "criteria": [
-            6,
-            13,
-            8,
-            9
-          ]
-        },
-        {
-          "operator": "AND",
-          "criteria": [
-            6,
-            13,
-            8,
-            10,
-            11
-          ]
-        }
-      ]
-    }
+        }  
   }
 ]
