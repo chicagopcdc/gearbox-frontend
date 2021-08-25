@@ -1,5 +1,5 @@
 import LinkButton from './LinkButton'
-import '../../index.css'
+import '../index.css'
 
 export default {
   title: 'LinkButton',
