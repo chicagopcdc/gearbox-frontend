@@ -43,7 +43,11 @@ function Select({
   }
   return (
     <div className="flex flex-col">
-      {label && <label htmlFor={name || ''}>{label}</label>}
+      {label && (
+        <label className="mb-1" htmlFor={name || ''}>
+          {label}
+        </label>
+      )}
       <select
         {...selectAttrs}
         onChange={(e) => {
