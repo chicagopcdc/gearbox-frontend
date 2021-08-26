@@ -8,13 +8,11 @@ import {
 
 import Layout from './Layout'
 import AboutPage from './pages/AboutPage'
-import GuidePage from './pages/GuidePage'
 import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import TermsPage from './pages/TermsPage'
-import TrialsPage from './pages/TrialsPage'
 import useAuth from './hooks/useAuth'
 import type {
   EligibilityCriterion,
@@ -116,14 +114,6 @@ function App() {
             ) : (
               <Redirect to="/" />
             )}
-          </Route>
-
-          <Route path="/guide" exact>
-            <GuidePage />
-          </Route>
-
-          <Route path="/trials" exact>
-            <TrialsPage studies={studies} />
           </Route>
 
           <Route path="/about" exact>
