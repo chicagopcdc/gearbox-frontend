@@ -31,7 +31,11 @@ function Radio({
 
   return (
     <div className="flex flex-col">
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label className="mb-1" htmlFor={name}>
+          {label}
+        </label>
+      )}
       {options && (
         <div className="flex flex-wrap justify-between">
           {options.map((option) => (

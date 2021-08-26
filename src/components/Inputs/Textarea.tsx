@@ -32,7 +32,11 @@ function Textarea({
   }
   return (
     <>
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && (
+        <label className="mb-1" htmlFor={name}>
+          {label}
+        </label>
+      )}
       <textarea {...textAreaAttrs} />
     </>
   )

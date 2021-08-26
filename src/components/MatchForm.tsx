@@ -74,7 +74,7 @@ function MatchForm({
 
               return (
                 isFieldShowing && (
-                  <div className="my-4" key={id}>
+                  <div className="my-6" key={id}>
                     <Field
                       config={{ ...fieldConfig, name: String(id) }}
                       value={formik.values[id]}
