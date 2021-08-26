@@ -39,7 +39,12 @@ function MatchingPage({
   return isMatchDataReady ? (
     screenSize.smAndDown ? (
       <>
-        <div className="flex justify-center sticky top-0 bg-white">
+        <div
+          className="flex justify-center sticky top-0 bg-white z-10"
+          style={{
+            minHeight: '2.5rem',
+          }}
+        >
           <Button
             size="small"
             block
@@ -75,7 +80,7 @@ function MatchingPage({
     ) : (
       <div className="flex h-screen pb-8">
         <section className="h-full overflow-scroll w-1/2">
-          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2 z-10">
             Patient Information
           </h1>
           <div className="px-4 lg:px-8 pb-4">
@@ -85,7 +90,7 @@ function MatchingPage({
           </div>
         </section>
         <section className="h-full overflow-scroll w-1/2">
-          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2 z-10">
             Open Trials
           </h1>
           <div

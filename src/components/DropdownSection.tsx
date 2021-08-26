@@ -24,7 +24,7 @@ function DropdownSection({
   }
   return (
     <section className="my-4">
-      <div className="flex py-2 justify-between border-b border-solid border-black">
+      <div className="flex sticky top-10 bg-white py-2 justify-between border-b border-solid border-black">
         <h2 className="font-bold">{name}</h2>
         {isDropDownOpen ? (
           <button onClick={handleClose} aria-label="Collapse dropdown">
