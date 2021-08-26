@@ -6,10 +6,7 @@ import { UserActionButton, UserActionCard } from './UserAction'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 import useScreenSize from '../hooks/useScreenSize'
 
-const navItems = [
-  { name: 'ABOUT GEARBOx', path: '/about' },
-  { name: 'USER GUIDE', path: '/guide' },
-]
+const navItems = [{ name: 'ABOUT GEARBOx', path: '/about' }]
 
 type HeaderProps = {
   isAuthenticated: boolean
