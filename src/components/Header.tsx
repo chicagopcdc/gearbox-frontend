@@ -42,7 +42,7 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
             <span className="mx-2">Menu</span>
           </button>
           {showMenu && (
-            <div className="absolute bg-white border-t border-primary shadow-md pt-6 pb-4 text-center mt-10 w-full z-10">
+            <div className="absolute bg-white border-t border-primary shadow-md pt-6 pb-4 text-center mt-10 w-full z-20">
               {navItems.map(({ path, name }) => (
                 <NavLink
                   key={path}
@@ -58,7 +58,7 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
           )}
           <NavLink
             to="/"
-            className="absolute bg-white px-1 mt-3 z-20"
+            className="absolute bg-white px-1 mt-3 z-30"
             style={{ left: 'calc(50vw - 64px)' }}
             onClick={showMenu ? toggleMenu : undefined}
           >
@@ -71,7 +71,7 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
         </nav>
       ) : (
         <nav>
-          <NavLink to="/" className="absolute bg-white px-1 mx-4 mt-2 z-20 ">
+          <NavLink to="/" className="absolute bg-white px-1 mx-4 mt-2 z-30 ">
             <img
               src={gearboxLogo}
               alt="GEARBOx logo"
@@ -95,13 +95,13 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
       {isAuthenticated ? (
         <div className="flex justify-end">
           <UserActionButton
-            className="z-20 mx-4 mt-3"
+            className="z-30 mx-4 mt-3"
             isActive={showUserAction}
             onClick={toggleUserAction}
           />
           {showUserAction && (
             <UserActionCard
-              className={`absolute z-10 ${
+              className={`absolute z-20 ${
                 screenSize.smAndDown
                   ? 'border-t border-primary mt-10 pt-6 w-full'
                   : 'border border-gray-300 mt-16 mx-4'
