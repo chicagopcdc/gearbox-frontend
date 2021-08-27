@@ -121,6 +121,8 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     enableReinitialize: true,
     onSubmit: ({ role, roleOther, ...otherValues }) => {
       setIsSubmitting(true)
+
+      if ('accessCode' in otherValues) delete otherValues['accessCode']
       onRegister({
         ...otherValues,
         role: role === 'other' && roleOther !== undefined ? roleOther : role,
