@@ -111,6 +111,7 @@ export type RegisterInput = {
   reviewStatus: {
     [id: number]: boolean
   }
+  accessCode?: string
 }
 
 export type UserData = {
