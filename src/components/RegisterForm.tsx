@@ -126,6 +126,17 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
         role: role === 'other' && roleOther !== undefined ? roleOther : role,
       })
     },
+    validate: (values) => {
+      const errors: { [key: string]: string } = {}
+
+      if (
+        process.env.REACT_APP_ACCESS_CODE &&
+        process.env.REACT_APP_ACCESS_CODE !== values.accessCode
+      )
+        errors.accessCode = 'Invalid access code!'
+
+      return errors
+    },
   })
 
   function handleChange(e: any) {
@@ -146,6 +157,12 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
                 value={getIn(formik.values, fieldConfig.name)}
                 onChange={handleChange}
               />
+              {fieldConfig.name === 'accessCode' &&
+                formik.errors.accessCode && (
+                  <div className="text-red-400 text-sm italic">
+                    {formik.errors.accessCode}
+                  </div>
+                )}
             </div>
           )
       )}
