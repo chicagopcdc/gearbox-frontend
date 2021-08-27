@@ -132,6 +132,18 @@ function AboutPage() {
           </li>
         </ul>
       </AboutPageSection>
+      <AboutPageSection>
+        <p>
+          If you need help with GEARBOx, send an email to{' '}
+          <LinkExternal
+            className="underline text-primary"
+            to="mailto:gearbox_help@lists.uchicago.edu"
+          >
+            gearbox_help@lists.uchicago.edu
+          </LinkExternal>
+          .
+        </p>
+      </AboutPageSection>
     </div>
   )
 }
