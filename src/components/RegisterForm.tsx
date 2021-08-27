@@ -117,6 +117,12 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     },
   })
 
+  function handleChange(e: any) {
+    e.target.type === 'checkbox'
+      ? formik.setFieldValue(e.target.name, e.target.checked)
+      : formik.handleChange(e)
+  }
+
   return (
     <form onSubmit={formik.handleSubmit}>
       {fieldsConfig.map(
@@ -127,11 +133,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
               <Field
                 config={fieldConfig}
                 value={getIn(formik.values, fieldConfig.name)}
-                onChange={(e) => {
-                  e.target.type === 'checkbox'
-                    ? formik.setFieldValue(e.target.name, e.target.checked)
-                    : formik.handleChange(e)
-                }}
+                onChange={handleChange}
               />
             </div>
           )
