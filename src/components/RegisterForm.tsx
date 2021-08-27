@@ -102,6 +102,17 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     initialValues.reviewStatus[id] = false
   }
 
+  if (process.env.REACT_APP_ACCESS_CODE) {
+    fieldsConfig.push({
+      type: 'text',
+      name: 'accessCode',
+      label: 'Access code',
+      required: true,
+    })
+
+    initialValues['accessCode'] = ''
+  }
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   useEffect(() => () => setIsSubmitting(false), [])
 
@@ -110,10 +121,23 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     enableReinitialize: true,
     onSubmit: ({ role, roleOther, ...otherValues }) => {
       setIsSubmitting(true)
+
+      if ('accessCode' in otherValues) delete otherValues['accessCode']
       onRegister({
         ...otherValues,
         role: role === 'other' && roleOther !== undefined ? roleOther : role,
       })
+    },
+    validate: (values) => {
+      const errors: { [key: string]: string } = {}
+
+      if (
+        process.env.REACT_APP_ACCESS_CODE &&
+        process.env.REACT_APP_ACCESS_CODE !== values.accessCode
+      )
+        errors.accessCode = 'Invalid access code!'
+
+      return errors
     },
   })
 
@@ -135,6 +159,12 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
                 value={getIn(formik.values, fieldConfig.name)}
                 onChange={handleChange}
               />
+              {fieldConfig.name === 'accessCode' &&
+                formik.errors.accessCode && (
+                  <div className="text-red-400 text-sm italic">
+                    {formik.errors.accessCode}
+                  </div>
+                )}
             </div>
           )
       )}
