@@ -102,6 +102,17 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     initialValues.reviewStatus[id] = false
   }
 
+  if (process.env.REACT_APP_ACCESS_CODE) {
+    fieldsConfig.push({
+      type: 'text',
+      name: 'accessCode',
+      label: 'Access code',
+      required: true,
+    })
+
+    initialValues['accessCode'] = ''
+  }
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   useEffect(() => () => setIsSubmitting(false), [])
 
