@@ -56,7 +56,7 @@ function AboutPage() {
           provided with information to help facilitate the enrollment of the
           child on the trial.
         </p>
-        <p className="mb-4">
+        <p>
           GEARBOx is developed by the University of Chicago’s Pediatric Cancer
           Data Commons (PCDC) team with funding from the Leukemia & Lymphoma
           Society (LLS) as part of PedAL: Precision Medicine for Pediatric Acute
@@ -64,7 +64,7 @@ function AboutPage() {
         </p>
       </AboutPageSection>
       <AboutPageSection title="Who is GEARBOx for?">
-        <p className="mb-4">
+        <p>
           GEARBOx is a decision-support tool that is meant for use by{' '}
           <em className="font-bold not-italic text-primary">
             clinicians and nurse navigators
@@ -76,7 +76,7 @@ function AboutPage() {
         </p>
       </AboutPageSection>
       <AboutPageSection title="What information is available on GEARBOX?">
-        <p className="mb-4">
+        <p>
           GEARBOx will include LLS-sponsored trials in its initial rollout, and
           will expand to include trials from other sponsors. Eligibility
           criteria, including inclusion and exclusion criteria, will be
@@ -93,7 +93,7 @@ function AboutPage() {
         </p>
       </AboutPageSection>
       <AboutPageSection title="Terms and conditions">
-        <p className="mb-4">
+        <p>
           <Link className="underline text-primary" to="/terms">
             Read the GEARBOx Terms and Conditions
           </Link>{' '}
@@ -101,7 +101,7 @@ function AboutPage() {
         </p>
       </AboutPageSection>
       <AboutPageSection title="Privacy notice">
-        <p className="mb-4">
+        <p>
           <LinkExternal
             className="underline text-primary"
             to="https://commons.cri.uchicago.edu/wp-content/uploads/2021/04/PCDC-Privacy-Notice.pdf"
