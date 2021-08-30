@@ -739,6 +739,18 @@
       ]
     },
     {
+      "id": 86,
+      "groupId": 2,
+      "type": "radio",
+      "name": "cerebellar_toxicity",
+      "label": "Does the patient have an history of cerebellar toxicity or cerebellar neurological findings on exam?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 39,
       "groupId": 3,
       "type": "number",
