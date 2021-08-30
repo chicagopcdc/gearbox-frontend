@@ -1185,6 +1185,14 @@
       "min": 0
     },
     {
+      "id": 96,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_ast_uln",
+      "label": "What is the patient's most recent measure of: SGOT (AST) (in ULN)",
+      "min": 0
+    },
+    {
       "id": 75,
       "groupId": 4,
       "type": "number",
