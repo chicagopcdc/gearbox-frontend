@@ -775,6 +775,14 @@
       "min": 0
     },
     {
+      "id": 87,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_anticancer_myelosupp",
+      "label": "How many days have elapsed since the patient's last exposure to: myelosuppressive anti-cancer agents",
+      "min": 0
+    },
+    {
       "id": 42,
       "groupId": 3,
       "type": "number",
