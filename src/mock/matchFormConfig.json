@@ -1271,6 +1271,18 @@
         { "value": 4, "label": "No", "description": "" },
         { "value": 5, "label": "Not sure", "description": "" }
       ]
+    },
+    {
+      "id": 99,
+      "groupId": 5,
+      "type": "radio",
+      "name": "expression_t1517",
+      "label": "Is there evidence of t(15;17) translocation?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
     }
   ]
 }
