@@ -460,6 +460,25 @@
       }
     },
     {
+      "id": 83,
+      "groupId": 2,
+      "type": "number",
+      "name": "periph_blood_blast_pct_meas",
+      "label": "What is the patient's most recent peripheral blood blast percentage?",
+      "min": 0,
+      "max": 100,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 16,
+            "value": 4,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 21,
       "groupId": 2,
       "type": "radio",
