@@ -930,8 +930,8 @@
       "id": 55,
       "groupId": 3,
       "type": "number",
-      "name": "weight",
-      "label": "exp_cyp3a4",
+      "name": "exp_cyp3a4",
+      "label": "How many days have elapsed since the patient's last exposure to: Strong inhibitors of CYP3A4",
       "min": 0
     },
     {
