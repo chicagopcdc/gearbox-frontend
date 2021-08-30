@@ -326,6 +326,24 @@
       }
     },
     {
+      "id": 81,
+      "groupId": 2,
+      "type": "number",
+      "name": "days_between_initdx_relapse",
+      "label": "How many days elapsed between initial diagnosis and relapse diagnosis?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 13,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 16,
       "groupId": 2,
       "type": "radio",
@@ -335,17 +353,7 @@
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
         { "value": 5, "label": "Not sure", "description": "" }
-      ],
-      "showIf": {
-        "operator": "AND",
-        "criteria": [
-          {
-            "id": 15,
-            "value": 3,
-            "operator": "eq"
-          }
-        ]
-      }
+      ]
     },
     {
       "id": 17,
