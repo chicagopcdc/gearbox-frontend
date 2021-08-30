@@ -898,7 +898,17 @@
       "type": "number",
       "name": "exp_autologous_sci",
       "label": "How many days have elapsed since the patient's last exposure to: Autologous stem cell infusion",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 89,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 53,
