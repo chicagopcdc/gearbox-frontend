@@ -18,5 +18,29 @@
       }
     ],
     "description": "This study aims to use clinical and biological characteristics of acute leukemias to screen for patient eligibility for available pediatric leukemia sub-trials. Testing bone marrow and blood from patients with leukemia that has come back after treatment or is difficult to treat may provide information about the patient's leukemia that is important when deciding how to best treat it, and may help doctors find better ways to diagnose and treat leukemia in children, adolescents, and young adults."
+  },
+  {
+    "id": 2,
+    "title": "SELCLAX",
+    "locations": [],
+    "links": [
+    ],
+    "description": ""
+  }
+  {
+    "id": 3,
+    "title": "VENAML",
+    "locations": [],
+    "links": [
+    ],
+    "description": ""
+  }
+  {
+    "id": 4,
+    "title": "PEPN1812",
+    "locations": [],
+    "links": [
+    ],
+    "description": ""
   }
 ]
