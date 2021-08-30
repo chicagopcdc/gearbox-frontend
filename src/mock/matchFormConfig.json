@@ -935,6 +935,34 @@
       "min": 0
     },
     {
+      "id": 90,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_cyp3a",
+      "label": "How many days have elapsed since the patient's last exposure to: Strong inhibitors of CYP3A",
+      "min": 0
+    },
+    {
+      "id": 91,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_calcineurin",
+      "label": "How many days have elapsed since the patient's last exposure to: calcineurin inhibitors",
+      "min": 0
+    },
+    {
+      "id": 92,
+      "groupId": 3,
+      "type": "radio",
+      "name": "exp_cd123_cart",
+      "label": "Has the patient had prior exposure to: CD123 directed antibody or CD123 directed chimeric antigen receptor (CAR) T cells",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 56,
       "groupId": 3,
       "type": "number",
