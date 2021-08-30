@@ -405,7 +405,7 @@
       "id": 18,
       "groupId": 2,
       "type": "number",
-      "name": "bm_recent_blast_methods",
+      "name": "bm_recent_blast_methods_count",
       "label": "The most recent measure of bone marrow blast percentage was confirmed by how many methods (e.g. Flow, FISH, etc.)?",
       "min": 0,
       "showIf": {
