@@ -374,6 +374,34 @@
       }
     },
     {
+      "id": 82,
+      "groupId": 2,
+      "type": "select",
+      "name": "bm_recent_blast_method",
+      "label": "The most recent measure of bone marrow blast percentage was assessed by which method?",
+      "options": [
+        {
+          "value": 60,
+          "label": "Morphology"
+        },
+        {
+          "value": 61,
+          "label": "Flow cytometry"
+        }
+      ],
+      "placeholder": "Select",
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 16,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 18,
       "groupId": 2,
       "type": "number",
