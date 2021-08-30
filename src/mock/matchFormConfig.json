@@ -1137,6 +1137,14 @@
       "min": 0
     },
     {
+      "id": 95,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_creat_clear_calc",
+      "label": "What is the patient's most recent measure of: calculated creatinine clearance (in mL/min/1.73m^2)",
+      "min": 0
+    },
+    {
       "id": 70,
       "groupId": 4,
       "type": "number",
