@@ -1051,6 +1051,18 @@
       ]
     },
     {
+      "id": 93,
+      "groupId": 3,
+      "type": "radio",
+      "name": "exp_flotetuzumab",
+      "label": "Has the patient had prior exposure to: flotetuzumab",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 64,
       "groupId": 3,
       "type": "radio",
