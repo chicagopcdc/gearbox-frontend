@@ -1209,6 +1209,22 @@
       "min": 0
     },
     {
+      "id": 97,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_platelet",
+      "label": "What is the patient's most recent measure of: Platelet (in count/mm3)",
+      "min": 0
+    },
+    {
+      "id": 98,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_hemoglobin",
+      "label": "What is the patient's most recent measure of: Hemoglobin (in g/dL)",
+      "min": 0
+    },
+    {
       "id": 77,
       "groupId": 5,
       "type": "radio",
