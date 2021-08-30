@@ -195,6 +195,10 @@
         {
           "value": 18,
           "label": "Early T-cell precursor acute lymphoblastic leukemia (ETP-ALL)"
+        },
+        {
+          "value": 59,
+          "label": "Ambiguous lineage acute leukemia (ALAL)"
         }
       ],
       "placeholder": "Select"
@@ -256,7 +260,7 @@
       "groupId": 2,
       "type": "number",
       "name": "current_refractory_num_cycles",
-      "label": "Current disease is refractory to how many induction cycles?",
+      "label": "Current disease is refractory to how many cycles of therapy?",
       "min": 0,
       "showIf": {
         "operator": "AND",
