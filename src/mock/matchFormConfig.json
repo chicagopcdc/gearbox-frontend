@@ -855,6 +855,26 @@
       "min": 0
     },
     {
+      "id": 88,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_radiopharma",
+      "label": "How many days have elapsed since the patient's last exposure to: Radiopharmaceutical therapy (e.g., radiolabeled antibody, 131I-MIBG)?",
+      "min": 0
+    },
+    {
+      "id": 89,
+      "groupId": 3,
+      "type": "radio",
+      "name": "exp_hct",
+      "label": "Has the patient had prior exposure to: Hematopoietic cell transplantation (HCT)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 51,
       "groupId": 3,
       "type": "number",
