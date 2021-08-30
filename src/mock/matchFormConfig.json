@@ -445,7 +445,7 @@
       "id": 20,
       "groupId": 2,
       "type": "number",
-      "name": "periph_blood_blasts",
+      "name": "periph_blood_blast_abs_meas",
       "label": "What is the patient's most recent peripheral blood absolute blast count measurement (in cells/microliter)?",
       "min": 0,
       "showIf": {
