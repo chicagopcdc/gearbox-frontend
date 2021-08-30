@@ -880,7 +880,17 @@
       "type": "number",
       "name": "exp_allogeneic_transpl",
       "label": "How many days have elapsed since the patient's last exposure to: Allogeneic (non-autologous) bone marrow or stem cell transplant",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 89,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 52,
