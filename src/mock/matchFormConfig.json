@@ -770,8 +770,8 @@
       "id": 41,
       "groupId": 3,
       "type": "number",
-      "name": "exp_anticancer",
-      "label": "How many days have elapsed since the patient's last exposure to: anti-cancer agents not known to be myelosuppressive",
+      "name": "exp_anticancer_nonmyelosupp",
+      "label": "How many days have elapsed since the patient's last exposure to: non-myelosuppressive anti-cancer agents",
       "min": 0
     },
     {
