@@ -1075,6 +1075,28 @@
       ]
     },
     {
+      "id": 94,
+      "groupId": 3,
+      "type": "radio",
+      "name": "exp_venetoclax_sensitive",
+      "label": "Has the patient had previous toxicity or hypersensitivity directly attributed to venetoclax?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 64,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 65,
       "groupId": 4,
       "type": "number",
