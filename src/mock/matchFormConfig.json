@@ -607,6 +607,30 @@
       ]
     },
     {
+      "id": 84,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_ataxia_telang",
+      "label": "Has the patient been diagnosed with: ataxia-telangiectasia",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 85,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_bloom",
+      "label": "Has the patient been diagnosed with: Bloom syndrome",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 30,
       "groupId": 2,
       "type": "radio",
