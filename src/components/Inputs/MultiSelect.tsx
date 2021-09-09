@@ -1,4 +1,4 @@
-import ReactMultiSelect from 'react-multi-select-component'
+import { MultiSelect as ReactMultiSelect } from 'react-multi-select-component'
 import type { MatchFormFieldOption } from '../../model'
 
 type MultiSelectProps = {
