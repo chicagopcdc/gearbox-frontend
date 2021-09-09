@@ -7,9 +7,14 @@ const isUsingGoogleAnalytics = /UA-\d+-\d+/.test(gaTrackingId)
 
 if (isUsingGoogleAnalytics) ReactGA.initialize(gaTrackingId)
 
-export default function useGoogleAnalytics(location: Location) {
+function useGoogleAnalytics(location: Location) {
   useEffect(() => {
-    if (isUsingGoogleAnalytics)
-      ReactGA.pageview(location.pathname + location.search)
+    ReactGA.pageview(location.pathname + location.search)
   }, [location])
 }
+
+export default isUsingGoogleAnalytics
+  ? useGoogleAnalytics
+  : () => {
+      /* noop */
+    }
