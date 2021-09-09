@@ -23,24 +23,21 @@
     "id": 2,
     "title": "SELCLAX",
     "locations": [],
-    "links": [
-    ],
+    "links": [],
     "description": ""
-  }
+  },
   {
     "id": 3,
     "title": "VENAML",
     "locations": [],
-    "links": [
-    ],
+    "links": [],
     "description": ""
-  }
+  },
   {
     "id": 4,
     "title": "PEPN1812",
     "locations": [],
-    "links": [
-    ],
+    "links": [],
     "description": ""
   }
 ]
