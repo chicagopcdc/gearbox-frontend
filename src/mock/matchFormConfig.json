@@ -925,6 +925,14 @@
       "min": 0
     },
     {
+      "id": 104,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_biologic",
+      "label": "How many days have elapsed since the patient's last exposure to: any biologic agent",
+      "min": 0
+    },
+    {
       "id": 50,
       "groupId": 3,
       "type": "number",
@@ -1026,6 +1034,30 @@
       "type": "number",
       "name": "exp_calcineurin",
       "label": "How many days have elapsed since the patient's last exposure to: calcineurin inhibitors",
+      "min": 0
+    },
+    {
+      "id": 105,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_monocl_antib",
+      "label": "How many half-lives have elapsed since the patient's last exposure to: monoclonal antibodies",
+      "min": 0
+    },
+    {
+      "id": 106,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_immunotherapy",
+      "label": "How many days have elapsed since the patient's last exposure to: immunotherapy",
+      "min": 0
+    },
+    {
+      "id": 107,
+      "groupId": 3,
+      "type": "number",
+      "name": "exp_demeth_hdac",
+      "label": "How many days have elapsed since the patient's last exposure to: Demethylating and/or HDAC Inhibitor Therapy",
       "min": 0
     },
     {
