@@ -26,8 +26,7 @@
   {
     "id": 3,
     "title": "VENAML",
-    "locations": [],
-    "links": [
+    "locations": [],    "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT03194932"
