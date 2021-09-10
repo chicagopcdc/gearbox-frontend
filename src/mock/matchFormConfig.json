@@ -1145,6 +1145,18 @@
       ]
     },
     {
+      "id": 109,
+      "groupId": 3,
+      "type": "radio",
+      "name": "vpa_meds",
+      "label": "Is the patient receiving valproic acid (VPA) therapy?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 62,
       "groupId": 3,
       "type": "radio",
