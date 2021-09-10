@@ -464,6 +464,21 @@
             "id": 16,
             "value": 3,
             "operator": "eq"
+          },
+          {
+            "id": 100,
+            "value": 3,
+            "operator": "eq"
+          },
+          {
+            "id": 17,
+            "value": 0.1,
+            "operator": "gte"
+          },
+          {
+            "id": 17,
+            "value": 1,
+            "operator": "lt"
           }
         ]
       }
