@@ -420,6 +420,33 @@
       }
     },
     {
+      "id": 100,
+      "groupId": 2,
+      "type": "radio",
+      "name": "bm_recent_stable_increase",
+      "label": "Does the most recent bone marrow blast percentage measurement represent stable or increased disease burden from a measurement at least 7 days prior?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 16,
+            "value": 3,
+            "operator": "eq"
+          },
+          {
+            "id": 17,
+            "value": 0.1,
+            "operator": "gte"
+          }
+        ]
+      }
+    },
+    {
       "id": 19,
       "groupId": 2,
       "type": "radio",
