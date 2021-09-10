@@ -389,44 +389,19 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                137,
-                138,
-                139,
-                140
-              ]
+              "criteria": [137, 138, 139, 140]
             },
             {
               "operator": "AND",
-              "criteria": [
-                137,
-                141,
-                142,
-                143
-              ]
+              "criteria": [137, 141, 142, 143]
             },
             {
               "operator": "AND",
-              "criteria": [
-                137,
-                138,
-                144,
-                145,
-                140,
-                141,
-                142,
-                146
-              ]
+              "criteria": [137, 138, 144, 145, 140, 141, 142, 146]
             },
             {
               "operator": "AND",
-              "criteria": [
-                137,
-                141,
-                142,
-                146,
-                147
-              ]
+              "criteria": [137, 141, 142, 146, 147]
             }
           ]
         },
@@ -436,21 +411,11 @@
             148,
             {
               "operator": "AND",
-              "criteria": [
-                149,
-                150,
-                151,
-                152,
-                153
-              ]
+              "criteria": [149, 150, 151, 152, 153]
             },
             {
               "operator": "AND",
-              "criteria": [
-                154,
-                149,
-                150
-              ]
+              "criteria": [154, 149, 150]
             }
           ]
         },
@@ -489,17 +454,11 @@
             184,
             {
               "operator": "AND",
-              "criteria": [
-                147,
-                185
-              ]
+              "criteria": [147, 185]
             },
             {
               "operator": "AND",
-              "criteria": [
-                147,
-                186
-              ]
+              "criteria": [147, 186]
             }
           ]
         },
@@ -512,10 +471,7 @@
         193,
         {
           "operator": "OR",
-          "criteria": [
-            194,
-            195
-          ]
+          "criteria": [194, 195]
         },
         196,
         {
@@ -524,125 +480,59 @@
             219,
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                199,
-                211
-              ]
+              "criteria": [198, 199, 211]
             },
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                200,
-                201,
-                212
-              ]
+              "criteria": [198, 200, 201, 212]
             },
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                202,
-                203,
-                213
-              ]
+              "criteria": [198, 202, 203, 213]
             },
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                204,
-                205,
-                214
-              ]
+              "criteria": [198, 204, 205, 214]
             },
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                206,
-                207,
-                215
-              ]
+              "criteria": [198, 206, 207, 215]
             },
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                208,
-                209,
-                216
-              ]
+              "criteria": [198, 208, 209, 216]
             },
             {
               "operator": "AND",
-              "criteria": [
-                198,
-                210,
-                217
-              ]
+              "criteria": [198, 210, 217]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                199,
-                211
-              ]
+              "criteria": [197, 199, 211]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                200,
-                201,
-                212
-              ]
+              "criteria": [197, 200, 201, 212]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                202,
-                203,
-                213
-              ]
+              "criteria": [197, 202, 203, 213]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                204,
-                205,
-                214
-              ]
+              "criteria": [197, 204, 205, 214]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                206,
-                207,
-                215
-              ]
+              "criteria": [197, 206, 207, 215]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                208,
-                209,
-                218
-              ]
+              "criteria": [197, 208, 209, 218]
             },
             {
               "operator": "AND",
-              "criteria": [
-                197,
-                210,
-                218
-              ]
+              "criteria": [197, 210, 218]
             }
           ]
         },
@@ -668,43 +558,19 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                229,
-                230,
-                231,
-                232
-              ]
+              "criteria": [229, 230, 231, 232]
             },
             {
               "operator": "AND",
-              "criteria": [
-                229,
-                233,
-                234,
-                235,
-                236,
-                237
-              ]
+              "criteria": [229, 233, 234, 235, 236, 237]
             },
             {
               "operator": "AND",
-              "criteria": [
-                238,
-                230,
-                231,
-                232
-              ]
+              "criteria": [238, 230, 231, 232]
             },
             {
               "operator": "AND",
-              "criteria": [
-                238,
-                233,
-                234,
-                235,
-                236,
-                237
-              ]
+              "criteria": [238, 233, 234, 235, 236, 237]
             }
           ]
         },
@@ -714,21 +580,11 @@
             239,
             {
               "operator": "AND",
-              "criteria": [
-               240,
-               241,
-               242,
-               243,
-               244
-              ]
+              "criteria": [240, 241, 242, 243, 244]
             },
             {
               "operator": "AND",
-              "criteria": [
-                240,
-                241,
-                245
-              ]
+              "criteria": [240, 241, 245]
             }
           ]
         },
@@ -737,18 +593,11 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                246,
-                247
-              ]
+              "criteria": [246, 247]
             },
             {
               "operator": "AND",
-              "criteria": [
-                250,
-                248,
-                249
-              ]
+              "criteria": [250, 248, 249]
             }
           ]
         },
@@ -773,138 +622,69 @@
         269,
         {
           "operator": "OR",
-          "criteria": [
-            270,
-            271
-          ]
+          "criteria": [270, 271]
         },
         272,
         {
           "operator": "OR",
-          "criteria": [ 
+          "criteria": [
             292,
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                295,
-                284
-              ]
+              "criteria": [245, 295, 284]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                273,
-                274,
-                285
-              ]
+              "criteria": [245, 273, 274, 285]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                275,
-                276,
-                286
-              ]
+              "criteria": [245, 275, 276, 286]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                277,
-                278,
-                287
-              ]
+              "criteria": [245, 277, 278, 287]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                279,
-                280,
-                288
-              ]
+              "criteria": [245, 279, 280, 288]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                281,
-                282,
-                289
-              ]
+              "criteria": [245, 281, 282, 289]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                245,
-                283,
-                290
-              ]
+              "criteria": [245, 283, 290]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                295,
-                284
-              ]
+              "criteria": [242, 295, 284]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                274,
-                273,
-                285
-              ]
+              "criteria": [242, 274, 273, 285]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                275,
-                276,
-                286
-              ]
+              "criteria": [242, 275, 276, 286]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                277,
-                278,
-                287
-              ]
+              "criteria": [242, 277, 278, 287]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                279,
-                280,
-                288
-              ]
+              "criteria": [242, 279, 280, 288]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                281,
-                282,
-                291
-              ]
+              "criteria": [242, 281, 282, 291]
             },
             {
               "operator": "AND",
-              "criteria": [ 
-                242,
-                283,
-                291
-              ]
-            },
+              "criteria": [242, 283, 291]
+            }
           ]
         },
         293,
