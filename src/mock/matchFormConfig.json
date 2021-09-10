@@ -745,6 +745,42 @@
       ]
     },
     {
+      "id": 101,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_uncontr_cns",
+      "label": "Has the patient been diagnosed with: clinically significant uncontrolled central nervous system (CNS) pathology (e.g. epilepsy, childhood seizure, paresis, aphasia, stroke, severe brain injuries, organic brain syndrome, or psychosis)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 102,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_hep_b_c",
+      "label": "Has the patient been diagnosed with: hepatitis B or C infection",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 103,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_liver_cirr_serious",
+      "label": "Has the patient been diagnosed with: liver cirrhosis or other serious liver disease",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 36,
       "groupId": 2,
       "type": "radio",
