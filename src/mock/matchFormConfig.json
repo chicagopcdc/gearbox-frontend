@@ -1367,6 +1367,85 @@
       "min": 0
     },
     {
+      "id": 111,
+      "groupId": 4,
+      "type": "radio",
+      "name": "dyspnea_present",
+      "label": "Is there evidence of: dyspnea",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 112,
+      "groupId": 4,
+      "type": "radio",
+      "name": "grade_dyspnea",
+      "label": "What is the patient's most recent measure of: dyspnea grade (CTCAE)",
+      "options": [
+        { "value": 95, "label": "Grade 1", "description": "" },
+        { "value": 96, "label": "Grade 2", "description": "" },
+        { "value": 97, "label": "Grade 3", "description": "" },
+        { "value": 98, "label": "Grade 4", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 111,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 113,
+      "groupId": 4,
+      "type": "radio",
+      "name": "hypoxia_present",
+      "label": "Is there evidence of: hypoxia",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 114,
+      "groupId": 4,
+      "type": "radio",
+      "name": "grade_hypoxia",
+      "label": "What is the patient's most recent measure of: hypoxia grade (CTCAE)",
+      "options": [
+        { "value": 96, "label": "Grade 2", "description": "" },
+        { "value": 97, "label": "Grade 3", "description": "" },
+        { "value": 98, "label": "Grade 4", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 113,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 115,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_dlco",
+      "label": "What is the patient's most recent measure of: Diffusing capacity for carbon monoxide (DLCO) (in % predicted)",
+      "min": 0
+    },
+    {
       "id": 77,
       "groupId": 5,
       "type": "radio",
