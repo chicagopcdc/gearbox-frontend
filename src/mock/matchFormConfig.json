@@ -1504,6 +1504,18 @@
         { "value": 4, "label": "No", "description": "" },
         { "value": 5, "label": "Not sure", "description": "" }
       ]
+    },
+    {
+      "id": 116,
+      "groupId": 5,
+      "type": "radio",
+      "name": "expression_som_JAK2_V617F",
+      "label": "Is there evidence of somatic JAK2 V617F mutation?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
     }
   ]
 }
