@@ -1227,6 +1227,18 @@
       }
     },
     {
+      "id": 110,
+      "groupId": 3,
+      "type": "radio",
+      "name": "donor_available",
+      "label": "Does the patient have a suitable stem cell donor available?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 65,
       "groupId": 4,
       "type": "number",
