@@ -1159,12 +1159,34 @@
       }
     },
     {
+      "id": 128,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_tbi_ever",
+      "label": "Does the patient have any prior exposure to: Total Body Irradiation (TBI)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 49,
       "groupId": 3,
       "type": "number",
       "name": "exp_tbi",
       "label": "How many days have elapsed since the patient's last exposure to: Total Body Irradiation (TBI)",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 128,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 104,
