@@ -1477,12 +1477,34 @@
       }
     },
     {
+      "id": 137,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_monocl_antib_ever",
+      "label": "Does the patient have any prior exposure to: monoclonal antibodies",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 105,
       "groupId": 3,
       "type": "number",
       "name": "exp_monocl_antib",
       "label": "How many half-lives have elapsed since the patient's last exposure to: monoclonal antibodies",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 137,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 106,
