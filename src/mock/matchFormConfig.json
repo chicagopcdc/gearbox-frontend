@@ -1219,12 +1219,34 @@
       }
     },
     {
+      "id": 130,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_other_bm_radiation_ever",
+      "label": "Does the patient have any prior exposure to: Other substantial BM radiation",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 50,
       "groupId": 3,
       "type": "number",
       "name": "exp_other_bm_radiation",
       "label": "How many days have elapsed since the patient's last exposure to: Other substantial BM radiation",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 130,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 88,

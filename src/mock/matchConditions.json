@@ -590,7 +590,19 @@
             439
           ]
         },
-        182,
+        {
+          "operator": "OR",
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                444,
+                182
+              ]
+            },
+            445
+          ]
+        },
         183,
         {
           "operator": "OR",

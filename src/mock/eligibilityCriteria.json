@@ -2237,5 +2237,17 @@
     "fieldId": 129,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 444,
+    "fieldId": 130,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 445,
+    "fieldId": 130,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
