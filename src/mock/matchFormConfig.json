@@ -1617,12 +1617,34 @@
       }
     },
     {
+      "id": 141,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_anthracycline_ever",
+      "label": "Does the patient have any prior exposure to: anthracycline or equivalent",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 108,
       "groupId": 3,
       "type": "number",
       "name": "cumul_anthracycline",
       "label": "How much cumulative radiation to the mediastinum (in Gy) has the patient received?",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 141,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 58,
