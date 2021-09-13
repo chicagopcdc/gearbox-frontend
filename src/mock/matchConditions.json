@@ -159,7 +159,19 @@
             }
           ]
         },
-        50,
+        {
+          "operator": "OR",
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                450,
+                50
+              ]
+            },
+            451
+          ]
+        },
         51,
         {
           "operator": "OR",

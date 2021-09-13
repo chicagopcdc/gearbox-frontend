@@ -1417,12 +1417,34 @@
       }
     },
     {
+      "id": 135,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_cyp3a_ever",
+      "label": "Does the patient have any prior exposure to: Strong inhibitors of CYP3A",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 90,
       "groupId": 3,
       "type": "number",
       "name": "exp_cyp3a",
       "label": "How many days have elapsed since the patient's last exposure to: Strong inhibitors of CYP3A",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 135,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 91,
