@@ -1357,12 +1357,34 @@
       }
     },
     {
+      "id": 133,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_cyp2d6_ever",
+      "label": "Does the patient have any prior exposure to: Strong inhibitors of CYP2D6",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 54,
       "groupId": 3,
       "type": "number",
       "name": "exp_cyp2d6",
       "label": "How many days have elapsed since the patient's last exposure to: Strong inhibitors of CYP2D6",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 133,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 55,
