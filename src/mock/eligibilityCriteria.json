@@ -2776,5 +2776,11 @@
     "fieldId": 141,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 464,
+    "fieldId": 10,
+    "fieldValue": 1,
+    "operator": "gte"
   }
 ]
