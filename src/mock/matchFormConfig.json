@@ -1507,12 +1507,34 @@
       }
     },
     {
+      "id": 138,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_immunotherapy_ever",
+      "label": "Does the patient have any prior exposure to: monoclonal antibodies",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 106,
       "groupId": 3,
       "type": "number",
       "name": "exp_immunotherapy",
       "label": "How many days have elapsed since the patient's last exposure to: immunotherapy",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 138,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 107,
