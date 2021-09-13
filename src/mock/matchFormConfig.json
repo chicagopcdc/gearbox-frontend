@@ -1039,12 +1039,34 @@
       }
     },
     {
+      "id": 124,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_short_acting_gf_ever",
+      "label": "Does the patient have any prior exposure to: Short-acting growth factor",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 45,
       "groupId": 3,
       "type": "number",
       "name": "exp_short_acting_gf",
       "label": "How many days have elapsed since the patient's last exposure to: Short-acting growth factor",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 124,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 46,

@@ -2129,5 +2129,29 @@
     "fieldId": 123,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 426,
+    "fieldId": 124,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 427,
+    "fieldId": 124,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 428,
+    "fieldId": 124,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 429,
+    "fieldId": 124,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
