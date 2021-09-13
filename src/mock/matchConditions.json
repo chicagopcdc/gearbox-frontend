@@ -141,10 +141,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                416,
-                46
-              ]
+              "criteria": [416, 46]
             },
             417
           ]
@@ -164,10 +161,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                450,
-                50
-              ]
+              "criteria": [450, 50]
             },
             451
           ]
@@ -177,10 +171,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                452,
-                51
-              ]
+              "criteria": [452, 51]
             },
             453
           ]
@@ -476,10 +467,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                404,
-                171
-              ]
+              "criteria": [404, 171]
             },
             405
           ]
@@ -489,10 +477,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                410,
-                172
-              ]
+              "criteria": [410, 172]
             },
             411
           ]
@@ -502,10 +487,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                414,
-                173
-              ]
+              "criteria": [414, 173]
             },
             415
           ]
@@ -515,10 +497,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                418,
-                174
-              ]
+              "criteria": [418, 174]
             },
             419
           ]
@@ -528,10 +507,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                420,
-                175
-              ]
+              "criteria": [420, 175]
             },
             421
           ]
@@ -541,10 +517,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                422,
-                176
-              ]
+              "criteria": [422, 176]
             },
             423
           ]
@@ -554,10 +527,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                426,
-                177
-              ]
+              "criteria": [426, 177]
             },
             427
           ]
@@ -567,10 +537,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                430,
-                178
-              ]
+              "criteria": [430, 178]
             },
             431
           ]
@@ -580,10 +547,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                432,
-                179
-              ]
+              "criteria": [432, 179]
             },
             433
           ]
@@ -593,10 +557,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                436,
-                180
-              ]
+              "criteria": [436, 180]
             },
             437
           ]
@@ -606,10 +567,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                438,
-                181
-              ]
+              "criteria": [438, 181]
             },
             439
           ]
@@ -619,10 +577,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                444,
-                182
-              ]
+              "criteria": [444, 182]
             },
             445
           ]
@@ -632,10 +587,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                446,
-                183
-              ]
+              "criteria": [446, 183]
             },
             447
           ]
@@ -660,10 +612,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                448,
-                188
-              ]
+              "criteria": [448, 188]
             },
             449
           ]
@@ -815,10 +764,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                408,
-                256
-              ]
+              "criteria": [408, 256]
             },
             409
           ]
@@ -828,10 +774,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                412,
-                257
-              ]
+              "criteria": [412, 257]
             },
             413
           ]
@@ -841,10 +784,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                424,
-                258
-              ]
+              "criteria": [424, 258]
             },
             425
           ]
@@ -854,10 +794,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                428,
-                259
-              ]
+              "criteria": [428, 259]
             },
             429
           ]
@@ -867,10 +804,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                434,
-                260
-              ]
+              "criteria": [434, 260]
             },
             435
           ]
@@ -880,10 +814,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                440,
-                261
-              ]
+              "criteria": [440, 261]
             },
             441
           ]
@@ -895,10 +826,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                454,
-                264
-              ]
+              "criteria": [454, 264]
             },
             455
           ]
@@ -908,10 +836,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                442,
-                265
-              ]
+              "criteria": [442, 265]
             },
             443
           ]
@@ -921,10 +846,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                456,
-                266
-              ]
+              "criteria": [456, 266]
             },
             457
           ]
@@ -934,10 +856,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                458,
-                267
-              ]
+              "criteria": [458, 267]
             },
             459
           ]
@@ -947,10 +866,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                460,
-                268
-              ]
+              "criteria": [460, 268]
             },
             461
           ]
@@ -1030,26 +946,26 @@
   },
   {
     "studyId": 6,
-    "algorithm":{
+    "algorithm": {
       "operator": "AND",
-      "criteria":[
+      "criteria": [
         296,
         {
           "operator": "OR",
-          "criteria":[
+          "criteria": [
             {
-              "operator":"AND",
-              "criteria":[297,298,299,300]
+              "operator": "AND",
+              "criteria": [297, 298, 299, 300]
             },
             {
-              "operator":"AND",
-              "criteria":[297,301,302,303]
+              "operator": "AND",
+              "criteria": [297, 301, 302, 303]
             },
             {
-              "operator":"AND",
-              "criteria":[304,305,306]
+              "operator": "AND",
+              "criteria": [304, 305, 306]
             }
-          ]         
+          ]
         },
         {
           "operator": "OR",
@@ -1066,15 +982,15 @@
           ]
         },
         {
-          "operator":"OR",
-          "criteria":[
+          "operator": "OR",
+          "criteria": [
             {
-              "operator":"AND",
-              "criteria":[314,315]
+              "operator": "AND",
+              "criteria": [314, 315]
             },
             {
-              "operator":"AND",
-              "criteria":[316,317]
+              "operator": "AND",
+              "criteria": [316, 317]
             }
           ]
         },
@@ -1092,10 +1008,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                406,
-                327
-              ]
+              "criteria": [406, 327]
             },
             407
           ]
@@ -1105,10 +1018,7 @@
           "criteria": [
             {
               "operator": "AND",
-              "criteria": [
-                462,
-                328
-              ]
+              "criteria": [462, 328]
             },
             463
           ]
@@ -1117,39 +1027,39 @@
         330,
         331,
         {
-          "operator":"OR",
-          "criteria":[332,333]
+          "operator": "OR",
+          "criteria": [332, 333]
         }
       ]
     }
   },
   {
     "studyId": 7,
-    "algorithm":{
+    "algorithm": {
       "operator": "AND",
-      "criteria":[
+      "criteria": [
         334,
         335,
         {
           "operator": "OR",
-          "criteria":[
+          "criteria": [
             {
-              "operator":"AND",
-              "criteria":[336, 337, 338, 339, 340, 341]
+              "operator": "AND",
+              "criteria": [336, 337, 338, 339, 340, 341]
             },
             {
-              "operator":"AND",
-              "criteria":[336, 342, 343, 344, 345, 346, 340, 347]
+              "operator": "AND",
+              "criteria": [336, 342, 343, 344, 345, 346, 340, 347]
             },
             {
-              "operator":"AND",
-              "criteria":[336, 342, 343, 348, 464, 337, 338, 349, 340, 347]
+              "operator": "AND",
+              "criteria": [336, 342, 343, 348, 464, 337, 338, 349, 340, 347]
             },
             {
-              "operator":"AND",
-              "criteria":[336, 350, 340, 341]
+              "operator": "AND",
+              "criteria": [336, 350, 340, 341]
             }
-          ]         
+          ]
         },
         {
           "operator": "OR",

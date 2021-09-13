@@ -1354,8 +1354,7 @@
     "fieldId": 99,
     "fieldValue": 4,
     "operator": "eq"
-  }
-  ,
+  },
   {
     "id": 227,
     "fieldId": 1,
