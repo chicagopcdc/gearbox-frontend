@@ -1267,7 +1267,7 @@
         {
           "operator": "OR",
           "criteria": [
-            398
+            398,
             {
               "operator": "AND",
               "criteria": [399, 400]
