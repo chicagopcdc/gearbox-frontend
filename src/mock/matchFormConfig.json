@@ -889,12 +889,34 @@
       }
     },
     {
+      "id": 119,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_anticancer_nonmyelosupp_ever",
+      "label": "Does the patient have any prior exposure to: non-myelosuppressive anti-cancer agents",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 41,
       "groupId": 3,
       "type": "number",
       "name": "exp_anticancer_nonmyelosupp",
       "label": "How many days have elapsed since the patient's last exposure to: non-myelosuppressive anti-cancer agents",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 119,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 87,

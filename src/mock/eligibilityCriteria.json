@@ -2002,60 +2002,72 @@
     "id": 404,
     "fieldId": 117,
     "fieldValue": 3,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 405,
     "fieldId": 117,
     "fieldValue": 4,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 406,
     "fieldId": 117,
     "fieldValue": 3,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 407,
     "fieldId": 117,
     "fieldValue": 4,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 408,
     "fieldId": 117,
     "fieldValue": 3,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 409,
     "fieldId": 117,
     "fieldValue": 4,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 410,
     "fieldId": 118,
     "fieldValue": 3,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 411,
     "fieldId": 118,
     "fieldValue": 4,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 412,
     "fieldId": 118,
     "fieldValue": 3,
-    "operator": "lte"
+    "operator": "eq"
   },
   {
     "id": 413,
     "fieldId": 118,
     "fieldValue": 4,
-    "operator": "lte"
+    "operator": "eq"
+  },
+  {
+    "id": 414,
+    "fieldId": 119,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 415,
+    "fieldId": 119,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
