@@ -691,5 +691,76 @@
         294
       ]
     }
+  },
+  {
+    "studyId": 6,
+    "algorithm":{
+      "operator": "AND",
+      "criteria":[
+        296,
+        {
+          "operator": "OR",
+          "criteria":[
+            {
+              "operator":"AND",
+              "criteria":[297,298,299,300]
+            },
+            {
+              "operator":"AND",
+              "criteria":[297,301,302,303]
+            },
+            {
+              "operator":"AND",
+              "criteria":[304,305,306]
+            }
+          ]         
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            307,
+            {
+              "operator": "AND",
+              "criteria": [308, 309, 310, 311, 312]
+            },
+            {
+              "operator": "AND",
+              "criteria": [308, 309, 313]
+            }
+          ]
+        },
+        {
+          "operator":"OR",
+          "criteria":[
+            {
+              "operator":"AND",
+              "criteria":[314,315]
+            },
+            {
+              "operator":"AND",
+              "criteria":[316,317]
+            }
+          ]
+        },
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        {
+          "operator":"OR",
+          "criteria":[332,333]
+        }
+      ]
+    }
   }
 ]
