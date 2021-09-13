@@ -1122,5 +1122,162 @@
         }
       ]
     }
+  },
+  {
+    "studyId": 7,
+    "algorithm":{
+      "operator": "AND",
+      "criteria":[
+        334,
+        335,
+        {
+          "operator": "OR",
+          "criteria":[
+            {
+              "operator":"AND",
+              "criteria":[336, 337, 338, 339, 340, 341]
+            },
+            {
+              "operator":"AND",
+              "criteria":[336, 342, 343, 344, 345, 346, 340, 347]
+            },
+            {
+              "operator":"AND",
+              "criteria":[336, 342, 343, 348, 464, 337, 338, 349, 340, 347]
+            },
+            {
+              "operator":"AND",
+              "criteria":[336, 350, 340, 341]
+            }
+          ]         
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            352,
+            {
+              "operator": "AND",
+              "criteria": [353, 354, 356, 357, 358]
+            },
+            {
+              "operator": "AND",
+              "criteria": [353, 354, 355]
+            }
+          ]
+        },
+        359,
+        360,
+        {
+          "operator": "OR",
+          "criteria": [361, 362]
+        },
+        363,
+        364,
+        365,
+        {
+          "operator": "OR",
+          "criteria": [
+            366,
+            {
+              "operator": "AND",
+              "criteria": [350, 367]
+            }
+          ]
+        },
+        368,
+        369,
+        {
+          "operator": "OR",
+          "criteria": [370, 371]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            392,
+            {
+              "operator": "AND",
+              "criteria": [355, 372, 384]
+            },
+            {
+              "operator": "AND",
+              "criteria": [355, 373, 374, 385]
+            },
+            {
+              "operator": "AND",
+              "criteria": [355, 375, 376, 386]
+            },
+            {
+              "operator": "AND",
+              "criteria": [355, 377, 378, 387]
+            },
+            {
+              "operator": "AND",
+              "criteria": [355, 379, 380, 388]
+            },
+            {
+              "operator": "AND",
+              "criteria": [355, 381, 382, 389]
+            },
+            {
+              "operator": "AND",
+              "criteria": [355, 383, 390]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 372, 384]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 373, 374, 385]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 375, 376, 386]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 377, 378, 387]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 379, 380, 388]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 381, 382, 391]
+            },
+            {
+              "operator": "AND",
+              "criteria": [356, 383, 391]
+            }
+          ]
+        },
+        393,
+        394,
+        {
+          "operator": "OR",
+          "criteria": [
+            395,
+            {
+              "operator": "AND",
+              "criteria": [396, 397]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            398
+            {
+              "operator": "AND",
+              "criteria": [399, 400]
+            }
+          ]
+        },
+        401,
+        402,
+        403
+      ]
+    }
   }
 ]
