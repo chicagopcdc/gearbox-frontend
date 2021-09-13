@@ -859,12 +859,34 @@
       }
     },
     {
+      "id": 118,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_corticosteroids_ever",
+      "label": "Does the patient have any prior exposure to: corticosteroids (if used to modify immune adverse events related to prior therapy)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 40,
       "groupId": 3,
       "type": "number",
       "name": "exp_corticosteroids",
       "label": "How many days have elapsed since the patient's last exposure to: corticosteroids (if used to modify immune adverse events related to prior therapy)",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 118,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 41,
