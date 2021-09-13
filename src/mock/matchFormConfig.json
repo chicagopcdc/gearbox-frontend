@@ -979,12 +979,34 @@
       }
     },
     {
+      "id": 122,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_interleukins_ever",
+      "label": "Does the patient have any prior exposure to: Interleukins, Interferons and Cytokines (not including Hematopoietic Growth Factors)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 43,
       "groupId": 3,
       "type": "number",
       "name": "exp_interleukins",
       "label": "How many days have elapsed since the patient's last exposure to: Interleukins, Interferons and Cytokines (not including Hematopoietic Growth Factors)",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 122,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 44,
