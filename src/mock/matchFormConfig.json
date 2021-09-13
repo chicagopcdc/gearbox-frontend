@@ -829,12 +829,34 @@
       ]
     },
     {
+      "id": 117,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_cytotoxic_chemo_ever",
+      "label": "Does the patient have any prior exposure to: cytotoxic chemotherapy (not including intrathecal cytotoxic chemotherapy, hydroxyurea, or corticosteroids)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 39,
       "groupId": 3,
       "type": "number",
       "name": "exp_cytotoxic_chemo",
       "label": "How many days have elapsed since the patient's last exposure to: cytotoxic chemotherapy (not including intrathecal cytotoxic chemotherapy, hydroxyurea, or corticosteroids)",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 117,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 40,
