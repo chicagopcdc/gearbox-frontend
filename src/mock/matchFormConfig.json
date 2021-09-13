@@ -36,7 +36,8 @@
       "type": "number",
       "name": "weight",
       "label": "What is the patient's current weight (in kg)?",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 3,
@@ -362,6 +363,8 @@
       "name": "bm_recent_blast_pct_meas",
       "label": "What is the most recent measure of the patient's bone marrow blast percentage?",
       "min": 0,
+      "max": 100,
+      "step": 0.1,
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -509,6 +512,7 @@
       "label": "What is the patient's most recent peripheral blood blast percentage?",
       "min": 0,
       "max": 100,
+      "step": 0.1,
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -1605,6 +1609,7 @@
       "name": "cumul_radiation_mediastinum",
       "label": "How much cumulative anthracycline or equivalent (in mg/m^2) has the patient received?",
       "min": 0,
+      "step": 0.1,
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -1635,6 +1640,7 @@
       "name": "cumul_anthracycline",
       "label": "How much cumulative radiation to the mediastinum (in Gy) has the patient received?",
       "min": 0,
+      "step": 0.1,
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -1794,7 +1800,9 @@
       "type": "number",
       "name": "meas_ef",
       "label": "What is the patient's most recent measure of: Ejection Fration (EF) (in %)",
-      "min": 0
+      "min": 0,
+      "max": 100,
+      "step": 0.1
     },
     {
       "id": 66,
@@ -1802,7 +1810,9 @@
       "type": "number",
       "name": "meas_sf",
       "label": "What is the patient's most recent measure of: Shortening Fraction (SF) (in %)",
-      "min": 0
+      "min": 0,
+      "max": 100,
+      "step": 0.1
     },
     {
       "id": 67,
@@ -1810,7 +1820,8 @@
       "type": "number",
       "name": "meas_qtcb",
       "label": "What is the patient's most recent measure of: Corrected QT using the Bazett formula (QTcB) interval (in msec)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 68,
@@ -1818,7 +1829,8 @@
       "type": "number",
       "name": "meas_gfr",
       "label": "What is the patient's most recent measure of: GFR (in mL/min/1.73 m2)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 69,
@@ -1826,7 +1838,8 @@
       "type": "number",
       "name": "meas_serum_creat",
       "label": "What is the patient's most recent measure of: Serum creatinine (in mg/dL)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 95,
@@ -1834,7 +1847,8 @@
       "type": "number",
       "name": "meas_creat_clear_calc",
       "label": "What is the patient's most recent measure of: calculated creatinine clearance (in mL/min/1.73m^2)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 70,
@@ -1842,7 +1856,8 @@
       "type": "number",
       "name": "meas_dbili_mgdl",
       "label": "What is the patient's most recent measure of: Direct bilirubin (in mg/dL)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 71,
@@ -1850,7 +1865,8 @@
       "type": "number",
       "name": "meas_dbili_uln",
       "label": "What is the patient's most recent measure of: Direct bilirubin (in ULN)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 72,
@@ -1858,7 +1874,8 @@
       "type": "number",
       "name": "meas_bili_uln",
       "label": "What is the patient's most recent measure of: Bilirubin (sum of conjugated + unconjugated) (in ULN for age)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 73,
@@ -1866,7 +1883,8 @@
       "type": "number",
       "name": "meas_alt_ul",
       "label": "What is the patient's most recent measure of: SGPT (ALT) (in U/L)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 74,
@@ -1874,7 +1892,8 @@
       "type": "number",
       "name": "meas_alt_uln",
       "label": "What is the patient's most recent measure of: SGPT (ALT) (in ULN)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 96,
@@ -1882,7 +1901,8 @@
       "type": "number",
       "name": "meas_ast_uln",
       "label": "What is the patient's most recent measure of: SGOT (AST) (in ULN)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 75,
@@ -1890,7 +1910,8 @@
       "type": "number",
       "name": "meas_albumin",
       "label": "What is the patient's most recent measure of: Albumin (in g/dL)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 76,
@@ -1898,7 +1919,8 @@
       "type": "number",
       "name": "meas_wbc",
       "label": "What is the patient's most recent measure of: White blood cells (WBC) (in count/mm3)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 97,
@@ -1906,7 +1928,8 @@
       "type": "number",
       "name": "meas_platelet",
       "label": "What is the patient's most recent measure of: Platelet (in count/mm3)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 98,
@@ -1914,7 +1937,8 @@
       "type": "number",
       "name": "meas_hemoglobin",
       "label": "What is the patient's most recent measure of: Hemoglobin (in g/dL)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 111,
@@ -1993,7 +2017,8 @@
       "type": "number",
       "name": "meas_dlco",
       "label": "What is the patient's most recent measure of: Diffusing capacity for carbon monoxide (DLCO) (in % predicted)",
-      "min": 0
+      "min": 0,
+      "step": 0.1
     },
     {
       "id": 77,
