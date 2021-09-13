@@ -1447,12 +1447,34 @@
       }
     },
     {
+      "id": 136,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_calcineurin_ever",
+      "label": "Does the patient have any prior exposure to: Strong inhibitors of CYP3A",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 91,
       "groupId": 3,
       "type": "number",
       "name": "exp_calcineurin",
       "label": "How many days have elapsed since the patient's last exposure to: calcineurin inhibitors",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 136,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 105,

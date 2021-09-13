@@ -172,7 +172,19 @@
             451
           ]
         },
-        51,
+        {
+          "operator": "OR",
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                452,
+                51
+              ]
+            },
+            453
+          ]
+        },
         {
           "operator": "OR",
           "criteria": [
@@ -878,7 +890,19 @@
         },
         262,
         263,
-        264,
+        {
+          "operator": "OR",
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                454,
+                264
+              ]
+            },
+            455
+          ]
+        },
         {
           "operator": "OR",
           "criteria": [
