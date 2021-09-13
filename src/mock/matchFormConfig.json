@@ -1069,12 +1069,34 @@
       }
     },
     {
+      "id": 125,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_local_pall_rt_ever",
+      "label": "Does the patient have any prior exposure to: Local palliative radiotherapy (RT), small port",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 46,
       "groupId": 3,
       "type": "number",
       "name": "exp_local_pall_rt",
       "label": "How many days have elapsed since the patient's last exposure to: Local palliative radiotherapy (RT), small port",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 125,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 47,
