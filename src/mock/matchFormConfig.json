@@ -1327,12 +1327,34 @@
       }
     },
     {
+      "id": 132,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_dli_ever",
+      "label": "Does the patient have any prior exposure to: DLI (donor lymphocyte infusion) or any type of cellular therapy (eg, modified T cells, NK cells, dendritic cells, etc.)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 53,
       "groupId": 3,
       "type": "number",
       "name": "exp_dli",
       "label": "How many days have elapsed since the patient's last exposure to: DLI (donor lymphocyte infusion) or any type of cellular therapy (eg, modified T cells, NK cells, dendritic cells, etc.)",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 132,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 54,
