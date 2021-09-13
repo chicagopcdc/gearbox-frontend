@@ -1129,12 +1129,34 @@
       }
     },
     {
+      "id": 127,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_pelvic_rt_ever",
+      "label": "Does the patient have any prior exposure to: Pelvic radiotherapy (RT), if >= 50% pelvis is exposed",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 48,
       "groupId": 3,
       "type": "number",
       "name": "exp_pelvic_rt",
       "label": "How many days have elapsed since the patient's last exposure to: Pelvic radiotherapy (RT), if >= 50% pelvis is exposed",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 127,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 49,
