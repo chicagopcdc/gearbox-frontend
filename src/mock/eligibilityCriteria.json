@@ -231,7 +231,7 @@
     "id": 39,
     "fieldId": 24,
     "fieldValue": 2,
-    "operator": "gte"
+    "operator": "lte"
   },
   {
     "id": 40,
