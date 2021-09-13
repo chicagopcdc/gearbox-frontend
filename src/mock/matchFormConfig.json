@@ -1537,12 +1537,34 @@
       }
     },
     {
+      "id": 139,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_demeth_hdac_ever",
+      "label": "Does the patient have any prior exposure to: monoclonal antibodies",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 107,
       "groupId": 3,
       "type": "number",
       "name": "exp_demeth_hdac",
       "label": "How many days have elapsed since the patient's last exposure to: Demethylating and/or HDAC Inhibitor Therapy",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 139,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 92,

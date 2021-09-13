@@ -2333,5 +2333,17 @@
     "fieldId": 138,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 460,
+    "fieldId": 139,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 461,
+    "fieldId": 139,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]

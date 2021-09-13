@@ -942,7 +942,19 @@
             459
           ]
         },
-        268,
+        {
+          "operator": "OR",
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                460,
+                268
+              ]
+            },
+            461
+          ]
+        },
         269,
         {
           "operator": "OR",
