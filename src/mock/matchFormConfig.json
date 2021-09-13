@@ -1009,12 +1009,34 @@
       }
     },
     {
+      "id": 123,
+      "groupId": 2,
+      "type": "radio",
+      "name": "exp_long_acting_gf_ever",
+      "label": "Does the patient have any prior exposure to: Long-acting growth factor (eg, pegfilgrastim)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 44,
       "groupId": 3,
       "type": "number",
       "name": "exp_long_acting_gf",
       "label": "How many days have elapsed since the patient's last exposure to: Long-acting growth factor (eg, pegfilgrastim)",
-      "min": 0
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 123,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 45,
