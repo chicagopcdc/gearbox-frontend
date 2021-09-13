@@ -2069,5 +2069,17 @@
     "fieldId": 119,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 416,
+    "fieldId": 120,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 417,
+    "fieldId": 120,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]

@@ -136,7 +136,19 @@
         43,
         44,
         45,
-        46,
+        {
+          "operator": "OR",
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                416,
+                46
+              ]
+            },
+            417
+          ]
+        },
         {
           "operator": "OR",
           "criteria": [
