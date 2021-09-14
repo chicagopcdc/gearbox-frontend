@@ -60,7 +60,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
         </div>
         <div className={styles.field.container}>
           <h3 className={styles.field.title}>Locations</h3>
-          <ul className="list-disc">
+          <ul className="list-disc ml-8">
             {study.locations.map((location) => (
               <li key={location}>{location}</li>
             ))}
