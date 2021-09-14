@@ -18,7 +18,7 @@
   {
     "id": 2,
     "title": "SELCLAX",
-    "locations": [],
+    "locations": ["St. Jude Children's Research Hospital"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
@@ -34,7 +34,7 @@
   {
     "id": 3,
     "title": "VENAML",
-    "locations": [],
+    "locations": ["Children's Hospital of Orange County", "St. Jude Children's Research Hospital"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
@@ -50,7 +50,7 @@
   {
     "id": 4,
     "title": "PEPN1812",
-    "locations": [],
+    "locations": ["Children's Hospital of Alabama", "Children's Hospital Los Angeles", "Children's Hospital of Orange County", "UCSF Medical Center-Mission Bay", "Children's Hospital Colorado", "Children's National Medical Center"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
@@ -66,7 +66,7 @@
   {
     "id": 5,
     "title": "T2016-003",
-    "locations": [],
+    "locations": ["Children's Hospital Los Angeles", "Children's Hospital Orange County", "UCSF School of Medicine", "The Children's Hospital, University of Colorado", "Children's National Medical Center", "University of Miami", "All Children's Hospital", "Children's Healthcare of Atlanta, Emory University", "Lurie Children's Hospital of Chicago"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
@@ -82,7 +82,7 @@
   {
     "id": 6,
     "title": "2020-0484",
-    "locations": [],
+    "locations": ["M D Anderson Cancer Center"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
@@ -98,7 +98,7 @@
   {
     "id": 7,
     "title": "834675",
-    "locations": [],
+    "locations": ["Children's Hospital of Philadelphia"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
