@@ -1,10 +1,6 @@
 # GEARBOx front end application prototype
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/95a1ab89-6d5d-4922-b2f6-a3586f42e2ed/deploy-status)](https://app.netlify.com/sites/gearbox-frontend-prototype/deploys)
-
 A simple prototype for the GEARBOx's client-side application, powered by [React](https://reactjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
-
-Manually hosted on Netlify for review at https://gearbox-frontend-prototype.netlify.app.
 
 The primary goal of this prototype is to facilitate the GEARBOx development team's efforts to iterate on different ideas for designing and implementing user interface to the GEARBOx service. The GEARBOx project is still at its early stage, and the scope of this prototype UI application is currently limited to modeling the client-side interactions without sending requests to GEARBOx back end services.
 
@@ -56,4 +52,5 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Contribute
+
 `npx prettier [filepath] -w`
