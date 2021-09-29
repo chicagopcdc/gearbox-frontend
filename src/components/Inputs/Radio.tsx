@@ -43,7 +43,7 @@ function Radio({
               <input
                 {...attrs}
                 className={optionClassName}
-                id={option.value}
+                id={`${name}-${option.value}`}
                 name={name}
                 type="radio"
                 value={option.value}
@@ -52,7 +52,7 @@ function Radio({
                   disabled ? undefined : () => handleChange(option.value)
                 }
               />
-              <label className="mx-2" htmlFor={option.value}>
+              <label className="mx-2" htmlFor={`${name}-${option.value}`}>
                 {option.label}
               </label>
             </div>
