@@ -17,6 +17,7 @@ const criteria: EligibilityCriterion[] = [
   { id: 1, fieldId: 1, fieldValue: false, operator: 'eq' },
   { id: 2, fieldId: 1, fieldValue: true, operator: 'eq' },
   { id: 3, fieldId: 2, fieldValue: 0, operator: 'gt' },
+  { id: 4, fieldId: 3, fieldValue: 0, operator: 'eq' },
 ]
 const config: MatchFormConfig = {
   groups: [],
@@ -24,6 +25,17 @@ const config: MatchFormConfig = {
     { id: 0, name: 'field 0', groupId: 0, type: '' },
     { id: 1, name: 'field 1', groupId: 0, type: '' },
     { id: 2, name: 'field 2', groupId: 0, type: '' },
+    {
+      id: 3,
+      name: 'field 3',
+      groupId: 0,
+      type: '',
+      options: [
+        { label: 'Yes', value: 0 },
+        { label: 'No', value: 1 },
+        { label: 'Not sure', value: 2 },
+      ],
+    },
   ],
 }
 const conditions: MatchCondition[] = [
@@ -48,6 +60,13 @@ const conditions: MatchCondition[] = [
       criteria: [0, { operator: 'OR', criteria: [2, 3] }],
     },
   },
+  {
+    studyId: 3,
+    algorithm: {
+      operator: 'AND',
+      criteria: [4],
+    },
+  },
 ]
 
 describe('getMatchGroups', () => {
@@ -61,7 +80,7 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [0, 1],
-      undetermined: [2],
+      undetermined: [2, 3],
       unmatched: [],
     })
   })
@@ -73,7 +92,7 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [1],
-      undetermined: [],
+      undetermined: [3],
       unmatched: [0, 2],
     })
   })
@@ -85,7 +104,7 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [1, 2],
-      undetermined: [0],
+      undetermined: [0, 3],
       unmatched: [],
     })
   })
@@ -97,7 +116,7 @@ describe('getMatchGroups', () => {
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [],
-      undetermined: [0, 1],
+      undetermined: [0, 1, 3],
       unmatched: [2],
     })
   })
@@ -106,7 +125,36 @@ describe('getMatchGroups', () => {
     const values: MatchFormValues = {}
     expect(getMatchGroupsTestHelper(values)).toEqual({
       matched: [],
+      undetermined: [0, 1, 2, 3],
+      unmatched: [],
+    })
+  })
+
+  test('for "Not sure" option', () => {
+    const valuesWithMatch: MatchFormValues = {
+      3: 0,
+    }
+    expect(getMatchGroupsTestHelper(valuesWithMatch)).toEqual({
+      matched: [3],
       undetermined: [0, 1, 2],
+      unmatched: [],
+    })
+
+    const valuesWithUnmatch: MatchFormValues = {
+      3: 1,
+    }
+    expect(getMatchGroupsTestHelper(valuesWithUnmatch)).toEqual({
+      matched: [],
+      undetermined: [0, 1, 2],
+      unmatched: [3],
+    })
+
+    const valuesWithNotSure: MatchFormValues = {
+      3: 2,
+    }
+    expect(getMatchGroupsTestHelper(valuesWithNotSure)).toEqual({
+      matched: [],
+      undetermined: [0, 1, 2, 3],
       unmatched: [],
     })
   })
