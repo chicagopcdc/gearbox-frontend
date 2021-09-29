@@ -24,7 +24,7 @@ import type {
 import {
   mockLoadEligibilityCriteria,
   mockLoadMatchConditions,
-  mockLoadMatchFromConfig,
+  mockLoadMatchFormConfig,
   mockLoadStudies,
   mockLoadLatestMatchInput,
   mockPostLatestMatchInput,
@@ -54,7 +54,7 @@ function App() {
       Promise.all([
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
-        mockLoadMatchFromConfig(),
+        mockLoadMatchFormConfig(),
         mockLoadLatestMatchInput(),
       ]).then(([criteria, conditions, config, latestMatchInput]) => {
         setCriteria(criteria)
