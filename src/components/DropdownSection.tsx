@@ -4,12 +4,14 @@ import { ChevronUp, ChevronDown } from 'react-feather'
 
 type DropdownSectionProps = {
   name: string
+  backgroundColor?: string
   children: React.ReactNode
   isCollapsedAtStart?: boolean
 }
 
 function DropdownSection({
   name,
+  backgroundColor = 'inherit',
   children,
   isCollapsedAtStart,
 }: DropdownSectionProps) {
@@ -23,8 +25,10 @@ function DropdownSection({
     setIsDropDownOpen(false)
   }
   return (
-    <section className="my-4">
-      <div className="flex sticky top-10 bg-white py-2 justify-between border-b border-solid border-black">
+    <section className={`my-4 bg-${backgroundColor}`}>
+      <div
+        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black bg-${backgroundColor}`}
+      >
         <h2 className="font-bold">{name}</h2>
         {isDropDownOpen ? (
           <button onClick={handleClose} aria-label="Collapse dropdown">
