@@ -69,7 +69,7 @@ function MatchingPage({
         </section>
         <section
           className={`p-4 lg:px-8 transition-colors duration-300 ${
-            isUpdating ? 'bg-gray-100' : ''
+            isUpdating ? 'bg-gray-100' : 'bg-white'
           } ${view === 'result' ? '' : 'hidden'} `}
         >
           <MatchResult
@@ -95,7 +95,7 @@ function MatchingPage({
           </h1>
           <div
             className={`px-4 lg:px-8 pb-4 transition-colors duration-300 ${
-              isUpdating ? 'bg-gray-100' : ''
+              isUpdating ? 'bg-gray-100' : 'bg-white'
             }`}
           >
             <MatchResult
