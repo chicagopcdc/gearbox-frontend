@@ -10,6 +10,7 @@ import type {
   MatchFormValues,
   Study,
 } from '../model'
+import { getMatchDetails, getMatchGroups } from '../utils'
 
 export type MatchingPageProps = {
   conditions: MatchCondition[]
@@ -35,6 +36,9 @@ function MatchingPage({
 
   const screenSize = useScreenSize()
   const [view, setView] = useState<'form' | 'result'>('form')
+
+  const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
+  const matchGroups = getMatchGroups(matchDetails)
 
   return isMatchDataReady ? (
     screenSize.smAndDown ? (
@@ -72,9 +76,7 @@ function MatchingPage({
             isUpdating ? 'bg-gray-100' : 'bg-white'
           } ${view === 'result' ? '' : 'hidden'} `}
         >
-          <MatchResult
-            {...{ criteria, conditions, config, studies, matchInput }}
-          />
+          <MatchResult {...{ matchDetails, matchGroups, studies }} />
         </section>
       </>
     ) : (
@@ -98,9 +100,7 @@ function MatchingPage({
               isUpdating ? 'bg-gray-100' : 'bg-white'
             }`}
           >
-            <MatchResult
-              {...{ criteria, conditions, config, matchInput, studies }}
-            />
+            <MatchResult {...{ matchDetails, matchGroups, studies }} />
           </div>
         </section>
       </div>
