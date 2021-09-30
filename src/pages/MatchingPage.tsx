@@ -68,9 +68,9 @@ function MatchingPage({
           />
         </section>
         <section
-          className={`p-4 lg:px-8 ${isUpdating ? 'bg-gray-100' : ''} ${
-            view === 'result' ? '' : 'hidden'
-          } `}
+          className={`p-4 lg:px-8 transition-colors duration-300 ${
+            isUpdating ? 'bg-gray-100' : ''
+          } ${view === 'result' ? '' : 'hidden'} `}
         >
           <MatchResult
             {...{ criteria, conditions, config, studies, matchInput }}
@@ -94,7 +94,9 @@ function MatchingPage({
             Open Trials
           </h1>
           <div
-            className={`px-4 lg:px-8 pb-4 ${isUpdating ? 'bg-gray-100' : ''}`}
+            className={`px-4 lg:px-8 pb-4 transition-colors duration-300 ${
+              isUpdating ? 'bg-gray-100' : ''
+            }`}
           >
             <MatchResult
               {...{ criteria, conditions, config, matchInput, studies }}
