@@ -196,3 +196,47 @@ export const clearShowIfField = (
 
   return values
 }
+
+export const getUniqueCritIdsInAlgorithm = (algorithm: MatchAlgorithm) => {
+  const criteria: number[] = []
+  for (const value of algorithm.criteria)
+    if (typeof value === 'number') criteria.push(value)
+    else criteria.push(...getUniqueCritIdsInAlgorithm(value))
+
+  return [...new Set(criteria)]
+}
+
+type markRelevantMatchFieldsArgs = {
+  conditions: MatchCondition[]
+  criteria: EligibilityCriterion[]
+  fields: MatchFormFieldConfig[]
+  unmatched: number[]
+  values: MatchFormValues
+}
+export const markRelevantMatchFields = ({
+  conditions,
+  criteria,
+  fields,
+  unmatched,
+  values,
+}: markRelevantMatchFieldsArgs) => {
+  const unmatchedStudyIdSet = new Set(unmatched)
+
+  const relevantCritIdSet: Set<number> = new Set()
+  for (const { algorithm, studyId } of conditions)
+    if (!unmatchedStudyIdSet.has(studyId)) {
+      const uniqueCritIds = getUniqueCritIdsInAlgorithm(algorithm)
+      for (const id of uniqueCritIds) relevantCritIdSet.add(id)
+    }
+
+  const relevantFieldIdSet: Set<number> = new Set()
+  for (const { id, fieldId } of criteria)
+    if (relevantCritIdSet.has(id) || values[fieldId] !== undefined)
+      relevantFieldIdSet.add(fieldId)
+
+  const markedFields: MatchFormFieldConfig[] = []
+  for (const field of fields)
+    markedFields.push({ ...field, relevant: relevantFieldIdSet.has(field.id) })
+
+  return markedFields
+}
