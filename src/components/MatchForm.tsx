@@ -2,6 +2,7 @@ import type React from 'react'
 import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
+import FieldWrapper from './FieldWrapper'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
 import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
@@ -62,26 +63,20 @@ function MatchForm({
           {config.fields.map(
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
-              if (groupId !== group.id) return undefined
+              if (groupId !== group.id) return null
 
-              let isFieldShowing = true
-              if (showIf !== undefined)
-                isFieldShowing = getIsFieldShowing(
-                  showIf,
-                  config.fields,
-                  formik.values
-                )
+              const isFieldShowing =
+                showIf === undefined ||
+                getIsFieldShowing(showIf, config.fields, formik.values)
 
               return (
-                isFieldShowing && (
-                  <div className="my-6" key={id}>
-                    <Field
-                      config={{ ...fieldConfig, name: String(id) }}
-                      value={formik.values[id]}
-                      onChange={formik.handleChange}
-                    />
-                  </div>
-                )
+                <FieldWrapper key={id} isShowing={isFieldShowing}>
+                  <Field
+                    config={{ ...fieldConfig, name: String(id) }}
+                    value={formik.values[id]}
+                    onChange={formik.handleChange}
+                  />
+                </FieldWrapper>
               )
             }
           )}
