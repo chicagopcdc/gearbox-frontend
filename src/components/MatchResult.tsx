@@ -32,31 +32,37 @@ function MatchResult({
   return (
     <>
       <DropdownSection name={`Matched (${matched.length})`}>
-        {matched.map((id) => (
-          <TrialCard
-            matchInfoAlgorithm={matchDetails[id]}
-            study={studyById[id]}
-            key={id}
-          />
-        ))}
+        <div className="mx-2">
+          {matched.map((id) => (
+            <TrialCard
+              matchInfoAlgorithm={matchDetails[id]}
+              study={studyById[id]}
+              key={id}
+            />
+          ))}
+        </div>
       </DropdownSection>
       <DropdownSection name={`Undetermined (${undetermined.length})`}>
-        {undetermined.map((id) => (
-          <TrialCard
-            matchInfoAlgorithm={matchDetails[id]}
-            study={studyById[id]}
-            key={id}
-          />
-        ))}
+        <div className="mx-2">
+          {undetermined.map((id) => (
+            <TrialCard
+              matchInfoAlgorithm={matchDetails[id]}
+              study={studyById[id]}
+              key={id}
+            />
+          ))}
+        </div>
       </DropdownSection>
       <DropdownSection name={`Unmatched (${unmatched.length})`}>
-        {unmatched.map((id) => (
-          <TrialCard
-            matchInfoAlgorithm={matchDetails[id]}
-            study={studyById[id]}
-            key={id}
-          />
-        ))}
+        <div className="mx-2">
+          {unmatched.map((id) => (
+            <TrialCard
+              matchInfoAlgorithm={matchDetails[id]}
+              study={studyById[id]}
+              key={id}
+            />
+          ))}
+        </div>
       </DropdownSection>
     </>
   )

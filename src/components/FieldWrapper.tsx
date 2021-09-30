@@ -7,7 +7,7 @@ type FieldWrapperProps = {
 }
 
 function FieldWrapper({ children, isShowing = true }: FieldWrapperProps) {
-  const baseClassName = 'my-6 transition-colors'
+  const baseClassName = 'my-4 p-2 transition-colors'
   const [className, setClassName] = useState(baseClassName)
 
   const prevIsShowing: React.MutableRefObject<boolean | undefined> = useRef()

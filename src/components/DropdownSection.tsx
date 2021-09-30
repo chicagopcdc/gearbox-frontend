@@ -36,7 +36,7 @@ function DropdownSection({
           </button>
         )}
       </div>
-      {isDropDownOpen && <div className="mx-2">{children}</div>}
+      {isDropDownOpen && children}
     </section>
   )
 }
