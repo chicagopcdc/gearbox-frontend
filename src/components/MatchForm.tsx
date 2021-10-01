@@ -62,13 +62,20 @@ function MatchForm({
           isCollapsedAtStart={i !== 0}
         >
           {config.fields.map(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ({ id, groupId, defaultValue, showIf, ...fieldConfig }) => {
+            ({
+              id,
+              groupId,
+              defaultValue, // eslint-disable-line @typescript-eslint/no-unused-vars
+              relevant,
+              showIf,
+              ...fieldConfig
+            }) => {
               if (groupId !== group.id) return null
 
               const isFieldShowing =
-                showIf === undefined ||
-                getIsFieldShowing(showIf, config.fields, formik.values)
+                relevant &&
+                (showIf === undefined ||
+                  getIsFieldShowing(showIf, config.fields, formik.values))
 
               return (
                 <FieldWrapper key={id} isShowing={isFieldShowing}>

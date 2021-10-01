@@ -10,7 +10,11 @@ import type {
   MatchFormValues,
   Study,
 } from '../model'
-import { getMatchDetails, getMatchGroups } from '../utils'
+import {
+  getMatchDetails,
+  getMatchGroups,
+  markRelevantMatchFields,
+} from '../utils'
 
 export type MatchingPageProps = {
   conditions: MatchCondition[]
@@ -38,6 +42,13 @@ function MatchingPage({
 
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
   const matchGroups = getMatchGroups(matchDetails)
+  const markedFields = markRelevantMatchFields({
+    conditions,
+    criteria,
+    fields: config.fields,
+    unmatched: matchGroups.unmatched,
+    values: matchInput,
+  })
 
   return screenSize.smAndDown ? (
     <>
@@ -66,7 +77,12 @@ function MatchingPage({
       </div>
       <section className={`p-4 lg:px-8 ${view === 'form' ? '' : 'hidden'} `}>
         <MatchForm
-          {...{ config, matchInput, updateMatchInput, setIsUpdating }}
+          {...{
+            config: { groups: config.groups, fields: markedFields },
+            matchInput,
+            updateMatchInput,
+            setIsUpdating,
+          }}
         />
       </section>
       <section
@@ -85,7 +101,12 @@ function MatchingPage({
         </h1>
         <div className="px-4 lg:px-8 pb-4">
           <MatchForm
-            {...{ config, matchInput, updateMatchInput, setIsUpdating }}
+            {...{
+              config: { groups: config.groups, fields: markedFields },
+              matchInput,
+              updateMatchInput,
+              setIsUpdating,
+            }}
           />
         </div>
       </section>
