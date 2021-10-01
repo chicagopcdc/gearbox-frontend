@@ -56,7 +56,7 @@ export type MatchFormFieldConfig = {
   options?: MatchFormFieldOption[]
   defaultValue?: any
   showIf?: MatchFormFieldShowIfCondition
-  releavnt?: boolean
+  relevant?: boolean
   [key: string]: any
 }
 
