@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 type FieldWrapperProps = {
   children: React.ReactNode
@@ -8,9 +8,8 @@ type FieldWrapperProps = {
 
 function FieldWrapper({ children, isShowing = true }: FieldWrapperProps) {
   const baseClassName = 'my-4 p-2 transition-colors'
-  const [className, setClassName] = useState(baseClassName)
-
   const prevIsShowing: React.MutableRefObject<boolean | undefined> = useRef()
+  const wrapperEl: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
   useEffect(() => {
     if (
       isShowing &&
@@ -18,10 +17,10 @@ function FieldWrapper({ children, isShowing = true }: FieldWrapperProps) {
       prevIsShowing.current !== isShowing
     ) {
       const timeoutStart = setTimeout(() => {
-        setClassName((c) => (c += ' bg-blue-100'))
+        wrapperEl.current?.classList.add('bg-blue-100')
       }, 100)
       const timeoutEnd = setTimeout(() => {
-        setClassName(baseClassName)
+        wrapperEl.current?.classList.remove('bg-blue-100')
       }, 500)
       return () => {
         clearTimeout(timeoutStart)
@@ -31,7 +30,11 @@ function FieldWrapper({ children, isShowing = true }: FieldWrapperProps) {
     prevIsShowing.current = isShowing
   }, [isShowing])
 
-  return isShowing ? <div className={className}>{children}</div> : null
+  return isShowing ? (
+    <div ref={wrapperEl} className={baseClassName}>
+      {children}
+    </div>
+  ) : null
 }
 
 export default FieldWrapper
