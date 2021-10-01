@@ -220,6 +220,9 @@ export const markRelevantMatchFields = ({
   unmatched,
   values,
 }: markRelevantMatchFieldsArgs) => {
+  if (unmatched?.length === 0)
+    return fields.map((field) => ({ ...field, relevant: true }))
+
   const unmatchedStudyIdSet = new Set(unmatched)
 
   const relevantCritIdSet: Set<number> = new Set()
