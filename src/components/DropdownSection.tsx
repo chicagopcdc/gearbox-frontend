@@ -24,10 +24,17 @@ function DropdownSection({
     e.preventDefault()
     setIsDropDownOpen(false)
   }
+  const isFirefox = navigator.userAgent.includes('Firefox')
   return (
-    <section className={`my-4 bg-${backgroundColor}`}>
+    <section
+      className={`my-4 bg-${backgroundColor} ${
+        isFirefox ? 'transition-inherit' : ''
+      }`}
+    >
       <div
-        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black bg-${backgroundColor}`}
+        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black bg-${backgroundColor} ${
+          isFirefox ? 'transition-inherit' : ''
+        }`}
       >
         <h2 className="font-bold">{name}</h2>
         {isDropDownOpen ? (

@@ -58,6 +58,12 @@ input:invalid.touched {
 .__react_component_tooltip.show {
   opacity: 1 !important;
 }
+
+.transition-inherit {
+  transition-property: inherit;
+  transition-duration: inherit;
+  transition-timing-function: inherit;
+}
 /* purgecss end ignore */
 
 @tailwind utilities;
