@@ -18,27 +18,31 @@ function Textarea({
   readOnly = false,
   ...attrs
 }: TextareaProps) {
-  const baseClassName =
+  const className = disabled ? 'text-gray-400' : undefined
+
+  const baseInputClassName =
     'rounded-none border border-solid border-black p-1 block w-full resize-none'
-  const disabledClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const disabledInputClassName = `${baseInputClassName} cursor-not-allowed bg-gray-200 border-gray-400`
   const textAreaAttrs = {
     ...attrs,
-    className: disabled || readOnly ? disabledClassName : baseClassName,
+    className:
+      disabled || readOnly ? disabledInputClassName : baseInputClassName,
     disabled,
     id: name,
     name,
     readOnly,
     style: { minHeight: '100px' },
   }
+
   return (
-    <>
+    <div className={className}>
       {label && (
         <label className="mb-1" htmlFor={name}>
           {label}
         </label>
       )}
       <textarea {...textAreaAttrs} />
-    </>
+    </div>
   )
 }
 

@@ -4,6 +4,7 @@ type CheckboxProps = {
   label?: string | React.ReactNode
   name?: string
   checked?: boolean
+  disabled?: boolean
   readOnly?: boolean
   required?: boolean
   onChange?: React.ChangeEventHandler<HTMLInputElement>
@@ -12,23 +13,32 @@ type CheckboxProps = {
 function Checkbox({
   label = '',
   name = '',
+  disabled,
   readOnly,
   onChange,
   ...attrs
 }: CheckboxProps) {
+  const className = disabled ? 'text-gray-400' : undefined
+
+  const baseInputClassName =
+    'rounded-none border border-solid border-black mr-4'
+  const disabledInputClassName = `${baseInputClassName} border-gray-300 bg-gray-200`
   const checkboxAttrs = {
     ...attrs,
-    className: 'rounded-none border border-solid border-black mr-4',
+    className:
+      disabled || readOnly ? disabledInputClassName : baseInputClassName,
+    disabled,
     id: name,
     name,
     type: 'checkbox',
-    onChange: readOnly ? undefined : onChange,
+    onChange: disabled || readOnly ? undefined : onChange,
   }
+
   return (
-    <>
+    <div className={className}>
       <input {...checkboxAttrs} />
       {label && <label htmlFor={name}>{label}</label>}
-    </>
+    </div>
   )
 }
 

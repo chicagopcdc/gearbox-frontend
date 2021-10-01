@@ -26,6 +26,15 @@ export const withPattern = () => (
   />
 )
 
+export const disabled = () => (
+  <TextField
+    label="Disabled"
+    value="cannot be changed"
+    disabled
+    onChange={(e) => console.log(e.target.value)}
+  />
+)
+
 export const readOnly = () => (
   <TextField
     label="read only"

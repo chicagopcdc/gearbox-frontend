@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
@@ -52,6 +52,8 @@ function MatchForm({
     }
   }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [isShowingAllFields, setIsShowingAllFields] = useState(false)
+
   return (
     <form ref={formEl} onReset={formik.handleReset}>
       {config.groups.map((group, i) => (
@@ -73,14 +75,18 @@ function MatchForm({
               if (groupId !== group.id) return null
 
               const isFieldShowing =
-                relevant &&
+                (isShowingAllFields || relevant) &&
                 (showIf === undefined ||
                   getIsFieldShowing(showIf, config.fields, formik.values))
 
               return (
                 <FieldWrapper key={id} isShowing={isFieldShowing}>
                   <Field
-                    config={{ ...fieldConfig, name: String(id) }}
+                    config={{
+                      ...fieldConfig,
+                      name: String(id),
+                      disabled: !relevant,
+                    }}
                     value={formik.values[id]}
                     onChange={formik.handleChange}
                   />
@@ -91,10 +97,21 @@ function MatchForm({
         </DropdownSection>
       ))}
 
-      <div className="flex flex-wrap justify-center mt-8">
-        <Button type="reset" outline>
-          Reset
-        </Button>
+      <div className="mt-8">
+        <div className="flex justify-center w-full">
+          <Button
+            outline
+            type="button"
+            onClick={() => setIsShowingAllFields((isShowing) => !isShowing)}
+          >
+            Show {isShowingAllFields ? 'relevant only' : 'all'}
+          </Button>
+        </div>
+        <div className="mt-4 flex justify-center w-full">
+          <Button type="reset" outline>
+            Reset
+          </Button>
+        </div>
       </div>
     </form>
   )

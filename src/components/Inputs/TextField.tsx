@@ -6,6 +6,7 @@ type TextFieldProps = {
   name?: string
   type?: 'text' | 'password' | 'number'
   autoFocus?: boolean
+  disabled?: boolean
   pattern?: string
   placeholder?: string
   readOnly?: boolean
@@ -22,19 +23,26 @@ function TextField({
   name = '',
   type = 'text',
   value = '',
-  readOnly = false,
+  disabled,
+  readOnly,
   ...attrs
 }: TextFieldProps) {
   const [isTouched, setIsTouched] = useState(false)
 
-  const baseClassName =
+  const baseClassName = 'flex flex-col'
+  const disabledClassName = `${baseClassName} text-gray-400`
+  const className = disabled ? disabledClassName : baseClassName
+
+  const baseInputClassName =
     'rounded-none border border-solid border-black p-1 w-full'
-  const readOnlyClassName = `${baseClassName} cursor-not-allowed bg-gray-200`
+  const disabledInputClassName = `${baseInputClassName} cursor-not-allowed bg-gray-200 border-gray-400`
   const inputAttrs = {
     ...attrs,
-    className: readOnly
-      ? readOnlyClassName
-      : baseClassName + (isTouched ? ' touched' : ''),
+    className:
+      disabled || readOnly
+        ? disabledInputClassName
+        : baseInputClassName + (isTouched ? ' touched' : ''),
+    disabled,
     id: name,
     name,
     readOnly,
@@ -45,7 +53,7 @@ function TextField({
     },
   }
   return (
-    <div className="flex flex-col">
+    <div className={className}>
       {label && (
         <label className="mb-1" htmlFor={name}>
           {label}

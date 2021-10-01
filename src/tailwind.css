@@ -35,6 +35,10 @@ input:invalid.touched {
   @apply p-1;
 }
 
+.rmsc .dropdown-container[aria-disabled='true'] {
+  @apply bg-gray-200 border-gray-400 text-gray-400;
+}
+
 .rmsc .dropdown-content {
   @apply border border-solid border-black pt-0 left-0;
 }
