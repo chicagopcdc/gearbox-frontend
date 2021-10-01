@@ -82,7 +82,11 @@ function MatchForm({
               return (
                 <FieldWrapper key={id} isShowing={isFieldShowing}>
                   <Field
-                    config={{ ...fieldConfig, name: String(id) }}
+                    config={{
+                      ...fieldConfig,
+                      name: String(id),
+                      disabled: !relevant,
+                    }}
                     value={formik.values[id]}
                     onChange={formik.handleChange}
                   />
