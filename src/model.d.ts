@@ -6,7 +6,7 @@ export type Study = {
   links: { name: string; href: string }[]
 }
 
-type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne' | 'in'
 
 export type EligibilityCriterion = {
   id: number
@@ -72,7 +72,7 @@ export type MatchFormValues = {
 export type MatchInfo = {
   fieldName: string
   fieldValue: any
-  fieldValueLabel?: string
+  fieldValueLabel?: string | string[]
   isMatched?: boolean
   operator: ComparisonOperator
 }
