@@ -6,7 +6,7 @@ export type Study = {
   links: { name: string; href: string }[]
 }
 
-type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne' | 'in'
 
 export type EligibilityCriterion = {
   id: number
