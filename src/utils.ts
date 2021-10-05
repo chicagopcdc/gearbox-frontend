@@ -91,6 +91,8 @@ const testCriterion = (
       return critValue >= testValue
     case 'ne':
       return critValue !== testValue
+    case 'in':
+      return critValue.includes(testValue)
   }
 }
 
