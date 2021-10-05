@@ -16,7 +16,7 @@ import {
 } from './utils'
 
 const criteria: EligibilityCriterion[] = [
-  { id: 0, fieldId: 0, fieldValue: true, operator: 'eq' },
+  { id: 0, fieldId: 0, fieldValue: [1, 2], operator: 'in' },
   { id: 1, fieldId: 1, fieldValue: false, operator: 'eq' },
   { id: 2, fieldId: 1, fieldValue: true, operator: 'eq' },
   { id: 3, fieldId: 2, fieldValue: 0, operator: 'gt' },
@@ -25,7 +25,17 @@ const criteria: EligibilityCriterion[] = [
 const config: MatchFormConfig = {
   groups: [],
   fields: [
-    { id: 0, name: 'field 0', groupId: 0, type: '' },
+    {
+      id: 0,
+      name: 'field 0',
+      groupId: 0,
+      type: '',
+      options: [
+        { label: 'foo', value: 0 },
+        { label: 'bar', value: 1 },
+        { label: 'baz', value: 2 },
+      ],
+    },
     { id: 1, name: 'field 1', groupId: 0, type: '' },
     { id: 2, name: 'field 2', groupId: 0, type: '' },
     {
@@ -78,7 +88,7 @@ describe('getMatchGroups', () => {
 
   test('for simple AND algorithm', () => {
     const values: MatchFormValues = {
-      0: true,
+      0: 1,
       1: false,
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
@@ -90,7 +100,7 @@ describe('getMatchGroups', () => {
 
   test('for simple OR algorithm', () => {
     const values: MatchFormValues = {
-      0: false,
+      0: 0,
       1: true,
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
@@ -102,7 +112,7 @@ describe('getMatchGroups', () => {
 
   test('for nested algorithm 1', () => {
     const values: MatchFormValues = {
-      0: true,
+      0: 1,
       2: 1,
     }
     expect(getMatchGroupsTestHelper(values)).toEqual({
@@ -164,12 +174,12 @@ describe('getMatchGroups', () => {
 })
 
 describe('getIsFieldShowing', () => {
-  test('for one criterion (eq)', () => {
+  test('for one criterion (in)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 0, operator: 'eq', value: true }],
+      criteria: [{ id: 0, operator: 'in', value: [1, 2] }],
     }
-    const values: MatchFormValues = { 0: true, 1: undefined, 2: undefined }
+    const values: MatchFormValues = { 0: 1, 1: undefined, 2: undefined }
 
     expect(getIsFieldShowing(showIf, config.fields, values)).toEqual(true)
   })
@@ -179,7 +189,7 @@ describe('getIsFieldShowing', () => {
       operator: 'OR',
       criteria: [{ id: 2, operator: 'gt', value: 1 }],
     }
-    const values: MatchFormValues = { 0: true, 1: undefined, 2: 2 }
+    const values: MatchFormValues = { 0: 1, 1: undefined, 2: 2 }
 
     expect(getIsFieldShowing(showIf, config.fields, values)).toEqual(true)
   })
@@ -188,21 +198,21 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
       criteria: [
-        { id: 0, operator: 'eq', value: true },
+        { id: 0, operator: 'in', value: [1, 2] },
         { id: 1, operator: 'eq', value: true },
         { id: 2, operator: 'gt', value: 1 },
       ],
     }
-    const values1: MatchFormValues = { 0: true }
+    const values1: MatchFormValues = { 0: 1 }
     expect(getIsFieldShowing(showIf, config.fields, values1)).toEqual(true)
 
-    const values2: MatchFormValues = { 0: false, 1: true }
+    const values2: MatchFormValues = { 0: 0, 1: true }
     expect(getIsFieldShowing(showIf, config.fields, values2)).toEqual(true)
 
-    const values3: MatchFormValues = { 0: false, 1: false, 2: 2 }
+    const values3: MatchFormValues = { 0: 0, 1: false, 2: 2 }
     expect(getIsFieldShowing(showIf, config.fields, values3)).toEqual(true)
 
-    const values4: MatchFormValues = { 0: false, 1: false, 2: 1 }
+    const values4: MatchFormValues = { 0: 0, 1: false, 2: 1 }
     expect(getIsFieldShowing(showIf, config.fields, values4)).toEqual(false)
   })
 
@@ -210,21 +220,21 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'AND',
       criteria: [
-        { id: 0, operator: 'eq', value: true },
+        { id: 0, operator: 'in', value: [1, 2] },
         { id: 1, operator: 'eq', value: true },
         { id: 2, operator: 'gt', value: 1 },
       ],
     }
-    const values1: MatchFormValues = { 0: true }
+    const values1: MatchFormValues = { 0: 1 }
     expect(getIsFieldShowing(showIf, config.fields, values1)).toEqual(false)
 
-    const values2: MatchFormValues = { 0: true, 1: false }
+    const values2: MatchFormValues = { 0: 1, 1: false }
     expect(getIsFieldShowing(showIf, config.fields, values2)).toEqual(false)
 
-    const values3: MatchFormValues = { 0: true, 1: true, 2: 2 }
+    const values3: MatchFormValues = { 0: 1, 1: true, 2: 2 }
     expect(getIsFieldShowing(showIf, config.fields, values3)).toEqual(true)
 
-    const values4: MatchFormValues = { 0: true, 1: true, 2: 1 }
+    const values4: MatchFormValues = { 0: 1, 1: true, 2: 1 }
     expect(getIsFieldShowing(showIf, config.fields, values4)).toEqual(false)
   })
 })
@@ -318,7 +328,7 @@ describe('markRelevantMatchFields', () => {
   })
 
   test('for case with values (no unmatched)', () => {
-    const [unmatched, markedFields] = testHelper({ 0: true })
+    const [unmatched, markedFields] = testHelper({ 0: 1 })
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: true,
@@ -328,7 +338,7 @@ describe('markRelevantMatchFields', () => {
   })
 
   test('for case with unmatched', () => {
-    const [unmatched, markedFields] = testHelper({ 0: false })
+    const [unmatched, markedFields] = testHelper({ 0: 0 })
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 2,
@@ -338,7 +348,7 @@ describe('markRelevantMatchFields', () => {
   })
 
   test('for case with unmatched, but with field values set', () => {
-    const [unmatched, markedFields] = testHelper({ 0: false, 2: 0 })
+    const [unmatched, markedFields] = testHelper({ 0: 0, 2: 0 })
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: true,
