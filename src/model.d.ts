@@ -72,7 +72,7 @@ export type MatchFormValues = {
 export type MatchInfo = {
   fieldName: string
   fieldValue: any
-  fieldValueLabel?: string
+  fieldValueLabel?: string | string[]
   isMatched?: boolean
   operator: ComparisonOperator
 }
