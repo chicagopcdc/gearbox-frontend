@@ -54,7 +54,7 @@ function TrialMatchInfo({
       {showModal ? (
         <div
           id="match-info-modal"
-          className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-10"
+          className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-50"
           style={{ background: '#cccc' }}
           role="dialog"
           aria-labelledby="eligibility-criteria-dialog-title"
