@@ -1,3 +1,4 @@
+import { CheckCircle, XCircle } from 'react-feather'
 import type { ComparisonOperator, MatchInfo } from '../model'
 
 function getOperatorString(operator: ComparisonOperator) {
@@ -39,13 +40,22 @@ function MatchInfoString({
     isMatched === undefined
       ? 'text-gray-700'
       : isMatched
-      ? 'text-green-700'
+      ? 'text-blue-700'
       : 'text-red-700'
+  const matchIcon =
+    isMatched === undefined ? null : isMatched ? (
+      <CheckCircle className="inline mx-1" size="1em" />
+    ) : (
+      <XCircle className="inline mx-1" size="1em" />
+    )
 
   return (
     <>
       {fieldName} <span className="italic text-gray-500">{operatorString}</span>{' '}
-      <span className={valueStringClassName}>{valueString}</span>
+      <span className={valueStringClassName}>
+        {valueString}
+        {matchIcon}
+      </span>
     </>
   )
 }

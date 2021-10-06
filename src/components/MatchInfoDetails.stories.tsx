@@ -17,7 +17,7 @@ export const exampleCase = () => (
           fieldName: 'foo',
           fieldValue: 0,
           fieldValueLabel: 'x',
-          isMatched: true,
+          isMatched: undefined,
           operator: 'eq',
         },
         {
@@ -47,7 +47,7 @@ export const exampleCase = () => (
                   fieldName: 'baz',
                   fieldValue: [0, 1],
                   fieldValueLabel: ['lorem', 'ipsum'],
-                  isMatched: true,
+                  isMatched: undefined,
                   operator: 'in',
                 },
               ],
