@@ -64,8 +64,8 @@ function TrialMatchInfo({
             className="bg-white overflow-scroll"
             style={{ maxHeight: '95%', maxWidth: '95%' }}
           >
-            <div className="text-sm sm:text-base p-4 sm:p-8">
-              <div className="flex justify-between border-b pb-4 mb-4">
+            <div className="text-sm sm:text-base px-4 pb-4 pt-2 sm:px-8 sm:pb-8">
+              <div className="flex justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
                 <h3
                   id="eligibility-criteria-dialog-title"
                   className="font-bold mr-4"
