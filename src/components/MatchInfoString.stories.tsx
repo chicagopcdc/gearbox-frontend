@@ -11,12 +11,27 @@ export default {
 
 export const EQ = () => (
   <>
+    <MatchInfoString
+      fieldName="foo"
+      fieldValue={0}
+      isMatched={undefined}
+      operator="eq"
+    />
+    <br />
     <MatchInfoString fieldName="foo" fieldValue={0} isMatched operator="eq" />
     <br />
     <MatchInfoString
       fieldName="foo"
       fieldValue={0}
       isMatched={false}
+      operator="eq"
+    />
+    <br />
+    <MatchInfoString
+      fieldName="bar"
+      fieldValue={0}
+      fieldValueLabel="baz"
+      isMatched={undefined}
       operator="eq"
     />
     <br />
@@ -40,12 +55,27 @@ export const EQ = () => (
 
 export const NE = () => (
   <>
+    <MatchInfoString
+      fieldName="foo"
+      fieldValue={0}
+      isMatched={undefined}
+      operator="ne"
+    />
+    <br />
     <MatchInfoString fieldName="foo" fieldValue={0} isMatched operator="ne" />
     <br />
     <MatchInfoString
       fieldName="foo"
       fieldValue={0}
       isMatched={false}
+      operator="ne"
+    />
+    <br />
+    <MatchInfoString
+      fieldName="bar"
+      fieldValue={0}
+      fieldValueLabel="baz"
+      isMatched={undefined}
       operator="ne"
     />
     <br />
@@ -69,6 +99,13 @@ export const NE = () => (
 
 export const GTAndGTE = () => (
   <>
+    <MatchInfoString
+      fieldName="foo"
+      fieldValue={0}
+      isMatched={undefined}
+      operator="gt"
+    />
+    <br />
     <MatchInfoString fieldName="foo" fieldValue={0} isMatched operator="gt" />
     <br />
     <MatchInfoString
@@ -76,6 +113,13 @@ export const GTAndGTE = () => (
       fieldValue={0}
       isMatched={false}
       operator="gt"
+    />
+    <br />
+    <MatchInfoString
+      fieldName="bar"
+      fieldValue={0}
+      isMatched={undefined}
+      operator="gte"
     />
     <br />
     <MatchInfoString fieldName="bar" fieldValue={0} isMatched operator="gte" />
@@ -91,6 +135,13 @@ export const GTAndGTE = () => (
 
 export const LTAndLTE = () => (
   <>
+    <MatchInfoString
+      fieldName="foo"
+      fieldValue={0}
+      isMatched={undefined}
+      operator="lt"
+    />
+    <br />
     <MatchInfoString fieldName="foo" fieldValue={0} isMatched operator="lt" />
     <br />
     <MatchInfoString
@@ -98,6 +149,13 @@ export const LTAndLTE = () => (
       fieldValue={0}
       isMatched={false}
       operator="lt"
+    />
+    <br />
+    <MatchInfoString
+      fieldName="bar"
+      fieldValue={0}
+      isMatched={undefined}
+      operator="lte"
     />
     <br />
     <MatchInfoString fieldName="bar" fieldValue={0} isMatched operator="lte" />
@@ -113,6 +171,13 @@ export const LTAndLTE = () => (
 
 export const IN = () => (
   <>
+    <MatchInfoString
+      fieldName="foo"
+      fieldValue={[0, 1]}
+      isMatched={undefined}
+      operator="in"
+    />
+    <br />
     <MatchInfoString
       fieldName="foo"
       fieldValue={[0, 1]}
