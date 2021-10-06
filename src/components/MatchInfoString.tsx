@@ -40,7 +40,7 @@ function MatchInfoString({
     isMatched === undefined
       ? 'text-gray-700'
       : isMatched
-      ? 'text-green-700'
+      ? 'text-blue-700'
       : 'text-red-700'
   const matchIcon =
     isMatched === undefined ? null : isMatched ? (
