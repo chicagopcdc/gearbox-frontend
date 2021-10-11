@@ -42,7 +42,7 @@ function MatchingPage({
   updateMatchInput,
 }: MatchingPageProps) {
   const [isUpdating, setIsUpdating] = useState(false)
-  const [isFilterActive, setIsFilterActive] = useState(false)
+  const [isFilterActive, setIsFilterActive] = useState(true)
   const screenSize = useScreenSize()
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
