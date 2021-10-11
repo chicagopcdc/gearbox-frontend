@@ -18,6 +18,7 @@ import type {
   Study,
 } from '../model'
 import {
+  getDefaultValues,
   getMatchDetails,
   getMatchGroups,
   markRelevantMatchFields,
@@ -51,8 +52,9 @@ function MatchingPage({
   function toggleFilter() {
     setIsFilterActive((isActive) => !isActive)
   }
+  const defaultValues = getDefaultValues(config)
   function handleReset() {
-    console.log('reset')
+    updateMatchInput(defaultValues)
   }
 
   if (config.fields === undefined || Object.keys(matchInput).length === 0)

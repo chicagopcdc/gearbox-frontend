@@ -3,7 +3,6 @@ import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
-import Button from './Inputs/Button'
 import Field from './Inputs/Field'
 import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
 import type { MatchFormValues, MatchFormConfig } from '../model'
@@ -33,7 +32,7 @@ function MatchForm({
   useEffect(() => {
     formik.setValues({ ...matchInput })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [matchInput])
 
   const formEl = useRef<HTMLFormElement>(null)
   useEffect(() => {
@@ -55,7 +54,7 @@ function MatchForm({
   }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <form ref={formEl} onReset={formik.handleReset}>
+    <form ref={formEl}>
       {config.groups.map((group, i) => (
         <DropdownSection
           key={group.id}
@@ -96,14 +95,6 @@ function MatchForm({
           )}
         </DropdownSection>
       ))}
-
-      <div className="mt-8">
-        <div className="mt-4 flex justify-center w-full">
-          <Button type="reset" outline>
-            Reset
-          </Button>
-        </div>
-      </div>
     </form>
   )
 }
