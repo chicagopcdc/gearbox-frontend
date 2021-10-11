@@ -1,9 +1,8 @@
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
-import Button from './Inputs/Button'
 import Field from './Inputs/Field'
 import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
 import type { MatchFormValues, MatchFormConfig } from '../model'
@@ -11,6 +10,7 @@ import type { MatchFormValues, MatchFormConfig } from '../model'
 export type MatchFormProps = {
   config: MatchFormConfig
   matchInput: MatchFormValues
+  isFilterActive: boolean
   updateMatchInput(values: MatchFormValues): void
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -18,6 +18,7 @@ export type MatchFormProps = {
 function MatchForm({
   config,
   matchInput,
+  isFilterActive,
   updateMatchInput,
   setIsUpdating,
 }: MatchFormProps) {
@@ -31,7 +32,7 @@ function MatchForm({
   useEffect(() => {
     formik.setValues({ ...matchInput })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [matchInput])
 
   const formEl = useRef<HTMLFormElement>(null)
   useEffect(() => {
@@ -52,10 +53,8 @@ function MatchForm({
     }
   }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [isShowingAllFields, setIsShowingAllFields] = useState(false)
-
   return (
-    <form ref={formEl} onReset={formik.handleReset}>
+    <form ref={formEl}>
       {config.groups.map((group, i) => (
         <DropdownSection
           key={group.id}
@@ -75,7 +74,7 @@ function MatchForm({
               if (groupId !== group.id) return null
 
               const isFieldShowing =
-                (isShowingAllFields || relevant) &&
+                (!isFilterActive || relevant) &&
                 (showIf === undefined ||
                   getIsFieldShowing(showIf, config.fields, formik.values))
 
@@ -96,23 +95,6 @@ function MatchForm({
           )}
         </DropdownSection>
       ))}
-
-      <div className="mt-8">
-        <div className="flex justify-center w-full">
-          <Button
-            outline
-            type="button"
-            onClick={() => setIsShowingAllFields((isShowing) => !isShowing)}
-          >
-            Show {isShowingAllFields ? 'relevant only' : 'all'}
-          </Button>
-        </div>
-        <div className="mt-4 flex justify-center w-full">
-          <Button type="reset" outline>
-            Reset
-          </Button>
-        </div>
-      </div>
     </form>
   )
 }
