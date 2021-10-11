@@ -50,7 +50,6 @@ function MatchingPage({
   }
   function toggleFilter() {
     setIsFilterActive((isActive) => !isActive)
-    console.log('toggle filter')
   }
   function handleReset() {
     console.log('reset')
@@ -165,6 +164,7 @@ function MatchingPage({
           {...{
             config: { groups: config.groups, fields: markedFields },
             matchInput,
+            isFilterActive,
             updateMatchInput,
             setIsUpdating,
           }}
@@ -250,6 +250,7 @@ function MatchingPage({
             {...{
               config: { groups: config.groups, fields: markedFields },
               matchInput,
+              isFilterActive,
               updateMatchInput,
               setIsUpdating,
             }}

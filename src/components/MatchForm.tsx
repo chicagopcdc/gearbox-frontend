@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
@@ -11,6 +11,7 @@ import type { MatchFormValues, MatchFormConfig } from '../model'
 export type MatchFormProps = {
   config: MatchFormConfig
   matchInput: MatchFormValues
+  isFilterActive: boolean
   updateMatchInput(values: MatchFormValues): void
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -18,6 +19,7 @@ export type MatchFormProps = {
 function MatchForm({
   config,
   matchInput,
+  isFilterActive,
   updateMatchInput,
   setIsUpdating,
 }: MatchFormProps) {
@@ -52,8 +54,6 @@ function MatchForm({
     }
   }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const [isShowingAllFields, setIsShowingAllFields] = useState(false)
-
   return (
     <form ref={formEl} onReset={formik.handleReset}>
       {config.groups.map((group, i) => (
@@ -75,7 +75,7 @@ function MatchForm({
               if (groupId !== group.id) return null
 
               const isFieldShowing =
-                (isShowingAllFields || relevant) &&
+                (!isFilterActive || relevant) &&
                 (showIf === undefined ||
                   getIsFieldShowing(showIf, config.fields, formik.values))
 
@@ -98,15 +98,6 @@ function MatchForm({
       ))}
 
       <div className="mt-8">
-        <div className="flex justify-center w-full">
-          <Button
-            outline
-            type="button"
-            onClick={() => setIsShowingAllFields((isShowing) => !isShowing)}
-          >
-            Show {isShowingAllFields ? 'relevant only' : 'all'}
-          </Button>
-        </div>
         <div className="mt-4 flex justify-center w-full">
           <Button type="reset" outline>
             Reset
