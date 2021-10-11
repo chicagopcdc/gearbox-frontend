@@ -42,24 +42,15 @@ function MatchingPage({
   updateMatchInput,
 }: MatchingPageProps) {
   const [isUpdating, setIsUpdating] = useState(false)
-  const screenSize = useScreenSize()
-  const [view, setView] = useState<'form' | 'result'>('form')
-  const [showFormOptions, setShowFormOptions] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(false)
-  function toggleFormOptions() {
-    setShowFormOptions((show) => !show)
-  }
-  function toggleFilter() {
-    setIsFilterActive((isActive) => !isActive)
-  }
-  const defaultValues = getDefaultValues(config)
-  function handleReset() {
-    updateMatchInput(defaultValues)
-  }
+  const screenSize = useScreenSize()
+  const [showFormOptions, setShowFormOptions] = useState(false)
+  const [view, setView] = useState<'form' | 'result'>('form')
 
   if (config.fields === undefined || Object.keys(matchInput).length === 0)
     return <div>Loading...</div>
 
+  const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
   const matchGroups = getMatchGroups(matchDetails)
   const markedFields = markRelevantMatchFields({
@@ -69,6 +60,16 @@ function MatchingPage({
     unmatched: matchGroups.unmatched,
     values: matchInput,
   })
+
+  function handleReset() {
+    updateMatchInput(defaultValues)
+  }
+  function toggleFilter() {
+    setIsFilterActive((isActive) => !isActive)
+  }
+  function toggleFormOptions() {
+    setShowFormOptions((show) => !show)
+  }
 
   return screenSize.smAndDown ? (
     <>
