@@ -12,32 +12,32 @@ import type {
   MatchFormFieldShowIfCondition,
 } from './model'
 
-export const getMatchGroups = (matchDetails: MatchDetails) => {
-  const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
-    const hasStatus = { true: false, undefined: false, false: false }
-    for (const matchInfoOrAlgo of algorithm.criteria) {
-      const matchStatus = Object.prototype.hasOwnProperty.call(
-        matchInfoOrAlgo,
-        'criteria'
-      )
-        ? getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
-        : (matchInfoOrAlgo as MatchInfo).isMatched
+const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
+  const hasStatus = { true: false, undefined: false, false: false }
+  for (const matchInfoOrAlgo of algorithm.criteria) {
+    const matchStatus = Object.prototype.hasOwnProperty.call(
+      matchInfoOrAlgo,
+      'criteria'
+    )
+      ? getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
+      : (matchInfoOrAlgo as MatchInfo).isMatched
 
-      hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
-    }
-
-    switch (algorithm.operator) {
-      case 'AND':
-        if (hasStatus.false) return false
-        if (hasStatus.undefined) return undefined
-        return true
-      case 'OR':
-        if (hasStatus.true) return true
-        if (hasStatus.undefined) return undefined
-        return false
-    }
+    hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
   }
 
+  switch (algorithm.operator) {
+    case 'AND':
+      if (hasStatus.false) return false
+      if (hasStatus.undefined) return undefined
+      return true
+    case 'OR':
+      if (hasStatus.true) return true
+      if (hasStatus.undefined) return undefined
+      return false
+  }
+}
+
+export const getMatchGroups = (matchDetails: MatchDetails) => {
   const matched: number[] = []
   const undetermined: number[] = []
   const unmatched: number[] = []
