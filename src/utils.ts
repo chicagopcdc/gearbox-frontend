@@ -12,6 +12,22 @@ import type {
   MatchFormFieldShowIfCondition,
 } from './model'
 
+const mergeStatus = (
+  operator: 'AND' | 'OR',
+  hasStatus: { [k in 'true' | 'undefined' | 'false']: boolean }
+) => {
+  switch (operator) {
+    case 'AND':
+      if (hasStatus.false) return false
+      if (hasStatus.undefined) return undefined
+      return true
+    case 'OR':
+      if (hasStatus.true) return true
+      if (hasStatus.undefined) return undefined
+      return false
+  }
+}
+
 const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
   const hasStatus = { true: false, undefined: false, false: false }
   for (const matchInfoOrAlgo of algorithm.criteria) {
@@ -25,16 +41,7 @@ const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
     hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
   }
 
-  switch (algorithm.operator) {
-    case 'AND':
-      if (hasStatus.false) return false
-      if (hasStatus.undefined) return undefined
-      return true
-    case 'OR':
-      if (hasStatus.true) return true
-      if (hasStatus.undefined) return undefined
-      return false
-  }
+  return mergeStatus(algorithm.operator, hasStatus)
 }
 
 export const getMatchGroups = (matchDetails: MatchDetails) => {
