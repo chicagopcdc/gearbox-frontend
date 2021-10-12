@@ -28,28 +28,12 @@ const mergeStatus = (
   }
 }
 
-const getMatchStatus = (algorithm: MatchInfoAlgorithm) => {
-  const hasStatus = { true: false, undefined: false, false: false }
-  for (const matchInfoOrAlgo of algorithm.criteria) {
-    const matchStatus = Object.prototype.hasOwnProperty.call(
-      matchInfoOrAlgo,
-      'criteria'
-    )
-      ? getMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
-      : (matchInfoOrAlgo as MatchInfo).isMatched
-
-    hasStatus[String(matchStatus) as 'true' | 'undefined' | 'false'] = true
-  }
-
-  return mergeStatus(algorithm.operator, hasStatus)
-}
-
 export const getMatchGroups = (matchDetails: MatchDetails) => {
   const matched: number[] = []
   const undetermined: number[] = []
   const unmatched: number[] = []
   for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
-    switch (getMatchStatus(studyMatchDetail)) {
+    switch (studyMatchDetail.isMatched) {
       case true:
         matched.push(parseInt(studyId))
         break
@@ -100,6 +84,50 @@ const testCriterion = (
       return critValue !== testValue
     case 'in':
       return critValue.includes(testValue)
+  }
+}
+
+const isMatchAlgorithm = (matchInfoOrAlgo: MatchInfo | MatchInfoAlgorithm) => {
+  return Object.prototype.hasOwnProperty.call(matchInfoOrAlgo, 'criteria')
+}
+
+const addMatchStatusSimple = (simpleAlgorithm: {
+  operator: 'AND' | 'OR'
+  criteria: MatchInfo[]
+}): MatchInfoAlgorithm => {
+  const hasStatus = { true: false, undefined: false, false: false }
+  for (const { isMatched } of simpleAlgorithm.criteria)
+    hasStatus[String(isMatched) as 'true' | 'undefined' | 'false'] = true
+
+  return {
+    ...simpleAlgorithm,
+    isMatched: mergeStatus(simpleAlgorithm.operator, hasStatus),
+  }
+}
+
+const addMatchStatus = (algorithm: MatchInfoAlgorithm): MatchInfoAlgorithm => {
+  const criteria = []
+  const hasStatus = { true: false, undefined: false, false: false }
+  for (const matchInfoOrAlgo of algorithm.criteria) {
+    const crit = isMatchAlgorithm(matchInfoOrAlgo)
+      ? algorithm.criteria.some(isMatchAlgorithm)
+        ? addMatchStatus(matchInfoOrAlgo as MatchInfoAlgorithm)
+        : addMatchStatusSimple(
+            matchInfoOrAlgo as {
+              operator: 'AND' | 'OR'
+              criteria: MatchInfo[]
+            }
+          )
+      : matchInfoOrAlgo
+
+    criteria.push(crit)
+    hasStatus[String(crit.isMatched) as 'true' | 'undefined' | 'false'] = true
+  }
+
+  return {
+    operator: algorithm.operator,
+    criteria,
+    isMatched: mergeStatus(algorithm.operator, hasStatus),
   }
 }
 
@@ -158,7 +186,7 @@ export const getMatchDetails = (
 
   const matchDetails = {} as MatchDetails
   for (const { studyId, algorithm } of matchConditions)
-    matchDetails[studyId] = parseAlgorithm(algorithm)
+    matchDetails[studyId] = addMatchStatus(parseAlgorithm(algorithm))
 
   return matchDetails
 }
