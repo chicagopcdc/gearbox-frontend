@@ -5,8 +5,11 @@ import type {
   MatchFormValues,
   MatchFormConfig,
   MatchFormFieldShowIfCondition,
+  MatchInfoAlgorithm,
+  MatchInfo,
 } from './model'
 import {
+  addMatchStatus,
   getMatchDetails,
   getMatchGroups,
   getIsFieldShowing,
@@ -81,6 +84,323 @@ const conditions: MatchCondition[] = [
     },
   },
 ]
+
+describe('addMatchStatus', () => {
+  function createDummyMatchInfo(isMatched: boolean | undefined): MatchInfo {
+    return {
+      fieldName: '',
+      fieldValue: '',
+      isMatched,
+      operator: 'eq',
+    }
+  }
+  const matchUndefined = createDummyMatchInfo(undefined)
+  const matchTrue = createDummyMatchInfo(true)
+  const matchFalse = createDummyMatchInfo(false)
+
+  test('for a single match info, "AND" operator', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchUndefined],
+    }
+    expect(addMatchStatus(a0)).toEqual({ ...a0, isMatched: undefined })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchTrue],
+    }
+    expect(addMatchStatus(a1)).toEqual({ ...a1, isMatched: true })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchFalse],
+    }
+    expect(addMatchStatus(a2)).toEqual({ ...a2, isMatched: false })
+  })
+
+  test('for a single match info, "OR" operator', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchUndefined],
+    }
+    expect(addMatchStatus(a0)).toEqual({ ...a0, isMatched: undefined })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchTrue],
+    }
+    expect(addMatchStatus(a1)).toEqual({ ...a1, isMatched: true })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchFalse],
+    }
+    expect(addMatchStatus(a2)).toEqual({ ...a2, isMatched: false })
+  })
+
+  test('for multiple match infos, "AND" operator', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchUndefined, matchUndefined],
+    }
+    expect(addMatchStatus(a0)).toEqual({ ...a0, isMatched: undefined })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchUndefined, matchTrue],
+    }
+    expect(addMatchStatus(a1)).toEqual({ ...a1, isMatched: undefined })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchUndefined, matchFalse],
+    }
+    expect(addMatchStatus(a2)).toEqual({ ...a2, isMatched: false })
+
+    const a3: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchTrue, matchTrue],
+    }
+    expect(addMatchStatus(a3)).toEqual({ ...a3, isMatched: true })
+
+    const a4: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchTrue, matchFalse],
+    }
+    expect(addMatchStatus(a4)).toEqual({ ...a4, isMatched: false })
+
+    const a5: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [matchFalse, matchFalse],
+    }
+    expect(addMatchStatus(a5)).toEqual({ ...a5, isMatched: false })
+  })
+
+  test('for multiple match infos, "OR" operator', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchUndefined, matchUndefined],
+    }
+    expect(addMatchStatus(a0)).toEqual({ ...a0, isMatched: undefined })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchUndefined, matchTrue],
+    }
+    expect(addMatchStatus(a1)).toEqual({ ...a1, isMatched: true })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchUndefined, matchFalse],
+    }
+    expect(addMatchStatus(a2)).toEqual({ ...a2, isMatched: undefined })
+
+    const a3: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchTrue, matchTrue],
+    }
+    expect(addMatchStatus(a3)).toEqual({ ...a3, isMatched: true })
+
+    const a4: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchTrue, matchFalse],
+    }
+    expect(addMatchStatus(a4)).toEqual({ ...a4, isMatched: true })
+
+    const a5: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [matchFalse, matchFalse],
+    }
+    expect(addMatchStatus(a5)).toEqual({ ...a5, isMatched: false })
+  })
+
+  test('for a single match algo, "AND" operator', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchUndefined],
+        },
+      ],
+    }
+    expect(addMatchStatus(a0)).toEqual({
+      ...a0,
+      criteria: a0.criteria.map((c) => ({ ...c, isMatched: undefined })),
+      isMatched: undefined,
+    })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchTrue],
+        },
+      ],
+    }
+    expect(addMatchStatus(a1)).toEqual({
+      ...a1,
+      criteria: a1.criteria.map((c) => ({ ...c, isMatched: true })),
+      isMatched: true,
+    })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchFalse],
+        },
+      ],
+    }
+    expect(addMatchStatus(a2)).toEqual({
+      ...a2,
+      criteria: a2.criteria.map((c) => ({ ...c, isMatched: false })),
+      isMatched: false,
+    })
+  })
+
+  test('for a single match algo, "OR" operator', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'OR',
+          criteria: [matchUndefined],
+        },
+      ],
+    }
+    expect(addMatchStatus(a0)).toEqual({
+      ...a0,
+      criteria: a0.criteria.map((c) => ({ ...c, isMatched: undefined })),
+      isMatched: undefined,
+    })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'OR',
+          criteria: [matchTrue],
+        },
+      ],
+    }
+    expect(addMatchStatus(a1)).toEqual({
+      ...a1,
+      criteria: a1.criteria.map((c) => ({ ...c, isMatched: true })),
+      isMatched: true,
+    })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'OR',
+          criteria: [matchFalse],
+        },
+      ],
+    }
+    expect(addMatchStatus(a2)).toEqual({
+      ...a2,
+      criteria: a2.criteria.map((c) => ({ ...c, isMatched: false })),
+      isMatched: false,
+    })
+  })
+
+  test('for complex cases', () => {
+    const a0: MatchInfoAlgorithm = {
+      operator: 'AND',
+      criteria: [
+        matchUndefined,
+        {
+          operator: 'OR',
+          criteria: [matchUndefined, matchTrue],
+        },
+      ],
+    }
+    expect(addMatchStatus(a0)).toEqual({
+      operator: 'AND',
+      criteria: [
+        matchUndefined,
+        {
+          operator: 'OR',
+          criteria: [matchUndefined, matchTrue],
+          isMatched: true,
+        },
+      ],
+      isMatched: undefined,
+    })
+
+    const a1: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchUndefined, matchTrue],
+        },
+        matchFalse,
+      ],
+    }
+    expect(addMatchStatus(a1)).toEqual({
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchUndefined, matchTrue],
+          isMatched: undefined,
+        },
+        matchFalse,
+      ],
+      isMatched: undefined,
+    })
+
+    const a2: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchUndefined, matchTrue],
+        },
+        matchFalse,
+        {
+          operator: 'OR',
+          criteria: [
+            {
+              operator: 'AND',
+              criteria: [matchUndefined, matchTrue],
+            },
+            matchTrue,
+          ],
+        },
+      ],
+    }
+    expect(addMatchStatus(a2)).toEqual({
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [matchUndefined, matchTrue],
+          isMatched: undefined,
+        },
+        matchFalse,
+        {
+          operator: 'OR',
+          criteria: [
+            {
+              operator: 'AND',
+              criteria: [matchUndefined, matchTrue],
+              isMatched: undefined,
+            },
+            matchTrue,
+          ],
+          isMatched: true,
+        },
+      ],
+      isMatched: true,
+    })
+  })
+})
 
 describe('getMatchGroups', () => {
   const getMatchGroupsTestHelper = (values: MatchFormValues) =>

@@ -86,7 +86,9 @@ const addMatchStatusSimple = (simpleAlgorithm: {
   }
 }
 
-const addMatchStatus = (algorithm: MatchInfoAlgorithm): MatchInfoAlgorithm => {
+export const addMatchStatus = (
+  algorithm: MatchInfoAlgorithm
+): MatchInfoAlgorithm => {
   const criteria = []
   const hasStatus = { true: false, undefined: false, false: false }
   for (const matchInfoOrAlgo of algorithm.criteria) {
