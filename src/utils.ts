@@ -12,41 +12,6 @@ import type {
   MatchFormFieldShowIfCondition,
 } from './model'
 
-const mergeStatus = (
-  operator: 'AND' | 'OR',
-  hasStatus: { [k in 'true' | 'undefined' | 'false']: boolean }
-) => {
-  switch (operator) {
-    case 'AND':
-      if (hasStatus.false) return false
-      if (hasStatus.undefined) return undefined
-      return true
-    case 'OR':
-      if (hasStatus.true) return true
-      if (hasStatus.undefined) return undefined
-      return false
-  }
-}
-
-export const getMatchGroups = (matchDetails: MatchDetails) => {
-  const matched: number[] = []
-  const undetermined: number[] = []
-  const unmatched: number[] = []
-  for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
-    switch (studyMatchDetail.isMatched) {
-      case true:
-        matched.push(parseInt(studyId))
-        break
-      case undefined:
-        undetermined.push(parseInt(studyId))
-        break
-      case false:
-        unmatched.push(parseInt(studyId))
-    }
-
-  return { matched, undetermined, unmatched }
-}
-
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
 
@@ -84,6 +49,22 @@ const testCriterion = (
       return critValue !== testValue
     case 'in':
       return critValue.includes(testValue)
+  }
+}
+
+const mergeStatus = (
+  operator: 'AND' | 'OR',
+  hasStatus: { [k in 'true' | 'undefined' | 'false']: boolean }
+) => {
+  switch (operator) {
+    case 'AND':
+      if (hasStatus.false) return false
+      if (hasStatus.undefined) return undefined
+      return true
+    case 'OR':
+      if (hasStatus.true) return true
+      if (hasStatus.undefined) return undefined
+      return false
   }
 }
 
@@ -189,6 +170,25 @@ export const getMatchDetails = (
     matchDetails[studyId] = addMatchStatus(parseAlgorithm(algorithm))
 
   return matchDetails
+}
+
+export const getMatchGroups = (matchDetails: MatchDetails) => {
+  const matched: number[] = []
+  const undetermined: number[] = []
+  const unmatched: number[] = []
+  for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
+    switch (studyMatchDetail.isMatched) {
+      case true:
+        matched.push(parseInt(studyId))
+        break
+      case undefined:
+        undetermined.push(parseInt(studyId))
+        break
+      case false:
+        unmatched.push(parseInt(studyId))
+    }
+
+  return { matched, undetermined, unmatched }
 }
 
 export const getDefaultValues = ({ fields }: MatchFormConfig) => {
