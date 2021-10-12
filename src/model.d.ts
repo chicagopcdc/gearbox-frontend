@@ -80,6 +80,7 @@ export type MatchInfo = {
 export type MatchInfoAlgorithm = {
   operator: 'AND' | 'OR'
   criteria: (MatchInfo | MatchInfoAlgorithm)[]
+  isMatched?: boolean
 }
 
 export type MatchDetails = { [id: number]: MatchInfoAlgorithm }
