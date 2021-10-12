@@ -55,6 +55,7 @@ function Radio({
                 onChange={
                   disabled ? undefined : () => handleChange(option.value)
                 }
+                readOnly={disabled}
               />
               <label className="mx-2" htmlFor={`${name}-${option.value}`}>
                 {option.label}
