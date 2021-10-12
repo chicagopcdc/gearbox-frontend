@@ -79,80 +79,80 @@ function MatchingPage({
           minHeight: '2.5rem',
         }}
       >
-        <Button
-          size="small"
-          block
-          outline={view !== 'form'}
-          onClick={() => setView('form')}
-        >
-          <div className="w-full relative py-1">
-            Patient Info
-            {view === 'form' && (
-              <div className="normal-case">
-                <button
-                  className={`ml-2 p-1 absolute right-0 top-0 ${
-                    showFormOptions ? 'bg-red-500' : 'hover:bg-red-500'
-                  }`}
-                  data-for="match-form-menu"
-                  data-tip
-                  onClick={toggleFormOptions}
+        <div className="w-full relative">
+          <Button
+            size="small"
+            block
+            outline={view !== 'form'}
+            onClick={() => setView('form')}
+          >
+            <div className="py-2">Patient Info</div>
+          </Button>
+          {view === 'form' && (
+            <div className="normal-case">
+              <button
+                className={`ml-2 px-1 absolute right-1 top-2 text-white ${
+                  showFormOptions ? 'bg-red-500' : 'hover:bg-red-500'
+                }`}
+                data-for="match-form-menu"
+                data-tip
+                onClick={toggleFormOptions}
+              >
+                <MoreHorizontal className="inline" size="1rem" />
+                <ReactTooltip
+                  border
+                  borderColor="black"
+                  id="match-form-menu"
+                  effect="solid"
+                  place="bottom"
+                  type="light"
                 >
-                  <MoreHorizontal className="inline" size="1rem" />
-                  <ReactTooltip
-                    border
-                    borderColor="black"
-                    id="match-form-menu"
-                    effect="solid"
-                    place="bottom"
-                    type="light"
-                  >
-                    <span>Options</span>
-                  </ReactTooltip>
-                </button>
-                {showFormOptions && (
-                  <div className="absolute right-0 origin-top-right w-44 bg-white border border-gray-300 shadow-md mt-2 p-1">
-                    <ul className="w-full text-sm text-center text-primary">
-                      <li className="hover:bg-red-100">
-                        <button
-                          className="w-full p-2"
-                          onClick={toggleFilter}
-                          data-tip
-                          data-for="match-form-filter"
-                        >
-                          {isFilterActive ? (
-                            <ToggleRight className="inline text" />
-                          ) : (
-                            <ToggleLeft className="inline text-gray-500" />
-                          )}
-                          <span className="mx-2">Filter questions</span>
-                        </button>
-                        <ReactTooltip
-                          id="match-form-filter"
-                          border
-                          borderColor="black"
-                          effect="solid"
-                          place="right"
-                          type="light"
-                        >
-                          <div style={{ maxWidth: '100px' }}>
-                            Filter to display the relevant questions only or see
-                            all
-                          </div>
-                        </ReactTooltip>
-                      </li>
-                      <li className="hover:bg-red-100">
-                        <button className="w-full p-2" onClick={handleReset}>
-                          <RotateCcw className="inline mr-2" size="1rem" />
-                          Reset
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </Button>
+                  <span>Options</span>
+                </ReactTooltip>
+              </button>
+              {showFormOptions && (
+                <div className="absolute right-0 origin-top-right w-44 bg-white border border-gray-300 shadow-md mt-1 p-1">
+                  <ul className="w-full text-sm text-center text-primary">
+                    <li className="hover:bg-red-100">
+                      <button
+                        className="w-full p-2 "
+                        onClick={toggleFilter}
+                        data-tip
+                        data-for="match-form-filter"
+                      >
+                        {isFilterActive ? (
+                          <ToggleRight className="inline text" />
+                        ) : (
+                          <ToggleLeft className="inline text-gray-500" />
+                        )}
+                        <span className="mx-2">Filter questions</span>
+                      </button>
+                      <ReactTooltip
+                        id="match-form-filter"
+                        border
+                        borderColor="black"
+                        effect="solid"
+                        place="right"
+                        type="light"
+                      >
+                        <div style={{ maxWidth: '100px' }}>
+                          Filter to display the relevant questions only or see
+                          all
+                        </div>
+                      </ReactTooltip>
+                    </li>
+                    <li className="hover:bg-red-100">
+                      <button className="w-full p-2" onClick={handleReset}>
+                        <RotateCcw className="inline mr-2" size="1rem" />
+                        Reset
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
         <Button
           size="small"
           block
