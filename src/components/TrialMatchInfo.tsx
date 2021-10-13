@@ -76,7 +76,7 @@ function TrialMatchInfo({
           aria-modal="true"
         >
           <div
-            className="bg-white overflow-scroll"
+            className="bg-white overflow-scroll w-full lg:w-3/4 xl:w-2/3 h-full"
             style={{ maxHeight: '95%', maxWidth: '95%' }}
           >
             <div className="text-sm sm:text-base px-4 pb-4 pt-2 sm:px-8 sm:pb-8">
