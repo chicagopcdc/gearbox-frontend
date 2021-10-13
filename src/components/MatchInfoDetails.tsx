@@ -39,17 +39,15 @@ function MatchInfoDetails({
                 <br />
               </>
             ))}
-          {isFilterActive &&
-          crit.isMatched ===
-            false ? null : Object.prototype.hasOwnProperty.call(
-              crit,
-              'fieldName'
-            ) ? (
+          {Object.prototype.hasOwnProperty.call(crit, 'fieldName') ? (
             <>
               <span className="whitespace-pre">
                 {' '.repeat(level * space)}
               </span>
-              <MatchInfoString {...(crit as MatchInfo)} />
+              <MatchInfoString
+                {...(crit as MatchInfo)}
+                isFilterActive={isFilterActive}
+              />
             </>
           ) : (
             <MatchInfoDetails
