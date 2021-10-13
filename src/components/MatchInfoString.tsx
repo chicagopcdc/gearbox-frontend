@@ -27,13 +27,20 @@ function getValueString(fieldValue: any): string {
   return typeof fieldValue === 'number' ? `${fieldValue}` : `"${fieldValue}"`
 }
 
+type MatchInfoStringProps = MatchInfo & {
+  isFilterActive?: boolean
+}
+
 function MatchInfoString({
   fieldName,
   fieldValue,
   fieldValueLabel,
+  isFilterActive,
   isMatched,
   operator,
-}: MatchInfo) {
+}: MatchInfoStringProps) {
+  if (isFilterActive && isMatched === false) return null
+
   const operatorString = getOperatorString(operator)
   const valueString = getValueString(fieldValueLabel ?? fieldValue)
   const valueStringClassName =
