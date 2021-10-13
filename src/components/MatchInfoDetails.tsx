@@ -39,7 +39,14 @@ function MatchInfoDetails({
                 <br />
               </>
             ))}
-          {Object.prototype.hasOwnProperty.call(crit, 'fieldName') ? (
+          {Object.prototype.hasOwnProperty.call(crit, 'criteria') ? (
+            <MatchInfoDetails
+              isFilterActive={isFilterActive}
+              matchInfoId={matchInfoId}
+              matchInfoAlgorithm={crit as MatchInfoAlgorithm}
+              level={level + 1}
+            />
+          ) : (
             <>
               <span className="whitespace-pre">
                 {' '.repeat(level * space)}
@@ -49,13 +56,6 @@ function MatchInfoDetails({
                 isFilterActive={isFilterActive}
               />
             </>
-          ) : (
-            <MatchInfoDetails
-              isFilterActive={isFilterActive}
-              matchInfoId={matchInfoId}
-              matchInfoAlgorithm={crit as MatchInfoAlgorithm}
-              level={level + 1}
-            />
           )}
           {level > 0 && i === criteria.length - 1 && (
             <>
