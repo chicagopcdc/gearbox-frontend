@@ -114,10 +114,15 @@ function TrialMatchInfo({
                         <ul className="w-full text-sm text-center text-primary">
                           <li className="hover:bg-red-100">
                             <button
-                              className="w-full p-2"
+                              className={`w-full p-2${
+                                studyMatchInfo.isMatched === false
+                                  ? ' bg-gray-100 text-gray-500 cursor-not-allowed'
+                                  : ''
+                              }`}
                               data-for="match-form-filter"
                               data-tip
                               onClick={toggleFilter}
+                              disabled={studyMatchInfo.isMatched === false}
                             >
                               {isFilterActive ? (
                                 <ToggleRight className="inline text" />
