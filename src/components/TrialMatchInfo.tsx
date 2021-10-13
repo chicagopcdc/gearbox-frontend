@@ -154,6 +154,7 @@ function TrialMatchInfo({
                 </div>
               </div>
               <MatchInfoDetails
+                isFilterActive={isFilterActive}
                 matchInfoId={matchInfoId}
                 matchInfoAlgorithm={studyMatchInfo}
               />
