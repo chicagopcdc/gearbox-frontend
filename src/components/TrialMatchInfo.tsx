@@ -5,6 +5,8 @@ import {
   ToggleLeft,
   ToggleRight,
   XCircle,
+  Zap,
+  ZapOff,
 } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import type { MatchInfoAlgorithm } from '../model'
@@ -26,12 +28,14 @@ function TrialMatchInfo({
   const [showModal, setShowModal] = useState(false)
   const [showModalOptions, setShowModalOptions] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(false)
+  const [isHighlightActive, setIsHighlightActive] = useState(false)
 
   const openModal = () => setShowModal(true)
   const closeModal = () => {
     setShowModal(false)
     setShowModalOptions(false)
     setIsFilterActive(false)
+    setIsHighlightActive(false)
   }
   useEffect(() => {
     return closeModal
@@ -53,6 +57,7 @@ function TrialMatchInfo({
   }, [showModal])
   const toggleModalOptions = () => setShowModalOptions((show) => !show)
   const toggleFilter = () => setIsFilterActive((isActive) => !isActive)
+  const toggleHighlight = () => setIsHighlightActive((isActive) => !isActive)
 
   return (
     <>
@@ -145,6 +150,34 @@ function TrialMatchInfo({
                               </div>
                             </ReactTooltip>
                           </li>
+                          <li className="hover:bg-red-100">
+                            <button
+                              className="w-full p-2"
+                              data-for="match-form-filter"
+                              data-tip
+                              onClick={toggleHighlight}
+                            >
+                              {isHighlightActive ? (
+                                <Zap className="inline text" />
+                              ) : (
+                                <ZapOff className="inline text-gray-500" />
+                              )}
+                              <span className="mx-2">Highlight status</span>
+                            </button>
+                            <ReactTooltip
+                              border
+                              borderColor="black"
+                              id="match-form-filter"
+                              effect="solid"
+                              place="bottom"
+                              type="light"
+                            >
+                              <div style={{ maxWidth: '200px' }}>
+                                Highlight relevant criteria if match status is
+                                determined.
+                              </div>
+                            </ReactTooltip>
+                          </li>
                         </ul>
                       </div>
                     )}
@@ -160,6 +193,7 @@ function TrialMatchInfo({
               </div>
               <MatchInfoDetails
                 isFilterActive={isFilterActive}
+                isHighlightActive={isHighlightActive}
                 matchInfoId={matchInfoId}
                 matchInfoAlgorithm={studyMatchInfo}
               />
