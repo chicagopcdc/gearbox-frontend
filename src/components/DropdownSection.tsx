@@ -11,7 +11,7 @@ type DropdownSectionProps = {
 
 function DropdownSection({
   name,
-  backgroundColor = 'inherit',
+  backgroundColor = 'bg-inherit',
   children,
   isCollapsedAtStart,
 }: DropdownSectionProps) {
@@ -27,12 +27,12 @@ function DropdownSection({
   const isFirefox = navigator.userAgent.includes('Firefox')
   return (
     <section
-      className={`my-4 bg-${backgroundColor} ${
+      className={`my-4 ${backgroundColor} ${
         isFirefox ? 'transition-inherit' : ''
       }`}
     >
       <div
-        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black bg-${backgroundColor} ${
+        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black ${backgroundColor} ${
           isFirefox ? 'transition-inherit' : ''
         }`}
       >
