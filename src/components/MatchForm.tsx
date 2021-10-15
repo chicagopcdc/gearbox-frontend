@@ -58,7 +58,7 @@ function MatchForm({
       {config.groups.map((group, i) => (
         <DropdownSection
           key={group.id}
-          backgroundColor="white"
+          backgroundColor="bg-white"
           name={group.name || 'General'}
           isCollapsedAtStart={i !== 0}
         >
