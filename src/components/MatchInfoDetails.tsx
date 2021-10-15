@@ -16,10 +16,12 @@ function MatchInfoDetails({
 }: MatchInfoDetailsProps) {
   const { criteria, operator, isMatched } = matchInfoAlgorithm
   const space = 8
+  const backgroundColor =
+    isMatched === undefined ? '' : isMatched ? 'bg-blue-100' : 'bg-red-100'
   return isFilterActive && isMatched === false ? null : (
     <span>
       {criteria.map((crit, i) => (
-        <span key={`${matchInfoId}-${level}-${i}`}>
+        <span className={backgroundColor} key={`${matchInfoId}-${level}-${i}`}>
           {level > 0 && i === 0 && (
             <>
               <span className="whitespace-pre">
