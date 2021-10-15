@@ -3,6 +3,7 @@ import MatchInfoString from './MatchInfoString'
 
 type MatchInfoDetailsProps = {
   isFilterActive?: boolean
+  isHighlightActive?: boolean
   matchInfoAlgorithm: MatchInfoAlgorithm
   matchInfoId?: string
   level?: number
@@ -10,14 +11,21 @@ type MatchInfoDetailsProps = {
 
 function MatchInfoDetails({
   isFilterActive = false,
+  isHighlightActive = false,
   matchInfoAlgorithm,
   matchInfoId = 'match-info',
   level = 0,
 }: MatchInfoDetailsProps) {
   const { criteria, operator, isMatched } = matchInfoAlgorithm
   const space = 8
+  const className =
+    !isHighlightActive || isMatched === undefined
+      ? ''
+      : isMatched
+      ? 'bg-blue-100'
+      : 'bg-red-100'
   return isFilterActive && isMatched === false ? null : (
-    <span>
+    <span className={className}>
       {criteria.map((crit, i) => (
         <span key={`${matchInfoId}-${level}-${i}`}>
           {level > 0 && i === 0 && (
@@ -42,6 +50,7 @@ function MatchInfoDetails({
           {Object.prototype.hasOwnProperty.call(crit, 'criteria') ? (
             <MatchInfoDetails
               isFilterActive={isFilterActive}
+              isHighlightActive={isHighlightActive}
               matchInfoId={matchInfoId}
               matchInfoAlgorithm={crit as MatchInfoAlgorithm}
               level={level + 1}
