@@ -41,10 +41,15 @@ function App() {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
   const [matchInput, setMatchInput] = useState({} as MatchFormValues)
+  const [userInputId, setUserInputId] = useState(
+    undefined as number | undefined
+  )
   const updateMatchInput = (newMatchInput: MatchFormValues) => {
     if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
       setMatchInput(newMatchInput)
-      postUserInput(newMatchInput)
+      postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
+        if (userInputId === undefined) setUserInputId(latestUserInputId)
+      })
     }
   }
   useEffect(() => {
@@ -55,12 +60,20 @@ function App() {
         mockLoadMatchConditions(),
         mockLoadMatchFormConfig(),
         getLatestUserInput(),
-      ]).then(([criteria, conditions, config, latestMatchInput]) => {
-        setCriteria(criteria)
-        setConditions(conditions)
-        setConfig(config)
-        setMatchInput(latestMatchInput)
-      })
+      ]).then(
+        ([
+          criteria,
+          conditions,
+          config,
+          [latestMatchInput, latestUserInputId],
+        ]) => {
+          setCriteria(criteria)
+          setConditions(conditions)
+          setConfig(config)
+          setMatchInput(latestMatchInput)
+          setUserInputId(latestUserInputId)
+        }
+      )
     } else {
       // clear data on logout
       setCriteria([] as EligibilityCriterion[])

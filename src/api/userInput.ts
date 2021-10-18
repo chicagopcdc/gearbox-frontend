@@ -8,17 +8,20 @@ export function getLatestUserInput() {
     .then(async (res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data)
-        return data.results.reduce(
-          (acc, { id, value }) => ({ ...acc, [id]: value }),
-          {} as MatchFormValues
-        )
+        return [
+          data.results.reduce(
+            (acc, { id, value }) => ({ ...acc, [id]: value }),
+            {} as MatchFormValues
+          ),
+          data.id,
+        ] as [MatchFormValues, number | undefined]
 
       console.error('Failed to fetch the latest saved user input:', data.detail)
-      return {} as MatchFormValues
+      return [{}, undefined] as [MatchFormValues, undefined]
     })
 }
 
-export function postUserInput(values: MatchFormValues): Promise<UserInput> {
+export function postUserInput(values: MatchFormValues, id?: number) {
   const data = Object.keys(values).reduce((acc, id) => {
     const value = values[Number(id)]
     return value === undefined || (Array.isArray(value) && value.length === 0)
@@ -31,10 +34,12 @@ export function postUserInput(values: MatchFormValues): Promise<UserInput> {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ data }),
+    body: JSON.stringify({ data, id }),
   })
-    .then((res) => res.json())
+    .then((res) => res.json() as Promise<UserInput>)
+    .then((data) => data.id)
     .catch((err) => {
       console.log('Failed to post the latest saved user input:', err)
+      return undefined
     })
 }
