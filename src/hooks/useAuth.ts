@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { RegisterInput, UserData } from '../model'
 
 export default function useAuth(): {
@@ -57,6 +57,20 @@ export default function useAuth(): {
         .catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // keep access token alive
+  const timer = useRef<number | undefined>(undefined)
+  useEffect(() => {
+    if (timer.current === undefined && isAuthenticated)
+      timer.current = window.setInterval(
+        () => fetch('/user/user/'),
+        10 * 60 * 1000 // ten minutes
+      )
+
+    return () => {
+      if (timer.current !== undefined) window.clearInterval(timer.current)
+    }
+  }, [isAuthenticated])
 
   return {
     isAuthenticated,
