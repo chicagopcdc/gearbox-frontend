@@ -1,0 +1,4 @@
+.storybook
+.vscode
+build
+node_modules
