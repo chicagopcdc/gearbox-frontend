@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { RegisterInput, UserData } from '../model'
+import {
+  fetchUser,
+  keepUserSessionAlive,
+  logout,
+  registerUser,
+} from '../api/auth'
 
 export default function useAuth(): {
   isAuthenticated: boolean
@@ -9,52 +15,17 @@ export default function useAuth(): {
   signout: () => void
 } {
   const [userData, setUserData] = useState<UserData>()
-  async function register({ reviewStatus, ...userInformation }: RegisterInput) {
-    const userResponse = await fetch('/user/user', {
-      body: JSON.stringify(userInformation),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-    })
-    if (!userResponse.ok) throw new Error('Failed to update user information.')
-    const registeredUserData = (await userResponse.json()) as UserData
-
-    if (Object.values(reviewStatus).filter(Boolean).length > 0) {
-      const documentsResponse = await fetch('/user/user/documents', {
-        body: JSON.stringify(reviewStatus),
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      if (!documentsResponse.ok)
-        throw new Error('Failed to update document review status.')
-      registeredUserData.docs_to_be_reviewed = await documentsResponse.json()
-    }
-
-    setUserData(registeredUserData)
+  function register(registerInput: RegisterInput) {
+    return registerUser(registerInput).then(setUserData)
   }
   function signout() {
     setUserData(undefined)
-
-    // perform fence logout
-    window.location.assign(`/user/logout?next=${window.location.href}`)
+    logout()
   }
 
   const isAuthenticated = userData !== undefined
   useEffect(() => {
-    if (!isAuthenticated)
-      fetch('/user/user/')
-        .then((res) => {
-          if (!res.ok)
-            throw new Error('Error: Failed to fetch user information!')
-          return res.json() as Promise<UserData>
-        })
-        .then(setUserData)
-        .catch(console.error)
+    if (!isAuthenticated) fetchUser().then(setUserData).catch(console.error)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -63,7 +34,7 @@ export default function useAuth(): {
   useEffect(() => {
     if (timer.current === undefined && isAuthenticated)
       timer.current = window.setInterval(
-        () => fetch('/user/user/'),
+        keepUserSessionAlive,
         10 * 60 * 1000 // ten minutes
       )
 
