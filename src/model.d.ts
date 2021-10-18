@@ -127,3 +127,8 @@ export type UserData = {
   username: string
   [key: string]: any
 }
+
+export type UserInput = {
+  id?: number
+  results: { id: string; value: string }[]
+}
