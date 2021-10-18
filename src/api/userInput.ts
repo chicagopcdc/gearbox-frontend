@@ -5,7 +5,7 @@ type LatestUserInputBody =
   | { detail: string } // does not exists
 export function getLatestUserInput() {
   return fetch('/mds/save/latest')
-    .then(async (res) => res.json())
+    .then((res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data)
         return [
