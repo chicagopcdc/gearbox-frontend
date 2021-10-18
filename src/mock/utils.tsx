@@ -25,7 +25,7 @@ export const mockLoadLatestMatchInput = () =>
 export const mockLoadMatchConditions = () =>
   Promise.resolve(matchConditions as MatchCondition[])
 
-export const mockLoadMatchFromConfig = () =>
+export const mockLoadMatchFormConfig = () =>
   Promise.resolve(matchFormConfig as MatchFormConfig)
 
 export const mockLoadStudies = () => Promise.resolve(studies as Study[])

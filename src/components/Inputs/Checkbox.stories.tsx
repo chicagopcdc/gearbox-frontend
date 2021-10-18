@@ -21,3 +21,5 @@ export const checked = () => <Checkbox label="checked" checked readOnly />
 export const unchecked = () => (
   <Checkbox label="unchecked" checked={false} readOnly />
 )
+
+export const disabled = () => <Checkbox label="disabled" disabled />

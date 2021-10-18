@@ -25,6 +25,12 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>GEARBOx by LLS PedAL</title>
+    <% if (process.env.NODE_ENV === 'production') { %>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com; connect-src 'self' https://www.google-analytics.com; img-src 'self' data: https://www.google-analytics.com; style-src 'self' 'unsafe-inline';"
+    />
+    <% } %>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

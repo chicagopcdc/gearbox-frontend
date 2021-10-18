@@ -4,12 +4,14 @@ import { ChevronUp, ChevronDown } from 'react-feather'
 
 type DropdownSectionProps = {
   name: string
+  backgroundColor?: string
   children: React.ReactNode
   isCollapsedAtStart?: boolean
 }
 
 function DropdownSection({
   name,
+  backgroundColor = 'bg-inherit',
   children,
   isCollapsedAtStart,
 }: DropdownSectionProps) {
@@ -22,9 +24,18 @@ function DropdownSection({
     e.preventDefault()
     setIsDropDownOpen(false)
   }
+  const isFirefox = navigator.userAgent.includes('Firefox')
   return (
-    <section className="my-4">
-      <div className="flex sticky top-10 bg-white py-2 justify-between border-b border-solid border-black">
+    <section
+      className={`my-4 ${backgroundColor} ${
+        isFirefox ? 'transition-inherit' : ''
+      }`}
+    >
+      <div
+        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black ${backgroundColor} ${
+          isFirefox ? 'transition-inherit' : ''
+        }`}
+      >
         <h2 className="font-bold">{name}</h2>
         {isDropDownOpen ? (
           <button onClick={handleClose} aria-label="Collapse dropdown">
@@ -36,7 +47,7 @@ function DropdownSection({
           </button>
         )}
       </div>
-      {isDropDownOpen && <div className="mx-2">{children}</div>}
+      {isDropDownOpen && children}
     </section>
   )
 }

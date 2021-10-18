@@ -22,6 +22,7 @@ module.exports = {
       colors: {
         primary: '#CC0000',
         secondary: '#AA0000',
+        inherit: 'inherit',
       },
     },
   },

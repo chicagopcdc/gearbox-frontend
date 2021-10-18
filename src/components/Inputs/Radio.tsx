@@ -24,13 +24,17 @@ function Radio({
       onChange({ target: { name, value: selected || '', type: 'number' } })
   }
 
+  const baseClassName = 'flex flex-col'
+  const disabledClassName = `${baseClassName} text-gray-400`
+  const className = disabled ? disabledClassName : baseClassName
+
   const baseOptionClassName = 'border border-solid border-black p-1'
   const optionClassName = disabled
-    ? `${baseOptionClassName} cursor-not-allowed bg-gray-200`
+    ? `${baseOptionClassName} cursor-not-allowed bg-gray-200 border-gray-400`
     : baseOptionClassName
 
   return (
-    <div className="flex flex-col">
+    <div className={className}>
       {label && (
         <label className="mb-1" htmlFor={name}>
           {label}
@@ -43,7 +47,7 @@ function Radio({
               <input
                 {...attrs}
                 className={optionClassName}
-                id={option.value}
+                id={`${name}-${option.value}`}
                 name={name}
                 type="radio"
                 value={option.value}
@@ -51,8 +55,9 @@ function Radio({
                 onChange={
                   disabled ? undefined : () => handleChange(option.value)
                 }
+                readOnly={disabled}
               />
-              <label className="mx-2" htmlFor={option.value}>
+              <label className="mx-2" htmlFor={`${name}-${option.value}`}>
                 {option.label}
               </label>
             </div>

@@ -6,7 +6,7 @@ export type Study = {
   links: { name: string; href: string }[]
 }
 
-type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne'
+type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne' | 'in'
 
 export type EligibilityCriterion = {
   id: number
@@ -56,6 +56,7 @@ export type MatchFormFieldConfig = {
   options?: MatchFormFieldOption[]
   defaultValue?: any
   showIf?: MatchFormFieldShowIfCondition
+  relevant?: boolean
   [key: string]: any
 }
 
@@ -71,7 +72,7 @@ export type MatchFormValues = {
 export type MatchInfo = {
   fieldName: string
   fieldValue: any
-  fieldValueLabel?: string
+  fieldValueLabel?: string | string[]
   isMatched?: boolean
   operator: ComparisonOperator
 }
@@ -79,6 +80,7 @@ export type MatchInfo = {
 export type MatchInfoAlgorithm = {
   operator: 'AND' | 'OR'
   criteria: (MatchInfo | MatchInfoAlgorithm)[]
+  isMatched?: boolean
 }
 
 export type MatchDetails = { [id: number]: MatchInfoAlgorithm }
@@ -124,4 +126,9 @@ export type UserData = {
   docs_to_be_reviewed: RegisterDocument[]
   username: string
   [key: string]: any
+}
+
+export type UserInput = {
+  id?: number
+  results: { id: string; value: string }[]
 }
