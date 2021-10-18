@@ -26,9 +26,8 @@ import {
   mockLoadMatchConditions,
   mockLoadMatchFormConfig,
   mockLoadStudies,
-  mockLoadLatestMatchInput,
-  mockPostLatestMatchInput,
 } from './mock/utils'
+import { getLatestUserInput, postUserInput } from './api/userInput'
 
 function App() {
   const { isAuthenticated, isRegistered, user, register, signout } = useAuth()
@@ -42,10 +41,15 @@ function App() {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
   const [matchInput, setMatchInput] = useState({} as MatchFormValues)
+  const [userInputId, setUserInputId] = useState(
+    undefined as number | undefined
+  )
   const updateMatchInput = (newMatchInput: MatchFormValues) => {
     if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
       setMatchInput(newMatchInput)
-      mockPostLatestMatchInput(newMatchInput)
+      postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
+        if (userInputId === undefined) setUserInputId(latestUserInputId)
+      })
     }
   }
   useEffect(() => {
@@ -55,13 +59,21 @@ function App() {
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
         mockLoadMatchFormConfig(),
-        mockLoadLatestMatchInput(),
-      ]).then(([criteria, conditions, config, latestMatchInput]) => {
-        setCriteria(criteria)
-        setConditions(conditions)
-        setConfig(config)
-        setMatchInput(latestMatchInput)
-      })
+        getLatestUserInput(),
+      ]).then(
+        ([
+          criteria,
+          conditions,
+          config,
+          [latestMatchInput, latestUserInputId],
+        ]) => {
+          setCriteria(criteria)
+          setConditions(conditions)
+          setConfig(config)
+          setMatchInput(latestMatchInput)
+          setUserInputId(latestUserInputId)
+        }
+      )
     } else {
       // clear data on logout
       setCriteria([] as EligibilityCriterion[])

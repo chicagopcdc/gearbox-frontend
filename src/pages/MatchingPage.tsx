@@ -47,8 +47,7 @@ function MatchingPage({
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
 
-  if (config.fields === undefined || Object.keys(matchInput).length === 0)
-    return <div>Loading...</div>
+  if (config.fields === undefined) return <div>Loading...</div>
 
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
