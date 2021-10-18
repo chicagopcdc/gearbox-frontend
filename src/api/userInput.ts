@@ -32,6 +32,7 @@ export function postUserInput(values: MatchFormValues, id?: number) {
   return fetch('/mds/save', {
     method: 'POST',
     headers: {
+      Accept: 'application/json',
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ data, id }),
