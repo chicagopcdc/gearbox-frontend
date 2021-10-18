@@ -26,9 +26,8 @@ import {
   mockLoadMatchConditions,
   mockLoadMatchFormConfig,
   mockLoadStudies,
-  mockLoadLatestMatchInput,
-  mockPostLatestMatchInput,
 } from './mock/utils'
+import { getLatestUserInput, postUserInput } from './api/userInput'
 
 function App() {
   const { isAuthenticated, isRegistered, user, register, signout } = useAuth()
@@ -45,7 +44,7 @@ function App() {
   const updateMatchInput = (newMatchInput: MatchFormValues) => {
     if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
       setMatchInput(newMatchInput)
-      mockPostLatestMatchInput(newMatchInput)
+      postUserInput(newMatchInput)
     }
   }
   useEffect(() => {
@@ -55,7 +54,7 @@ function App() {
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
         mockLoadMatchFormConfig(),
-        mockLoadLatestMatchInput(),
+        getLatestUserInput(),
       ]).then(([criteria, conditions, config, latestMatchInput]) => {
         setCriteria(criteria)
         setConditions(conditions)
