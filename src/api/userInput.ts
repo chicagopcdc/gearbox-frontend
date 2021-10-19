@@ -4,7 +4,7 @@ type LatestUserInputBody =
   | UserInput // exists
   | { detail: string } // does not exists
 export function getLatestUserInput() {
-  return fetch('/mds/save/latest')
+  return fetch('/gearbox/user-input/latest')
     .then((res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data)
@@ -29,7 +29,7 @@ export function postUserInput(values: MatchFormValues, id?: number) {
       : [...acc, { id: Number(id), value }]
   }, [] as { id: number; value: any }[])
 
-  return fetch('/mds/save', {
+  return fetch('/gearbox/user-input', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
