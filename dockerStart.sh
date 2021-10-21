@@ -2,6 +2,6 @@
 #
 # Little startup script launching nginx
 #
-# set -eu
+set -eu
 
 /usr/sbin/nginx -g 'daemon off;'
