@@ -1,14 +1,15 @@
 import { RegisterInput, UserData } from '../model'
+import { fetchGearbox } from './utils'
 
 export function fetchUser() {
-  return fetch('/user/user/').then((res) => {
+  return fetchGearbox('/user/user/').then((res) => {
     if (!res.ok) throw new Error('Error: Failed to fetch user information!')
     return res.json() as Promise<UserData>
   })
 }
 
 export function keepUserSessionAlive() {
-  fetch('/user/user/')
+  fetchGearbox('/user/user/')
 }
 
 export function loginWithGoogle() {
@@ -23,24 +24,16 @@ export async function registerUser({
   reviewStatus,
   ...userInformation
 }: RegisterInput) {
-  const userResponse = await fetch('/user/user', {
+  const userResponse = await fetchGearbox('/user/user', {
     body: JSON.stringify(userInformation),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
     method: 'PUT',
   })
   if (!userResponse.ok) throw new Error('Failed to update user information.')
   const registeredUserData = (await userResponse.json()) as UserData
 
   if (Object.values(reviewStatus).filter(Boolean).length > 0) {
-    const documentsResponse = await fetch('/user/user/documents', {
+    const documentsResponse = await fetchGearbox('/user/user/documents', {
       body: JSON.stringify(reviewStatus),
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
       method: 'POST',
     })
     if (!documentsResponse.ok)
