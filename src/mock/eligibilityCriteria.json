@@ -224,14 +224,14 @@
   {
     "id": 38,
     "fieldId": 24,
-    "fieldValue": 0,
-    "operator": "gte"
+    "fieldValue": 111,
+    "operator": "eq"
   },
   {
     "id": 39,
     "fieldId": 24,
-    "fieldValue": 2,
-    "operator": "lte"
+    "fieldValue": 112,
+    "operator": "eq"
   },
   {
     "id": 40,
@@ -608,14 +608,14 @@
   {
     "id": 102,
     "fieldId": 24,
-    "fieldValue": 0,
-    "operator": "gte"
+    "fieldValue": 111,
+    "operator": "eq"
   },
   {
     "id": 103,
     "fieldId": 24,
-    "fieldValue": 2,
-    "operator": "lte"
+    "fieldValue": 112,
+    "operator": "eq"
   },
   {
     "id": 104,
@@ -944,14 +944,14 @@
   {
     "id": 158,
     "fieldId": 24,
-    "fieldValue": 0,
-    "operator": "gte"
+    "fieldValue": 111,
+    "operator": "eq"
   },
   {
     "id": 159,
     "fieldId": 24,
-    "fieldValue": 2,
-    "operator": "lte"
+    "fieldValue": 112,
+    "operator": "eq"
   },
   {
     "id": 160,
@@ -1502,14 +1502,14 @@
   {
     "id": 251,
     "fieldId": 24,
-    "fieldValue": 0,
-    "operator": "gte"
+    "fieldValue": 111,
+    "operator": "eq"
   },
   {
     "id": 252,
     "fieldId": 24,
-    "fieldValue": 2,
-    "operator": "lte"
+    "fieldValue": 112,
+    "operator": "eq"
   },
   {
     "id": 253,
@@ -1904,14 +1904,14 @@
   {
     "id": 318,
     "fieldId": 24,
-    "fieldValue": 0,
-    "operator": "gte"
+    "fieldValue": 111,
+    "operator": "eq"
   },
   {
     "id": 319,
     "fieldId": 24,
-    "fieldValue": 2,
-    "operator": "lte"
+    "fieldValue": 112,
+    "operator": "eq"
   },
   {
     "id": 320,
@@ -2150,14 +2150,14 @@
   {
     "id": 359,
     "fieldId": 24,
-    "fieldValue": 0,
-    "operator": "gte"
+    "fieldValue": 111,
+    "operator": "eq"
   },
   {
     "id": 360,
     "fieldId": 24,
-    "fieldValue": 2,
-    "operator": "lte"
+    "fieldValue": 112,
+    "operator": "eq"
   },
   {
     "id": 361,
@@ -2782,5 +2782,41 @@
     "fieldId": 10,
     "fieldValue": 1,
     "operator": "gte"
+  },
+  {
+    "id": 465,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
+  },
+  {
+    "id": 466,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
+  },
+  {
+    "id": 467,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
+  },
+  {
+    "id": 468,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
+  },
+  {
+    "id": 469,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
+  },
+  {
+    "id": 470,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
   }
 ]
