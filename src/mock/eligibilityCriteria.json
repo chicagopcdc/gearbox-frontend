@@ -1,1274 +1,1092 @@
 [
   {
     "id": 1,
-    "studyId": 1,
     "fieldId": 1,
     "fieldValue": 22,
     "operator": "lt"
   },
   {
     "id": 2,
-    "studyId": 1,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 3,
-    "studyId": 1,
     "fieldId": 8,
     "fieldValue": 14,
     "operator": "eq"
   },
   {
     "id": 4,
-    "studyId": 1,
     "fieldId": 8,
     "fieldValue": 11,
     "operator": "eq"
   },
   {
     "id": 5,
-    "studyId": 1,
     "fieldId": 8,
     "fieldValue": 15,
     "operator": "eq"
   },
   {
     "id": 6,
-    "studyId": 1,
     "fieldId": 8,
     "fieldValue": 9,
     "operator": "eq"
   },
   {
     "id": 7,
-    "studyId": 1,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 8,
-    "studyId": 1,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 9,
-    "studyId": 1,
     "fieldId": 14,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 10,
-    "studyId": 1,
     "fieldId": 14,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 11,
-    "studyId": 1,
     "fieldId": 80,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 12,
-    "studyId": 1,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 13,
-    "studyId": 1,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 14,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 30,
     "operator": "lte"
   },
   {
     "id": 15,
-    "studyId": 2,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 16,
-    "studyId": 2,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 17,
-    "studyId": 2,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 18,
-    "studyId": 2,
     "fieldId": 12,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 19,
-    "studyId": 2,
     "fieldId": 8,
     "fieldValue": 59,
     "operator": "eq"
   },
   {
     "id": 20,
-    "studyId": 2,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 21,
-    "studyId": 2,
     "fieldId": 12,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 22,
-    "studyId": 2,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 23,
-    "studyId": 2,
     "fieldId": 14,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 24,
-    "studyId": 2,
     "fieldId": 14,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 25,
-    "studyId": 2,
     "fieldId": 89,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 26,
-    "studyId": 2,
     "fieldId": 81,
     "fieldValue": 365,
     "operator": "lte"
   },
   {
     "id": 27,
-    "studyId": 2,
     "fieldId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 28,
-    "studyId": 2,
     "fieldId": 4,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 29,
-    "studyId": 2,
     "fieldId": 5,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 30,
-    "studyId": 2,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 31,
-    "studyId": 2,
     "fieldId": 6,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 32,
-    "studyId": 2,
     "fieldId": 7,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 33,
-    "studyId": 2,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 34,
-    "studyId": 2,
     "fieldId": 16,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 35,
-    "studyId": 2,
     "fieldId": 16,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 36,
-    "studyId": 2,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 37,
-    "studyId": 2,
     "fieldId": 83,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 38,
-    "studyId": 2,
     "fieldId": 24,
     "fieldValue": 0,
     "operator": "gte"
   },
   {
     "id": 39,
-    "studyId": 2,
     "fieldId": 24,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 40,
-    "studyId": 2,
     "fieldId": 25,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 41,
-    "studyId": 2,
     "fieldId": 26,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 42,
-    "studyId": 2,
     "fieldId": 33,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 43,
-    "studyId": 2,
     "fieldId": 34,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 44,
-    "studyId": 2,
     "fieldId": 37,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 45,
-    "studyId": 2,
     "fieldId": 86,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 46,
-    "studyId": 2,
     "fieldId": 87,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 47,
-    "studyId": 2,
     "fieldId": 89,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 48,
-    "studyId": 2,
     "fieldId": 51,
     "fieldValue": 60,
     "operator": "gt"
   },
   {
     "id": 49,
-    "studyId": 2,
     "fieldId": 52,
     "fieldValue": 60,
     "operator": "gt"
   },
   {
     "id": 50,
-    "studyId": 2,
     "fieldId": 55,
     "fieldValue": 3,
     "operator": "gt"
   },
   {
     "id": 51,
-    "studyId": 2,
     "fieldId": 91,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 52,
-    "studyId": 2,
     "fieldId": 64,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 53,
-    "studyId": 2,
     "fieldId": 64,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 54,
-    "studyId": 2,
     "fieldId": 94,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 55,
-    "studyId": 2,
     "fieldId": 71,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 56,
-    "studyId": 2,
     "fieldId": 65,
     "fieldValue": 40,
     "operator": "gte"
   },
   {
     "id": 57,
-    "studyId": 2,
     "fieldId": 66,
     "fieldValue": 25,
     "operator": "gte"
   },
   {
     "id": 58,
-    "studyId": 2,
     "fieldId": 58,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 59,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "lt"
   },
   {
     "id": 60,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 61,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "lt"
   },
   {
     "id": 62,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 63,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "lt"
   },
   {
     "id": 64,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "gte"
   },
   {
     "id": 65,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "lt"
   },
   {
     "id": 66,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "gte"
   },
   {
     "id": 67,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "lt"
   },
   {
     "id": 68,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "gte"
   },
   {
     "id": 69,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "lt"
   },
   {
     "id": 70,
-    "studyId": 2,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "gte"
   },
   {
     "id": 71,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 0.5,
     "operator": "lte"
   },
   {
     "id": 72,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 0.6,
     "operator": "lte"
   },
   {
     "id": 73,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 0.8,
     "operator": "lte"
   },
   {
     "id": 74,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 1,
     "operator": "lte"
   },
   {
     "id": 75,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 1.2,
     "operator": "lte"
   },
   {
     "id": 76,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 77,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 1.7,
     "operator": "lte"
   },
   {
     "id": 78,
-    "studyId": 2,
     "fieldId": 69,
     "fieldValue": 1.4,
     "operator": "lte"
   },
   {
     "id": 79,
-    "studyId": 2,
     "fieldId": 95,
     "fieldValue": 30,
     "operator": "gte"
   },
   {
     "id": 80,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 24,
     "operator": "lt"
   },
   {
     "id": 81,
-    "studyId": 3,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 82,
-    "studyId": 3,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 83,
-    "studyId": 3,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 84,
-    "studyId": 3,
     "fieldId": 12,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 85,
-    "studyId": 3,
     "fieldId": 8,
     "fieldValue": 59,
     "operator": "eq"
   },
   {
     "id": 86,
-    "studyId": 3,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 87,
-    "studyId": 3,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 88,
-    "studyId": 3,
     "fieldId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 89,
-    "studyId": 3,
     "fieldId": 4,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 90,
-    "studyId": 3,
     "fieldId": 5,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 91,
-    "studyId": 3,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 92,
-    "studyId": 3,
     "fieldId": 6,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 93,
-    "studyId": 3,
     "fieldId": 7,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 94,
-    "studyId": 3,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 95,
-    "studyId": 3,
     "fieldId": 16,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 96,
-    "studyId": 3,
     "fieldId": 82,
     "fieldValue": 60,
     "operator": "eq"
   },
   {
     "id": 97,
-    "studyId": 3,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 98,
-    "studyId": 3,
     "fieldId": 82,
     "fieldValue": 61,
     "operator": "eq"
   },
   {
     "id": 99,
-    "studyId": 3,
     "fieldId": 17,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 100,
-    "studyId": 3,
     "fieldId": 16,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 101,
-    "studyId": 3,
     "fieldId": 83,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 102,
-    "studyId": 3,
     "fieldId": 24,
     "fieldValue": 0,
     "operator": "gte"
   },
   {
     "id": 103,
-    "studyId": 3,
     "fieldId": 24,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 104,
-    "studyId": 3,
     "fieldId": 25,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 105,
-    "studyId": 3,
     "fieldId": 26,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 106,
-    "studyId": 3,
     "fieldId": 33,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 107,
-    "studyId": 3,
     "fieldId": 34,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 108,
-    "studyId": 3,
     "fieldId": 37,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 109,
-    "studyId": 3,
     "fieldId": 58,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 110,
-    "studyId": 3,
     "fieldId": 65,
     "fieldValue": 40,
     "operator": "gte"
   },
   {
     "id": 111,
-    "studyId": 3,
     "fieldId": 66,
     "fieldValue": 25,
     "operator": "gte"
   },
   {
     "id": 112,
-    "studyId": 3,
     "fieldId": 71,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 113,
-    "studyId": 3,
     "fieldId": 74,
     "fieldValue": 4,
     "operator": "lte"
   },
   {
     "id": 114,
-    "studyId": 3,
     "fieldId": 96,
     "fieldValue": 4,
     "operator": "lte"
   },
   {
     "id": 115,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "lt"
   },
   {
     "id": 116,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 117,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 118,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 119,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "lt"
   },
   {
     "id": 120,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "gte"
   },
   {
     "id": 121,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "lt"
   },
   {
     "id": 122,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "gte"
   },
   {
     "id": 123,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "lt"
   },
   {
     "id": 124,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "gte"
   },
   {
     "id": 125,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "lt"
   },
   {
     "id": 126,
-    "studyId": 3,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "gte"
   },
   {
     "id": 127,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 0.5,
     "operator": "lte"
   },
   {
     "id": 128,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 0.6,
     "operator": "lte"
   },
   {
     "id": 129,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 0.8,
     "operator": "lte"
   },
   {
     "id": 130,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 1,
     "operator": "lte"
   },
   {
     "id": 131,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 1.2,
     "operator": "lte"
   },
   {
     "id": 132,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 133,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 1.7,
     "operator": "lte"
   },
   {
     "id": 134,
-    "studyId": 3,
     "fieldId": 69,
     "fieldValue": 1.4,
     "operator": "lte"
   },
   {
     "id": 135,
-    "studyId": 3,
     "fieldId": 95,
     "fieldValue": 60,
     "operator": "gte"
   },
   {
     "id": 136,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 21,
     "operator": "lte"
   },
   {
     "id": 137,
-    "studyId": 4,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 138,
-    "studyId": 4,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 139,
-    "studyId": 4,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 140,
-    "studyId": 4,
     "fieldId": 12,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 141,
-    "studyId": 4,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 142,
-    "studyId": 4,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 143,
-    "studyId": 4,
     "fieldId": 14,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 144,
-    "studyId": 4,
     "fieldId": 11,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 145,
-    "studyId": 4,
     "fieldId": 10,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 146,
-    "studyId": 4,
     "fieldId": 14,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 147,
-    "studyId": 4,
     "fieldId": 89,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 148,
-    "studyId": 4,
     "fieldId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 149,
-    "studyId": 4,
     "fieldId": 4,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 150,
-    "studyId": 4,
     "fieldId": 5,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 151,
-    "studyId": 4,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 152,
-    "studyId": 4,
     "fieldId": 6,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 153,
-    "studyId": 4,
     "fieldId": 7,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 154,
-    "studyId": 4,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 155,
-    "studyId": 4,
     "fieldId": 16,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 156,
-    "studyId": 4,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 157,
-    "studyId": 4,
     "fieldId": 2,
     "fieldValue": 17,
     "operator": "gte"
   },
   {
     "id": 158,
-    "studyId": 4,
     "fieldId": 24,
     "fieldValue": 0,
     "operator": "gte"
   },
   {
     "id": 159,
-    "studyId": 4,
     "fieldId": 24,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 160,
-    "studyId": 4,
     "fieldId": 22,
     "fieldValue": 19,
     "operator": "eq"
   },
   {
     "id": 161,
-    "studyId": 4,
     "fieldId": 25,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 162,
-    "studyId": 4,
     "fieldId": 27,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 163,
-    "studyId": 4,
     "fieldId": 28,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 164,
-    "studyId": 4,
     "fieldId": 84,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 165,
-    "studyId": 4,
     "fieldId": 85,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 166,
-    "studyId": 4,
     "fieldId": 30,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 167,
-    "studyId": 4,
     "fieldId": 31,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 168,
-    "studyId": 4,
     "fieldId": 32,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 169,
-    "studyId": 4,
     "fieldId": 33,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 170,
-    "studyId": 4,
     "fieldId": 37,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 171,
-    "studyId": 4,
     "fieldId": 39,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 172,
-    "studyId": 4,
     "fieldId": 40,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 173,
-    "studyId": 4,
     "fieldId": 41,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 174,
-    "studyId": 4,
     "fieldId": 42,
     "fieldValue": 21,
     "operator": "gte"
   },
   {
     "id": 175,
-    "studyId": 4,
     "fieldId": 43,
     "fieldValue": 21,
     "operator": "gte"
   },
   {
     "id": 176,
-    "studyId": 4,
     "fieldId": 44,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 177,
-    "studyId": 4,
     "fieldId": 45,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 178,
-    "studyId": 4,
     "fieldId": 46,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 179,
-    "studyId": 4,
     "fieldId": 47,
     "fieldValue": 84,
     "operator": "gte"
   },
   {
     "id": 180,
-    "studyId": 4,
     "fieldId": 48,
     "fieldValue": 84,
     "operator": "gte"
   },
   {
     "id": 181,
-    "studyId": 4,
     "fieldId": 49,
     "fieldValue": 84,
     "operator": "gte"
   },
   {
     "id": 182,
-    "studyId": 4,
     "fieldId": 50,
     "fieldValue": 42,
     "operator": "gte"
@@ -1276,1973 +1094,1691 @@
   {
     "id": 183,
     "fieldId": 88,
-    "studyId": 4,
     "fieldValue": 42,
     "operator": "gte"
   },
   {
     "id": 184,
     "fieldId": 89,
-    "studyId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 185,
-    "studyId": 4,
     "fieldId": 51,
     "fieldValue": 84,
     "operator": "gte"
   },
   {
     "id": 186,
-    "studyId": 4,
     "fieldId": 52,
     "fieldValue": 42,
     "operator": "gte"
   },
   {
     "id": 187,
-    "studyId": 4,
     "fieldId": 58,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 188,
-    "studyId": 4,
     "fieldId": 53,
     "fieldValue": 42,
     "operator": "gte"
   },
   {
     "id": 189,
-    "studyId": 4,
     "fieldId": 59,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 190,
-    "studyId": 4,
     "fieldId": 60,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 191,
-    "studyId": 4,
     "fieldId": 62,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 192,
-    "studyId": 4,
     "fieldId": 93,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 193,
-    "studyId": 4,
     "fieldId": 92,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 194,
-    "studyId": 4,
     "fieldId": 65,
     "fieldValue": 50,
     "operator": "gte"
   },
   {
     "id": 195,
-    "studyId": 4,
     "fieldId": 66,
     "fieldValue": 27,
     "operator": "gte"
   },
   {
     "id": 196,
-    "studyId": 4,
     "fieldId": 68,
     "fieldValue": 70,
     "operator": "gte"
   },
   {
     "id": 197,
-    "studyId": 4,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 198,
-    "studyId": 4,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 199,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "lt"
   },
   {
     "id": 200,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 201,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "lt"
   },
   {
     "id": 202,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 203,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "lt"
   },
   {
     "id": 204,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "gte"
   },
   {
     "id": 205,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "lt"
   },
   {
     "id": 206,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "gte"
   },
   {
     "id": 207,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "lt"
   },
   {
     "id": 208,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "gte"
   },
   {
     "id": 209,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "lt"
   },
   {
     "id": 210,
-    "studyId": 4,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "gte"
   },
   {
     "id": 211,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 0.5,
     "operator": "lte"
   },
   {
     "id": 212,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 0.6,
     "operator": "lte"
   },
   {
     "id": 213,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 0.8,
     "operator": "lte"
   },
   {
     "id": 214,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 1,
     "operator": "lte"
   },
   {
     "id": 215,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 1.2,
     "operator": "lte"
   },
   {
     "id": 216,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 217,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 1.7,
     "operator": "lte"
   },
   {
     "id": 218,
-    "studyId": 4,
     "fieldId": 69,
     "fieldValue": 1.4,
     "operator": "lte"
   },
   {
     "id": 219,
-    "studyId": 4,
     "fieldId": 95,
     "fieldValue": 60,
     "operator": "gte"
   },
   {
     "id": 220,
-    "studyId": 4,
     "fieldId": 72,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 221,
-    "studyId": 4,
     "fieldId": 74,
     "fieldValue": 3,
     "operator": "lte"
   },
   {
     "id": 222,
-    "studyId": 4,
     "fieldId": 96,
     "fieldValue": 3,
     "operator": "lte"
   },
   {
     "id": 223,
-    "studyId": 4,
     "fieldId": 75,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 224,
-    "studyId": 4,
     "fieldId": 97,
     "fieldValue": 20000,
     "operator": "gte"
   },
   {
     "id": 225,
-    "studyId": 4,
     "fieldId": 98,
     "fieldValue": 8,
     "operator": "gte"
   },
   {
     "id": 226,
-    "studyId": 4,
     "fieldId": 99,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 227,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 228,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 25,
     "operator": "lte"
   },
   {
     "id": 229,
-    "studyId": 5,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 230,
-    "studyId": 5,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 231,
-    "studyId": 5,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 232,
-    "studyId": 5,
     "fieldId": 14,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 233,
-    "studyId": 5,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 234,
-    "studyId": 5,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 235,
-    "studyId": 5,
     "fieldId": 10,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 236,
-    "studyId": 5,
     "fieldId": 13,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 237,
-    "studyId": 5,
     "fieldId": 12,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 238,
-    "studyId": 5,
     "fieldId": 8,
     "fieldValue": 14,
     "operator": "eq"
   },
   {
     "id": 239,
-    "studyId": 5,
     "fieldId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 240,
-    "studyId": 5,
     "fieldId": 4,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 241,
-    "studyId": 5,
     "fieldId": 5,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 242,
-    "studyId": 5,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 243,
-    "studyId": 5,
     "fieldId": 6,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 244,
-    "studyId": 5,
     "fieldId": 7,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 245,
-    "studyId": 5,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 246,
-    "studyId": 5,
     "fieldId": 16,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 247,
-    "studyId": 5,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 248,
-    "studyId": 5,
     "fieldId": 17,
     "fieldValue": 0.1,
     "operator": "gte"
   },
   {
     "id": 249,
-    "studyId": 5,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "lt"
   },
   {
     "id": 250,
-    "studyId": 5,
     "fieldId": 100,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 251,
-    "studyId": 5,
     "fieldId": 24,
     "fieldValue": 0,
     "operator": "gte"
   },
   {
     "id": 252,
-    "studyId": 5,
     "fieldId": 24,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 253,
-    "studyId": 5,
     "fieldId": 85,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 254,
-    "studyId": 5,
     "fieldId": 30,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 255,
-    "studyId": 5,
     "fieldId": 37,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 256,
-    "studyId": 5,
     "fieldId": 39,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 257,
-    "studyId": 5,
     "fieldId": 40,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 258,
-    "studyId": 5,
     "fieldId": 44,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 259,
-    "studyId": 5,
     "fieldId": 45,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 260,
-    "studyId": 5,
     "fieldId": 47,
     "fieldValue": 90,
     "operator": "gte"
   },
   {
     "id": 261,
-    "studyId": 5,
     "fieldId": 49,
     "fieldValue": 90,
     "operator": "gte"
   },
   {
     "id": 262,
-    "studyId": 5,
     "fieldId": 58,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 263,
-    "studyId": 5,
     "fieldId": 60,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 264,
-    "studyId": 5,
     "fieldId": 91,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 265,
-    "studyId": 5,
     "fieldId": 104,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 266,
-    "studyId": 5,
     "fieldId": 105,
     "fieldValue": 3,
     "operator": "gte"
   },
   {
     "id": 267,
-    "studyId": 5,
     "fieldId": 106,
     "fieldValue": 42,
     "operator": "gte"
   },
   {
     "id": 268,
-    "studyId": 5,
     "fieldId": 107,
     "fieldValue": 7,
     "operator": "gte"
   },
   {
     "id": 269,
-    "studyId": 5,
     "fieldId": 109,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 270,
-    "studyId": 5,
     "fieldId": 65,
     "fieldValue": 50,
     "operator": "gte"
   },
   {
     "id": 271,
-    "studyId": 5,
     "fieldId": 66,
     "fieldValue": 27,
     "operator": "gte"
   },
   {
     "id": 272,
-    "studyId": 5,
     "fieldId": 68,
     "fieldValue": 70,
     "operator": "gte"
   },
   {
     "id": 273,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 274,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "lt"
   },
   {
     "id": 275,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 276,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "lt"
   },
   {
     "id": 277,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "gte"
   },
   {
     "id": 278,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "lt"
   },
   {
     "id": 279,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "gte"
   },
   {
     "id": 280,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "lt"
   },
   {
     "id": 281,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "gte"
   },
   {
     "id": 282,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "lt"
   },
   {
     "id": 283,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "gte"
   },
   {
     "id": 284,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 0.5,
     "operator": "lte"
   },
   {
     "id": 285,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 0.6,
     "operator": "lte"
   },
   {
     "id": 286,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 0.8,
     "operator": "lte"
   },
   {
     "id": 287,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 1,
     "operator": "lte"
   },
   {
     "id": 288,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 1.2,
     "operator": "lte"
   },
   {
     "id": 289,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 290,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 1.7,
     "operator": "lte"
   },
   {
     "id": 291,
-    "studyId": 5,
     "fieldId": 69,
     "fieldValue": 1.4,
     "operator": "lte"
   },
   {
     "id": 292,
-    "studyId": 5,
     "fieldId": 95,
     "fieldValue": 60,
     "operator": "gte"
   },
   {
     "id": 293,
-    "studyId": 5,
     "fieldId": 72,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 294,
-    "studyId": 5,
     "fieldId": 74,
     "fieldValue": 5,
     "operator": "lte"
   },
   {
     "id": 295,
-    "studyId": 5,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "lt"
   },
   {
     "id": 296,
-    "studyId": 6,
     "fieldId": 1,
     "fieldValue": 21,
     "operator": "lte"
   },
   {
     "id": 297,
-    "studyId": 6,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 298,
-    "studyId": 6,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 299,
-    "studyId": 6,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 300,
-    "studyId": 6,
     "fieldId": 14,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 301,
-    "studyId": 6,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 302,
-    "studyId": 6,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 303,
-    "studyId": 6,
     "fieldId": 10,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 304,
-    "studyId": 6,
     "fieldId": 8,
     "fieldValue": 14,
     "operator": "eq"
   },
   {
     "id": 305,
-    "studyId": 6,
     "fieldId": 13,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 306,
-    "studyId": 6,
     "fieldId": 15,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 307,
-    "studyId": 6,
     "fieldId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 308,
-    "studyId": 6,
     "fieldId": 4,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 309,
-    "studyId": 6,
     "fieldId": 5,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 310,
-    "studyId": 6,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 311,
-    "studyId": 6,
     "fieldId": 6,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 312,
-    "studyId": 6,
     "fieldId": 7,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 313,
-    "studyId": 6,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 314,
-    "studyId": 6,
     "fieldId": 16,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 315,
-    "studyId": 6,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 316,
-    "studyId": 6,
     "fieldId": 16,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 317,
-    "studyId": 6,
     "fieldId": 83,
     "fieldValue": 5,
     "operator": "gte"
   },
   {
     "id": 318,
-    "studyId": 6,
     "fieldId": 24,
     "fieldValue": 0,
     "operator": "gte"
   },
   {
     "id": 319,
-    "studyId": 6,
     "fieldId": 24,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 320,
-    "studyId": 6,
     "fieldId": 22,
     "fieldValue": 19,
     "operator": "eq"
   },
   {
     "id": 321,
-    "studyId": 6,
     "fieldId": 26,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 322,
-    "studyId": 6,
     "fieldId": 33,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 323,
-    "studyId": 6,
     "fieldId": 101,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 324,
-    "studyId": 6,
     "fieldId": 35,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 325,
-    "studyId": 6,
     "fieldId": 102,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 326,
-    "studyId": 6,
     "fieldId": 103,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 327,
-    "studyId": 6,
     "fieldId": 39,
     "fieldValue": 14,
     "operator": "gte"
   },
   {
     "id": 328,
-    "studyId": 6,
     "fieldId": 108,
     "fieldValue": 450,
     "operator": "lte"
   },
   {
     "id": 329,
-    "studyId": 6,
     "fieldId": 65,
     "fieldValue": 50,
     "operator": "gte"
   },
   {
     "id": 330,
-    "studyId": 6,
     "fieldId": 69,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 331,
-    "studyId": 6,
     "fieldId": 72,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 332,
-    "studyId": 6,
     "fieldId": 74,
     "fieldValue": 3,
     "operator": "lte"
   },
   {
     "id": 333,
-    "studyId": 6,
     "fieldId": 96,
     "fieldValue": 3,
     "operator": "lte"
   },
   {
     "id": 334,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 335,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 29,
     "operator": "lte"
   },
   {
     "id": 336,
-    "studyId": 7,
     "fieldId": 8,
     "fieldValue": 7,
     "operator": "eq"
   },
   {
     "id": 337,
-    "studyId": 7,
     "fieldId": 13,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 338,
-    "studyId": 7,
     "fieldId": 15,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 339,
-    "studyId": 7,
     "fieldId": 14,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 340,
-    "studyId": 7,
     "fieldId": 16,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 341,
-    "studyId": 7,
     "fieldId": 17,
     "fieldValue": 0.1,
     "operator": "gte"
   },
   {
     "id": 342,
-    "studyId": 7,
     "fieldId": 9,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 343,
-    "studyId": 7,
     "fieldId": 11,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 344,
-    "studyId": 7,
     "fieldId": 10,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 345,
-    "studyId": 7,
     "fieldId": 12,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 346,
-    "studyId": 7,
     "fieldId": 13,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 347,
-    "studyId": 7,
     "fieldId": 17,
     "fieldValue": 5,
     "operator": "gt"
   },
   {
     "id": 348,
-    "studyId": 7,
     "fieldId": 12,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 349,
-    "studyId": 7,
     "fieldId": 14,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 350,
-    "studyId": 7,
     "fieldId": 89,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 351,
-    "studyId": 7,
     "fieldId": 17,
     "fieldValue": 0.1,
     "operator": "gt"
   },
   {
     "id": 352,
-    "studyId": 7,
     "fieldId": 4,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 353,
-    "studyId": 7,
     "fieldId": 4,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 354,
-    "studyId": 7,
     "fieldId": 5,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 355,
-    "studyId": 7,
     "fieldId": 3,
     "fieldValue": 1,
     "operator": "eq"
   },
   {
     "id": 356,
-    "studyId": 7,
     "fieldId": 3,
     "fieldValue": 2,
     "operator": "eq"
   },
   {
     "id": 357,
-    "studyId": 7,
     "fieldId": 6,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 358,
-    "studyId": 7,
     "fieldId": 7,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 359,
-    "studyId": 7,
     "fieldId": 24,
     "fieldValue": 0,
     "operator": "gte"
   },
   {
     "id": 360,
-    "studyId": 7,
     "fieldId": 24,
     "fieldValue": 2,
     "operator": "lte"
   },
   {
     "id": 361,
-    "studyId": 7,
     "fieldId": 22,
     "fieldValue": 19,
     "operator": "eq"
   },
   {
     "id": 362,
-    "studyId": 7,
     "fieldId": 22,
     "fieldValue": 20,
     "operator": "eq"
   },
   {
     "id": 363,
-    "studyId": 7,
     "fieldId": 35,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 364,
-    "studyId": 7,
     "fieldId": 102,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 365,
-    "studyId": 7,
     "fieldId": 37,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 366,
-    "studyId": 7,
     "fieldId": 89,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 367,
-    "studyId": 7,
     "fieldId": 51,
     "fieldValue": 183,
     "operator": "gte"
   },
   {
     "id": 368,
-    "studyId": 7,
     "fieldId": 58,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 369,
-    "studyId": 7,
     "fieldId": 110,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 370,
-    "studyId": 7,
     "fieldId": 65,
     "fieldValue": 45,
     "operator": "gte"
   },
   {
     "id": 371,
-    "studyId": 7,
     "fieldId": 66,
     "fieldValue": 28,
     "operator": "gte"
   },
   {
     "id": 372,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "lt"
   },
   {
     "id": 373,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 1,
     "operator": "gte"
   },
   {
     "id": 374,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "lt"
   },
   {
     "id": 375,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 2,
     "operator": "gte"
   },
   {
     "id": 376,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "lt"
   },
   {
     "id": 377,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 6,
     "operator": "gte"
   },
   {
     "id": 378,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "lt"
   },
   {
     "id": 379,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 10,
     "operator": "gte"
   },
   {
     "id": 380,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "lt"
   },
   {
     "id": 381,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 13,
     "operator": "gte"
   },
   {
     "id": 382,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "lt"
   },
   {
     "id": 383,
-    "studyId": 7,
     "fieldId": 1,
     "fieldValue": 16,
     "operator": "gte"
   },
   {
     "id": 384,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 0.5,
     "operator": "lte"
   },
   {
     "id": 385,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 0.6,
     "operator": "lte"
   },
   {
     "id": 386,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 0.8,
     "operator": "lte"
   },
   {
     "id": 387,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 1,
     "operator": "lte"
   },
   {
     "id": 388,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 1.2,
     "operator": "lte"
   },
   {
     "id": 389,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 1.5,
     "operator": "lte"
   },
   {
     "id": 390,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 1.7,
     "operator": "lte"
   },
   {
     "id": 391,
-    "studyId": 7,
     "fieldId": 69,
     "fieldValue": 1.4,
     "operator": "lte"
   },
   {
     "id": 392,
-    "studyId": 7,
     "fieldId": 95,
     "fieldValue": 60,
     "operator": "gte"
   },
   {
     "id": 393,
-    "studyId": 7,
     "fieldId": 72,
     "fieldValue": 3,
     "operator": "lte"
   },
   {
     "id": 394,
-    "studyId": 7,
     "fieldId": 74,
     "fieldValue": 5,
     "operator": "lte"
   },
   {
     "id": 395,
-    "studyId": 7,
     "fieldId": 111,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 396,
-    "studyId": 7,
     "fieldId": 111,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 397,
-    "studyId": 7,
     "fieldId": 112,
     "fieldValue": 95,
     "operator": "eq"
   },
   {
     "id": 398,
-    "studyId": 7,
     "fieldId": 113,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 399,
-    "studyId": 7,
     "fieldId": 113,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 400,
-    "studyId": 7,
     "fieldId": 114,
     "fieldValue": 96,
     "operator": "eq"
   },
   {
     "id": 401,
-    "studyId": 7,
     "fieldId": 115,
     "fieldValue": 40,
     "operator": "gte"
   },
   {
     "id": 402,
-    "studyId": 7,
     "fieldId": 99,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 403,
-    "studyId": 7,
     "fieldId": 116,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 404,
-    "studyId": 4,
     "fieldId": 117,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 405,
-    "studyId": 4,
     "fieldId": 117,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 406,
-    "studyId": 6,
     "fieldId": 117,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 407,
-    "studyId": 6,
     "fieldId": 117,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 408,
-    "studyId": 5,
     "fieldId": 117,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 409,
-    "studyId": 5,
     "fieldId": 117,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 410,
-    "studyId": 4,
     "fieldId": 118,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 411,
-    "studyId": 4,
     "fieldId": 118,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 412,
-    "studyId": 5,
     "fieldId": 118,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 413,
-    "studyId": 5,
     "fieldId": 118,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 414,
-    "studyId": 4,
     "fieldId": 119,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 415,
-    "studyId": 4,
     "fieldId": 119,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 416,
-    "studyId": 2,
     "fieldId": 120,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 417,
-    "studyId": 2,
     "fieldId": 120,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 418,
-    "studyId": 4,
     "fieldId": 121,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 419,
-    "studyId": 4,
     "fieldId": 121,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 420,
-    "studyId": 4,
     "fieldId": 122,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 421,
-    "studyId": 4,
     "fieldId": 122,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 422,
-    "studyId": 4,
     "fieldId": 123,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 423,
-    "studyId": 4,
     "fieldId": 123,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 424,
-    "studyId": 5,
     "fieldId": 123,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 425,
-    "studyId": 5,
     "fieldId": 123,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 426,
-    "studyId": 4,
     "fieldId": 124,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 427,
-    "studyId": 4,
     "fieldId": 124,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 428,
-    "studyId": 5,
     "fieldId": 124,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 429,
-    "studyId": 5,
     "fieldId": 124,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 430,
-    "studyId": 4,
     "fieldId": 125,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 431,
-    "studyId": 4,
     "fieldId": 125,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 432,
-    "studyId": 4,
     "fieldId": 126,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 433,
-    "studyId": 4,
     "fieldId": 126,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 434,
-    "studyId": 5,
     "fieldId": 126,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 435,
-    "studyId": 5,
     "fieldId": 126,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 436,
-    "studyId": 4,
     "fieldId": 127,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 437,
-    "studyId": 4,
     "fieldId": 127,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 438,
-    "studyId": 4,
     "fieldId": 128,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 439,
-    "studyId": 4,
     "fieldId": 128,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 440,
-    "studyId": 5,
     "fieldId": 128,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 441,
-    "studyId": 5,
     "fieldId": 128,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 442,
-    "studyId": 5,
     "fieldId": 129,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 443,
-    "studyId": 5,
     "fieldId": 129,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 444,
-    "studyId": 4,
     "fieldId": 130,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 445,
-    "studyId": 4,
     "fieldId": 130,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 446,
-    "studyId": 4,
     "fieldId": 131,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 447,
-    "studyId": 4,
     "fieldId": 131,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 448,
-    "studyId": 4,
     "fieldId": 132,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 449,
-    "studyId": 4,
     "fieldId": 132,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 450,
-    "studyId": 2,
     "fieldId": 135,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 451,
-    "studyId": 2,
     "fieldId": 135,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 452,
-    "studyId": 2,
     "fieldId": 136,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 453,
-    "studyId": 2,
     "fieldId": 136,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 454,
-    "studyId": 5,
     "fieldId": 136,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 455,
-    "studyId": 5,
     "fieldId": 136,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 456,
-    "studyId": 5,
     "fieldId": 137,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 457,
-    "studyId": 5,
     "fieldId": 137,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 458,
-    "studyId": 5,
     "fieldId": 138,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 459,
-    "studyId": 5,
     "fieldId": 138,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 460,
-    "studyId": 5,
     "fieldId": 139,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 461,
-    "studyId": 5,
     "fieldId": 139,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 462,
-    "studyId": 6,
     "fieldId": 141,
     "fieldValue": 3,
     "operator": "eq"
   },
   {
     "id": 463,
-    "studyId": 6,
     "fieldId": 141,
     "fieldValue": 4,
     "operator": "eq"
   },
   {
     "id": 464,
-    "studyId": 7,
     "fieldId": 10,
     "fieldValue": 1,
     "operator": "gte"
