@@ -1,13 +1,13 @@
 {
   "name": "gearbox",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@fontsource/lato": "^4.5.0",
-    "autoprefixer": "^10.3.7",
+    "autoprefixer": "^10.4.0",
     "formik": "^2.2.6",
-    "postcss": "^8.3.9",
-    "postcss-cli": "^8.3.1",
+    "postcss": "^8.3.11",
+    "postcss-cli": "^9.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
@@ -16,7 +16,7 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "^4.0.3",
     "react-tooltip": "^4.2.18",
-    "tailwindcss": "^2.2.17"
+    "tailwindcss": "^2.2.19"
   },
   "scripts": {
     "watch:tailwind": "postcss src/tailwind.css -o src/index.css --watch",
@@ -52,14 +52,14 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.12",
     "@tailwindcss/forms": "^0.3.4",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^26.0.24",
-    "@types/node": "^14.17.27",
-    "@types/react": "^17.0.30",
-    "@types/react-dom": "^17.0.9",
-    "@types/react-router-dom": "^5.3.1",
+    "@types/node": "^14.17.33",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-router-dom": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "concurrently": "^6.3.0",
@@ -68,7 +68,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   }
