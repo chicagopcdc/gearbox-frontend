@@ -1,10 +1,11 @@
 import type { MatchFormValues, UserInput } from '../model'
+import { fetchGearbox } from './utils'
 
 type LatestUserInputBody =
   | UserInput // exists
   | { detail: string } // does not exists
 export function getLatestUserInput() {
-  return fetch('/mds/save/latest')
+  return fetchGearbox('/gearbox/user-input/latest')
     .then((res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data)
@@ -29,11 +30,8 @@ export function postUserInput(values: MatchFormValues, id?: number) {
       : [...acc, { id: Number(id), value }]
   }, [] as { id: number; value: any }[])
 
-  return fetch('/mds/save', {
+  return fetchGearbox('/gearbox/user-input', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
     body: JSON.stringify({ data, id }),
   })
     .then((res) => res.json() as Promise<UserInput>)

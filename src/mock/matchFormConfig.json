@@ -31,15 +31,6 @@
       "min": 0
     },
     {
-      "id": 2,
-      "groupId": 1,
-      "type": "number",
-      "name": "weight",
-      "label": "What is the patient's current weight (in kg)?",
-      "min": 0,
-      "step": 0.1
-    },
-    {
       "id": 3,
       "groupId": 1,
       "type": "radio",
@@ -139,6 +130,15 @@
       }
     },
     {
+      "id": 2,
+      "groupId": 1,
+      "type": "number",
+      "name": "weight",
+      "label": "What is the patient's current weight (in kg)?",
+      "min": 0,
+      "step": 0.1
+    },
+    {
       "id": 8,
       "groupId": 2,
       "type": "select",
@@ -217,24 +217,6 @@
       ]
     },
     {
-      "id": 10,
-      "groupId": 2,
-      "type": "number",
-      "name": "count_refractory",
-      "label": "How many occurrences of refractory disease, including the current if applicable?",
-      "min": 0,
-      "showIf": {
-        "operator": "AND",
-        "criteria": [
-          {
-            "id": 9,
-            "value": 3,
-            "operator": "eq"
-          }
-        ]
-      }
-    },
-    {
       "id": 11,
       "groupId": 2,
       "type": "radio",
@@ -275,6 +257,24 @@
       }
     },
     {
+      "id": 10,
+      "groupId": 2,
+      "type": "number",
+      "name": "count_refractory",
+      "label": "How many occurrences of refractory disease, including the current if applicable?",
+      "min": 0,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 9,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 13,
       "groupId": 2,
       "type": "radio",
@@ -287,12 +287,16 @@
       ]
     },
     {
-      "id": 14,
+      "id": 15,
       "groupId": 2,
-      "type": "number",
-      "name": "count_relapse",
-      "label": "How many confirmed or suspected relapses, including the current if applicable?",
-      "min": 0,
+      "type": "radio",
+      "name": "current_relapse",
+      "label": "Is the patient currently in relapse (or suspected relapse)?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -305,16 +309,12 @@
       }
     },
     {
-      "id": 15,
+      "id": 14,
       "groupId": 2,
-      "type": "radio",
-      "name": "current_relapse",
-      "label": "Is the patient currently in relapse (or suspected relapse)?",
-      "options": [
-        { "value": 3, "label": "Yes", "description": "" },
-        { "value": 4, "label": "No", "description": "" },
-        { "value": 5, "label": "Not sure", "description": "" }
-      ],
+      "type": "number",
+      "name": "count_relapse",
+      "label": "How many confirmed or suspected relapses, including the current if applicable?",
+      "min": 0,
       "showIf": {
         "operator": "AND",
         "criteria": [
@@ -587,10 +587,32 @@
     {
       "id": 24,
       "groupId": 2,
-      "type": "number",
+      "type": "select",
       "name": "ecog",
       "label": "What is the patient's ECOG score?",
-      "min": 0
+      "options": [
+        {
+          "value": 111,
+          "label": "ECOG 0 (Lansky/Karnofsky 90-100)"
+        },
+        {
+          "value": 112,
+          "label": "ECOG 1 (Lansky/Karnofsky 70-80)"
+        },
+        {
+          "value": 113,
+          "label": "ECOG 2 (Lansky/Karnofsky 50-60)"
+        },
+        {
+          "value": 114,
+          "label": "ECOG 3 (Lansky/Karnofsky 30-40)"
+        },
+        {
+          "value": 115,
+          "label": "ECOG 4 (Lansky/Karnofsky 10-20)"
+        }
+      ],
+      "placeholder": "Select"
     },
     {
       "id": 25,
@@ -621,7 +643,7 @@
       "groupId": 2,
       "type": "radio",
       "name": "diag_iso_emd",
-      "label": "Has the patient been diagnosed with: isolated extramedullary disease",
+      "label": "Has the patient been diagnosed with: isolated extramedullary disease (i.e. the absence of bone marrow involvement)",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
@@ -677,6 +699,18 @@
       ]
     },
     {
+      "id": 33,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_cong_bmf",
+      "label": "Has the patient been diagnosed with: any known congenital bone marrow failure syndrome (e.g. Fanconi anemia, Kostmann syndrome, Shwachman syndrome)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 30,
       "groupId": 2,
       "type": "radio",
@@ -686,7 +720,17 @@
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
         { "value": 5, "label": "Not sure", "description": "" }
-      ]
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 33,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 31,
@@ -698,7 +742,17 @@
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
         { "value": 5, "label": "Not sure", "description": "" }
-      ]
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 33,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 32,
@@ -710,19 +764,17 @@
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
         { "value": 5, "label": "Not sure", "description": "" }
-      ]
-    },
-    {
-      "id": 33,
-      "groupId": 2,
-      "type": "radio",
-      "name": "diag_cong_bmf",
-      "label": "Has the patient been diagnosed with: other known congenital bone marrow failure syndrome",
-      "options": [
-        { "value": 3, "label": "Yes", "description": "" },
-        { "value": 4, "label": "No", "description": "" },
-        { "value": 5, "label": "Not sure", "description": "" }
-      ]
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 33,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 34,
@@ -864,7 +916,7 @@
     },
     {
       "id": 118,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_corticosteroids_ever",
       "label": "Does the patient have any prior exposure to: corticosteroids (if used to modify immune adverse events related to prior therapy)",
@@ -894,7 +946,7 @@
     },
     {
       "id": 119,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_anticancer_nonmyelosupp_ever",
       "label": "Does the patient have any prior exposure to: non-myelosuppressive anti-cancer agents",
@@ -924,7 +976,7 @@
     },
     {
       "id": 120,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_anticancer_myelosupp_ever",
       "label": "Does the patient have any prior exposure to: myelosuppressive anti-cancer agents",
@@ -954,7 +1006,7 @@
     },
     {
       "id": 121,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_antibody_drug_conj_ever",
       "label": "Does the patient have any prior exposure to: antibody-drug conjugate",
@@ -984,7 +1036,7 @@
     },
     {
       "id": 122,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_interleukins_ever",
       "label": "Does the patient have any prior exposure to: Interleukins, Interferons and Cytokines (not including Hematopoietic Growth Factors)",
@@ -1014,7 +1066,7 @@
     },
     {
       "id": 123,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_long_acting_gf_ever",
       "label": "Does the patient have any prior exposure to: Long-acting growth factor (eg, pegfilgrastim)",
@@ -1044,7 +1096,7 @@
     },
     {
       "id": 124,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_short_acting_gf_ever",
       "label": "Does the patient have any prior exposure to: Short-acting growth factor",
@@ -1074,7 +1126,7 @@
     },
     {
       "id": 125,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_local_pall_rt_ever",
       "label": "Does the patient have any prior exposure to: Local palliative radiotherapy (RT), small port",
@@ -1104,7 +1156,7 @@
     },
     {
       "id": 126,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_craniospatial_rt_ever",
       "label": "Does the patient have any prior exposure to: Craniospinal radiotherapy (RT)",
@@ -1134,7 +1186,7 @@
     },
     {
       "id": 127,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_pelvic_rt_ever",
       "label": "Does the patient have any prior exposure to: Pelvic radiotherapy (RT), if >= 50% pelvis is exposed",
@@ -1164,7 +1216,7 @@
     },
     {
       "id": 128,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_tbi_ever",
       "label": "Does the patient have any prior exposure to: Total Body Irradiation (TBI)",
@@ -1194,7 +1246,7 @@
     },
     {
       "id": 129,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_biologic_ever",
       "label": "Does the patient have any prior exposure to: any biologic agent",
@@ -1224,7 +1276,7 @@
     },
     {
       "id": 130,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_other_bm_radiation_ever",
       "label": "Does the patient have any prior exposure to: Other substantial BM radiation",
@@ -1254,7 +1306,7 @@
     },
     {
       "id": 131,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_radiopharma_ever",
       "label": "Does the patient have any prior exposure to: Radiopharmaceutical therapy (e.g., radiolabeled antibody, 131I-MIBG)?",
@@ -1332,7 +1384,7 @@
     },
     {
       "id": 132,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_dli_ever",
       "label": "Does the patient have any prior exposure to: DLI (donor lymphocyte infusion) or any type of cellular therapy (eg, modified T cells, NK cells, dendritic cells, etc.)",
@@ -1362,7 +1414,7 @@
     },
     {
       "id": 133,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_cyp2d6_ever",
       "label": "Does the patient have any prior exposure to: Strong inhibitors of CYP2D6",
@@ -1392,7 +1444,7 @@
     },
     {
       "id": 134,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_cyp3a4_ever",
       "label": "Does the patient have any prior exposure to: Strong inhibitors of CYP3A4",
@@ -1422,7 +1474,7 @@
     },
     {
       "id": 135,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_cyp3a_ever",
       "label": "Does the patient have any prior exposure to: Strong inhibitors of CYP3A",
@@ -1452,7 +1504,7 @@
     },
     {
       "id": 136,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_calcineurin_ever",
       "label": "Does the patient have any prior exposure to: calcineurin inhibitors",
@@ -1482,7 +1534,7 @@
     },
     {
       "id": 137,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_monocl_antib_ever",
       "label": "Does the patient have any prior exposure to: monoclonal antibodies",
@@ -1512,7 +1564,7 @@
     },
     {
       "id": 138,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_immunotherapy_ever",
       "label": "Does the patient have any prior exposure to: immunotherapy",
@@ -1542,7 +1594,7 @@
     },
     {
       "id": 139,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_demeth_hdac_ever",
       "label": "Does the patient have any prior exposure to: Demethylating and/or HDAC Inhibitor Therapy",
@@ -1592,7 +1644,7 @@
     },
     {
       "id": 140,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "radiation_mediastinum_ever",
       "label": "Does the patient have any prior exposure to: radiation to the mediastinum",
@@ -1623,7 +1675,7 @@
     },
     {
       "id": 141,
-      "groupId": 2,
+      "groupId": 3,
       "type": "radio",
       "name": "exp_anthracycline_ever",
       "label": "Does the patient have any prior exposure to: anthracycline or equivalent",
