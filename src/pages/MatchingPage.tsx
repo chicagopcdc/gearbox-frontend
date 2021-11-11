@@ -1,3 +1,4 @@
+import type React from 'react'
 import { useState } from 'react'
 import {
   MoreHorizontal,
@@ -69,6 +70,10 @@ function MatchingPage({
   function toggleFormOptions() {
     setShowFormOptions((show) => !show)
   }
+  function handleFormOptionsBlur(e: React.FocusEvent) {
+    if (showFormOptions && !e.currentTarget.contains(e.relatedTarget))
+      setShowFormOptions(false)
+  }
 
   return screenSize.smAndDown ? (
     <>
@@ -78,7 +83,11 @@ function MatchingPage({
           minHeight: '2.5rem',
         }}
       >
-        <div className="w-full relative">
+        <div
+          className="w-full relative"
+          onBlur={handleFormOptionsBlur}
+          tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
+        >
           <Button
             size="small"
             block
@@ -185,7 +194,11 @@ function MatchingPage({
       <section className="h-full overflow-scroll w-1/2">
         <h1 className="sticky top-0 bg-white uppercase text-primary font-bold px-4 lg:px-8 py-2 z-10 flex items-end justify-between">
           <span>Patient Information</span>
-          <div className="inline relative font-normal normal-case text-base">
+          <div
+            className="inline relative font-normal normal-case text-base"
+            onBlur={handleFormOptionsBlur}
+            tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
+          >
             <button
               className={`px-2 py-1 ${
                 showFormOptions ? 'bg-red-100' : 'hover:bg-red-100'
