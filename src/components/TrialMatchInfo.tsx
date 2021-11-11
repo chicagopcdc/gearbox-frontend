@@ -58,6 +58,10 @@ function TrialMatchInfo({
   const toggleModalOptions = () => setShowModalOptions((show) => !show)
   const toggleFilter = () => setIsFilterActive((isActive) => !isActive)
   const toggleHighlight = () => setIsHighlightActive((isActive) => !isActive)
+  function handleModalOptionsBlur(e: React.FocusEvent) {
+    if (showModalOptions && !e.currentTarget.contains(e.relatedTarget))
+      setShowModalOptions(false)
+  }
 
   return (
     <>
@@ -93,7 +97,11 @@ function TrialMatchInfo({
                   Eligibility Criteria for {studyTitle}
                 </h3>
                 <div>
-                  <div className="inline relative font-normal normal-case text-base">
+                  <div
+                    className="inline relative font-normal normal-case text-base"
+                    onBlur={handleModalOptionsBlur}
+                    tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
+                  >
                     <button
                       className={`p-1 ${
                         showModalOptions ? 'text-primary' : 'hover:text-primary'
