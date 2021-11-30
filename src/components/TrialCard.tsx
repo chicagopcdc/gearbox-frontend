@@ -72,14 +72,9 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
           <ul className="list-disc ml-8">
             {study.links.map(({ name, href }) => (
               <li key={name}>
-                <a
-                  className="block text-blue-700"
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <LinkExternal className="block text-blue-700" to={href}>
                   {name}
-                </a>
+                </LinkExternal>
               </li>
             ))}
           </ul>
