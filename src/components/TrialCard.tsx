@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ChevronUp, ChevronDown } from 'react-feather'
+import LinkExternal from './LinkExternal'
 import TrialMatchInfo from './TrialMatchInfo'
 import type { MatchInfoAlgorithm, Study } from '../model'
 
@@ -82,6 +83,26 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
               </li>
             ))}
           </ul>
+        </div>
+        <div className={`${styles.field.container} italic mt-12 text-sm`}>
+          <h3 className={styles.field.title}>
+            Pediatric Clinical Trial Nurse Navigator One-on-One Support
+          </h3>
+          <p>
+            To connect with a Pediatric Clinical Trial Nurse Navigator at the
+            Leukemia {'&'} Lymphoma Society who will personally assist your
+            patient throughout the entire clinical-trial process, click this
+            link to fill out a{' '}
+            <LinkExternal
+              className="text-blue-700"
+              to="https://lls-forms.careboxhealth.com/?IRC=NOIRC"
+            >
+              Clinical Trial Support Center referral form
+            </LinkExternal>
+            . One of our pediatric oncology nurses will call your patient within
+            1 business day and provide you with a copy of the individualized
+            trial search results.
+          </p>
         </div>
       </div>
     </div>
