@@ -288,20 +288,6 @@
         {
           "operator": "OR",
           "criteria": [
-            88,
-            {
-              "operator": "AND",
-              "criteria": [89, 90, 91, 92, 93]
-            },
-            {
-              "operator": "AND",
-              "criteria": [89, 90, 94]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
             {
               "operator": "AND",
               "criteria": [
@@ -433,20 +419,6 @@
             {
               "operator": "AND",
               "criteria": [137, 141, 142, 146, 147]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            148,
-            {
-              "operator": "AND",
-              "criteria": [149, 150, 151, 152, 153]
-            },
-            {
-              "operator": "AND",
-              "criteria": [154, 149, 150]
             }
           ]
         },
@@ -733,20 +705,6 @@
         {
           "operator": "OR",
           "criteria": [
-            239,
-            {
-              "operator": "AND",
-              "criteria": [240, 241, 242, 243, 244]
-            },
-            {
-              "operator": "AND",
-              "criteria": [240, 241, 245]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
             {
               "operator": "AND",
               "criteria": [246, 247]
@@ -984,20 +942,6 @@
         {
           "operator": "OR",
           "criteria": [
-            307,
-            {
-              "operator": "AND",
-              "criteria": [308, 309, 310, 311, 312]
-            },
-            {
-              "operator": "AND",
-              "criteria": [308, 309, 313]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
             {
               "operator": "AND",
               "criteria": [314, 315]
@@ -1074,20 +1018,6 @@
             {
               "operator": "AND",
               "criteria": [336, 350, 340, 341]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            352,
-            {
-              "operator": "AND",
-              "criteria": [353, 354, 356, 357, 358]
-            },
-            {
-              "operator": "AND",
-              "criteria": [353, 354, 355]
             }
           ]
         },
