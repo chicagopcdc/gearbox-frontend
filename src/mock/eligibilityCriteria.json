@@ -2650,5 +2650,156 @@
     "fieldId": 33,
     "fieldValue": 3,
     "operator": "eq"
+  },
+  {
+    "id": 473,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 474,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 475,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 476,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 477,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 478,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 479,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 480,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  ,
+  {
+    "id": 481,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 482,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 483,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 484,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 485,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 486,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 487,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 488,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 489,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 490,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 491,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 492,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 493,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 494,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 495,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 496,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 497,
+    "fieldId": 147,
+    "fieldValue": 3,
+    "operator": "eq"
   }
 ]
