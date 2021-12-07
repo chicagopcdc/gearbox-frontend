@@ -1759,6 +1759,40 @@
       ]
     },
     {
+      "id": 142,
+      "groupId": 4,
+      "type": "radio",
+      "name": "abn_cardio",
+      "label": "Does the patient demonstrate abnormal: cardiac function test results?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 143,
+      "groupId": 4,
+      "type": "radio",
+      "name": "abn_l_ventr",
+      "label": "Does the patient demonstrate abnormal: left ventricular function?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 142,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 65,
       "groupId": 4,
       "type": "number",
@@ -1766,7 +1800,22 @@
       "label": "What is the patient's most recent measure of: Ejection Fraction (EF) (in %)",
       "min": 0,
       "max": 100,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 142,
+            "value": 3,
+            "operator": "eq"
+          },
+          {
+            "id": 143,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 66,
@@ -1776,16 +1825,80 @@
       "label": "What is the patient's most recent measure of: Shortening Fraction (SF) (in %)",
       "min": 0,
       "max": 100,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 142,
+            "value": 3,
+            "operator": "eq"
+          },
+          {
+            "id": 143,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
-      "id": 69,
+      "id": 144,
+      "groupId": 4,
+      "type": "radio",
+      "name": "abn_qtc",
+      "label": "Does the patient demonstrate abnormal: QTc?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ],
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 142,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 67,
       "groupId": 4,
       "type": "number",
-      "name": "meas_serum_creat",
-      "label": "What is the patient's most recent measure of: Serum creatinine (in mg/dL)",
+      "name": "meas_qtcb",
+      "label": "What is the patient's most recent measure of: Corrected QT using the Bazett formula (QTcB) interval (in msec)",
       "min": 0,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 142,
+            "value": 3,
+            "operator": "eq"
+          },
+          {
+            "id": 144,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 145,
+      "groupId": 4,
+      "type": "radio",
+      "name": "abn_renal",
+      "label": "Does the patient demonstrate abnormal: renal function test results?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
     },
     {
       "id": 68,
@@ -1794,7 +1907,36 @@
       "name": "meas_gfr",
       "label": "What is the patient's most recent measure of: GFR (in mL/min/1.73 m2)",
       "min": 0,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 145,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_serum_creat",
+      "label": "What is the patient's most recent measure of: Serum creatinine (in mg/dL)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 145,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 95,
@@ -1803,70 +1945,17 @@
       "name": "meas_creat_clear_calc",
       "label": "What is the patient's most recent measure of: calculated creatinine clearance (in mL/min/1.73m^2)",
       "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 71,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_dbili_uln",
-      "label": "What is the patient's most recent measure of: Direct bilirubin (in ULN)",
-      "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 72,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_bili_uln",
-      "label": "What is the patient's most recent measure of: Bilirubin (sum of conjugated + unconjugated) (in ULN for age)",
-      "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 74,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_alt_uln",
-      "label": "What is the patient's most recent measure of: SGPT (ALT) (in ULN)",
-      "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 96,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_ast_uln",
-      "label": "What is the patient's most recent measure of: SGOT (AST) (in ULN)",
-      "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 75,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_albumin",
-      "label": "What is the patient's most recent measure of: Albumin (in g/dL)",
-      "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 97,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_platelet",
-      "label": "What is the patient's most recent measure of: Platelet (in count/mm3)",
-      "min": 0,
-      "step": 0.1
-    },
-    {
-      "id": 98,
-      "groupId": 4,
-      "type": "number",
-      "name": "meas_hemoglobin",
-      "label": "What is the patient's most recent measure of: Hemoglobin (in g/dL)",
-      "min": 0,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 145,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 111,
@@ -1949,13 +2038,16 @@
       "step": 0.1
     },
     {
-      "id": 67,
+      "id": 146,
       "groupId": 4,
-      "type": "number",
-      "name": "meas_qtcb",
-      "label": "What is the patient's most recent measure of: Corrected QT using the Bazett formula (QTcB) interval (in msec)",
-      "min": 0,
-      "step": 0.1
+      "type": "radio",
+      "name": "abn_liver",
+      "label": "Does the patient demonstrate abnormal: liver function test results?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
     },
     {
       "id": 70,
@@ -1964,7 +2056,55 @@
       "name": "meas_dbili_mgdl",
       "label": "What is the patient's most recent measure of: Direct bilirubin (in mg/dL)",
       "min": 0,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 71,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_dbili_uln",
+      "label": "What is the patient's most recent measure of: Direct bilirubin (in ULN)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 72,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_bili_uln",
+      "label": "What is the patient's most recent measure of: Bilirubin (sum of conjugated + unconjugated) (in ULN for age)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 73,
@@ -1973,7 +2113,86 @@
       "name": "meas_alt_ul",
       "label": "What is the patient's most recent measure of: SGPT (ALT) (in U/L)",
       "min": 0,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 74,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_alt_uln",
+      "label": "What is the patient's most recent measure of: SGPT (ALT) (in ULN)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 96,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_ast_uln",
+      "label": "What is the patient's most recent measure of: SGOT (AST) (in ULN)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 75,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_albumin",
+      "label": "What is the patient's most recent measure of: Albumin (in g/dL)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 147,
+      "groupId": 4,
+      "type": "radio",
+      "name": "abn_hema",
+      "label": "Does the patient demonstrate abnormal: hematology panel test results?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
     },
     {
       "id": 76,
@@ -1982,7 +2201,55 @@
       "name": "meas_wbc",
       "label": "What is the patient's most recent measure of: White blood cells (WBC) (in count/mm3)",
       "min": 0,
-      "step": 0.1
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 147,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 97,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_platelet",
+      "label": "What is the patient's most recent measure of: Platelet (in count/mm3)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 147,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
+      "id": 98,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_hemoglobin",
+      "label": "What is the patient's most recent measure of: Hemoglobin (in g/dL)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 147,
+            "value": 3,
+            "operator": "eq"
+          }
+        ]
+      }
     },
     {
       "id": 99,
