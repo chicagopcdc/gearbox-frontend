@@ -355,7 +355,24 @@
         109,
         {
           "operator": "OR",
-          "criteria": [110, 111]
+          "criteria": [
+            {
+              "operator": "AND",
+              "criteria": [
+                502,
+                503,
+                {
+                  "operator": "OR",
+                  "criteria": [110, 111]
+                }
+              ]
+            },
+            {
+              "operator": "AND",
+              "criteria": [502, 478]
+            },
+            477
+          ]
         },
         {
           "operator": "OR",
@@ -419,9 +436,16 @@
             135
           ]
         },
-        112,
-        113,
-        114
+        {
+          "operator": "OR",
+          "criteria": [
+            479,
+            {
+              "operator": "AND",
+              "criteria": [480, 112, 113, 114]
+            }
+          ]
+        }
       ]
     }
   },
