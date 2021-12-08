@@ -2926,5 +2926,29 @@
     "fieldId": 146,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 519,
+    "fieldId": 142,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 520,
+    "fieldId": 143,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 521,
+    "fieldId": 145,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 522,
+    "fieldId": 146,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
