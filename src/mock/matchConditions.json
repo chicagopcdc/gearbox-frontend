@@ -385,63 +385,74 @@
         {
           "operator": "OR",
           "criteria": [
+            504,
             {
               "operator": "AND",
-              "criteria": [94, 115, 127]
-            },
-            {
-              "operator": "AND",
-              "criteria": [94, 116, 117, 128]
-            },
-            {
-              "operator": "AND",
-              "criteria": [94, 118, 119, 129]
-            },
-            {
-              "operator": "AND",
-              "criteria": [94, 120, 121, 130]
-            },
-            {
-              "operator": "AND",
-              "criteria": [94, 122, 123, 131]
-            },
-            {
-              "operator": "AND",
-              "criteria": [94, 124, 125, 132]
-            },
-            {
-              "operator": "AND",
-              "criteria": [94, 126, 133]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 115, 127]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 116, 117, 128]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 118, 119, 129]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 120, 121, 130]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 122, 123, 131]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 124, 125, 134]
-            },
-            {
-              "operator": "AND",
-              "criteria": [91, 126, 134]
-            },
-            135
+              "criteria": [505,
+                {
+                  "operator": "OR",
+                  "criteria": [
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 115, 127]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 116, 117, 128]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 118, 119, 129]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 120, 121, 130]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 122, 123, 131]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 124, 125, 132]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [94, 126, 133]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 115, 127]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 116, 117, 128]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 118, 119, 129]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 120, 121, 130]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 122, 123, 131]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 124, 125, 134]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [91, 126, 134]
+                    },
+                    135
+                  ]
+                }
+              ]
+            }
           ]
         },
         {
