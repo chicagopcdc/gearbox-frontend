@@ -1762,7 +1762,7 @@
       "id": 142,
       "groupId": 4,
       "type": "radio",
-      "name": "abn_cardio",
+      "name": "norm_cardiac",
       "label": "Does the patient demonstrate normal: cardiac function test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
@@ -1774,7 +1774,7 @@
       "id": 143,
       "groupId": 4,
       "type": "radio",
-      "name": "abn_l_ventr",
+      "name": "norm_lv",
       "label": "Does the patient demonstrate normal: left ventricular function?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
@@ -1786,7 +1786,7 @@
         "criteria": [
           {
             "id": 142,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1806,12 +1806,12 @@
         "criteria": [
           {
             "id": 142,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           },
           {
             "id": 143,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1831,12 +1831,12 @@
         "criteria": [
           {
             "id": 142,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           },
           {
             "id": 143,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1846,7 +1846,7 @@
       "id": 144,
       "groupId": 4,
       "type": "radio",
-      "name": "abn_qtc",
+      "name": "norm_qtc",
       "label": "Does the patient demonstrate normal: QTc?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
@@ -1858,7 +1858,7 @@
         "criteria": [
           {
             "id": 142,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1877,12 +1877,12 @@
         "criteria": [
           {
             "id": 142,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           },
           {
             "id": 144,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1892,7 +1892,7 @@
       "id": 145,
       "groupId": 4,
       "type": "radio",
-      "name": "abn_renal",
+      "name": "norm_renal",
       "label": "Does the patient demonstrate normal: renal function test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
@@ -1913,7 +1913,7 @@
         "criteria": [
           {
             "id": 145,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1932,7 +1932,7 @@
         "criteria": [
           {
             "id": 145,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -1951,7 +1951,7 @@
         "criteria": [
           {
             "id": 145,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2041,7 +2041,7 @@
       "id": 146,
       "groupId": 4,
       "type": "radio",
-      "name": "abn_liver",
+      "name": "norm_liver",
       "label": "Does the patient demonstrate normal: liver function test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
@@ -2062,7 +2062,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2081,7 +2081,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2100,7 +2100,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2119,7 +2119,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2138,7 +2138,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2157,7 +2157,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2176,7 +2176,7 @@
         "criteria": [
           {
             "id": 146,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2186,7 +2186,7 @@
       "id": 147,
       "groupId": 4,
       "type": "radio",
-      "name": "abn_hema",
+      "name": "norm_hema",
       "label": "Does the patient demonstrate normal: hematology panel test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
@@ -2207,7 +2207,7 @@
         "criteria": [
           {
             "id": 147,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2226,7 +2226,7 @@
         "criteria": [
           {
             "id": 147,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
@@ -2245,7 +2245,7 @@
         "criteria": [
           {
             "id": 147,
-            "value": 3,
+            "value": 4,
             "operator": "eq"
           }
         ]
