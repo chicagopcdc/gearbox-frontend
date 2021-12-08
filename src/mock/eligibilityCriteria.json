@@ -2801,5 +2801,29 @@
     "fieldId": 147,
     "fieldValue": 3,
     "operator": "eq"
+  },
+  {
+    "id": 498,
+    "fieldId": 142,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 499,
+    "fieldId": 143,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 500,
+    "fieldId": 145,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 501,
+    "fieldId": 146,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
