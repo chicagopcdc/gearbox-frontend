@@ -2836,8 +2836,7 @@
     "fieldId": 143,
     "fieldValue": 4,
     "operator": "eq"
-  }
-  ,
+  },
   {
     "id": 504,
     "fieldId": 145,
@@ -2900,6 +2899,30 @@
   },
   {
     "id": 514,
+    "fieldId": 146,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 515,
+    "fieldId": 142,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 516,
+    "fieldId": 143,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 517,
+    "fieldId": 145,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 518,
     "fieldId": 146,
     "fieldValue": 4,
     "operator": "eq"
