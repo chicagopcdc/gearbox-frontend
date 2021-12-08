@@ -1,7 +1,8 @@
 [
   {
     "id": 1,
-    "title": "APAL2020SC",
+    "title": "A Study to Test Bone Marrow and Blood in Children With Leukemia That Has Come Back After Treatment or Is Difficult to Treat",
+    "code": "APAL2020SC",
     "locations": [],
     "links": [
       {
@@ -13,7 +14,8 @@
   },
   {
     "id": 2,
-    "title": "SELCLAX",
+    "title": "Study of Selinexor and Venetoclax in Combination With Chemotherapy in Pediatric and Young Adult Patients With Refractory or Relapsed Acute Myeloid Leukemia",
+    "code": "SELCLAX",
     "locations": ["St. Jude Children's Research Hospital"],
     "links": [
       {
@@ -25,7 +27,8 @@
   },
   {
     "id": 3,
-    "title": "VENAML",
+    "title": "Study of Venetoclax in Combination With Chemotherapy in Pediatric Patients With Refractory or Relapsed Acute Myeloid Leukemia or Acute Leukemia of Ambiguous Lineage",
+    "code": "VENAML",
     "locations": [
       "Children's Hospital of Orange County",
       "St. Jude Children's Research Hospital"
@@ -40,7 +43,8 @@
   },
   {
     "id": 4,
-    "title": "PEPN1812",
+    "title": "Flotetuzumab for the Treatment of Pediatric Recurrent or Refractory Acute Myeloid Leukemia",
+    "code": "PEPN1812",
     "locations": [
       "Children's Hospital of Alabama",
       "Children's Hospital Los Angeles",
@@ -59,7 +63,8 @@
   },
   {
     "id": 5,
-    "title": "T2016-003",
+    "title": "Epigenetic Reprogramming in Relapse/Refractory AML",
+    "code": "T2016-003",
     "locations": [
       "Children's Hospital Los Angeles",
       "Children's Hospital Orange County",
@@ -81,7 +86,8 @@
   },
   {
     "id": 6,
-    "title": "2020-0484",
+    "title": "Liposomal Cytarabine, Daunorubicin, and Gemtuzumab Ozogamicin for the Treatment of Relapsed Refractory Pediatric Patients With Acute Myeloid Leukemia",
+    "code": "2020-0484",
     "locations": ["M D Anderson Cancer Center"],
     "links": [
       {
@@ -93,7 +99,8 @@
   },
   {
     "id": 7,
-    "title": "834675",
+    "title": "CD123 Redirected T Cells for AML in Pediatric Subjects",
+    "code": "834675",
     "locations": ["Children's Hospital of Philadelphia"],
     "links": [
       {
