@@ -2879,5 +2879,29 @@
     "fieldId": 147,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 511,
+    "fieldId": 142,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 512,
+    "fieldId": 143,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 513,
+    "fieldId": 145,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 514,
+    "fieldId": 146,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
