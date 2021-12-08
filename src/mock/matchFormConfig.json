@@ -1763,7 +1763,7 @@
       "groupId": 4,
       "type": "radio",
       "name": "abn_cardio",
-      "label": "Does the patient demonstrate abnormal: cardiac function test results?",
+      "label": "Does the patient demonstrate normal: cardiac function test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
@@ -1775,7 +1775,7 @@
       "groupId": 4,
       "type": "radio",
       "name": "abn_l_ventr",
-      "label": "Does the patient demonstrate abnormal: left ventricular function?",
+      "label": "Does the patient demonstrate normal: left ventricular function?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
@@ -1847,7 +1847,7 @@
       "groupId": 4,
       "type": "radio",
       "name": "abn_qtc",
-      "label": "Does the patient demonstrate abnormal: QTc?",
+      "label": "Does the patient demonstrate normal: QTc?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
@@ -1893,7 +1893,7 @@
       "groupId": 4,
       "type": "radio",
       "name": "abn_renal",
-      "label": "Does the patient demonstrate abnormal: renal function test results?",
+      "label": "Does the patient demonstrate normal: renal function test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
@@ -2042,7 +2042,7 @@
       "groupId": 4,
       "type": "radio",
       "name": "abn_liver",
-      "label": "Does the patient demonstrate abnormal: liver function test results?",
+      "label": "Does the patient demonstrate normal: liver function test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
@@ -2187,7 +2187,7 @@
       "groupId": 4,
       "type": "radio",
       "name": "abn_hema",
-      "label": "Does the patient demonstrate abnormal: hematology panel test results?",
+      "label": "Does the patient demonstrate normal: hematology panel test results?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
