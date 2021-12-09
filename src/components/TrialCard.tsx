@@ -30,9 +30,8 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
           <div className="flex">
             {matchInfoAlgorithm !== undefined && (
               <TrialMatchInfo
-                studyId={study.id}
+                study={study}
                 studyMatchInfo={matchInfoAlgorithm}
-                studyTitle={study.title}
               />
             )}
             {isDropDownOpen ? (
