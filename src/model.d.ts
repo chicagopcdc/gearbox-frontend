@@ -1,5 +1,6 @@
 export type Study = {
   id: number
+  code: string
   title: string
   description: string
   locations: string[]
