@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ['./src/**/*.tsx'],
+  content: ['./src/**/*.tsx'],
   theme: {
     extend: {
       flex: {
@@ -26,6 +26,5 @@ module.exports = {
       },
     },
   },
-  variants: {},
   plugins: [require('@tailwindcss/forms')],
 }
