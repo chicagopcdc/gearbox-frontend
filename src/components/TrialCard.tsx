@@ -24,37 +24,43 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
   const handleClose = () => setIsDropDownOpen(false)
   return (
     <div className={styles.container}>
-      <div className="flex justify-between">
-        <h2 className="text-lg font-bold">{study.title}</h2>
-        <div className="flex">
-          {matchInfoAlgorithm !== undefined && (
-            <TrialMatchInfo
-              studyId={study.id}
-              studyMatchInfo={matchInfoAlgorithm}
-              studyTitle={study.title}
-            />
-          )}
-          {isDropDownOpen ? (
-            <button
-              type="button"
-              onClick={handleClose}
-              aria-label="Collapse trial card"
-            >
-              <ChevronUp color="#C00" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={handleOpen}
-              aria-label="Expand trial card"
-            >
-              <ChevronDown />
-            </button>
-          )}
+      <div>
+        <div className="flex justify-between pb-4">
+          <h2 className="text-lg font-bold">{study.code}</h2>
+          <div className="flex">
+            {matchInfoAlgorithm !== undefined && (
+              <TrialMatchInfo
+                studyId={study.id}
+                studyMatchInfo={matchInfoAlgorithm}
+                studyTitle={study.title}
+              />
+            )}
+            {isDropDownOpen ? (
+              <button
+                type="button"
+                onClick={handleClose}
+                aria-label="Collapse trial card"
+              >
+                <ChevronUp color="#C00" />
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={handleOpen}
+                aria-label="Expand trial card"
+              >
+                <ChevronDown />
+              </button>
+            )}
+          </div>
+        </div>
+        <div className={styles.field.container}>
+          <h3 className={styles.field.title}>Title</h3>
+          <p className={isDropDownOpen ? '' : 'truncate'}>{study.title}</p>
         </div>
       </div>
 
-      <div className={isDropDownOpen ? 'pt-4' : 'hidden'}>
+      <div className={isDropDownOpen ? '' : 'hidden'}>
         {study.description ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>Description</h3>
