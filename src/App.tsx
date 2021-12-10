@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from 'react-router-dom'
 
 import Layout from './Layout'
@@ -91,55 +91,53 @@ function App() {
         username={user?.username ?? ''}
         onLogout={signout}
       >
-        <Switch>
-          <Route path="/" exact>
-            {isAuthenticated ? (
-              isRegistered ? (
-                <MatchingPage
-                  {...{
-                    conditions,
-                    config,
-                    criteria,
-                    studies,
-                    matchInput,
-                    updateMatchInput,
-                  }}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? (
+                isRegistered ? (
+                  <MatchingPage
+                    {...{
+                      conditions,
+                      config,
+                      criteria,
+                      studies,
+                      matchInput,
+                      updateMatchInput,
+                    }}
+                  />
+                ) : (
+                  <Navigate to="/register" replace />
+                )
+              ) : (
+                <LandingPage />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              isAuthenticated && !isRegistered ? (
+                <RegisterPage
+                  docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
+                  onRegister={register}
                 />
               ) : (
-                <Redirect to="/register" />
+                <Navigate to="/" replace />
               )
-            ) : (
-              <LandingPage />
-            )}
-          </Route>
-
-          <Route path="/login" exact>
-            {isAuthenticated ? <Redirect to="/" /> : <LoginPage />}
-          </Route>
-
-          <Route path="/register" exact>
-            {isAuthenticated && !isRegistered ? (
-              <RegisterPage
-                docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
-                onRegister={register}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
-
-          <Route path="/about" exact>
-            <AboutPage />
-          </Route>
-
-          <Route path="/terms" exact>
-            <TermsPage />
-          </Route>
-
-          <Route path="*">
-            <Redirect to={{ pathname: '/' }} />
-          </Route>
-        </Switch>
+            }
+          />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Layout>
     </Router>
   )
