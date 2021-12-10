@@ -83,9 +83,6 @@ function LandingPageSection3() {
             alt="Match form screenshot right"
           />
         </div>
-        <Link to="/guide" className="underline text-primary text-md md:text-xl">
-          Learn how to use GEARBOx
-        </Link>
       </div>
     </section>
   )
