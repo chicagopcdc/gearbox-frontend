@@ -31,6 +31,8 @@
     "code": "VENAML",
     "locations": [
       "Children's Hospital of Orange County",
+      "Lucille Packard Children's Hospital Stanford University",
+      "UNC Lineberger Comprehensive Cancer Center",
       "St. Jude Children's Research Hospital"
     ],
     "links": [
@@ -51,7 +53,20 @@
       "Children's Hospital of Orange County",
       "UCSF Medical Center-Mission Bay",
       "Children's Hospital Colorado",
-      "Children's National Medical Center"
+      "Children's National Medical Center",
+      "Children's Healthcare of Atlanta - Egleston",
+      "Lurie Children's Hospital-Chicago",
+      "Riley Hospital for Children",
+      "C S Mott Children's Hospital",
+      "University of Minnesota/Masonic Cancer Center",
+      "Washington University School of Medicine",
+      "NYP/Columbia University Medical Center/Herbert Irving Comprehensive Cancer Center",
+      "Cincinnati Children's Hospital Medical Center",
+      "Children's Hospital of Philadelphia",
+      "Children's Hospital of Pittsburgh of UPMC",
+      "Saint Jude Children's Research Hospital",
+      "Baylor College of Medicine/Dan L Duncan Comprehensive Cancer Center",
+      "Seattle Children's Hospital"
     ],
     "links": [
       {
@@ -74,7 +89,31 @@
       "University of Miami",
       "All Children's Hospital",
       "Children's Healthcare of Atlanta, Emory University",
-      "Lurie Children's Hospital of Chicago"
+      "Lurie Children's Hospital of Chicago",
+      "Johns Hopkins University",
+      "Sidney Kimmel Cancer Center at Johns Hopkins",
+      "National Cancer Institute, Pediatric Oncology Branch",
+      "Dana-Farber Cancer Institute",
+      "C.S. Mott Children's Hospital",
+      "CS Mott Children's Hospital, Ann Arbor",
+      "Children's Hospitals and Clinics of Minnesota",
+      "New York University Medical Center",
+      "Children's Hospital New York-Presbyterian",
+      "Levine Children's Hospital",
+      "Cincinnati Children's Hospital",
+      "Nationwide Children's Hospital",
+      "Oregon Health and Science University",
+      "Children's Hospital of Philadelphia",
+      "Cook Children's Medical Center",
+      "Texas Children's Cancer Center, Baylor",
+      "Primary Children's Hospital",
+      "Seattle Children's Hospital",
+      "Medical College of Wisconsin",
+      "Sydney Children's Hospital",
+      "Children's Hospital at Westmead",
+      "British Columbia Children's Hospital",
+      "Toronto, Ontario, Canada, M5G 1X8",
+      "Sainte Justine University Hospital"
     ],
     "links": [
       {
