@@ -92,7 +92,7 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                   <span className="text-gray-500 text-sm">
                     Eligibility Criteria for{' '}
                   </span>
-                  <span className="italic inline-block">
+                  <span className="italic block">
                     {study.code}: {study.title}
                   </span>
                 </h3>
