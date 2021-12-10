@@ -44,8 +44,11 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
                 <NavLink
                   key={path}
                   to={path}
-                  className="hover:bg-red-100 text-xs text-primary hover:text-secondary text-center py-3 px-2 block w-full"
-                  activeClassName="font-bold text-secondary bg-red-100"
+                  className={({ isActive }) =>
+                    isActive
+                      ? 'hover:bg-red-100 text-xs text-center py-3 px-2 block w-full bg-red-100 font-bold text-secondary '
+                      : 'hover:bg-red-100 text-xs text-center py-3 px-2 block w-full text-primary hover:text-secondary '
+                  }
                   onClick={toggleMenu}
                 >
                   {name}
@@ -80,8 +83,11 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
               <NavLink
                 key={path}
                 to={path}
-                className="text-xs text-primary hover:text-secondary text-center py-3 px-4"
-                activeClassName="font-bold text-secondary"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'text-xs text-center py-3 px-4 font-bold text-secondary'
+                    : 'text-xs text-center py-3 px-4 text-primary hover:text-secondary '
+                }
               >
                 {name}
               </NavLink>

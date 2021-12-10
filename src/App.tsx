@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from 'react-router-dom'
 
 import Layout from './Layout'
@@ -91,11 +91,10 @@ function App() {
         username={user?.username ?? ''}
         onLogout={signout}
       >
-        <Switch>
+        <Routes>
           <Route
             path="/"
-            exact
-            render={() =>
+            element={
               isAuthenticated ? (
                 isRegistered ? (
                   <MatchingPage
@@ -109,7 +108,7 @@ function App() {
                     }}
                   />
                 ) : (
-                  <Redirect to="/register" />
+                  <Navigate to="/register" replace />
                 )
               ) : (
                 <LandingPage />
@@ -118,29 +117,27 @@ function App() {
           />
           <Route
             path="/login"
-            exact
-            render={() =>
-              isAuthenticated ? <Redirect to="/" /> : <LoginPage />
+            element={
+              isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />
             }
           />
           <Route
             path="/register"
-            exact
-            render={() =>
+            element={
               isAuthenticated && !isRegistered ? (
                 <RegisterPage
                   docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
                   onRegister={register}
                 />
               ) : (
-                <Redirect to="/" />
+                <Navigate to="/" replace />
               )
             }
           />
-          <Route path="/about" exact render={() => <AboutPage />} />
-          <Route path="/terms" exact render={() => <TermsPage />} />
-          <Route path="*" render={() => <Redirect to={{ pathname: '/' }} />} />
-        </Switch>
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Layout>
     </Router>
   )
