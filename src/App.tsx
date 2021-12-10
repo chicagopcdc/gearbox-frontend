@@ -92,53 +92,54 @@ function App() {
         onLogout={signout}
       >
         <Switch>
-          <Route path="/" exact>
-            {isAuthenticated ? (
-              isRegistered ? (
-                <MatchingPage
-                  {...{
-                    conditions,
-                    config,
-                    criteria,
-                    studies,
-                    matchInput,
-                    updateMatchInput,
-                  }}
+          <Route
+            path="/"
+            exact
+            render={() =>
+              isAuthenticated ? (
+                isRegistered ? (
+                  <MatchingPage
+                    {...{
+                      conditions,
+                      config,
+                      criteria,
+                      studies,
+                      matchInput,
+                      updateMatchInput,
+                    }}
+                  />
+                ) : (
+                  <Redirect to="/register" />
+                )
+              ) : (
+                <LandingPage />
+              )
+            }
+          />
+          <Route
+            path="/login"
+            exact
+            render={() =>
+              isAuthenticated ? <Redirect to="/" /> : <LoginPage />
+            }
+          />
+          <Route
+            path="/register"
+            exact
+            render={() =>
+              isAuthenticated && !isRegistered ? (
+                <RegisterPage
+                  docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
+                  onRegister={register}
                 />
               ) : (
-                <Redirect to="/register" />
+                <Redirect to="/" />
               )
-            ) : (
-              <LandingPage />
-            )}
-          </Route>
-
-          <Route path="/login" exact>
-            {isAuthenticated ? <Redirect to="/" /> : <LoginPage />}
-          </Route>
-
-          <Route path="/register" exact>
-            {isAuthenticated && !isRegistered ? (
-              <RegisterPage
-                docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
-                onRegister={register}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
-
-          <Route path="/about" exact>
-            <AboutPage />
-          </Route>
-
-          <Route path="/terms" exact>
-            <TermsPage />
-          </Route>
-
-          <Route path="*">
-            <Redirect to={{ pathname: '/' }} />
-          </Route>
+            }
+          />
+          <Route path="/about" exact render={() => <AboutPage />} />
+          <Route path="/terms" exact render={() => <TermsPage />} />
+          <Route path="*" render={() => <Redirect to={{ pathname: '/' }} />} />
         </Switch>
       </Layout>
     </Router>
