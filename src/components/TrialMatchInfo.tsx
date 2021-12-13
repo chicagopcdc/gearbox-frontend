@@ -9,21 +9,16 @@ import {
   ZapOff,
 } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
-import type { MatchInfoAlgorithm } from '../model'
+import type { MatchInfoAlgorithm, Study } from '../model'
 import MatchInfoDetails from './MatchInfoDetails'
 
 type TrialMatchInfoProps = {
-  studyId: number
+  study: Study
   studyMatchInfo: MatchInfoAlgorithm
-  studyTitle: string
 }
 
-function TrialMatchInfo({
-  studyId,
-  studyMatchInfo,
-  studyTitle,
-}: TrialMatchInfoProps) {
-  const matchInfoId = `match-info-${studyId}`
+function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
+  const matchInfoId = `match-info-${study.id}`
 
   const [showModal, setShowModal] = useState(false)
   const [showModalOptions, setShowModalOptions] = useState(false)
@@ -58,6 +53,10 @@ function TrialMatchInfo({
   const toggleModalOptions = () => setShowModalOptions((show) => !show)
   const toggleFilter = () => setIsFilterActive((isActive) => !isActive)
   const toggleHighlight = () => setIsHighlightActive((isActive) => !isActive)
+  function handleModalOptionsBlur(e: React.FocusEvent) {
+    if (showModalOptions && !e.currentTarget.contains(e.relatedTarget))
+      setShowModalOptions(false)
+  }
 
   return (
     <>
@@ -85,15 +84,24 @@ function TrialMatchInfo({
             style={{ maxHeight: '95%', maxWidth: '95%' }}
           >
             <div className="text-sm sm:text-base px-4 pb-4 pt-2 sm:px-8 sm:pb-8">
-              <div className="flex items-center justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
+              <div className="flex items-baseline justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
                 <h3
                   id="eligibility-criteria-dialog-title"
                   className="font-bold mr-4"
                 >
-                  Eligibility Criteria for {studyTitle}
+                  <span className="text-gray-500 text-sm">
+                    Eligibility Criteria for{' '}
+                  </span>
+                  <span className="italic block">
+                    {study.code}: {study.title}
+                  </span>
                 </h3>
-                <div>
-                  <div className="inline relative font-normal normal-case text-base">
+                <div className="min-w-max">
+                  <div
+                    className="inline relative font-normal normal-case text-base"
+                    onBlur={handleModalOptionsBlur}
+                    tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
+                  >
                     <button
                       className={`p-1 ${
                         showModalOptions ? 'text-primary' : 'hover:text-primary'

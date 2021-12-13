@@ -56,7 +56,7 @@ export function UserActionCard({
       <Button outline onClick={onLogout}>
         Log out
       </Button>
-      <ul className="text-sm mt-8 mb-4">
+      <ul className="text-sm mt-8 mb-4 min-w-max">
         <li className="mx-2 inline underline">
           <Link to="/terms">Terms</Link>
         </li>

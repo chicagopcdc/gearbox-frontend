@@ -1,81 +1,85 @@
 [
   {
     "id": 1,
-    "title": "APAL2020SC",
+    "title": "A Study to Test Bone Marrow and Blood in Children With Leukemia That Has Come Back After Treatment or Is Difficult to Treat",
+    "code": "APAL2020SC",
     "locations": [],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT04726241"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "This study aims to use clinical and biological characteristics of acute leukemias to screen for patient eligibility for available pediatric leukemia sub-trials. Testing bone marrow and blood from patients with leukemia that has come back after treatment or is difficult to treat may provide information about the patient's leukemia that is important when deciding how to best treat it, and may help doctors find better ways to diagnose and treat leukemia in children, adolescents, and young adults."
   },
   {
     "id": 2,
-    "title": "SELCLAX",
+    "title": "Study of Selinexor and Venetoclax in Combination With Chemotherapy in Pediatric and Young Adult Patients With Refractory or Relapsed Acute Myeloid Leukemia",
+    "code": "SELCLAX",
     "locations": ["St. Jude Children's Research Hospital"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT04898894"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "The purpose of this study is to test the safety and determine the best dose of venetoclax and selinexor when given with chemotherapy drugs in treating pediatric and young adult patients with acute myeloid leukemia (AML) or acute leukemia of ambiguous lineage (ALAL) that has come back (relapsed) or did not respond to treatment (refractory)."
   },
   {
     "id": 3,
-    "title": "VENAML",
+    "title": "Study of Venetoclax in Combination With Chemotherapy in Pediatric Patients With Refractory or Relapsed Acute Myeloid Leukemia or Acute Leukemia of Ambiguous Lineage",
+    "code": "VENAML",
     "locations": [
       "Children's Hospital of Orange County",
+      "Lucille Packard Children's Hospital Stanford University",
+      "UNC Lineberger Comprehensive Cancer Center",
       "St. Jude Children's Research Hospital"
     ],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT03194932"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "The purpose of this study is to test the safety and determine the best dose of venetoclax and cytarabine when given with or without idarubicin in treating pediatric patients with acute myeloid leukemia (AML) that did not respond to treatment (refractory) or has come back after treatment (relapsed)."
   },
   {
     "id": 4,
-    "title": "PEPN1812",
+    "title": "Flotetuzumab for the Treatment of Pediatric Recurrent or Refractory Acute Myeloid Leukemia",
+    "code": "PEPN1812",
     "locations": [
       "Children's Hospital of Alabama",
       "Children's Hospital Los Angeles",
       "Children's Hospital of Orange County",
       "UCSF Medical Center-Mission Bay",
       "Children's Hospital Colorado",
-      "Children's National Medical Center"
+      "Children's National Medical Center",
+      "Children's Healthcare of Atlanta - Egleston",
+      "Lurie Children's Hospital-Chicago",
+      "Riley Hospital for Children",
+      "C S Mott Children's Hospital",
+      "University of Minnesota/Masonic Cancer Center",
+      "Washington University School of Medicine",
+      "NYP/Columbia University Medical Center/Herbert Irving Comprehensive Cancer Center",
+      "Cincinnati Children's Hospital Medical Center",
+      "Children's Hospital of Philadelphia",
+      "Children's Hospital of Pittsburgh of UPMC",
+      "Saint Jude Children's Research Hospital",
+      "Baylor College of Medicine/Dan L Duncan Comprehensive Cancer Center",
+      "Seattle Children's Hospital"
     ],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT04158739"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "This phase I trial studies the side effects and best dose of flotetuzumab and how well it works in treating patients with acute myeloid leukemia that has come back (recurrent) or has not responded to treatment (refractory). Immunotherapy with flotetuzumab may induce changes in the body's immune system and may interfere with the ability of leukemia cells to grow and spread. Giving flotetuzumab may stop the leukemia from growing or shrink for a period of time, as well as possibly lessening symptoms, such as pain, that are caused by the leukemia."
   },
   {
     "id": 5,
-    "title": "T2016-003",
+    "title": "Epigenetic Reprogramming in Relapse/Refractory AML",
+    "code": "T2016-003",
     "locations": [
       "Children's Hospital Los Angeles",
       "Children's Hospital Orange County",
@@ -85,48 +89,62 @@
       "University of Miami",
       "All Children's Hospital",
       "Children's Healthcare of Atlanta, Emory University",
-      "Lurie Children's Hospital of Chicago"
+      "Lurie Children's Hospital of Chicago",
+      "Johns Hopkins University",
+      "Sidney Kimmel Cancer Center at Johns Hopkins",
+      "National Cancer Institute, Pediatric Oncology Branch",
+      "Dana-Farber Cancer Institute",
+      "C.S. Mott Children's Hospital",
+      "CS Mott Children's Hospital, Ann Arbor",
+      "Children's Hospitals and Clinics of Minnesota",
+      "New York University Medical Center",
+      "Children's Hospital New York-Presbyterian",
+      "Levine Children's Hospital",
+      "Cincinnati Children's Hospital",
+      "Nationwide Children's Hospital",
+      "Oregon Health and Science University",
+      "Children's Hospital of Philadelphia",
+      "Cook Children's Medical Center",
+      "Texas Children's Cancer Center, Baylor",
+      "Primary Children's Hospital",
+      "Seattle Children's Hospital",
+      "Medical College of Wisconsin",
+      "Sydney Children's Hospital",
+      "Children's Hospital at Westmead",
+      "British Columbia Children's Hospital",
+      "Toronto, Ontario, Canada, M5G 1X8",
+      "Sainte Justine University Hospital"
     ],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT03263936"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "This is a pilot study using decitabine and vorinostat before and during chemotherapy with fludarabine, cytarabine and G-CSF (FLAG)."
   },
   {
     "id": 6,
-    "title": "2020-0484",
+    "title": "Liposomal Cytarabine, Daunorubicin, and Gemtuzumab Ozogamicin for the Treatment of Relapsed Refractory Pediatric Patients With Acute Myeloid Leukemia",
+    "code": "2020-0484",
     "locations": ["M D Anderson Cancer Center"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT04915612"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "This phase I trial studies the best dose and side effects of liposomal cytarabine, daunorubicin, and gemtuzumab ozogamicin in treating pediatric patients with acute myeloid leukemia that has returned after treatment (relapsed) or does not respond to treatment (refractory). Chemotherapy drugs, such as liposomal cytarabine and daunorubicin, work in different ways to stop the growth of tumor cells, either by killing the cells, by stopping them from dividing, or by stopping them from spreading. Gemtuzumab ozogamicin is a monoclonal antibody, called gemtuzumab, linked to a toxic agent called ozogamicin. Gemtuzumab attaches to CD33 positive cancer cells in a targeted way and delivers ozogamicin to kill them. Giving liposomal cytarabine and daunorubicin and gemtuzumab ozogamicin may help to control the disease."
   },
   {
     "id": 7,
-    "title": "834675",
+    "title": "CD123 Redirected T Cells for AML in Pediatric Subjects",
+    "code": "834675",
     "locations": ["Children's Hospital of Philadelphia"],
     "links": [
       {
         "name": "ClinicalTrials.gov",
         "href": "https://clinicaltrials.gov/ct2/show/NCT04678336"
-      },
-      {
-        "name": "LLS Clinical Trial Support Center (CTSC)",
-        "href": "https://www.lls.org/support-resources/information-specialists/clinical-trial-support-center-ctsc"
       }
     ],
     "description": "Phase 1 open-label study to estimate the safety, manufacturing feasibility, and efficacy of intravenously administered, lentivirally transduced T cells expressing anti-CD123 chimeric antigen receptors expressing tandem TCRζ and 4-1BB (TCRζ /4-1BB) costimulatory domains in pediatric subjects with relapsed/refractory Acute Myeloid Leukemia (AML)."
