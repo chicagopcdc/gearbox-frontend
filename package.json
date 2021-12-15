@@ -1,6 +1,6 @@
 {
   "name": "gearbox",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "dependencies": {
     "@fontsource/lato": "^4.5.0",
