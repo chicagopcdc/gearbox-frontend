@@ -161,7 +161,7 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                           <li className="hover:bg-red-100">
                             <button
                               className="w-full p-2"
-                              data-for="match-form-filter"
+                              data-for="match-form-highlight"
                               data-tip
                               onClick={toggleHighlight}
                             >
@@ -175,7 +175,7 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                             <ReactTooltip
                               border
                               borderColor="black"
-                              id="match-form-filter"
+                              id="match-form-highlight"
                               effect="solid"
                               place="bottom"
                               type="light"
