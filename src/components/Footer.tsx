@@ -65,7 +65,7 @@ function Footer() {
             </li>
           </ul>
         </div>
-        <div>© 2021 Pediatric Cancer Data Commons</div>
+        <div>© {new Date().getFullYear()} The University of Chicago</div>
       </section>
     </footer>
   )
