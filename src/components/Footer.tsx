@@ -33,14 +33,14 @@ function Footer() {
           />
         </a>
         <a
-          href="https://www.lls.org/"
+          href="https://www.lls.org/lls-childrens-initiative-pedal"
           className="m-2"
           target="_blank"
           rel="noreferrer"
         >
           <img
             src={llsLogo}
-            alt="Leukeima & Lymphoma Society"
+            alt="LLS PedAL"
             style={{ height: '60px', padding: '6px' }}
           />
         </a>
