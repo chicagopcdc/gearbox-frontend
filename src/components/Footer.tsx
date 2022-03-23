@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import uchicagoLogo from '../assets/uchicago-logo.svg'
 import pcdcLogo from '../assets/pcdc-logo.png'
-import pedalLogo from '../assets/pedal-logo.svg'
+import llsLogo from '../assets/lls-logo.svg'
 import LinkExternal from './LinkExternal'
 
 function Footer() {
@@ -33,12 +33,16 @@ function Footer() {
           />
         </a>
         <a
-          href="https://www.lls.org/childrens-initiative/pedal"
+          href="https://www.lls.org/"
           className="m-2"
           target="_blank"
           rel="noreferrer"
         >
-          <img src={pedalLogo} alt="PedAL" style={{ maxHeight: '60px' }} />
+          <img
+            src={llsLogo}
+            alt="Leukeima & Lymphoma Society"
+            style={{ height: '60px', padding: '6px' }}
+          />
         </a>
       </section>
       <section className="text-center text-sm">
