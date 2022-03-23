@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import uchicagoLogo from '../assets/uchicago-logo.svg'
 import pcdcLogo from '../assets/pcdc-logo.png'
-import pedalLogo from '../assets/pedal-logo.svg'
+import llsLogo from '../assets/lls-logo.svg'
 import LinkExternal from './LinkExternal'
 
 function Footer() {
@@ -17,7 +17,7 @@ function Footer() {
           <img
             src={uchicagoLogo}
             alt="University of Chicago"
-            style={{ maxHeight: '60px', padding: '6px' }}
+            style={{ height: '60px', padding: '6px' }}
           />
         </a>
         <a
@@ -29,16 +29,20 @@ function Footer() {
           <img
             src={pcdcLogo}
             alt="Pediatric Center Data Commons"
-            style={{ maxHeight: '60px' }}
+            style={{ height: '60px' }}
           />
         </a>
         <a
-          href="https://www.lls.org/childrens-initiative/pedal"
+          href="https://www.lls.org/lls-childrens-initiative-pedal"
           className="m-2"
           target="_blank"
           rel="noreferrer"
         >
-          <img src={pedalLogo} alt="PedAL" style={{ maxHeight: '60px' }} />
+          <img
+            src={llsLogo}
+            alt="LLS PedAL"
+            style={{ height: '60px', padding: '6px' }}
+          />
         </a>
       </section>
       <section className="text-center text-sm">
