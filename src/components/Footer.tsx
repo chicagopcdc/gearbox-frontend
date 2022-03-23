@@ -17,7 +17,7 @@ function Footer() {
           <img
             src={uchicagoLogo}
             alt="University of Chicago"
-            style={{ maxHeight: '60px', padding: '6px' }}
+            style={{ height: '60px', padding: '6px' }}
           />
         </a>
         <a
@@ -29,7 +29,7 @@ function Footer() {
           <img
             src={pcdcLogo}
             alt="Pediatric Center Data Commons"
-            style={{ maxHeight: '60px' }}
+            style={{ height: '60px' }}
           />
         </a>
         <a
