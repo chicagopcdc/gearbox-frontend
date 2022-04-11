@@ -2950,5 +2950,570 @@
     "fieldId": 146,
     "fieldValue": 4,
     "operator": "eq"
+  },
+  {
+    "id": 523,
+    "fieldId": 1,
+    "fieldValue": 22,
+    "operator": "lt"
+  },
+  {
+    "id": 524,
+    "fieldId": 8,
+    "fieldValue": 7,
+    "operator": "eq"
+  },
+  {
+    "id": 525,
+    "fieldId": 13,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 526,
+    "fieldId": 15,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 527,
+    "fieldId": 14,
+    "fieldValue": 1,
+    "operator": "gte"
+  },
+  {
+    "id": 531,
+    "fieldId": 3,
+    "fieldValue": 2,
+    "operator": "eq"
+  },
+  {
+    "id": 534,
+    "fieldId": 3,
+    "fieldValue": 1,
+    "operator": "eq"
+  },
+  {
+    "id": 535,
+    "fieldId": 24,
+    "fieldValue": 111,
+    "operator": "eq"
+  },
+  {
+    "id": 536,
+    "fieldId": 24,
+    "fieldValue": 112,
+    "operator": "eq"
+  }
+  ,
+  {
+    "id": 537,
+    "fieldId": 24,
+    "fieldValue": 113,
+    "operator": "eq"
+  },
+  {
+    "id": 538,
+    "fieldId": 22,
+    "fieldValue": 19,
+    "operator": "eq"
+  },
+  {
+    "id": 539,
+    "fieldId": 22,
+    "fieldValue": 20,
+    "operator": "eq"
+  },
+  {
+    "id": 540,
+    "fieldId": 26,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 541,
+    "fieldId": 33,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 542,
+    "fieldId": 33,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 543,
+    "fieldId": 30,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 544,
+    "fieldId": 31,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 545,
+    "fieldId": 32,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 546,
+    "fieldId": 34,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 547,
+    "fieldId": 148,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 548,
+    "fieldId": 35,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 549,
+    "fieldId": 39,
+    "fieldValue": 14,
+    "operator": "gte"
+  },
+  {
+    "id": 550,
+    "fieldId": 117,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 551,
+    "fieldId": 117,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 552,
+    "fieldId": 42,
+    "fieldValue": 21,
+    "operator": "gte"
+  },
+  {
+    "id": 553,
+    "fieldId": 121,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 554,
+    "fieldId": 121,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 555,
+    "fieldId": 43,
+    "fieldValue": 21,
+    "operator": "gte"
+  },
+  {
+    "id": 556,
+    "fieldId": 122,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 557,
+    "fieldId": 122,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 558,
+    "fieldId": 44,
+    "fieldValue": 14,
+    "operator": "gte"
+  },
+  {
+    "id": 559,
+    "fieldId": 123,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 560,
+    "fieldId": 123,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 561,
+    "fieldId": 45,
+    "fieldValue": 7,
+    "operator": "gte"
+  },
+  {
+    "id": 562,
+    "fieldId": 124,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 563,
+    "fieldId": 124,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 564,
+    "fieldId": 46,
+    "fieldValue": 14,
+    "operator": "gte"
+  },
+  {
+    "id": 565,
+    "fieldId": 125,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 566,
+    "fieldId": 125,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 567,
+    "fieldId": 47,
+    "fieldValue": 84,
+    "operator": "gte"
+  },
+  {
+    "id": 568,
+    "fieldId": 126,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 569,
+    "fieldId": 126,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 570,
+    "fieldId": 48,
+    "fieldValue": 84,
+    "operator": "gte"
+  },
+  {
+    "id": 571,
+    "fieldId": 127,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 572,
+    "fieldId": 127,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 573,
+    "fieldId": 50,
+    "fieldValue": 42,
+    "operator": "gte"
+  },
+  {
+    "id": 574,
+    "fieldId": 130,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 575,
+    "fieldId": 130,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 576,
+    "fieldId": 89,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 577,
+    "fieldId": 89,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 578,
+    "fieldId": 51,
+    "fieldValue": 84,
+    "operator": "gte"
+  },
+  {
+    "id": 579,
+    "fieldId": 58,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 580,
+    "fieldId": 53,
+    "fieldValue": 42,
+    "operator": "gte"
+  },
+  {
+    "id": 581,
+    "fieldId": 132,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 582,
+    "fieldId": 132,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 583,
+    "fieldId": 55,
+    "fieldValue": 7,
+    "operator": "gte"
+  },
+  {
+    "id": 584,
+    "fieldId": 134,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 585,
+    "fieldId": 134,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 586,
+    "fieldId": 142,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 587,
+    "fieldId": 142,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 588,
+    "fieldId": 143,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 589,
+    "fieldId": 143,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 590,
+    "fieldId": 65,
+    "fieldValue": 40,
+    "operator": "gte"
+  },
+  {
+    "id": 591,
+    "fieldId": 66,
+    "fieldValue": 25,
+    "operator": "gte"
+  },
+  {
+    "id": 592,
+    "fieldId": 145,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 593,
+    "fieldId": 145,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 594,
+    "fieldId": 1,
+    "fieldValue": 1,
+    "operator": "lt"
+  },
+  {
+    "id": 595,
+    "fieldId": 1,
+    "fieldValue": 1,
+    "operator": "gte"
+  },
+  {
+    "id": 596,
+    "fieldId": 1,
+    "fieldValue": 2,
+    "operator": "lt"
+  },
+  {
+    "id": 597,
+    "fieldId": 1,
+    "fieldValue": 2,
+    "operator": "gte"
+  },
+  {
+    "id": 598,
+    "fieldId": 1,
+    "fieldValue": 6,
+    "operator": "lt"
+  },
+  {
+    "id": 599,
+    "fieldId": 1,
+    "fieldValue": 6,
+    "operator": "gte"
+  },
+  {
+    "id": 600,
+    "fieldId": 1,
+    "fieldValue": 10,
+    "operator": "lt"
+  },
+  {
+    "id": 601,
+    "fieldId": 1,
+    "fieldValue": 10,
+    "operator": "gte"
+  },
+  {
+    "id": 602,
+    "fieldId": 1,
+    "fieldValue": 13,
+    "operator": "lt"
+  },
+  {
+    "id": 603,
+    "fieldId": 1,
+    "fieldValue": 13,
+    "operator": "gte"
+  },
+  {
+    "id": 604,
+    "fieldId": 1,
+    "fieldValue": 16,
+    "operator": "lt"
+  },
+  {
+    "id": 605,
+    "fieldId": 1,
+    "fieldValue": 16,
+    "operator": "gte"
+  },
+  {
+    "id": 606,
+    "fieldId": 69,
+    "fieldValue": 0.5,
+    "operator": "lte"
+  },
+  {
+    "id": 606,
+    "fieldId": 69,
+    "fieldValue": 0.5,
+    "operator": "lte"
+  },
+  {
+    "id": 607,
+    "fieldId": 69,
+    "fieldValue": 0.6,
+    "operator": "lte"
+  },
+  {
+    "id": 608,
+    "fieldId": 69,
+    "fieldValue": 0.8,
+    "operator": "lte"
+  },
+  {
+    "id": 609,
+    "fieldId": 69,
+    "fieldValue": 1.0,
+    "operator": "lte"
+  },
+  {
+    "id": 610,
+    "fieldId": 69,
+    "fieldValue": 1.2,
+    "operator": "lte"
+  },
+  {
+    "id": 611,
+    "fieldId": 69,
+    "fieldValue": 1.5,
+    "operator": "lte"
+  },
+  {
+    "id": 612,
+    "fieldId": 69,
+    "fieldValue": 1.7,
+    "operator": "lte"
+  },
+  {
+    "id": 613,
+    "fieldId": 69,
+    "fieldValue": 1.4,
+    "operator": "lte"
+  },
+  {
+    "id": 614,
+    "fieldId": 68,
+    "fieldValue": 60,
+    "operator": "gte"
+  },
+  {
+    "id": 615,
+    "fieldId": 146,
+    "fieldValue": 3,
+    "operator": "eq"
+  },
+  {
+    "id": 616,
+    "fieldId": 146,
+    "fieldValue": 4,
+    "operator": "eq"
+  },
+  {
+    "id": 617,
+    "fieldId": 72,
+    "fieldValue": 1.5,
+    "operator": "lte"
+  },
+  {
+    "id": 618,
+    "fieldId": 74,
+    "fieldValue": 2.5,
+    "operator": "lte"
+  },
+  {
+    "id": 619,
+    "fieldId": 149,
+    "fieldValue": 2.5,
+    "operator": "lt"
+  },
+  {
+    "id": 620,
+    "fieldId": 150,
+    "fieldValue": 4,
+    "operator": "eq"
   }
 ]
