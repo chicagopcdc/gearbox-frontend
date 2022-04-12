@@ -148,5 +148,18 @@
       }
     ],
     "description": "Phase 1 open-label study to estimate the safety, manufacturing feasibility, and efficacy of intravenously administered, lentivirally transduced T cells expressing anti-CD123 chimeric antigen receptors expressing tandem TCRζ and 4-1BB (TCRζ /4-1BB) costimulatory domains in pediatric subjects with relapsed/refractory Acute Myeloid Leukemia (AML)."
+  },
+  {
+    "id": 8,
+    "title": "Venetoclax in Children With Relapsed Acute Myeloid Leukemia (AML)",
+    "code": "APAL2020D",
+    "locations": [],
+    "links": [
+      {
+        "name": "ClinicalTrials.gov",
+        "href": "https://clinicaltrials.gov/ct2/show/NCT05183035"
+      }
+    ],
+    "description": "A study to evaluate if the randomized addition of venetoclax to a chemotherapy backbone (fludarabine/cytarabine/gemtuzumab ozogamicin [GO]) improves survival of children/adolescents/young adults with acute myeloid leukemia (AML) in 1st relapse who are unable to receive additional anthracyclines, or in 2nd relapse."
   }
 ]

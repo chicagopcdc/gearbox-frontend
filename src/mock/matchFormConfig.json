@@ -642,6 +642,18 @@
       ]
     },
     {
+      "id": 148,
+      "groupId": 2,
+      "type": "radio",
+      "name": "diag_chf",
+      "label": "Has the patient been diagnosed with: congestive heart failure (CHF)",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
       "id": 27,
       "groupId": 2,
       "type": "radio",
@@ -2164,6 +2176,25 @@
       }
     },
     {
+      "id": 149,
+      "groupId": 4,
+      "type": "number",
+      "name": "meas_alp_uln",
+      "label": "What is the patient's most recent measure of: Alkaline phosphatase (ALP) (in ULN)",
+      "min": 0,
+      "step": 0.1,
+      "showIf": {
+        "operator": "AND",
+        "criteria": [
+          {
+            "id": 146,
+            "value": 4,
+            "operator": "eq"
+          }
+        ]
+      }
+    },
+    {
       "id": 75,
       "groupId": 4,
       "type": "number",
@@ -2269,6 +2300,18 @@
       "type": "radio",
       "name": "expression_som_JAK2_V617F",
       "label": "Is there evidence of somatic JAK2 V617F mutation?",
+      "options": [
+        { "value": 3, "label": "Yes", "description": "" },
+        { "value": 4, "label": "No", "description": "" },
+        { "value": 5, "label": "Not sure", "description": "" }
+      ]
+    },
+    {
+      "id": 150,
+      "groupId": 5,
+      "type": "radio",
+      "name": "expression_flt3_itd",
+      "label": "Is there evidence of FLT3 / internal tandem duplication (ITD) mutation?",
       "options": [
         { "value": 3, "label": "Yes", "description": "" },
         { "value": 4, "label": "No", "description": "" },
