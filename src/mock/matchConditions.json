@@ -1518,14 +1518,11 @@
             {
               "operator": "AND",
               "criteria": [
-                587, 
+                587,
                 589,
                 {
                   "operator": "OR",
-                  "criteria": [
-                    590,
-                    591
-                  ]
+                  "criteria": [590, 591]
                 }
               ]
             }
