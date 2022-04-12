@@ -111,7 +111,14 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             </LinkExternal>
             . One of our pediatric oncology nurses will call your patient within
             1 business day and provide you with a copy of the individualized
-            trial search results.
+            trial search results. For general inquiries, simply email{' '}
+            <LinkExternal
+              className="text-blue-700"
+              to="mailto:askPedAL@lls.org"
+            >
+              askPedAL@lls.org
+            </LinkExternal>
+            .
           </p>
         </div>
       </div>
