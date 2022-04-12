@@ -32,7 +32,7 @@ function DropdownSection({
       }`}
     >
       <div
-        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black ${backgroundColor} ${
+        className={`flex sticky top-10 py-2 justify-between border-b border-solid border-black z-[5] ${backgroundColor} ${
           isFirefox ? 'transition-inherit' : ''
         }`}
       >
