@@ -44,39 +44,6 @@
     "description": "The purpose of this study is to test the safety and determine the best dose of venetoclax and cytarabine when given with or without idarubicin in treating pediatric patients with acute myeloid leukemia (AML) that did not respond to treatment (refractory) or has come back after treatment (relapsed)."
   },
   {
-    "id": 4,
-    "title": "Flotetuzumab for the Treatment of Pediatric Recurrent or Refractory Acute Myeloid Leukemia",
-    "code": "PEPN1812",
-    "locations": [
-      "Children's Hospital of Alabama",
-      "Children's Hospital Los Angeles",
-      "Children's Hospital of Orange County",
-      "UCSF Medical Center-Mission Bay",
-      "Children's Hospital Colorado",
-      "Children's National Medical Center",
-      "Children's Healthcare of Atlanta - Egleston",
-      "Lurie Children's Hospital-Chicago",
-      "Riley Hospital for Children",
-      "C S Mott Children's Hospital",
-      "University of Minnesota/Masonic Cancer Center",
-      "Washington University School of Medicine",
-      "NYP/Columbia University Medical Center/Herbert Irving Comprehensive Cancer Center",
-      "Cincinnati Children's Hospital Medical Center",
-      "Children's Hospital of Philadelphia",
-      "Children's Hospital of Pittsburgh of UPMC",
-      "Saint Jude Children's Research Hospital",
-      "Baylor College of Medicine/Dan L Duncan Comprehensive Cancer Center",
-      "Seattle Children's Hospital"
-    ],
-    "links": [
-      {
-        "name": "ClinicalTrials.gov",
-        "href": "https://clinicaltrials.gov/ct2/show/NCT04158739"
-      }
-    ],
-    "description": "This phase I trial studies the side effects and best dose of flotetuzumab and how well it works in treating patients with acute myeloid leukemia that has come back (recurrent) or has not responded to treatment (refractory). Immunotherapy with flotetuzumab may induce changes in the body's immune system and may interfere with the ability of leukemia cells to grow and spread. Giving flotetuzumab may stop the leukemia from growing or shrink for a period of time, as well as possibly lessening symptoms, such as pain, that are caused by the leukemia."
-  },
-  {
     "id": 5,
     "title": "Epigenetic Reprogramming in Relapse/Refractory AML",
     "code": "T2016-003",
