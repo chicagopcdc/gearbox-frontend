@@ -10,6 +10,7 @@ import {
 export default function useAuth(): {
   isAuthenticated: boolean
   isRegistered: boolean
+  hasDocsToBeReviewed: boolean
   user?: UserData
   register: (input: RegisterInput) => Promise<void>
   signout: () => void
@@ -43,10 +44,15 @@ export default function useAuth(): {
     }
   }, [isAuthenticated])
 
+  const isRegistered =
+    isAuthenticated && (userData?.authz?.['/portal'] ?? [])?.length > 0
+  const hasDocsToBeReviewed =
+    isRegistered && (userData.docs_to_be_reviewed ?? [])?.length > 0
+
   return {
     isAuthenticated,
-    isRegistered:
-      isAuthenticated && (userData?.authz?.['/portal'] ?? [])?.length > 0,
+    isRegistered,
+    hasDocsToBeReviewed,
     user: userData,
     register,
     signout,
