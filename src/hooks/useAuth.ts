@@ -27,7 +27,7 @@ export default function useAuth(): {
       isAuthenticated,
       isRegistered,
       hasDocsToBeReviewed,
-      userData,
+      user: userData,
       register: (registerInput: RegisterInput) =>
         registerUser(registerInput).then(setUserData),
       signout: () => {
