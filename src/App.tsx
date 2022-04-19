@@ -12,6 +12,7 @@ import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import DocumentReviewPage from './pages/DocumentReviewPage'
 import TermsPage from './pages/TermsPage'
 import useAuth from './hooks/useAuth'
 import type {
@@ -95,23 +96,23 @@ function App() {
           <Route
             path="/"
             element={
-              auth.isAuthenticated ? (
-                auth.isRegistered ? (
-                  <MatchingPage
-                    {...{
-                      conditions,
-                      config,
-                      criteria,
-                      studies,
-                      matchInput,
-                      updateMatchInput,
-                    }}
-                  />
-                ) : (
-                  <Navigate to="/register" replace />
-                )
-              ) : (
+              !auth.isAuthenticated ? (
                 <LandingPage />
+              ) : !auth.isRegistered ? (
+                <Navigate to="/register" replace />
+              ) : auth.hasDocsToBeReviewed ? (
+                <Navigate to="/document-review" replace />
+              ) : (
+                <MatchingPage
+                  {...{
+                    conditions,
+                    config,
+                    criteria,
+                    studies,
+                    matchInput,
+                    updateMatchInput,
+                  }}
+                />
               )
             }
           />
@@ -128,6 +129,19 @@ function App() {
                 <RegisterPage
                   docsToBeReviewed={auth.user?.docs_to_be_reviewed ?? []}
                   onRegister={auth.register}
+                />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/document-review"
+            element={
+              auth.hasDocsToBeReviewed ? (
+                <DocumentReviewPage
+                  docsToBeReviewed={auth.user?.docs_to_be_reviewed ?? []}
+                  onReview={auth.reviewDocuments}
                 />
               ) : (
                 <Navigate to="/" replace />
