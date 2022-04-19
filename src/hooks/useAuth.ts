@@ -5,6 +5,7 @@ import {
   keepUserSessionAlive,
   logout,
   registerUser,
+  updateDocsReviewStatus,
 } from '../api/auth'
 
 export default function useAuth(): {
@@ -13,6 +14,7 @@ export default function useAuth(): {
   hasDocsToBeReviewed: boolean
   user?: UserData
   register: (input: RegisterInput) => Promise<void>
+  reviewDocuments: (status: RegisterInput['reviewStatus']) => Promise<void>
   signout: () => void
 } {
   const [userData, setUserData] = useState<UserData>()
@@ -30,6 +32,14 @@ export default function useAuth(): {
       user: userData,
       register: (registerInput: RegisterInput) =>
         registerUser(registerInput).then(setUserData),
+      reviewDocuments: (status: RegisterInput['reviewStatus']) =>
+        updateDocsReviewStatus(status).then((docsToBeReviewed) =>
+          setUserData((prevUserData) =>
+            prevUserData === undefined
+              ? prevUserData
+              : { ...prevUserData, docs_to_be_reviewed: docsToBeReviewed }
+          )
+        ),
       signout: () => {
         setUserData(undefined)
         logout()
