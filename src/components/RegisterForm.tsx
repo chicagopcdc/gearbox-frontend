@@ -11,10 +11,13 @@ import type {
 
 export type RegisterFormProps = {
   docsToBeReviewed: RegisterDocument[]
-  onRegister: (input: RegisterInput) => void
+  onRegister: (input: RegisterInput) => Promise<void>
 }
 
 function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
+  const [error, setError] = useState(null as Error | null)
+  if (error) throw error
+
   const fieldsConfig: RegisterFormFieldConfig[] = [
     {
       type: 'text',
@@ -127,7 +130,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
       onRegister({
         ...otherValues,
         role: role === 'other' && roleOther !== undefined ? roleOther : role,
-      })
+      }).catch(setError)
     },
     validate: (values) => {
       const errors: { [key: string]: string } = {}
