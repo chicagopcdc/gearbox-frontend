@@ -11,13 +11,16 @@ import type {
 
 type DocumentReviewFormProps = {
   docsToBeReviewed: RegisterDocument[]
-  onReview: (status: RegisterInput['reviewStatus']) => void
+  onReview: (status: RegisterInput['reviewStatus']) => Promise<void>
 }
 
 function DocumentReviewForm({
   docsToBeReviewed,
   onReview,
 }: DocumentReviewFormProps) {
+  const [error, setError] = useState(null as Error | null)
+  if (error) throw error
+
   const fieldsConfig: RegisterFormFieldConfig[] = []
   const initialValues: { status: RegisterInput['reviewStatus'] } = {
     status: {},
@@ -49,7 +52,7 @@ function DocumentReviewForm({
     enableReinitialize: true,
     onSubmit: ({ status }) => {
       setIsSubmitting(true)
-      onReview(status)
+      onReview(status).catch(setError)
     },
   })
 

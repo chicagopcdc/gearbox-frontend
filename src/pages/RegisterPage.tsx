@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import ErrorBoundary from '../components/ErrorBoundary'
 import RegisterForm from '../components/RegisterForm'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 import type { RegisterDocument, RegisterInput } from '../model'
@@ -9,15 +9,6 @@ type RegisterPageProps = {
 }
 
 function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
-  const [isError, setIsError] = useState(false)
-
-  function handleRegister(input: RegisterInput) {
-    onRegister(input).catch((e) => {
-      setIsError(true)
-      console.error(e)
-    })
-  }
-
   return (
     <div className="flex h-full items-center justify-center">
       <div
@@ -31,28 +22,25 @@ function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
             style={{ height: '40px' }}
           />
         </div>
-
-        {isError ? (
-          <>
-            <h1 className="mb-16 text-lg text-center">
-              Failed to register to use GEARBOx!
-            </h1>
-            <p>
-              Pleaset refresh thie page and try again. If the problem persists,
-              please contact us to get help.
-            </p>
-          </>
-        ) : (
-          <>
-            <h1 className="mb-16 text-lg text-center">
-              Register to use GEARBOx
-            </h1>
-            <RegisterForm
-              docsToBeReviewed={docsToBeReviewed}
-              onRegister={handleRegister}
-            />
-          </>
-        )}
+        <ErrorBoundary
+          fallback={
+            <>
+              <h1 className="mb-16 text-lg text-center">
+                Failed to register to use GEARBOx!
+              </h1>
+              <p>
+                Pleaset refresh thie page and try again. If the problem
+                persists, please contact us to get help.
+              </p>
+            </>
+          }
+        >
+          <h1 className="mb-16 text-lg text-center">Register to use GEARBOx</h1>
+          <RegisterForm
+            docsToBeReviewed={docsToBeReviewed}
+            onRegister={onRegister}
+          />
+        </ErrorBoundary>
       </div>
     </div>
   )
