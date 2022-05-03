@@ -4,7 +4,7 @@ import type { MatchFormConfig, MatchFormValues } from '../model'
 import '../index.css'
 
 export default {
-  title: 'MatchForm',
+  title: 'Forms/MatchForm',
   component: MatchForm,
   decorators: [
     (storyFn: () => JSX.Element) => (

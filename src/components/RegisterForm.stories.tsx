@@ -4,7 +4,7 @@ import type { RegisterDocument } from '../model'
 import '../index.css'
 
 export default {
-  title: 'RegisterForm',
+  title: 'Forms/RegisterForm',
   component: RegisterForm,
   decorators: [
     (storyFn: () => JSX.Element) => (
