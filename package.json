@@ -6,7 +6,6 @@
     "@fontsource/lato": "^4.5.3",
     "@tailwindcss/forms": "^0.4.1",
     "autoprefixer": "^10.4.4",
-    "formik": "^2.2.6",
     "postcss": "^8.4.12",
     "postcss-cli": "^9.1.0",
     "react": "^17.0.2",
