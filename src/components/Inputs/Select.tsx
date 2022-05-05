@@ -22,7 +22,7 @@ function Select({
   name,
   options,
   placeholder,
-  value = '',
+  value,
   disabled = false,
   onChange,
   ...attrs
