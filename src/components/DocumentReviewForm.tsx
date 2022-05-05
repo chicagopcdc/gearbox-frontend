@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { getIn, useFormik } from 'formik'
 import LinkExternal from './LinkExternal'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
@@ -22,13 +21,11 @@ function DocumentReviewForm({
   if (error) throw error
 
   const fieldsConfig: RegisterFormFieldConfig[] = []
-  const initialValues: { status: RegisterInput['reviewStatus'] } = {
-    status: {},
-  }
+  const initialValues: RegisterInput['reviewStatus'] = {}
   for (const { id, name, formatted, required, version } of docsToBeReviewed) {
     fieldsConfig.push({
       type: 'checkbox',
-      name: `status.${id}`,
+      name: String(id),
       label: (
         <>
           I have read and agree to the{' '}
@@ -40,41 +37,31 @@ function DocumentReviewForm({
       ),
       required,
     })
-
-    initialValues.status[id] = false
+    initialValues[id] = false
   }
-
   const [isSubmitting, setIsSubmitting] = useState(false)
   useEffect(() => () => setIsSubmitting(false), [])
 
-  const formik = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    onSubmit: ({ status }) => {
-      setIsSubmitting(true)
-      onReview(status).catch(setError)
-    },
-  })
+  function handleSubmit(e: React.SyntheticEvent) {
+    e.preventDefault()
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    formik.setFieldValue(e.target.name, e.target.checked)
+    const status: RegisterInput['reviewStatus'] = initialValues
+    const formData = new FormData(e.target as HTMLFormElement)
+    for (const [k, v] of formData.entries()) status[Number(k)] = v === 'on'
+
+    setIsSubmitting(true)
+    onReview(status).catch(setError)
   }
 
-  const hasUnreviewedDoc = !Object.values(formik.values.status).every(Boolean)
-
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       {fieldsConfig.map((fieldConfig) => (
         <div className="my-4" key={fieldConfig.name}>
-          <Field
-            config={fieldConfig}
-            value={getIn(formik.values, fieldConfig.name)}
-            onChange={handleChange}
-          />
+          <Field config={fieldConfig} />
         </div>
       ))}
       <div className="flex flex-wrap justify-center mt-8">
-        <Button type="submit" disabled={hasUnreviewedDoc || isSubmitting}>
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Completing...' : 'Complete'}
         </Button>
       </div>
