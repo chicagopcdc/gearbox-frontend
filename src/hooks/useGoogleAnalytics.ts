@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import ReactGA from 'react-ga'
-import type { Location } from 'history'
+import type { Location } from 'react-router-dom'
 
 const gaTrackingId = process.env.REACT_APP_GA_TRACKING_ID ?? ''
 const isUsingGoogleAnalytics = /UA-\d+-\d+/.test(gaTrackingId)

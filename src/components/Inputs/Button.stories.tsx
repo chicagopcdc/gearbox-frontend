@@ -1,24 +1,29 @@
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import Button from './Button'
 import '../../index.css'
 
 export default {
-  title: 'Button',
+  title: 'Inputs/Button',
   components: Button,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
-}
+} as ComponentMeta<typeof Button>
 
-export const defaultView = () => (
-  <Button onClick={() => alert('clicked!')}>Click me</Button>
+export const Basic: ComponentStory<typeof Button> = (args) => (
+  <div className="m-4">
+    <Button {...args} />
+  </div>
 )
 
-export const block = () => <Button block>Click me</Button>
+Basic.args = {
+  children: 'Click me',
+  disabled: false,
+  onClick: action('click'),
+  outline: false,
+}
 
-export const disabled = () => <Button disabled>Click me</Button>
-
-export const outline = () => <Button outline>Click me</Button>
-
-export const small = () => <Button size="small">Click me</Button>
-
-export const large = () => <Button size="large">Click me</Button>
+Basic.argTypes = {
+  size: {
+    options: [undefined, 'small', 'large'],
+    control: { type: 'radio' },
+  },
+}

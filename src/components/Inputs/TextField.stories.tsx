@@ -1,84 +1,95 @@
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import TextField from './TextField'
 import '../../index.css'
 
-export default {
-  title: 'TextField',
-  component: TextField,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
+function onChange(e: React.BaseSyntheticEvent) {
+  return action(`${e.target.value}`)(e)
 }
 
-export const defaultView = () => (
-  <TextField
-    label="default text field"
-    placeholder="some text"
-    onChange={(e) => console.log(e.target.value)}
-  />
+export default {
+  title: 'Inputs/TextField',
+  component: TextField,
+} as ComponentMeta<typeof TextField>
+
+export const Basic: ComponentStory<typeof TextField> = (args) => (
+  <div className="m-4">
+    <TextField {...args} />
+  </div>
 )
 
-export const withPattern = () => (
-  <TextField
-    label="default text field"
-    pattern="\d{7}"
-    placeholder="e.g. 1234567"
-    onChange={(e) => console.log(e.target.value)}
-  />
-)
+Basic.args = {
+  label: 'A basic text field',
+  name: 'basic-field',
+  onChange,
+  placeholder: 'placeholder',
+}
 
-export const disabled = () => (
-  <TextField
-    label="Disabled"
-    value="cannot be changed"
-    disabled
-    onChange={(e) => console.log(e.target.value)}
-  />
-)
+export const Text = Basic.bind({})
 
-export const readOnly = () => (
-  <TextField
-    label="read only"
-    value="cannot be changed"
-    readOnly
-    onChange={(e) => console.log(e.target.value)}
-  />
-)
+Text.args = {
+  label: 'A text field',
+  name: 'text-field',
+  onChange,
+  placeholder: 'Some text',
+  type: 'text',
+}
 
-export const typePassword = () => (
-  <TextField
-    label="password"
-    placeholder="some password"
-    type="password"
-    onChange={(e) => console.log(e.target.value)}
-  />
-)
+Text.argTypes = {
+  type: {
+    table: { disable: true },
+  },
+  max: {
+    table: { disable: true },
+  },
+  min: {
+    table: { disable: true },
+  },
+  step: {
+    table: { disable: true },
+  },
+}
 
-export const typeNumber = () => (
-  <>
-    <TextField
-      label="number field"
-      type="number"
-      placeholder="some number"
-      onChange={(e) => console.log(e.target.value)}
-    />
-    <br />
-    <br />
-    <TextField
-      label="with min and max"
-      type="number"
-      placeholder="between 0 and 10"
-      min={0}
-      max={10}
-      onChange={(e) => console.log(e.target.value)}
-    />
-    <br />
-    <br />
-    <TextField
-      label="with step"
-      type="number"
-      placeholder="by 0.1"
-      step={0.1}
-      onChange={(e) => console.log(e.target.value)}
-    />
-  </>
-)
+export const Password = Basic.bind({})
+
+Password.args = {
+  label: 'A password field',
+  name: 'password-field',
+  onChange,
+  placeholder: 'Some password',
+  type: 'password',
+}
+
+Password.argTypes = {
+  type: {
+    table: { disable: true },
+  },
+  max: {
+    table: { disable: true },
+  },
+  min: {
+    table: { disable: true },
+  },
+  step: {
+    table: { disable: true },
+  },
+}
+
+export const Number = Basic.bind({})
+
+Number.args = {
+  label: 'A number field',
+  name: 'number-field',
+  onChange,
+  placeholder: 'Some number',
+  type: 'number',
+}
+
+Number.argTypes = {
+  type: {
+    table: { disable: true },
+  },
+  pattern: {
+    table: { disable: true },
+  },
+}

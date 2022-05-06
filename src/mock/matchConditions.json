@@ -470,329 +470,6 @@
     }
   },
   {
-    "studyId": 4,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        136,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [137, 138, 139, 140]
-            },
-            {
-              "operator": "AND",
-              "criteria": [137, 141, 142, 143]
-            },
-            {
-              "operator": "AND",
-              "criteria": [137, 138, 144, 145, 140, 141, 142, 146]
-            },
-            {
-              "operator": "AND",
-              "criteria": [137, 141, 142, 146, 147]
-            }
-          ]
-        },
-        155,
-        156,
-        157,
-        {
-          "operator": "OR",
-          "criteria": [158, 159, 470]
-        },
-        160,
-        161,
-        162,
-        163,
-        164,
-        165,
-        169,
-        170,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [404, 171]
-            },
-            405
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [410, 172]
-            },
-            411
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [414, 173]
-            },
-            415
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [418, 174]
-            },
-            419
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [420, 175]
-            },
-            421
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [422, 176]
-            },
-            423
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [426, 177]
-            },
-            427
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [430, 178]
-            },
-            431
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [432, 179]
-            },
-            433
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [436, 180]
-            },
-            437
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [438, 181]
-            },
-            439
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [444, 182]
-            },
-            445
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [446, 183]
-            },
-            447
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            184,
-            {
-              "operator": "AND",
-              "criteria": [147, 185]
-            },
-            {
-              "operator": "AND",
-              "criteria": [147, 186]
-            }
-          ]
-        },
-        187,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [448, 188]
-            },
-            449
-          ]
-        },
-        189,
-        190,
-        191,
-        192,
-        193,
-        {
-          "operator": "OR",
-          "criteria": [
-            493,
-            {
-              "operator": "AND",
-              "criteria": [506, 494]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                506,
-                507,
-                {
-                  "operator": "OR",
-                  "criteria": [194, 195]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                508,
-                196,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    219,
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 199, 211]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 200, 201, 212]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 202, 203, 213]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 204, 205, 214]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 206, 207, 215]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 208, 209, 216]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [198, 210, 217]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 199, 211]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 200, 201, 212]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 202, 203, 213]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 204, 205, 214]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 206, 207, 215]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 208, 209, 218]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [197, 210, 218]
-                    }
-                  ]
-                }
-              ]
-            },
-            495
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [509, 220, 221, 222, 223]
-            },
-            496
-          ]
-        },
-
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [510, 224, 225]
-            },
-            497
-          ]
-        },
-        226
-      ]
-    }
-  },
-  {
     "studyId": 5,
     "algorithm": {
       "operator": "AND",
@@ -1334,7 +1011,7 @@
             492,
             {
               "operator": "AND",
-              "criteria": [522, 393, 3994]
+              "criteria": [522, 393, 394]
             }
           ]
         },
@@ -1361,6 +1038,258 @@
         401,
         402,
         403
+      ]
+    }
+  },
+  {
+    "studyId": 8,
+    "algorithm": {
+      "operator": "AND",
+      "criteria": [
+        523,
+        524,
+        525,
+        526,
+        527,
+        {
+          "operator": "OR",
+          "criteria": [535, 536, 537]
+        },
+        {
+          "operator": "OR",
+          "criteria": [538, 539]
+        },
+        540,
+        {
+          "operator": "OR",
+          "criteria": [
+            541,
+            {
+              "operator": "AND",
+              "criteria": [542, 543, 544, 545]
+            }
+          ]
+        },
+        546,
+        547,
+        548,
+        {
+          "operator": "OR",
+          "criteria": [
+            551,
+            {
+              "operator": "AND",
+              "criteria": [549, 550]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            554,
+            {
+              "operator": "AND",
+              "criteria": [552, 553]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            557,
+            {
+              "operator": "AND",
+              "criteria": [555, 556]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            560,
+            {
+              "operator": "AND",
+              "criteria": [558, 559]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            563,
+            {
+              "operator": "AND",
+              "criteria": [561, 562]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            566,
+            {
+              "operator": "AND",
+              "criteria": [564, 565]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            569,
+            {
+              "operator": "AND",
+              "criteria": [567, 568]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            572,
+            {
+              "operator": "AND",
+              "criteria": [570, 571]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            575,
+            {
+              "operator": "AND",
+              "criteria": [573, 574]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            576,
+            {
+              "operator": "AND",
+              "criteria": [577, 578]
+            }
+          ]
+        },
+        579,
+        {
+          "operator": "OR",
+          "criteria": [
+            585,
+            {
+              "operator": "AND",
+              "criteria": [583, 584]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            586,
+            {
+              "operator": "AND",
+              "criteria": [587, 588]
+            },
+            {
+              "operator": "AND",
+              "criteria": [
+                587,
+                589,
+                {
+                  "operator": "OR",
+                  "criteria": [590, 591]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            592,
+            {
+              "operator": "AND",
+              "criteria": [
+                593,
+                614,
+                {
+                  "operator": "OR",
+                  "criteria": [
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 594, 606]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 595, 596, 607]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 597, 598, 608]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 599, 600, 609]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 601, 602, 610]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 603, 604, 611]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [534, 605, 612]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 594, 606]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 595, 596, 607]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 597, 598, 608]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 599, 600, 609]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 601, 602, 610]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 603, 604, 613]
+                    },
+                    {
+                      "operator": "AND",
+                      "criteria": [531, 605, 613]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "operator": "OR",
+          "criteria": [
+            615,
+            {
+              "operator": "AND",
+              "criteria": [616, 617, 618, 619]
+            }
+          ]
+        },
+        620
       ]
     }
   }

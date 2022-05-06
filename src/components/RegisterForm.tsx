@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { getIn, useFormik } from 'formik'
 import LinkExternal from './LinkExternal'
 import Button from './Inputs/Button'
 import Field from './Inputs/Field'
@@ -11,11 +10,16 @@ import type {
 
 export type RegisterFormProps = {
   docsToBeReviewed: RegisterDocument[]
-  onRegister: (input: RegisterInput) => void
+  onRegister: (input: RegisterInput) => Promise<void>
 }
 
+type RegisterUserInput = Omit<RegisterInput, 'reviewStatus' | 'accessCde'>
+
 function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
-  const fieldsConfig: RegisterFormFieldConfig[] = [
+  const [error, setError] = useState(null as Error | null)
+  if (error) throw error
+
+  const userFieldsConfig: RegisterFormFieldConfig[] = [
     {
       type: 'text',
       name: 'firstName',
@@ -68,24 +72,24 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
       name: 'roleOther',
       label: 'Type in your role',
       required: true,
-      showIf: {
-        name: 'role',
-        value: 'other',
-      },
     },
   ]
-
-  const initialValues: RegisterInput = {
+  const initialUser: RegisterUserInput = {
     firstName: '',
     lastName: '',
     institution: '',
     role: '',
     roleOther: '',
-    reviewStatus: {},
+  }
+  const [showRoleOther, setShowRoleOther] = useState(false)
+  function handleUserChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.name === 'role') setShowRoleOther(e.target.value === 'other')
   }
 
-  for (const { id, name, formatted, required } of docsToBeReviewed) {
-    fieldsConfig.push({
+  const reviewStatusFieldsConfig: RegisterFormFieldConfig[] = []
+  const initialReviewStatus: RegisterInput['reviewStatus'] = {}
+  for (const { id, name, formatted, required, version } of docsToBeReviewed) {
+    reviewStatusFieldsConfig.push({
       type: 'checkbox',
       name: `reviewStatus.${id}`,
       label: (
@@ -94,79 +98,84 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
           <LinkExternal className="underline text-primary" to={formatted}>
             {name}
           </LinkExternal>
+          {version ? ` (v${version})` : null}
         </>
       ),
       required,
     })
 
-    initialValues.reviewStatus[id] = false
+    initialReviewStatus[id] = false
   }
 
-  if (process.env.REACT_APP_ACCESS_CODE) {
-    fieldsConfig.push({
+  let accessCodeFieldConfig: RegisterFormFieldConfig | undefined = undefined
+  if (process.env.REACT_APP_ACCESS_CODE)
+    accessCodeFieldConfig = {
       type: 'text',
       name: 'accessCode',
       label: 'Access code',
       required: true,
-    })
-
-    initialValues['accessCode'] = ''
+      pattern: process.env.REACT_APP_ACCESS_CODE,
+    }
+  const [accessCode, setAccessCode] = useState('')
+  function handleAccessCodeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setAccessCode(e.target.value)
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   useEffect(() => () => setIsSubmitting(false), [])
+  function handleSubmit(e: React.SyntheticEvent) {
+    e.preventDefault()
 
-  const formik = useFormik({
-    initialValues,
-    enableReinitialize: true,
-    onSubmit: ({ role, roleOther, ...otherValues }) => {
-      setIsSubmitting(true)
+    const user = { ...initialUser }
+    const reviewStatus = { ...initialReviewStatus }
+    const formData = new FormData(e.target as HTMLFormElement)
+    for (const [k, v] of formData.entries())
+      if (k !== 'accessCode')
+        if (k.startsWith('reviewStatus')) {
+          const id = Number(k.split('.')[1])
+          reviewStatus[id] = v === 'on'
+        } else {
+          user[k as keyof RegisterUserInput] = v as string
+        }
 
-      if ('accessCode' in otherValues) delete otherValues['accessCode']
-      onRegister({
-        ...otherValues,
-        role: role === 'other' && roleOther !== undefined ? roleOther : role,
-      })
-    },
-    validate: (values) => {
-      const errors: { [key: string]: string } = {}
-
-      if (
-        process.env.REACT_APP_ACCESS_CODE &&
-        process.env.REACT_APP_ACCESS_CODE !== values.accessCode
-      )
-        errors.accessCode = 'Invalid access code!'
-
-      return errors
-    },
-  })
-
-  function handleChange(e: any) {
-    e.target.type === 'checkbox'
-      ? formik.setFieldValue(e.target.name, e.target.checked)
-      : formik.handleChange(e)
+    setIsSubmitting(true)
+    const { role, roleOther, ...rest } = user
+    onRegister({
+      reviewStatus,
+      role: role === 'other' && roleOther !== undefined ? roleOther : role,
+      ...rest,
+    }).catch(setError)
   }
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      {fieldsConfig.map(
-        ({ showIf, ...fieldConfig }) =>
-          (showIf === undefined ||
-            getIn(formik.values, showIf.name) === showIf.value) && (
+    <form onSubmit={handleSubmit}>
+      {userFieldsConfig.map(
+        (fieldConfig) =>
+          (fieldConfig.name !== 'roleOther' || showRoleOther) && (
             <div className="my-4" key={fieldConfig.name}>
-              <Field
-                config={fieldConfig}
-                value={getIn(formik.values, fieldConfig.name)}
-                onChange={handleChange}
-              />
-              {fieldConfig.name === 'accessCode' &&
-                formik.errors.accessCode && (
-                  <div className="text-red-400 text-sm italic">
-                    {formik.errors.accessCode}
-                  </div>
-                )}
+              <Field config={fieldConfig} onChange={handleUserChange} />
             </div>
           )
+      )}
+      {reviewStatusFieldsConfig.map((fieldConfig) => (
+        <div className="my-4" key={fieldConfig.name}>
+          <Field config={fieldConfig} />
+        </div>
+      ))}
+      {accessCodeFieldConfig !== undefined && (
+        <div className="my-4" key={accessCodeFieldConfig.name}>
+          <Field
+            config={accessCodeFieldConfig}
+            value={accessCode}
+            onChange={handleAccessCodeChange}
+          />
+          {accessCode !== '' &&
+            accessCode !== accessCodeFieldConfig.pattern && (
+              <div className="text-red-400 text-sm italic">
+                Invalid access code!
+              </div>
+            )}
+        </div>
       )}
       <div className="flex flex-wrap justify-center mt-8">
         <Button type="submit" disabled={isSubmitting}>

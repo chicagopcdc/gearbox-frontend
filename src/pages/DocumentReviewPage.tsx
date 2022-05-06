@@ -1,14 +1,17 @@
+import DocumentReviewForm from '../components/DocumentReviewForm'
 import ErrorBoundary from '../components/ErrorBoundary'
-import RegisterForm from '../components/RegisterForm'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 import type { RegisterDocument, RegisterInput } from '../model'
 
-type RegisterPageProps = {
+type DocumentReviewPageProps = {
   docsToBeReviewed: RegisterDocument[]
-  onRegister: (input: RegisterInput) => Promise<void>
+  onReview: (reviewStatus: RegisterInput['reviewStatus']) => Promise<void>
 }
 
-function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
+function DocumentReviewPage({
+  docsToBeReviewed,
+  onReview,
+}: DocumentReviewPageProps) {
   return (
     <div className="flex h-full items-center justify-center">
       <div
@@ -26,7 +29,7 @@ function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
           fallback={
             <>
               <h1 className="mb-16 text-lg text-center">
-                Failed to register to use GEARBOx!
+                Failed to complete document review to use GEARBOx!
               </h1>
               <p>
                 Pleaset refresh thie page and try again. If the problem
@@ -35,10 +38,13 @@ function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
             </>
           }
         >
-          <h1 className="mb-16 text-lg text-center">Register to use GEARBOx</h1>
-          <RegisterForm
+          <h1 className="mb-16 text-lg text-center">
+            Review the following updated documents to continue your access to
+            GEARBOx
+          </h1>
+          <DocumentReviewForm
             docsToBeReviewed={docsToBeReviewed}
-            onRegister={onRegister}
+            onReview={onReview}
           />
         </ErrorBoundary>
       </div>
@@ -46,4 +52,4 @@ function RegisterPage({ docsToBeReviewed, onRegister }: RegisterPageProps) {
   )
 }
 
-export default RegisterPage
+export default DocumentReviewPage

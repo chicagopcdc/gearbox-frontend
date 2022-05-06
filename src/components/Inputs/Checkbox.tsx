@@ -18,10 +18,10 @@ function Checkbox({
   onChange,
   ...attrs
 }: CheckboxProps) {
-  const className = disabled ? 'text-gray-400' : undefined
+  const className = 'flex' + (disabled ? ' text-gray-400' : '')
 
   const baseInputClassName =
-    'rounded-none border border-solid border-black mr-4'
+    'rounded-none border border-solid border-black inline-block mt-1 mr-4'
   const disabledInputClassName = `${baseInputClassName} border-gray-300 bg-gray-200`
   const checkboxAttrs = {
     ...attrs,

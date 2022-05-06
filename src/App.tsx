@@ -12,6 +12,7 @@ import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import DocumentReviewPage from './pages/DocumentReviewPage'
 import TermsPage from './pages/TermsPage'
 import useAuth from './hooks/useAuth'
 import type {
@@ -30,7 +31,7 @@ import {
 import { getLatestUserInput, postUserInput } from './api/userInput'
 
 function App() {
-  const { isAuthenticated, isRegistered, user, register, signout } = useAuth()
+  const auth = useAuth()
 
   const [studies, setStudies] = useState([] as Study[])
   useEffect(() => {
@@ -53,7 +54,7 @@ function App() {
     }
   }
   useEffect(() => {
-    if (isAuthenticated && isRegistered) {
+    if (auth.isAuthenticated && auth.isRegistered) {
       // load data on login
       Promise.all([
         mockLoadEligibilityCriteria(),
@@ -82,52 +83,65 @@ function App() {
       setMatchInput({} as MatchFormValues)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated, isRegistered])
+  }, [auth.isAuthenticated, auth.isRegistered])
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
       <Layout
-        isAuthenticated={isAuthenticated}
-        username={user?.username ?? ''}
-        onLogout={signout}
+        isAuthenticated={auth.isAuthenticated}
+        username={auth.user?.username ?? ''}
+        onLogout={auth.signout}
       >
         <Routes>
           <Route
             path="/"
             element={
-              isAuthenticated ? (
-                isRegistered ? (
-                  <MatchingPage
-                    {...{
-                      conditions,
-                      config,
-                      criteria,
-                      studies,
-                      matchInput,
-                      updateMatchInput,
-                    }}
-                  />
-                ) : (
-                  <Navigate to="/register" replace />
-                )
-              ) : (
+              !auth.isAuthenticated ? (
                 <LandingPage />
+              ) : !auth.isRegistered ? (
+                <Navigate to="/register" replace />
+              ) : auth.hasDocsToBeReviewed ? (
+                <Navigate to="/document-review" replace />
+              ) : (
+                <MatchingPage
+                  {...{
+                    conditions,
+                    config,
+                    criteria,
+                    studies,
+                    matchInput,
+                    updateMatchInput,
+                  }}
+                />
               )
             }
           />
           <Route
             path="/login"
             element={
-              isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />
+              auth.isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />
             }
           />
           <Route
             path="/register"
             element={
-              isAuthenticated && !isRegistered ? (
+              auth.isAuthenticated && !auth.isRegistered ? (
                 <RegisterPage
-                  docsToBeReviewed={user?.docs_to_be_reviewed ?? []}
-                  onRegister={register}
+                  docsToBeReviewed={auth.user?.docs_to_be_reviewed ?? []}
+                  onRegister={auth.register}
+                />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/document-review"
+            element={
+              auth.hasDocsToBeReviewed ? (
+                <DocumentReviewPage
+                  docsToBeReviewed={auth.user?.docs_to_be_reviewed ?? []}
+                  onReview={auth.reviewDocuments}
                 />
               ) : (
                 <Navigate to="/" replace />

@@ -1,6 +1,5 @@
 import type React from 'react'
-import { useEffect, useRef } from 'react'
-import { useFormik } from 'formik'
+import { useEffect, useRef, useState } from 'react'
 import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
 import Field from './Inputs/Field'
@@ -23,16 +22,14 @@ function MatchForm({
   setIsUpdating,
 }: MatchFormProps) {
   const defaultValues = getDefaultValues(config)
-  const formik = useFormik({
-    initialValues: { ...defaultValues },
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    onSubmit() {},
-  })
+  const [values, setValues] = useState(defaultValues)
+  useEffect(() => setValues({ ...matchInput }), [matchInput])
 
-  useEffect(() => {
-    formik.setValues({ ...matchInput })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [matchInput])
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const value =
+      e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    setValues((values) => ({ ...values, [e.target.name]: value }))
+  }
 
   const formEl = useRef<HTMLFormElement>(null)
   useEffect(() => {
@@ -42,7 +39,7 @@ function MatchForm({
     if (formEl?.current?.reportValidity()) {
       setIsUpdating(true)
       timeout = setTimeout(() => {
-        const newValues = { ...formik.values }
+        const newValues = { ...values }
         updateMatchInput(clearShowIfField(config, defaultValues, newValues))
         setIsUpdating(false)
       }, 1000)
@@ -51,7 +48,7 @@ function MatchForm({
     return () => {
       if (timeout !== undefined) clearTimeout(timeout)
     }
-  }, [formik.values]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [values]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <form ref={formEl}>
@@ -76,7 +73,7 @@ function MatchForm({
               const isFieldShowing =
                 (!isFilterActive || relevant) &&
                 (showIf === undefined ||
-                  getIsFieldShowing(showIf, config.fields, formik.values))
+                  getIsFieldShowing(showIf, config.fields, values))
 
               return (
                 <FieldWrapper key={id} isShowing={isFieldShowing}>
@@ -86,8 +83,8 @@ function MatchForm({
                       name: String(id),
                       disabled: !relevant,
                     }}
-                    value={formik.values[id]}
-                    onChange={formik.handleChange}
+                    value={values[id]}
+                    onChange={handleChange}
                   />
                 </FieldWrapper>
               )

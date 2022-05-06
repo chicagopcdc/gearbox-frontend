@@ -20,6 +20,16 @@ export function logout() {
   window.location.assign(`/user/logout?next=${window.location.href}`)
 }
 
+export function updateDocsReviewStatus(status: RegisterInput['reviewStatus']) {
+  return fetchGearbox('/user/user/documents', {
+    body: JSON.stringify(status),
+    method: 'POST',
+  }).then((res) => {
+    if (!res.ok) throw new Error('Failed to update document review status.')
+    return res.json() as Promise<UserData['docs_to_be_reviewed']>
+  })
+}
+
 export async function registerUser({
   reviewStatus,
   ...userInformation
@@ -32,14 +42,8 @@ export async function registerUser({
   const registeredUserData = (await userResponse.json()) as UserData
 
   if (Object.values(reviewStatus).filter(Boolean).length > 0) {
-    const documentsResponse = await fetchGearbox('/user/user/documents', {
-      body: JSON.stringify(reviewStatus),
-      method: 'POST',
-    })
-    if (!documentsResponse.ok)
-      throw new Error('Failed to update document review status.')
-    registeredUserData.docs_to_be_reviewed = await documentsResponse.json()
+    const docsToBeReviewed = await updateDocsReviewStatus(reviewStatus)
+    registeredUserData.docs_to_be_reviewed = docsToBeReviewed
   }
-
   return registeredUserData
 }

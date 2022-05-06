@@ -1,36 +1,22 @@
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import Textarea from './Textarea'
 import '../../index.css'
 
 export default {
-  title: 'Textarea',
+  title: 'Inputs/Textarea',
   component: Textarea,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
+} as ComponentMeta<typeof Textarea>
+
+export const Basic: ComponentStory<typeof Textarea> = (args) => (
+  <div className="m-4">
+    <Textarea {...args} />
+  </div>
+)
+
+Basic.args = {
+  label: 'A basic text area',
+  name: 'textarea',
+  placeholder: 'Type some text here',
+  onChange: (e) => action(`${e.target.value}`)(e),
 }
-
-export const defaultView = () => (
-  <Textarea
-    label="default text field"
-    placeholder="placeholder"
-    onChange={(e) => console.log(e.target.value)}
-  />
-)
-
-export const readOnly = () => (
-  <Textarea
-    label="Read only"
-    value="cannot be changed"
-    readOnly
-    onChange={(e) => console.log(e.target.value)}
-  />
-)
-
-export const disabled = () => (
-  <Textarea
-    label="Disabled"
-    value="disabled"
-    disabled
-    onChange={(e) => console.log(e.target.value)}
-  />
-)

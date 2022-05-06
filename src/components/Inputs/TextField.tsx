@@ -22,7 +22,7 @@ function TextField({
   label = '',
   name = '',
   type = 'text',
-  value = '',
+  value,
   disabled,
   readOnly,
   ...attrs
