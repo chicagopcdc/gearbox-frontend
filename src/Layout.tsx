@@ -3,7 +3,6 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import WarningBanner from './components/WarningBanner'
 import useGoogleAnalytics from './hooks/useGoogleAnalytics'
 
 type LayoutProps = {
@@ -35,7 +34,6 @@ function Layout({
 
   return (
     <>
-      <WarningBanner />
       {isLoginPage || <Header {...{ isAuthenticated, username, onLogout }} />}
       <main className={mainClassName}>{children}</main>
       {isHomeMatchingPage || <Footer />}
