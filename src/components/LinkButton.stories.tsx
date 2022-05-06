@@ -1,38 +1,29 @@
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import LinkButton from './LinkButton'
 import '../index.css'
 
 export default {
   title: 'LinkButton',
   components: LinkButton,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
+} as ComponentMeta<typeof LinkButton>
+
+export const Basic: ComponentStory<typeof LinkButton> = (args) => (
+  <div className="m-4">
+    <LinkButton {...args} />
+  </div>
+)
+
+Basic.args = {
+  block: false,
+  children: 'Click me',
+  outline: false,
+  size: undefined,
+  to: 'https://www.uchicago.edu/',
 }
 
-export const defaultView = () => (
-  <LinkButton to="https://www.uchicago.edu/">Click me</LinkButton>
-)
-
-export const block = () => (
-  <LinkButton to="https://www.uchicago.edu/" block>
-    Click me
-  </LinkButton>
-)
-
-export const outline = () => (
-  <LinkButton to="https://www.uchicago.edu/" outline>
-    Click me
-  </LinkButton>
-)
-
-export const small = () => (
-  <LinkButton to="https://www.uchicago.edu/" size="small">
-    Click me
-  </LinkButton>
-)
-
-export const large = () => (
-  <LinkButton to="https://www.uchicago.edu/" size="large">
-    Click me
-  </LinkButton>
-)
+Basic.argTypes = {
+  size: {
+    options: [undefined, 'small', 'large'],
+    control: 'radio',
+  },
+}
