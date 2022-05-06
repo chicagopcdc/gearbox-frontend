@@ -1,14 +1,7 @@
-import type React from 'react'
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import Radio from './Radio'
 import '../../index.css'
-
-export default {
-  title: 'Radio',
-  component: Radio,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
-}
 
 const options = [
   { value: 0, label: 'foo' },
@@ -16,38 +9,27 @@ const options = [
   { value: 2, label: 'baz' },
 ]
 
-export const defaultView: React.FC = () => {
-  return (
-    <Radio
-      label="default radio"
-      name="radio"
-      options={options}
-      onChange={(e: any) => console.log(e.target.value)}
-    />
-  )
+export default {
+  title: 'Inputs/Radio',
+  component: Radio,
+} as ComponentMeta<typeof Radio>
+
+export const Basic: ComponentStory<typeof Radio> = (args) => (
+  <div className="m-4">
+    <Radio {...args} />
+  </div>
+)
+
+Basic.args = {
+  label: 'A basic radio',
+  name: 'radio',
+  options,
+  onChange: (e) => action(`${e.target.value}`)(e),
 }
 
-export const defaultValue: React.FC = () => {
-  return (
-    <Radio
-      label="with default value"
-      name="radio"
-      options={options}
-      value={'foo'}
-      onChange={(e: any) => console.log(e.target.value)}
-    />
-  )
-}
-
-export const disabled: React.FC = () => {
-  return (
-    <Radio
-      label="disabled"
-      name="radio"
-      options={options}
-      value={'bar'}
-      disabled
-      onChange={(e: any) => console.log(e.target.value)}
-    />
-  )
+Basic.argTypes = {
+  value: {
+    options: [undefined, ...options.map((o) => o.value)],
+    control: 'select',
+  },
 }

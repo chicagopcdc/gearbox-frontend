@@ -1,13 +1,7 @@
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import Select from './Select'
 import '../../index.css'
-
-export default {
-  title: 'Select',
-  component: Select,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
-}
 
 const options = [
   { value: 0, label: 'foo' },
@@ -15,21 +9,28 @@ const options = [
   { value: 2, label: 'baz' },
 ]
 
-export const defaultView = () => (
-  <Select
-    label="simple select"
-    options={options}
-    placeholder="Select from options"
-    onChange={(e) => console.log(e.target.value)}
-  />
+export default {
+  title: 'Inputs/Select',
+  component: Select,
+} as ComponentMeta<typeof Select>
+
+export const Basic: ComponentStory<typeof Select> = (args) => (
+  <div className="m-4">
+    <Select {...args} />
+  </div>
 )
 
-export const disabled = () => (
-  <Select
-    label="simple select"
-    options={options}
-    disabled
-    placeholder="Disabled"
-    value="foo"
-  />
-)
+Basic.args = {
+  label: 'A simple select',
+  name: 'select',
+  onChange: (e) => action(`${e.target.value}`)(e),
+  options,
+  placeholder: 'Select from options',
+}
+
+Basic.argTypes = {
+  value: {
+    options: [undefined, ...options.map((o) => o.value)],
+    control: 'select',
+  },
+}
