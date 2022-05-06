@@ -1,25 +1,30 @@
+import type { ComponentMeta, ComponentStory } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import Checkbox from './Checkbox'
 import '../../index.css'
 
 export default {
-  title: 'Checkbox',
+  title: 'Inputs/Checkbox',
   component: Checkbox,
-  decorators: [
-    (storyFn: () => JSX.Element) => <div className="m-4">{storyFn()}</div>,
-  ],
+} as ComponentMeta<typeof Checkbox>
+
+export const Basic: ComponentStory<typeof Checkbox> = (args) => (
+  <div className="m-4">
+    <Checkbox {...args} />
+  </div>
+)
+
+Basic.args = {
+  disabled: false,
+  label: 'A basic checkbox',
+  name: 'checkbox',
+  readOnly: false,
+  onChange: (e) => action(`${e.target.checked}`)(e),
 }
 
-export const defaultView = () => (
-  <Checkbox
-    label="default checkbox"
-    onChange={(e) => console.log(e.target.checked)}
-  />
-)
-
-export const checked = () => <Checkbox label="checked" checked readOnly />
-
-export const unchecked = () => (
-  <Checkbox label="unchecked" checked={false} readOnly />
-)
-
-export const disabled = () => <Checkbox label="disabled" disabled />
+Basic.argTypes = {
+  checked: {
+    options: [undefined, false, true],
+    control: 'select',
+  },
+}
