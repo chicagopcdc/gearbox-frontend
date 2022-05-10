@@ -107,7 +107,7 @@ function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
               className={`absolute z-20 ${
                 screenSize.smAndDown
                   ? 'border-t border-primary mt-10 pt-6 w-full'
-                  : 'border border-gray-300 mt-16 mx-4'
+                  : 'border border-gray-300 min-w-[200px] mt-16 mx-4'
               }`}
               username={username}
               onLogout={onLogout}
