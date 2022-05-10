@@ -68,7 +68,7 @@ export function UserActionCard({
         </li>
       </ul>
       <p className="italic text-xs">
-        Portal version: v{process.env.REACT_APP_VERSION}
+        UI version: {process.env.REACT_APP_VERSION}
       </p>
     </div>
   )
