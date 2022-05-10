@@ -21,9 +21,9 @@
   "scripts": {
     "watch:tailwind": "postcss src/tailwind.css -o src/index.css --watch",
     "start": "react-scripts start",
-    "dev": "concurrently \"npm:start\" \"npm:watch:tailwind\"",
+    "dev": "REACT_APP_VERSION=$npm_package_version concurrently \"npm:start\" \"npm:watch:tailwind\"",
     "prebuild": "postcss src/tailwind.css -o src/index.css --env production",
-    "build": "react-scripts build",
+    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier src --write",
