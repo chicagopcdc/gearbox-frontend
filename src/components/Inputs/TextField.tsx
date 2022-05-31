@@ -47,7 +47,7 @@ function TextField({
     name,
     readOnly,
     type,
-    value,
+    value: value ?? '',
     onFocus() {
       if (!isTouched) setIsTouched(true)
     },

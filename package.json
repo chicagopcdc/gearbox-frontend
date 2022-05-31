@@ -1,6 +1,6 @@
 {
   "name": "@pcdc/gearbox",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "@fontsource/lato": "^4.5.8",
