@@ -42,7 +42,7 @@ function Select({
     disabled,
     id: name,
     name,
-    value,
+    value: value ?? '',
     style: { minWidth: '200px' },
   }
   return (

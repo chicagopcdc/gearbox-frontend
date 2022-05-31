@@ -16,6 +16,7 @@ function Textarea({
   name = '',
   disabled = false,
   readOnly = false,
+  value,
   ...attrs
 }: TextareaProps) {
   const className = disabled ? 'text-gray-400' : undefined
@@ -32,6 +33,7 @@ function Textarea({
     name,
     readOnly,
     style: { minHeight: '100px' },
+    value: value ?? '',
   }
 
   return (
