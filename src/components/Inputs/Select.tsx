@@ -55,16 +55,16 @@ function Select({
       <select
         {...selectAttrs}
         onChange={(e) => {
-          if (onChange)
+          if (onChange) {
+            const valueAsFloat = Number.parseFloat(e.target.value)
+            const isValueNaN = Number.isNaN(valueAsFloat)
             onChange({
               target: {
                 name,
-                value: e.target.value,
-                type: Number.isNaN(Number.parseFloat(e.target.value))
-                  ? undefined
-                  : 'number',
+                value: isValueNaN ? e.target.value : valueAsFloat,
               },
             } as React.ChangeEvent<HTMLSelectElement>)
+          }
         }}
       >
         {placeholder && (
