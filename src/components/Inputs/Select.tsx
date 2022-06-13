@@ -42,7 +42,8 @@ function Select({
     disabled,
     id: name,
     name,
-    value: value ?? '',
+    // allow controlled select to "clear"
+    value: onChange === undefined || value !== undefined ? value : '',
     style: { minWidth: '200px' },
   }
   return (
