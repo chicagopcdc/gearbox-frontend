@@ -47,7 +47,8 @@ function TextField({
     name,
     readOnly,
     type,
-    value: value ?? '',
+    // allow controlled text field to "clear"
+    value: attrs.onChange === undefined || value !== undefined ? value : '',
     onFocus() {
       if (!isTouched) setIsTouched(true)
     },

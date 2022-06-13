@@ -33,7 +33,8 @@ function Textarea({
     name,
     readOnly,
     style: { minHeight: '100px' },
-    value: value ?? '',
+    // allow controlled textarea to "clear"
+    value: attrs.onChange === undefined || value !== undefined ? value : '',
   }
 
   return (

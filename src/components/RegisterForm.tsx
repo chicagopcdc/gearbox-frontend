@@ -82,7 +82,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
     roleOther: '',
   }
   const [showRoleOther, setShowRoleOther] = useState(false)
-  function handleUserChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleUserChange(e: React.ChangeEvent<HTMLFormElement>) {
     if (e.target.name === 'role') setShowRoleOther(e.target.value === 'other')
   }
 
@@ -148,12 +148,12 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} onChange={handleUserChange}>
       {userFieldsConfig.map(
         (fieldConfig) =>
           (fieldConfig.name !== 'roleOther' || showRoleOther) && (
             <div className="my-4" key={fieldConfig.name}>
-              <Field config={fieldConfig} onChange={handleUserChange} />
+              <Field config={fieldConfig} />
             </div>
           )
       )}
