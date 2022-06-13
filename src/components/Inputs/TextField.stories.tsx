@@ -15,14 +15,15 @@ export default {
 
 export const Basic: ComponentStory<typeof TextField> = (args) => (
   <div className="m-4">
-    <TextField {...args} />
+    <form onChange={onChange} onSubmit={(e) => e.preventDefault()}>
+      <TextField {...args} />
+    </form>
   </div>
 )
 
 Basic.args = {
   label: 'A basic text field',
   name: 'basic-field',
-  onChange,
   placeholder: 'placeholder',
 }
 
@@ -31,7 +32,6 @@ export const Text = Basic.bind({})
 Text.args = {
   label: 'A text field',
   name: 'text-field',
-  onChange,
   placeholder: 'Some text',
   type: 'text',
 }
@@ -56,7 +56,6 @@ export const Password = Basic.bind({})
 Password.args = {
   label: 'A password field',
   name: 'password-field',
-  onChange,
   placeholder: 'Some password',
   type: 'password',
 }
@@ -81,7 +80,6 @@ export const Number = Basic.bind({})
 Number.args = {
   label: 'A number field',
   name: 'number-field',
-  onChange,
   placeholder: 'Some number',
   type: 'number',
 }

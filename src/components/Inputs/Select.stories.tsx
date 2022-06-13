@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import type { ComponentMeta, ComponentStory } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import Select from './Select'
@@ -17,14 +17,20 @@ export default {
 
 export const Basic: ComponentStory<typeof Select> = (args) => (
   <div className="m-4">
-    <Select {...args} />
+    <form
+      onChange={(e: React.ChangeEvent<HTMLFormElement>) =>
+        action(`${e.target.value}`)(e)
+      }
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <Select {...args} />
+    </form>
   </div>
 )
 
 Basic.args = {
   label: 'A simple select',
   name: 'select',
-  onChange: (e) => action(`${e.target.value}`)(e),
   options,
   placeholder: 'Select from options',
 }
@@ -75,7 +81,7 @@ export const Controlled: ComponentStory<typeof Select> = (args) => {
         <button
           className={buttonClassName}
           type="button"
-          onClick={(e) => {
+          onClick={() => {
             action(`(controlled) Clear`)({})
             setValue(undefined)
           }}

@@ -11,7 +11,14 @@ export default {
 
 export const Basic: ComponentStory<typeof Textarea> = (args) => (
   <div className="m-4">
-    <Textarea {...args} />
+    <form
+      onChange={(e: React.ChangeEvent<HTMLFormElement>) =>
+        action(`${e.target.value}`)(e)
+      }
+      onSubmit={(e) => e.preventDefault()}
+    >
+      <Textarea {...args} />
+    </form>
   </div>
 )
 
@@ -19,7 +26,6 @@ Basic.args = {
   label: 'A basic text area',
   name: 'textarea',
   placeholder: 'Type some text here',
-  onChange: (e) => action(`${e.target.value}`)(e),
 }
 
 export const Controlled: ComponentStory<typeof Textarea> = (args) => {
