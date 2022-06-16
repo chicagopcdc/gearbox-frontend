@@ -1527,7 +1527,7 @@
       "groupId": 3,
       "type": "number",
       "name": "cumul_anthracycline",
-      "label": "How much cumulative radiation to the mediastinum (in Gy) has the patient received?",
+      "label": "How much cumulative anthracycline or equivalent (in mg/m^2) has the patient received?",
       "min": 0,
       "step": 0.1,
       "showIf": {
@@ -1732,7 +1732,7 @@
       "groupId": 3,
       "type": "number",
       "name": "cumul_radiation_mediastinum",
-      "label": "How much cumulative anthracycline or equivalent (in mg/m^2) has the patient received?",
+      "label": "How much cumulative radiation to the mediastinum (in Gy) has the patient received?",
       "min": 0,
       "step": 0.1,
       "showIf": {
