@@ -18,7 +18,7 @@ export type EligibilityCriterion = {
 
 export type MatchAlgorithm = {
   operator: 'AND' | 'OR'
-  criteria: (number | MatchAlgorithm)[]
+  criteria: (EligibilityCriterion['id'] | MatchAlgorithm)[]
 }
 
 export type MatchCondition = {
