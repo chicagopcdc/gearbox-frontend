@@ -22,7 +22,7 @@ export type MatchAlgorithm = {
 }
 
 export type MatchCondition = {
-  studyId: number
+  studyId: Study['id']
   algorithm: MatchAlgorithm
 }
 
@@ -84,7 +84,9 @@ export type MatchInfoAlgorithm = {
   isMatched?: boolean
 }
 
-export type MatchDetails = { [id: number]: MatchInfoAlgorithm }
+export type MatchDetails = {
+  [studyId: Study['id']]: MatchInfoAlgorithm
+}
 
 export type RegisterDocument = {
   formatted: string
