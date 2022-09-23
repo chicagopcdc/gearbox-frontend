@@ -114,7 +114,7 @@ export type RegisterInput = {
   role: string
   roleOther?: string
   reviewStatus: {
-    [id: number]: boolean
+    [documentId: RegisterDocument['id']]: boolean
   }
   accessCode?: string
 }
