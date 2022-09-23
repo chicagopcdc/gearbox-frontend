@@ -31,17 +31,6 @@ export type MatchFormGroupConfig = {
   name: string
 }
 
-export type MatchFormFieldShowIfCriterion = {
-  id: number
-  operator: ComparisonOperator
-  value: any
-}
-
-export type MatchFormFieldShowIfCondition = {
-  operator: 'AND' | 'OR'
-  criteria: MatchFormFieldShowIfCriterion[]
-}
-
 export type MatchFormFieldOption = {
   value: any
   label: string
@@ -56,10 +45,21 @@ export type MatchFormFieldConfig = {
   label?: string
   options?: MatchFormFieldOption[]
   defaultValue?: any
-  showIf?: MatchFormFieldShowIfCondition
+  showIf?: {
+    operator: 'AND' | 'OR'
+    criteria: {
+      id: MatchFormFieldConfig['id']
+      operator: ComparisonOperator
+      value: any
+    }[]
+  }
   relevant?: boolean
   [key: string]: any
 }
+
+export type MatchFormFieldShowIfCondition = NonNullable<
+  MatchFormFieldConfig['showIf']
+>
 
 export type MatchFormConfig = {
   groups: MatchFormGroupConfig[]
@@ -67,7 +67,7 @@ export type MatchFormConfig = {
 }
 
 export type MatchFormValues = {
-  [id: number]: any
+  [fieldId: MatchFormFieldConfig['id']]: any
 }
 
 export type MatchInfo = {
