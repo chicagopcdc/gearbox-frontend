@@ -1,1296 +1,2628 @@
 [
-  {
-    "studyId": 1,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        1,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                2,
+    {
+        "studyId": 1,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                1,
                 {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [12, 7]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [13, 8]
-                    }
-                  ]
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                2,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                12,
+                                                7
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                13,
+                                                8
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        3,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                4,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                12,
+                                                7
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                13,
+                                                8
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                5,
+                                13,
+                                8
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                6,
+                                13,
+                                8,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                9
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                10,
+                                                11
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ]
-            },
-            3,
-            {
-              "operator": "AND",
-              "criteria": [
-                4,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [12, 7]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [13, 8]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [5, 13, 8]
-            },
-            {
-              "operator": "AND",
-              "criteria": [6, 13, 8, 9]
-            },
-            {
-              "operator": "AND",
-              "criteria": [6, 13, 8, 10, 11]
-            }
-          ]
+            ]
         }
-      ]
-    }
-  },
-  {
-    "studyId": 2,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        14,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [15, 16, 17, 18]
-            },
-            {
-              "operator": "AND",
-              "criteria": [19, 16, 17, 18]
-            },
-            {
-              "operator": "AND",
-              "criteria": [15, 16, 20, 17, 21]
-            },
-            {
-              "operator": "AND",
-              "criteria": [19, 16, 20, 17, 21]
-            },
-            {
-              "operator": "AND",
-              "criteria": [15, 20, 22, 23]
-            },
-            {
-              "operator": "AND",
-              "criteria": [19, 20, 22, 23]
-            },
-            {
-              "operator": "AND",
-              "criteria": [15, 20, 22, 24, 25]
-            },
-            {
-              "operator": "AND",
-              "criteria": [19, 20, 22, 24, 25]
-            },
-            {
-              "operator": "AND",
-              "criteria": [15, 20, 22, 24, 26]
-            },
-            {
-              "operator": "AND",
-              "criteria": [19, 20, 22, 24, 26]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [34, 36]
-            },
-            {
-              "operator": "AND",
-              "criteria": [35, 37]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [38, 39, 466]
-        },
-        40,
-        41,
-        42,
-        43,
-        44,
-        45,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [416, 46]
-            },
-            417
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            47,
-            {
-              "operator": "AND",
-              "criteria": [25, 48, 49]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [450, 50]
-            },
-            451
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [452, 51]
-            },
-            453
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            52,
-            {
-              "operator": "AND",
-              "criteria": [53, 54]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [501, 55]
-            },
-            476
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                498,
-                499,
+    },
+    {
+        "studyId": 2,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                14,
                 {
-                  "operator": "OR",
-                  "criteria": [56, 57]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [498, 474]
-            },
-            473
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            475,
-            {
-              "operator": "AND",
-              "criteria": [
-                500,
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                15,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                16,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                17,
+                                                                18
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                20,
+                                                                17,
+                                                                21
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                20,
+                                                22,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                23
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                24,
+                                                                {
+                                                                    "operator": "OR",
+                                                                    "criteria": [
+                                                                        25,
+                                                                        26
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                19,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                16,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                17,
+                                                                18
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                20,
+                                                                17,
+                                                                21
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                20,
+                                                22,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                23
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                24,
+                                                                {
+                                                                    "operator": "OR",
+                                                                    "criteria": [
+                                                                        25,
+                                                                        26
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 59, 71]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 60, 61, 72]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 62, 63, 73]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 64, 65, 74]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 66, 67, 75]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 68, 69, 76]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [30, 70, 76]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 59, 71]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 60, 61, 72]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 62, 63, 73]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 64, 65, 74]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 30, 66, 67, 75]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 68, 69, 78]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [33, 70, 78]
-                    },
-                    79
-                  ]
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                34,
+                                36
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                35,
+                                37
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        38,
+                        39,
+                        466
+                    ]
+                },
+                40,
+                41,
+                42,
+                43,
+                44,
+                45,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                416,
+                                46
+                            ]
+                        },
+                        417
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        47,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                25,
+                                48,
+                                49
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                450,
+                                50
+                            ]
+                        },
+                        451
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                452,
+                                51
+                            ]
+                        },
+                        453
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        52,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                53,
+                                54
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                501,
+                                55
+                            ]
+                        },
+                        476
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                498,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        499,
+                                        {
+                                            "operator": "OR",
+                                            "criteria": [
+                                                56,
+                                                57
+                                            ]
+                                        },
+                                        474
+                                    ]
+                                }
+                            ]
+                        },
+                        473
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        475,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                500,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                30,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                59,
+                                                                71
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                60,
+                                                                61,
+                                                                72
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                62,
+                                                                63,
+                                                                73
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                64,
+                                                                65,
+                                                                74
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                66,
+                                                                67,
+                                                                75
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                68,
+                                                                69,
+                                                                76
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                70,
+                                                                76
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                33,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                59,
+                                                                71
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                60,
+                                                                61,
+                                                                72
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                62,
+                                                                63,
+                                                                73
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                64,
+                                                                65,
+                                                                74
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                30,
+                                                                66,
+                                                                67,
+                                                                75
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                68,
+                                                                69,
+                                                                78
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                70,
+                                                                78
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        79
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
+            ]
         }
-      ]
-    }
-  },
-  {
-    "studyId": 3,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        80,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [81, 82, 83, 84]
-            },
-            {
-              "operator": "AND",
-              "criteria": [85, 82, 83, 84]
-            },
-            {
-              "operator": "AND",
-              "criteria": [81, 86, 87]
-            },
-            {
-              "operator": "AND",
-              "criteria": [85, 86, 87]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                95,
+    },
+    {
+        "studyId": 3,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                80,
                 {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [96, 97]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [98, 99]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [100, 101]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [102, 103, 467]
-        },
-        104,
-        105,
-        106,
-        107,
-        108,
-        109,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                502,
-                503,
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                81,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                82,
+                                                83,
+                                                84
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                86,
+                                                87
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                85,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                82,
+                                                83,
+                                                84
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                86,
+                                                87
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                100,
+                                101
+                            ]
+                        }
+                    ]
+                },
                 {
-                  "operator": "OR",
-                  "criteria": [110, 111]
-                }
-              ]
-            },
-            {
-              "operator": "AND",
-              "criteria": [502, 478]
-            },
-            477
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            504,
-            {
-              "operator": "AND",
-              "criteria": [
-                505,
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                95,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                96,
+                                                97
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                98,
+                                                99
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 115, 127]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 116, 117, 128]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 118, 119, 129]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 120, 121, 130]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 122, 123, 131]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 124, 125, 132]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [94, 126, 133]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 115, 127]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 116, 117, 128]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 118, 119, 129]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 120, 121, 130]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 122, 123, 131]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 124, 125, 134]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [91, 126, 134]
-                    },
-                    135
-                  ]
+                    "operator": "OR",
+                    "criteria": [
+                        102,
+                        103,
+                        467
+                    ]
+                },
+                104,
+                105,
+                106,
+                107,
+                108,
+                109,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                502,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        503,
+                                        {
+                                            "operator": "OR",
+                                            "criteria": [
+                                                110,
+                                                111
+                                            ]
+                                        },
+                                        478
+                                    ]
+                                }
+                            ]
+                        },
+                        477
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        504,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                505,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                94,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                115,
+                                                                127
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                116,
+                                                                117,
+                                                                128
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                118,
+                                                                119,
+                                                                129
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                120,
+                                                                121,
+                                                                130
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                122,
+                                                                123,
+                                                                131
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                124,
+                                                                125,
+                                                                132
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                126,
+                                                                133
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                91,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                115,
+                                                                127
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                116,
+                                                                117,
+                                                                128
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                118,
+                                                                119,
+                                                                129
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                120,
+                                                                121,
+                                                                130
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                122,
+                                                                123,
+                                                                131
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                124,
+                                                                125,
+                                                                134
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                126,
+                                                                134
+                                                            ]
+                                                        },
+                                                        135
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        479,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                480,
+                                112,
+                                113,
+                                114
+                            ]
+                        }
+                    ]
                 }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            479,
-            {
-              "operator": "AND",
-              "criteria": [480, 112, 113, 114]
-            }
-          ]
+            ]
         }
-      ]
-    }
-  },
-  {
-    "studyId": 5,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        227,
-        228,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [229, 230, 231, 232]
-            },
-            {
-              "operator": "AND",
-              "criteria": [229, 233, 234, 235, 236, 237]
-            },
-            {
-              "operator": "AND",
-              "criteria": [238, 230, 231, 232]
-            },
-            {
-              "operator": "AND",
-              "criteria": [238, 233, 234, 235, 236, 237]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [246, 247]
-            },
-            {
-              "operator": "AND",
-              "criteria": [250, 248, 249]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [251, 252, 468]
-        },
-        253,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [472, 254]
-            },
-            471
-          ]
-        },
-        255,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [408, 256]
-            },
-            409
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [412, 257]
-            },
-            413
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [424, 258]
-            },
-            425
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [428, 259]
-            },
-            429
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [434, 260]
-            },
-            435
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [440, 261]
-            },
-            441
-          ]
-        },
-        262,
-        263,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [454, 264]
-            },
-            455
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [442, 265]
-            },
-            443
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [456, 266]
-            },
-            457
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [458, 267]
-            },
-            459
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [460, 268]
-            },
-            461
-          ]
-        },
-        269,
-        {
-          "operator": "OR",
-          "criteria": [
-            481,
-            {
-              "operator": "AND",
-              "criteria": [511, 482]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                511,
-                512,
+    },
+    {
+        "studyId": 5,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                227,
+                228,
                 {
-                  "operator": "OR",
-                  "criteria": [270, 271]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            483,
-            {
-              "operator": "AND",
-              "criteria": [
-                513,
-                272,
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                229,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                230,
+                                                231,
+                                                232
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                233,
+                                                234,
+                                                235,
+                                                236,
+                                                237
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                238,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                230,
+                                                231,
+                                                232
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                233,
+                                                234,
+                                                235,
+                                                236,
+                                                237
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
                 {
-                  "operator": "OR",
-                  "criteria": [
-                    292,
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 295, 284]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 273, 274, 285]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 275, 276, 286]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 277, 278, 287]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 279, 280, 288]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 281, 282, 289]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [245, 283, 290]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 295, 284]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 274, 273, 285]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 275, 276, 286]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 277, 278, 287]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 279, 280, 288]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 281, 282, 291]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [242, 283, 291]
-                    }
-                  ]
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                246,
+                                247
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                250,
+                                248,
+                                249
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        251,
+                        252,
+                        468
+                    ]
+                },
+                253,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                472,
+                                254
+                            ]
+                        },
+                        471
+                    ]
+                },
+                255,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                408,
+                                256
+                            ]
+                        },
+                        409
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                412,
+                                257
+                            ]
+                        },
+                        413
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                424,
+                                258
+                            ]
+                        },
+                        425
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                428,
+                                259
+                            ]
+                        },
+                        429
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                434,
+                                260
+                            ]
+                        },
+                        435
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                440,
+                                261
+                            ]
+                        },
+                        441
+                    ]
+                },
+                262,
+                263,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                454,
+                                264
+                            ]
+                        },
+                        455
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                442,
+                                265
+                            ]
+                        },
+                        443
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                456,
+                                266
+                            ]
+                        },
+                        457
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                458,
+                                267
+                            ]
+                        },
+                        459
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                460,
+                                268
+                            ]
+                        },
+                        461
+                    ]
+                },
+                269,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        481,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                511,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                482
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                512,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        270,
+                                                        271
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        483,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                513,
+                                272,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        292,
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                245,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                295,
+                                                                284
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                273,
+                                                                274,
+                                                                285
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                275,
+                                                                276,
+                                                                286
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                277,
+                                                                278,
+                                                                287
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                279,
+                                                                280,
+                                                                288
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                281,
+                                                                282,
+                                                                289
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                283,
+                                                                290
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                242,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                295,
+                                                                284
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                274,
+                                                                273,
+                                                                285
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                275,
+                                                                276,
+                                                                286
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                277,
+                                                                278,
+                                                                287
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                279,
+                                                                280,
+                                                                288
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                281,
+                                                                282,
+                                                                291
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                283,
+                                                                291
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                514,
+                                293,
+                                294
+                            ]
+                        },
+                        484
+                    ]
                 }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [514, 293, 294]
-            },
-            484
-          ]
+            ]
         }
-      ]
-    }
-  },
-  {
-    "studyId": 6,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        296,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [297, 298, 299, 300]
-            },
-            {
-              "operator": "AND",
-              "criteria": [297, 301, 302, 303]
-            },
-            {
-              "operator": "AND",
-              "criteria": [304, 305, 306]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [314, 315]
-            },
-            {
-              "operator": "AND",
-              "criteria": [316, 317]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [318, 319, 469]
-        },
-        320,
-        321,
-        322,
-        323,
-        324,
-        325,
-        326,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [406, 327]
-            },
-            407
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [462, 328]
-            },
-            463
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [515, 486]
-            },
-            485,
-            {
-              "operator": "AND",
-              "criteria": [515, 516, 329]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [517, 330]
-            },
-            487
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [
-                518,
-                331,
+    },
+    {
+        "studyId": 6,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                296,
                 {
-                  "operator": "OR",
-                  "criteria": [332, 333]
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                297,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                298,
+                                                299,
+                                                300
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                301,
+                                                302,
+                                                303
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                304,
+                                305,
+                                306
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                314,
+                                315
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                316,
+                                317
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        318,
+                        319,
+                        469
+                    ]
+                },
+                320,
+                321,
+                322,
+                323,
+                324,
+                325,
+                326,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                406,
+                                327
+                            ]
+                        },
+                        407
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                462,
+                                328
+                            ]
+                        },
+                        463
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                515,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                486
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                516,
+                                                329
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        485
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                517,
+                                330
+                            ]
+                        },
+                        487
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                518,
+                                331,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        332,
+                                        333
+                                    ]
+                                }
+                            ]
+                        },
+                        488
+                    ]
                 }
-              ]
-            },
-            488
-          ]
+            ]
         }
-      ]
+    },
+    {
+        "studyId": 7,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                334,
+                335,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                336,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                337,
+                                                338,
+                                                339,
+                                                340,
+                                                341
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                342,
+                                                343,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                344,
+                                                                345,
+                                                                346,
+                                                                340,
+                                                                347
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                348,
+                                                                464,
+                                                                337,
+                                                                338,
+                                                                349,
+                                                                340,
+                                                                347
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                350,
+                                                340,
+                                                341
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        359,
+                        360,
+                        465
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        361,
+                        362
+                    ]
+                },
+                363,
+                364,
+                365,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        366,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                350,
+                                367
+                            ]
+                        }
+                    ]
+                },
+                368,
+                369,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        489,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                519,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                490
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                520,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        370,
+                                                        371
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        491,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                521,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        392,
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                355,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                372,
+                                                                384
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                373,
+                                                                374,
+                                                                385
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                375,
+                                                                376,
+                                                                386
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                377,
+                                                                378,
+                                                                387
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                379,
+                                                                380,
+                                                                388
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                381,
+                                                                382,
+                                                                389
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                383,
+                                                                390
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                356,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                372,
+                                                                384
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                373,
+                                                                374,
+                                                                385
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                375,
+                                                                376,
+                                                                386
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                377,
+                                                                378,
+                                                                387
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                379,
+                                                                380,
+                                                                388
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                381,
+                                                                382,
+                                                                391
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                383,
+                                                                391
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        492,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                522,
+                                393,
+                                394
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        395,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                396,
+                                397
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        398,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                399,
+                                400
+                            ]
+                        }
+                    ]
+                },
+                401,
+                402,
+                403
+            ]
+        }
+    },
+    {
+        "studyId": 8,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                523,
+                524,
+                525,
+                526,
+                527,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        525,
+                        536,
+                        537
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        538,
+                        539
+                    ]
+                },
+                540,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        541,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                542,
+                                543,
+                                544,
+                                545
+                            ]
+                        }
+                    ]
+                },
+                546,
+                547,
+                548,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        551,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                549,
+                                550
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        554,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                552,
+                                553
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        557,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                555,
+                                556
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        560,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                558,
+                                559
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        563,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                561,
+                                562
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        566,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                564,
+                                565
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        569,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                567,
+                                568
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        572,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                570,
+                                571
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        575,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                573,
+                                574
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        576,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                577,
+                                578
+                            ]
+                        }
+                    ]
+                },
+                579,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        585,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                583,
+                                584
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        586,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                587,
+                                588
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                587,
+                                589,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        590,
+                                        591
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        592,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                593,
+                                614,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                534,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                594,
+                                                                606
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                595,
+                                                                596,
+                                                                607
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                597,
+                                                                598,
+                                                                608
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                599,
+                                                                600,
+                                                                609
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                601,
+                                                                602,
+                                                                610
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                603,
+                                                                604,
+                                                                611
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                605,
+                                                                612
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                531,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                594,
+                                                                606
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                595,
+                                                                596,
+                                                                607
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                597,
+                                                                598,
+                                                                608
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                599,
+                                                                600,
+                                                                609
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                601,
+                                                                602,
+                                                                610
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                603,
+                                                                604,
+                                                                613
+                                                            ]
+                                                        },
+                                                        {
+                                                            "operator": "AND",
+                                                            "criteria": [
+                                                                605,
+                                                                613
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        615,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                616,
+                                617,
+                                618,
+                                619
+                            ]
+                        }
+                    ]
+                },
+                620
+            ]
+        }
+    },
+    {
+        "studyId": 9,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                621,
+                622,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                623,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                624,
+                                                625,
+                                                626,
+                                                627,
+                                                628
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                629,
+                                                630,
+                                                631,
+                                                632,
+                                                627,
+                                                628
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        633,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                634,
+                                635,
+                                636,
+                                637,
+                                638
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                634,
+                                635,
+                                639
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        640,
+                        641,
+                        642
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        643,
+                        644
+                    ]
+                },
+                645,
+                646,
+                647,
+                664,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        649,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                665,
+                                648
+                            ]
+                        }
+                    ]
+                },
+                650,
+                651,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        652,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                653,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        654,
+                                        655
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        656,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                657,
+                                658,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        659,
+                                        660
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        661,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                662,
+                                663
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "studyId": 10,
+        "algorithm": {
+            "operator": "AND",
+            "criteria": [
+                666,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                667,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                668,
+                                                669,
+                                                670
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                673,
+                                                674,
+                                                675,
+                                                676
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                671,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                668,
+                                                669,
+                                                670
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                673,
+                                                674,
+                                                675,
+                                                676
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                672,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                668,
+                                                669,
+                                                670
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                673,
+                                                674,
+                                                675,
+                                                676
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                677,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                678
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                679,
+                                                672
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                723,
+                                                680
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                681,
+                                682
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        683,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                684,
+                                {
+                                    "operator": "AND",
+                                    "criteria": [
+                                        685,
+                                        686,
+                                        687,
+                                        688
+                                    ]
+                                },
+                                {
+                                    "operator": "AND",
+                                    "criteria": [
+                                        685,
+                                        689
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        690,
+                        691,
+                        692
+                    ]
+                },
+                693,
+                694,
+                695,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        698,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                696,
+                                697
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        701,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                699,
+                                700
+                            ]
+                        }
+                    ]
+                },
+                702,
+                705,
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        708,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                706,
+                                707
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        709,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                710,
+                                {
+                                    "operator": "OR",
+                                    "criteria": [
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                711
+                                            ]
+                                        },
+                                        {
+                                            "operator": "AND",
+                                            "criteria": [
+                                                712,
+                                                {
+                                                    "operator": "OR",
+                                                    "criteria": [
+                                                        713,
+                                                        714
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "operator": "OR",
+                    "criteria": [
+                        715,
+                        {
+                            "operator": "AND",
+                            "criteria": [
+                                716,
+                                717,
+                                718,
+                                719,
+                                720
+                            ]
+                        }
+                    ]
+                },
+                721
+            ]
+        }
     }
-  },
-  {
-    "studyId": 7,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        334,
-        335,
-        {
-          "operator": "OR",
-          "criteria": [
-            {
-              "operator": "AND",
-              "criteria": [336, 337, 338, 339, 340, 341]
-            },
-            {
-              "operator": "AND",
-              "criteria": [336, 342, 343, 344, 345, 346, 340, 347]
-            },
-            {
-              "operator": "AND",
-              "criteria": [336, 342, 343, 348, 464, 337, 338, 349, 340, 347]
-            },
-            {
-              "operator": "AND",
-              "criteria": [336, 350, 340, 341]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [359, 360, 465]
-        },
-        {
-          "operator": "OR",
-          "criteria": [361, 362]
-        },
-        363,
-        364,
-        365,
-        {
-          "operator": "OR",
-          "criteria": [
-            366,
-            {
-              "operator": "AND",
-              "criteria": [350, 367]
-            }
-          ]
-        },
-        368,
-        369,
-        {
-          "operator": "OR",
-          "criteria": [
-            489,
-            {
-              "operator": "AND",
-              "criteria": [519, 490]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                519,
-                520,
-                {
-                  "operator": "OR",
-                  "criteria": [370, 371]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            491,
-            {
-              "operator": "AND",
-              "criteria": [
-                521,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    392,
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 372, 384]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 373, 374, 385]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 375, 376, 386]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 377, 378, 387]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 379, 380, 388]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 381, 382, 389]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [355, 383, 390]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 372, 384]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 373, 374, 385]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 375, 376, 386]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 377, 378, 387]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 379, 380, 388]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 381, 382, 391]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [356, 383, 391]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            492,
-            {
-              "operator": "AND",
-              "criteria": [522, 393, 394]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            395,
-            {
-              "operator": "AND",
-              "criteria": [396, 397]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            398,
-            {
-              "operator": "AND",
-              "criteria": [399, 400]
-            }
-          ]
-        },
-        401,
-        402,
-        403
-      ]
-    }
-  },
-  {
-    "studyId": 8,
-    "algorithm": {
-      "operator": "AND",
-      "criteria": [
-        523,
-        524,
-        525,
-        526,
-        527,
-        {
-          "operator": "OR",
-          "criteria": [535, 536, 537]
-        },
-        {
-          "operator": "OR",
-          "criteria": [538, 539]
-        },
-        540,
-        {
-          "operator": "OR",
-          "criteria": [
-            541,
-            {
-              "operator": "AND",
-              "criteria": [542, 543, 544, 545]
-            }
-          ]
-        },
-        546,
-        547,
-        548,
-        {
-          "operator": "OR",
-          "criteria": [
-            551,
-            {
-              "operator": "AND",
-              "criteria": [549, 550]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            554,
-            {
-              "operator": "AND",
-              "criteria": [552, 553]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            557,
-            {
-              "operator": "AND",
-              "criteria": [555, 556]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            560,
-            {
-              "operator": "AND",
-              "criteria": [558, 559]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            563,
-            {
-              "operator": "AND",
-              "criteria": [561, 562]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            566,
-            {
-              "operator": "AND",
-              "criteria": [564, 565]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            569,
-            {
-              "operator": "AND",
-              "criteria": [567, 568]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            572,
-            {
-              "operator": "AND",
-              "criteria": [570, 571]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            575,
-            {
-              "operator": "AND",
-              "criteria": [573, 574]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            576,
-            {
-              "operator": "AND",
-              "criteria": [577, 578]
-            }
-          ]
-        },
-        579,
-        {
-          "operator": "OR",
-          "criteria": [
-            585,
-            {
-              "operator": "AND",
-              "criteria": [583, 584]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            586,
-            {
-              "operator": "AND",
-              "criteria": [587, 588]
-            },
-            {
-              "operator": "AND",
-              "criteria": [
-                587,
-                589,
-                {
-                  "operator": "OR",
-                  "criteria": [590, 591]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            592,
-            {
-              "operator": "AND",
-              "criteria": [
-                593,
-                614,
-                {
-                  "operator": "OR",
-                  "criteria": [
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 594, 606]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 595, 596, 607]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 597, 598, 608]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 599, 600, 609]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 601, 602, 610]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 603, 604, 611]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [534, 605, 612]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 594, 606]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 595, 596, 607]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 597, 598, 608]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 599, 600, 609]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 601, 602, 610]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 603, 604, 613]
-                    },
-                    {
-                      "operator": "AND",
-                      "criteria": [531, 605, 613]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "operator": "OR",
-          "criteria": [
-            615,
-            {
-              "operator": "AND",
-              "criteria": [616, 617, 618, 619]
-            }
-          ]
-        },
-        620
-      ]
-    }
-  }
 ]
