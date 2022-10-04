@@ -76,11 +76,11 @@ function App() {
       )
     } else {
       // clear data on logout
-      setCriteria([] as EligibilityCriterion[])
-      setConditions([] as MatchCondition[])
+      setCriteria([])
+      setConditions([])
       setConfig({} as MatchFormConfig)
-      setMatchInput({} as MatchFormValues)
-      setStudies([] as Study[])
+      setMatchInput({})
+      setStudies([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.isRegistered])
