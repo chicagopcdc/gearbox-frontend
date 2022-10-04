@@ -15,76 +15,11 @@ import RegisterPage from './pages/RegisterPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
 import TermsPage from './pages/TermsPage'
 import useAuth from './hooks/useAuth'
-import type {
-  EligibilityCriterion,
-  MatchCondition,
-  MatchFormConfig,
-  MatchFormValues,
-  Study,
-} from './model'
-import {
-  mockLoadEligibilityCriteria,
-  mockLoadMatchConditions,
-  mockLoadMatchFormConfig,
-  mockLoadStudies,
-} from './mock/utils'
-import { getLatestUserInput, postUserInput } from './api/userInput'
+import useGearboxData from './hooks/useGearboxData'
 
 function App() {
   const auth = useAuth()
-
-  const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
-  const [conditions, setConditions] = useState([] as MatchCondition[])
-  const [config, setConfig] = useState({} as MatchFormConfig)
-  const [matchInput, setMatchInput] = useState({} as MatchFormValues)
-  const [studies, setStudies] = useState([] as Study[])
-  const [userInputId, setUserInputId] = useState(
-    undefined as number | undefined
-  )
-  const updateMatchInput = (newMatchInput: MatchFormValues) => {
-    if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
-      setMatchInput(newMatchInput)
-      postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
-        if (userInputId === undefined) setUserInputId(latestUserInputId)
-      })
-    }
-  }
-  useEffect(() => {
-    if (auth.isRegistered) {
-      // load data on login
-      Promise.all([
-        mockLoadEligibilityCriteria(),
-        mockLoadMatchConditions(),
-        mockLoadMatchFormConfig(),
-        mockLoadStudies(),
-        getLatestUserInput(),
-      ]).then(
-        ([
-          criteria,
-          conditions,
-          config,
-          studies,
-          [latestMatchInput, latestUserInputId],
-        ]) => {
-          setCriteria(criteria)
-          setConditions(conditions)
-          setConfig(config)
-          setMatchInput(latestMatchInput)
-          setStudies(studies)
-          setUserInputId(latestUserInputId)
-        }
-      )
-    } else {
-      // clear data on logout
-      setCriteria([])
-      setConditions([])
-      setConfig({} as MatchFormConfig)
-      setMatchInput({})
-      setStudies([])
-      setUserInputId(undefined)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.isRegistered])
+  const gearboxData = useGearboxData(auth)
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
@@ -104,16 +39,7 @@ function App() {
               ) : auth.hasDocsToBeReviewed ? (
                 <Navigate to="/document-review" replace />
               ) : (
-                <MatchingPage
-                  {...{
-                    conditions,
-                    config,
-                    criteria,
-                    studies,
-                    matchInput,
-                    updateMatchInput,
-                  }}
-                />
+                <MatchingPage {...gearboxData} />
               )
             }
           />
