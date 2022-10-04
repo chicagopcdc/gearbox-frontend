@@ -81,6 +81,7 @@ function App() {
       setConfig({} as MatchFormConfig)
       setMatchInput({})
       setStudies([])
+      setUserInputId(undefined)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.isRegistered])
