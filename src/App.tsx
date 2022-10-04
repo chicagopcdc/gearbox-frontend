@@ -50,7 +50,7 @@ function App() {
     }
   }
   useEffect(() => {
-    if (auth.isAuthenticated && auth.isRegistered) {
+    if (auth.isRegistered) {
       // load data on login
       Promise.all([
         mockLoadEligibilityCriteria(),
@@ -83,7 +83,7 @@ function App() {
       setStudies([] as Study[])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [auth.isAuthenticated, auth.isRegistered])
+  }, [auth.isRegistered])
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
