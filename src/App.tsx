@@ -33,15 +33,11 @@ import { getLatestUserInput, postUserInput } from './api/userInput'
 function App() {
   const auth = useAuth()
 
-  const [studies, setStudies] = useState([] as Study[])
-  useEffect(() => {
-    mockLoadStudies().then(setStudies)
-  }, [])
-
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
   const [matchInput, setMatchInput] = useState({} as MatchFormValues)
+  const [studies, setStudies] = useState([] as Study[])
   const [userInputId, setUserInputId] = useState(
     undefined as number | undefined
   )
@@ -60,18 +56,21 @@ function App() {
         mockLoadEligibilityCriteria(),
         mockLoadMatchConditions(),
         mockLoadMatchFormConfig(),
+        mockLoadStudies(),
         getLatestUserInput(),
       ]).then(
         ([
           criteria,
           conditions,
           config,
+          studies,
           [latestMatchInput, latestUserInputId],
         ]) => {
           setCriteria(criteria)
           setConditions(conditions)
           setConfig(config)
           setMatchInput(latestMatchInput)
+          setStudies(studies)
           setUserInputId(latestUserInputId)
         }
       )
@@ -81,6 +80,7 @@ function App() {
       setConditions([] as MatchCondition[])
       setConfig({} as MatchFormConfig)
       setMatchInput({} as MatchFormValues)
+      setStudies([] as Study[])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.isAuthenticated, auth.isRegistered])
