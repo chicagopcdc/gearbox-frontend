@@ -15,6 +15,8 @@ import {
 import { getLatestUserInput, postUserInput } from '../api/userInput'
 import type useAuth from './useAuth'
 
+type GearboxDataStatus = 'loading' | 'error' | undefined
+
 export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({} as MatchFormConfig)
@@ -24,30 +26,41 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [userInputId, setUserInputId] = useState(
     undefined as number | undefined
   )
+  const [status, setStatus] = useState(undefined as GearboxDataStatus)
+  useEffect(() => {
+    console.log(status)
+  }, [status])
 
   const fetchAll = () => {
+    setStatus('loading')
     Promise.all([
       mockLoadMatchConditions(),
       mockLoadMatchFormConfig(),
       mockLoadEligibilityCriteria(),
       mockLoadStudies(),
       getLatestUserInput(),
-    ]).then(
-      ([
-        conditions,
-        config,
-        criteria,
-        studies,
-        [latestMatchInput, latestUserInputId],
-      ]) => {
-        setConditions(conditions)
-        setConfig(config)
-        setCriteria(criteria)
-        setMatchInput(latestMatchInput)
-        setStudies(studies)
-        setUserInputId(latestUserInputId)
-      }
-    )
+    ])
+      .then(
+        ([
+          conditions,
+          config,
+          criteria,
+          studies,
+          [latestMatchInput, latestUserInputId],
+        ]) => {
+          setConditions(conditions)
+          setConfig(config)
+          setCriteria(criteria)
+          setMatchInput(latestMatchInput)
+          setStudies(studies)
+          setUserInputId(latestUserInputId)
+
+          setStatus(undefined)
+        }
+      )
+      .catch(() => {
+        setStatus('error')
+      })
   }
   const resetAll = () => {
     setConditions([])
@@ -82,5 +95,6 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
       matchInput,
       studies,
     },
+    status,
   }
 }
