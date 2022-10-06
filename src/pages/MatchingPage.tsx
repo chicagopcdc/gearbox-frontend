@@ -21,7 +21,7 @@ import {
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
-function MatchingPage({ action, state }: MatchingPageProps) {
+function MatchingPage({ action, state, status }: MatchingPageProps) {
   const { updateMatchInput } = action
   const { conditions, config, criteria, studies, matchInput } = state
 
@@ -31,7 +31,7 @@ function MatchingPage({ action, state }: MatchingPageProps) {
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
 
-  if (config.fields === undefined) return <div>Loading...</div>
+  if (status === 'loading') return <div>Loading...</div>
 
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
