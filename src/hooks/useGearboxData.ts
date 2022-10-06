@@ -19,7 +19,10 @@ type GearboxDataStatus = 'loading' | 'error' | undefined
 
 export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [conditions, setConditions] = useState([] as MatchCondition[])
-  const [config, setConfig] = useState({} as MatchFormConfig)
+  const [config, setConfig] = useState({
+    groups: [],
+    fields: [],
+  } as MatchFormConfig)
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
   const [matchInput, setMatchInput] = useState({} as MatchFormValues)
   const [studies, setStudies] = useState([] as Study[])
@@ -64,7 +67,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   }
   const resetAll = () => {
     setConditions([])
-    setConfig({} as MatchFormConfig)
+    setConfig({ groups: [], fields: [] } as MatchFormConfig)
     setCriteria([])
     setMatchInput({})
     setStudies([])
