@@ -25,6 +25,38 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     undefined as number | undefined
   )
 
+  const fetchAll = () => {
+    Promise.all([
+      mockLoadMatchConditions(),
+      mockLoadMatchFormConfig(),
+      mockLoadEligibilityCriteria(),
+      mockLoadStudies(),
+      getLatestUserInput(),
+    ]).then(
+      ([
+        conditions,
+        config,
+        criteria,
+        studies,
+        [latestMatchInput, latestUserInputId],
+      ]) => {
+        setConditions(conditions)
+        setConfig(config)
+        setCriteria(criteria)
+        setMatchInput(latestMatchInput)
+        setStudies(studies)
+        setUserInputId(latestUserInputId)
+      }
+    )
+  }
+  const resetAll = () => {
+    setConditions([])
+    setConfig({} as MatchFormConfig)
+    setCriteria([])
+    setMatchInput({})
+    setStudies([])
+    setUserInputId(undefined)
+  }
   const updateMatchInput = (newMatchInput: MatchFormValues) => {
     if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
       setMatchInput(newMatchInput)
@@ -35,39 +67,8 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   }
 
   useEffect(() => {
-    if (auth.isRegistered) {
-      // load data on login
-      Promise.all([
-        mockLoadMatchConditions(),
-        mockLoadMatchFormConfig(),
-        mockLoadEligibilityCriteria(),
-        mockLoadStudies(),
-        getLatestUserInput(),
-      ]).then(
-        ([
-          conditions,
-          config,
-          criteria,
-          studies,
-          [latestMatchInput, latestUserInputId],
-        ]) => {
-          setConditions(conditions)
-          setConfig(config)
-          setCriteria(criteria)
-          setMatchInput(latestMatchInput)
-          setStudies(studies)
-          setUserInputId(latestUserInputId)
-        }
-      )
-    } else {
-      // clear data on logout
-      setConditions([])
-      setConfig({} as MatchFormConfig)
-      setCriteria([])
-      setMatchInput({})
-      setStudies([])
-      setUserInputId(undefined)
-    }
+    if (auth.isRegistered) fetchAll() // load data on login
+    else resetAll() // clear data on logout
   }, [auth.isRegistered])
 
   return {
