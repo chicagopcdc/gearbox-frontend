@@ -21,14 +21,10 @@ import {
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
-function MatchingPage({
-  conditions,
-  config,
-  criteria,
-  studies,
-  matchInput,
-  updateMatchInput,
-}: MatchingPageProps) {
+function MatchingPage({ action, state }: MatchingPageProps) {
+  const { updateMatchInput } = action
+  const { conditions, config, criteria, studies, matchInput } = state
+
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(true)
   const screenSize = useScreenSize()

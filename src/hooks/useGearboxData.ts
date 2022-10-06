@@ -24,6 +24,16 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [userInputId, setUserInputId] = useState(
     undefined as number | undefined
   )
+
+  const updateMatchInput = (newMatchInput: MatchFormValues) => {
+    if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
+      setMatchInput(newMatchInput)
+      postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
+        if (userInputId === undefined) setUserInputId(latestUserInputId)
+      })
+    }
+  }
+
   useEffect(() => {
     if (auth.isRegistered) {
       // load data on login
@@ -61,18 +71,15 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   }, [auth.isRegistered])
 
   return {
-    conditions,
-    config,
-    criteria,
-    matchInput,
-    studies,
-    updateMatchInput: (newMatchInput: MatchFormValues) => {
-      if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
-        setMatchInput(newMatchInput)
-        postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
-          if (userInputId === undefined) setUserInputId(latestUserInputId)
-        })
-      }
+    action: {
+      updateMatchInput,
+    },
+    state: {
+      conditions,
+      config,
+      criteria,
+      matchInput,
+      studies,
     },
   }
 }
