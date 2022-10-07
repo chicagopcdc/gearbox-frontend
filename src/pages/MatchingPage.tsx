@@ -22,7 +22,7 @@ import {
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
 function MatchingPage({ action, state, status }: MatchingPageProps) {
-  const { updateMatchInput } = action
+  const { fetchAll, updateMatchInput } = action
   const { conditions, config, criteria, studies, matchInput } = state
 
   const [isUpdating, setIsUpdating] = useState(false)
@@ -32,6 +32,15 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   const [view, setView] = useState<'form' | 'result'>('form')
 
   if (status === 'loading') return <div>Loading...</div>
+  if (status === 'error')
+    return (
+      <>
+        <div className="pb-4">Something went wrong!</div>
+        <Button size="normal" onClick={fetchAll}>
+          Try again
+        </Button>
+      </>
+    )
 
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)

@@ -89,6 +89,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
 
   return {
     action: {
+      fetchAll,
       updateMatchInput,
     },
     state: {
