@@ -10,14 +10,8 @@ import ReactTooltip from 'react-tooltip'
 import Button from '../components/Inputs/Button'
 import MatchForm from '../components/MatchForm'
 import MatchResult from '../components/MatchResult'
+import type useGearboxData from '../hooks/useGearboxData'
 import useScreenSize from '../hooks/useScreenSize'
-import type {
-  EligibilityCriterion,
-  MatchCondition,
-  MatchFormConfig,
-  MatchFormValues,
-  Study,
-} from '../model'
 import {
   getDefaultValues,
   getMatchDetails,
@@ -25,30 +19,28 @@ import {
   markRelevantMatchFields,
 } from '../utils'
 
-export type MatchingPageProps = {
-  conditions: MatchCondition[]
-  config: MatchFormConfig
-  criteria: EligibilityCriterion[]
-  studies: Study[]
-  matchInput: MatchFormValues
-  updateMatchInput(values: MatchFormValues): void
-}
+export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
-function MatchingPage({
-  conditions,
-  config,
-  criteria,
-  studies,
-  matchInput,
-  updateMatchInput,
-}: MatchingPageProps) {
+function MatchingPage({ action, state, status }: MatchingPageProps) {
+  const { fetchAll, updateMatchInput } = action
+  const { conditions, config, criteria, studies, matchInput } = state
+
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(true)
   const screenSize = useScreenSize()
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
 
-  if (config.fields === undefined) return <div>Loading...</div>
+  if (status === 'loading') return <div>Loading...</div>
+  if (status === 'error')
+    return (
+      <>
+        <div className="pb-4">Something went wrong!</div>
+        <Button size="normal" onClick={fetchAll}>
+          Try again
+        </Button>
+      </>
+    )
 
   const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
