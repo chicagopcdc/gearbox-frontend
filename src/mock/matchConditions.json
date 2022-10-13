@@ -2241,30 +2241,6 @@
                 {
                     "operator": "OR",
                     "criteria": [
-                        633,
-                        {
-                            "operator": "AND",
-                            "criteria": [
-                                634,
-                                635,
-                                636,
-                                637,
-                                638
-                            ]
-                        },
-                        {
-                            "operator": "AND",
-                            "criteria": [
-                                634,
-                                635,
-                                639
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "operator": "OR",
-                    "criteria": [
                         640,
                         641,
                         642
@@ -2485,34 +2461,6 @@
                             "criteria": [
                                 681,
                                 682
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "operator": "OR",
-                    "criteria": [
-                        683,
-                        {
-                            "operator": "AND",
-                            "criteria": [
-                                684,
-                                {
-                                    "operator": "AND",
-                                    "criteria": [
-                                        685,
-                                        686,
-                                        687,
-                                        688
-                                    ]
-                                },
-                                {
-                                    "operator": "AND",
-                                    "criteria": [
-                                        685,
-                                        689
-                                    ]
-                                }
                             ]
                         }
                     ]
