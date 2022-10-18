@@ -963,6 +963,7 @@
         },
         {
             "id": 151,
+            "groupId": 2,
             "name": "diag_cong_blood_disorder",
             "label": "Has the patient been diagnosed with any congenital bleeding disorders, including but not limited to hemophilia?",
             "type": "radio",
@@ -3435,3 +3436,4 @@
         }
     ]
 }
+
