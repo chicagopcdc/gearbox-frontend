@@ -12,3 +12,13 @@ export function fetchGearbox(input: RequestInfo, init: RequestInit = {}) {
     },
   })
 }
+
+export function readCache<T>(key: string) {
+  const data = localStorage.getItem(key)
+  if (data !== null) return JSON.parse(data) as T
+  return null
+}
+
+export function writeCache(key: string, data: string) {
+  return localStorage.setItem(key, data)
+}
