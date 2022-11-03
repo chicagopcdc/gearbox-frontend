@@ -6,12 +6,10 @@ import type {
   MatchFormValues,
   Study,
 } from '../model'
-import {
-  mockLoadEligibilityCriteria,
-  mockLoadMatchConditions,
-  mockLoadMatchFormConfig,
-  mockLoadStudies,
-} from '../mock/utils'
+import { getEligibilityCriteria } from '../api/eligibilityCriteria'
+import { getMatchConditions } from '../api/matchConditions'
+import { getMatchFormConfig } from '../api/matchFormConfig'
+import { getStudies } from '../api/studies'
 import { getLatestUserInput, postUserInput } from '../api/userInput'
 import type useAuth from './useAuth'
 
@@ -37,10 +35,10 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const fetchAll = () => {
     setStatus('loading')
     Promise.all([
-      mockLoadMatchConditions(),
-      mockLoadMatchFormConfig(),
-      mockLoadEligibilityCriteria(),
-      mockLoadStudies(),
+      getMatchConditions(),
+      getMatchFormConfig(),
+      getEligibilityCriteria(),
+      getStudies(),
       getLatestUserInput(),
     ])
       .then(
