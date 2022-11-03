@@ -28,9 +28,6 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     undefined as number | undefined
   )
   const [status, setStatus] = useState(undefined as GearboxDataStatus)
-  useEffect(() => {
-    console.log(status)
-  }, [status])
 
   const fetchAll = () => {
     setStatus('loading')
