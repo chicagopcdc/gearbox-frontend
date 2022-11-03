@@ -1,4 +1,4 @@
-import { EligibilityCriterion } from '../model'
+import type { EligibilityCriterion } from '../model'
 import { fetchGearbox, readCache, writeCache } from './utils'
 
 const LOCAL_STORAGE_KEY = 'gearbox:eligiblity-criteria'

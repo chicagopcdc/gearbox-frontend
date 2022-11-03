@@ -1,4 +1,4 @@
-import { Study } from '../model'
+import type { Study } from '../model'
 import { fetchGearbox, readCache, writeCache } from './utils'
 
 const LOCAL_STORAGE_KEY = 'gearbox:studies'

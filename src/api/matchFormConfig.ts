@@ -1,4 +1,4 @@
-import { MatchFormConfig } from '../model'
+import type { MatchFormConfig } from '../model'
 import { fetchGearbox, readCache, writeCache } from './utils'
 
 const LOCAL_STORAGE_KEY = 'gearbox:match-form'

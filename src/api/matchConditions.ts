@@ -1,4 +1,4 @@
-import { MatchCondition } from '../model'
+import type { MatchCondition } from '../model'
 import { fetchGearbox, readCache, writeCache } from './utils'
 
 const LOCAL_STORAGE_KEY = 'gearbox:match-conditions'
