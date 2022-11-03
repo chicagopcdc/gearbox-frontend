@@ -41,24 +41,16 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
       getStudies(),
       getLatestUserInput(),
     ])
-      .then(
-        ([
-          conditions,
-          config,
-          criteria,
-          studies,
-          [latestMatchInput, latestUserInputId],
-        ]) => {
-          setConditions(conditions)
-          setConfig(config)
-          setCriteria(criteria)
-          setMatchInput(latestMatchInput)
-          setStudies(studies)
-          setUserInputId(latestUserInputId)
+      .then(([conditions, config, criteria, studies, latestUserInput]) => {
+        setConditions(conditions)
+        setConfig(config)
+        setCriteria(criteria)
+        setMatchInput(latestUserInput.values)
+        setStudies(studies)
+        setUserInputId(latestUserInput.id)
 
-          setStatus(undefined)
-        }
-      )
+        setStatus(undefined)
+      })
       .catch(() => {
         setStatus('error')
       })
