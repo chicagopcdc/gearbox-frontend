@@ -9,16 +9,16 @@ export function getLatestUserInput() {
     .then((res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data)
-        return [
-          data.results.reduce(
+        return {
+          values: data.results.reduce(
             (acc, { id, value }) => ({ ...acc, [id]: value }),
             {} as MatchFormValues
           ),
-          data.id,
-        ] as [MatchFormValues, number | undefined]
+          id: data.id as number | undefined,
+        }
 
       console.error('Failed to fetch the latest saved user input:', data.detail)
-      return [{}, undefined] as [MatchFormValues, undefined]
+      return { values: {} as MatchFormValues, id: undefined }
     })
 }
 

@@ -6,12 +6,10 @@ import type {
   MatchFormValues,
   Study,
 } from '../model'
-import {
-  mockLoadEligibilityCriteria,
-  mockLoadMatchConditions,
-  mockLoadMatchFormConfig,
-  mockLoadStudies,
-} from '../mock/utils'
+import { getEligibilityCriteria } from '../api/eligibilityCriteria'
+import { getMatchConditions } from '../api/matchConditions'
+import { getMatchFormConfig } from '../api/matchFormConfig'
+import { getStudies } from '../api/studies'
 import { getLatestUserInput, postUserInput } from '../api/userInput'
 import type useAuth from './useAuth'
 
@@ -30,37 +28,26 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     undefined as number | undefined
   )
   const [status, setStatus] = useState(undefined as GearboxDataStatus)
-  useEffect(() => {
-    console.log(status)
-  }, [status])
 
   const fetchAll = () => {
     setStatus('loading')
     Promise.all([
-      mockLoadMatchConditions(),
-      mockLoadMatchFormConfig(),
-      mockLoadEligibilityCriteria(),
-      mockLoadStudies(),
+      getMatchConditions(),
+      getMatchFormConfig(),
+      getEligibilityCriteria(),
+      getStudies(),
       getLatestUserInput(),
     ])
-      .then(
-        ([
-          conditions,
-          config,
-          criteria,
-          studies,
-          [latestMatchInput, latestUserInputId],
-        ]) => {
-          setConditions(conditions)
-          setConfig(config)
-          setCriteria(criteria)
-          setMatchInput(latestMatchInput)
-          setStudies(studies)
-          setUserInputId(latestUserInputId)
+      .then(([conditions, config, criteria, studies, latestUserInput]) => {
+        setConditions(conditions)
+        setConfig(config)
+        setCriteria(criteria)
+        setMatchInput(latestUserInput.values)
+        setStudies(studies)
+        setUserInputId(latestUserInput.id)
 
-          setStatus(undefined)
-        }
-      )
+        setStatus(undefined)
+      })
       .catch(() => {
         setStatus('error')
       })
