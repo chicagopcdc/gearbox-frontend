@@ -501,7 +501,7 @@ describe('getIsFieldShowing', () => {
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: undefined }
 
-    expect(getIsFieldShowing(showIf, config.fields, values)).toEqual(true)
+    expect(getIsFieldShowing(showIf, config, values)).toEqual(true)
   })
 
   test('for one criterion (gt)', () => {
@@ -511,7 +511,7 @@ describe('getIsFieldShowing', () => {
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: 2 }
 
-    expect(getIsFieldShowing(showIf, config.fields, values)).toEqual(true)
+    expect(getIsFieldShowing(showIf, config, values)).toEqual(true)
   })
 
   test('for multiple criteria (OR)', () => {
@@ -524,16 +524,16 @@ describe('getIsFieldShowing', () => {
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
-    expect(getIsFieldShowing(showIf, config.fields, values1)).toEqual(true)
+    expect(getIsFieldShowing(showIf, config, values1)).toEqual(true)
 
     const values2: MatchFormValues = { 0: 0, 1: true }
-    expect(getIsFieldShowing(showIf, config.fields, values2)).toEqual(true)
+    expect(getIsFieldShowing(showIf, config, values2)).toEqual(true)
 
     const values3: MatchFormValues = { 0: 0, 1: false, 2: 2 }
-    expect(getIsFieldShowing(showIf, config.fields, values3)).toEqual(true)
+    expect(getIsFieldShowing(showIf, config, values3)).toEqual(true)
 
     const values4: MatchFormValues = { 0: 0, 1: false, 2: 1 }
-    expect(getIsFieldShowing(showIf, config.fields, values4)).toEqual(false)
+    expect(getIsFieldShowing(showIf, config, values4)).toEqual(false)
   })
 
   test('for multiple criteria (AND)', () => {
@@ -546,16 +546,16 @@ describe('getIsFieldShowing', () => {
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
-    expect(getIsFieldShowing(showIf, config.fields, values1)).toEqual(false)
+    expect(getIsFieldShowing(showIf, config, values1)).toEqual(false)
 
     const values2: MatchFormValues = { 0: 1, 1: false }
-    expect(getIsFieldShowing(showIf, config.fields, values2)).toEqual(false)
+    expect(getIsFieldShowing(showIf, config, values2)).toEqual(false)
 
     const values3: MatchFormValues = { 0: 1, 1: true, 2: 2 }
-    expect(getIsFieldShowing(showIf, config.fields, values3)).toEqual(true)
+    expect(getIsFieldShowing(showIf, config, values3)).toEqual(true)
 
     const values4: MatchFormValues = { 0: 1, 1: true, 2: 1 }
-    expect(getIsFieldShowing(showIf, config.fields, values4)).toEqual(false)
+    expect(getIsFieldShowing(showIf, config, values4)).toEqual(false)
   })
 })
 

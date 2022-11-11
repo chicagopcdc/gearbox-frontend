@@ -69,7 +69,7 @@ function MatchForm({
               const isFieldShowing =
                 (!isFilterActive || relevant) &&
                 (showIf === undefined ||
-                  getIsFieldShowing(showIf, config.fields, values))
+                  getIsFieldShowing(showIf, config, values))
 
               return (
                 <FieldWrapper key={id} isShowing={isFieldShowing}>
