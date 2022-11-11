@@ -25,30 +25,27 @@ function MatchForm({
   const [values, setValues] = useState(defaultValues)
   useEffect(() => setValues({ ...matchInput }), [matchInput])
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    setValues((values) => ({ ...values, [e.target.name]: value }))
-  }
-
   const formEl = useRef<HTMLFormElement>(null)
-  useEffect(() => {
-    let timeout: NodeJS.Timeout | undefined
-    if (timeout !== undefined) clearTimeout(timeout)
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>()
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const newValues = {
+      ...values,
+      [e.target.name]:
+        e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+    }
+    setValues(newValues)
+
+    if (timeoutRef.current !== undefined) clearTimeout(timeoutRef.current)
 
     if (formEl?.current?.reportValidity()) {
       setIsUpdating(true)
-      timeout = setTimeout(() => {
-        const newValues = { ...values }
+      timeoutRef.current = setTimeout(() => {
         updateMatchInput(clearShowIfField(config, defaultValues, newValues))
         setIsUpdating(false)
+        clearTimeout(timeoutRef.current)
       }, 1000)
     } else setIsUpdating(false)
-
-    return () => {
-      if (timeout !== undefined) clearTimeout(timeout)
-    }
-  }, [values]) // eslint-disable-line react-hooks/exhaustive-deps
+  }
 
   return (
     <form ref={formEl}>
