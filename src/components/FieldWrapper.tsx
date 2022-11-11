@@ -11,11 +11,7 @@ function FieldWrapper({ children, isShowing = true }: FieldWrapperProps) {
   const prevIsShowing: React.MutableRefObject<boolean | undefined> = useRef()
   const wrapperEl: React.MutableRefObject<HTMLDivElement | null> = useRef(null)
   useEffect(() => {
-    if (
-      isShowing &&
-      prevIsShowing.current !== undefined &&
-      prevIsShowing.current !== isShowing
-    ) {
+    if (isShowing && prevIsShowing.current === !isShowing) {
       const timeoutStart = setTimeout(() => {
         wrapperEl.current?.classList.add('bg-blue-100')
       }, 100)
