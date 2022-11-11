@@ -70,7 +70,6 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
       </>
     )
 
-  const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
   const matchGroups = getMatchGroups(matchDetails)
   const markedFields = markRelevantMatchFields({
@@ -82,7 +81,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   })
 
   function handleReset() {
-    updateMatchInput(defaultValues)
+    updateMatchInput(getDefaultValues(config))
   }
   function toggleFilter() {
     setIsFilterActive((isActive) => !isActive)
