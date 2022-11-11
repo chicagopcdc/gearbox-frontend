@@ -21,8 +21,7 @@ function MatchForm({
   updateMatchInput,
   setIsUpdating,
 }: MatchFormProps) {
-  const defaultValues = getDefaultValues(config)
-  const [values, setValues] = useState(defaultValues)
+  const [values, setValues] = useState(getDefaultValues(config))
   useEffect(() => setValues({ ...matchInput }), [matchInput])
 
   const formEl = useRef<HTMLFormElement>(null)
@@ -40,7 +39,7 @@ function MatchForm({
     if (formEl?.current?.reportValidity()) {
       setIsUpdating(true)
       timeoutRef.current = setTimeout(() => {
-        updateMatchInput(clearShowIfField(config, defaultValues, newValues))
+        updateMatchInput(clearShowIfField(config, newValues))
         setIsUpdating(false)
         clearTimeout(timeoutRef.current)
       }, 1000)

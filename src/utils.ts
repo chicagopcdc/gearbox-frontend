@@ -227,12 +227,15 @@ export const getIsFieldShowing = (
 }
 
 export const clearShowIfField = (
-  { fields }: MatchFormConfig,
-  defaultValues: MatchFormValues,
+  config: MatchFormConfig,
   values: MatchFormValues
 ) => {
-  for (const { id, showIf } of fields)
-    if (showIf !== undefined && !getIsFieldShowing(showIf, fields, values))
+  const defaultValues = getDefaultValues(config)
+  for (const { id, showIf } of config.fields)
+    if (
+      showIf !== undefined &&
+      !getIsFieldShowing(showIf, config.fields, values)
+    )
       values[id] = defaultValues[id]
 
   return values
