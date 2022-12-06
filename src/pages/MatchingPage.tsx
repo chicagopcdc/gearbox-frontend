@@ -8,16 +8,11 @@ import {
 } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import Button from '../components/Inputs/Button'
+import LinkExternal from '../components/LinkExternal'
 import MatchForm from '../components/MatchForm'
 import MatchResult from '../components/MatchResult'
+import type useGearboxData from '../hooks/useGearboxData'
 import useScreenSize from '../hooks/useScreenSize'
-import type {
-  EligibilityCriterion,
-  MatchCondition,
-  MatchFormConfig,
-  MatchFormValues,
-  Study,
-} from '../model'
 import {
   getDefaultValues,
   getMatchDetails,
@@ -25,32 +20,56 @@ import {
   markRelevantMatchFields,
 } from '../utils'
 
-export type MatchingPageProps = {
-  conditions: MatchCondition[]
-  config: MatchFormConfig
-  criteria: EligibilityCriterion[]
-  studies: Study[]
-  matchInput: MatchFormValues
-  updateMatchInput(values: MatchFormValues): void
-}
+export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
-function MatchingPage({
-  conditions,
-  config,
-  criteria,
-  studies,
-  matchInput,
-  updateMatchInput,
-}: MatchingPageProps) {
+function MatchingPage({ action, state, status }: MatchingPageProps) {
+  const { fetchAll, updateMatchInput } = action
+  const { conditions, config, criteria, studies, matchInput } = state
+
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(true)
   const screenSize = useScreenSize()
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
 
-  if (config.fields === undefined) return <div>Loading...</div>
+  if (status === 'loading') return <div>Loading...</div>
+  if (status === 'error')
+    return (
+      <>
+        <div className="pb-8">
+          <p className="pb-4">Something went wrong! Please try again.</p>
+          <Button size="normal" onClick={fetchAll}>
+            Try again
+          </Button>
+        </div>
+        <div className="pb-4">
+          <p>
+            &quot;Try again&quot; button did not fix the problem? Please try
+            hard refresh.
+          </p>
+          <ul className="list-disc pl-8">
+            <li>
+              Chrome or Firefox: Press <strong>Ctrl + F5</strong> on Windows or{' '}
+              <strong>Cmd + Shift + R</strong> on Mac
+            </li>
+            <li>
+              Safari (Mac): Press <strong>Cmd + Option + R</strong>
+            </li>
+          </ul>
+        </div>
+        <p>
+          Hard refresh did not fix the problem? Please reach out to{' '}
+          <LinkExternal
+            className="underline text-primary"
+            to="mailto:gearbox_help@lists.uchicago.edu"
+          >
+            gearbox_help@lists.uchicago.edu
+          </LinkExternal>
+          .
+        </p>
+      </>
+    )
 
-  const defaultValues = getDefaultValues(config)
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
   const matchGroups = getMatchGroups(matchDetails)
   const markedFields = markRelevantMatchFields({
@@ -62,7 +81,7 @@ function MatchingPage({
   })
 
   function handleReset() {
-    updateMatchInput(defaultValues)
+    updateMatchInput(getDefaultValues(config))
   }
   function toggleFilter() {
     setIsFilterActive((isActive) => !isActive)

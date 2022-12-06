@@ -67,6 +67,9 @@ export function UserActionCard({
           </LinkExternal>
         </li>
       </ul>
+      <p className="italic text-xs">
+        UI version: {process.env.REACT_APP_VERSION}
+      </p>
     </div>
   )
 }

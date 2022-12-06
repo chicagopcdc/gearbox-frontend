@@ -21,34 +21,30 @@ function MatchForm({
   updateMatchInput,
   setIsUpdating,
 }: MatchFormProps) {
-  const defaultValues = getDefaultValues(config)
-  const [values, setValues] = useState(defaultValues)
+  const [values, setValues] = useState(getDefaultValues(config))
   useEffect(() => setValues({ ...matchInput }), [matchInput])
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const value =
-      e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    setValues((values) => ({ ...values, [e.target.name]: value }))
-  }
-
   const formEl = useRef<HTMLFormElement>(null)
-  useEffect(() => {
-    let timeout: NodeJS.Timeout | undefined
-    if (timeout !== undefined) clearTimeout(timeout)
+  const timeoutRef = useRef<NodeJS.Timeout | undefined>()
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const newValues = {
+      ...values,
+      [e.target.name]:
+        e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+    }
+    setValues(newValues)
+
+    if (timeoutRef.current !== undefined) clearTimeout(timeoutRef.current)
 
     if (formEl?.current?.reportValidity()) {
       setIsUpdating(true)
-      timeout = setTimeout(() => {
-        const newValues = { ...values }
-        updateMatchInput(clearShowIfField(config, defaultValues, newValues))
+      timeoutRef.current = setTimeout(() => {
+        updateMatchInput(clearShowIfField(config, newValues))
         setIsUpdating(false)
+        clearTimeout(timeoutRef.current)
       }, 1000)
     } else setIsUpdating(false)
-
-    return () => {
-      if (timeout !== undefined) clearTimeout(timeout)
-    }
-  }, [values]) // eslint-disable-line react-hooks/exhaustive-deps
+  }
 
   return (
     <form ref={formEl}>
@@ -73,7 +69,7 @@ function MatchForm({
               const isFieldShowing =
                 (!isFilterActive || relevant) &&
                 (showIf === undefined ||
-                  getIsFieldShowing(showIf, config.fields, values))
+                  getIsFieldShowing(showIf, config, values))
 
               return (
                 <FieldWrapper key={id} isShowing={isFieldShowing}>

@@ -128,5 +128,31 @@
       }
     ],
     "description": "A study to evaluate if the randomized addition of venetoclax to a chemotherapy backbone (fludarabine/cytarabine/gemtuzumab ozogamicin [GO]) improves survival of children/adolescents/young adults with acute myeloid leukemia (AML) in 1st relapse who are unable to receive additional anthracyclines, or in 2nd relapse."
+  },
+  {
+    "id": 9,
+    "title": "Niclosamide in Pediatric Patients With Relapsed and Refractory AML",
+    "code": "PEDSHEMAML0007",
+    "locations": ["Stanford University"],
+    "links": [
+      {
+        "name": "ClinicalTrials.gov",
+        "href": "https://clinicaltrials.gov/ct2/show/NCT05188170"
+      }
+    ],
+    "description": "Protocol is designed to evaluate a niclosamide dose escalation scale in combination with cytarabine as a therapeutic modality for pediatric subjects with relapsed/refractory acute myeloid leukemia."
+  },
+  {
+    "id": 10,
+    "title": "Relapsed Pediatric AML to Determine the Safety and Efficacy of the PARP Inhibitor Talazoparib in Combination With Conventional Chemotherapy (PARPAML)",
+    "code": "PEDSHEMAML0008",
+    "locations": ["Stanford University"],
+    "links": [
+      {
+        "name": "ClinicalTrials.gov",
+        "href": "https://clinicaltrials.gov/ct2/show/NCT05101551"
+      }
+    ],
+    "description": "This is a Phase 1, open label, multicenter, dose finding study with dose expansion intended to evaluate the safety and tolerability of talazoparib in combination with conventional chemotherapy. Preliminary estimates of efficacy will be obtain through a dose expansion cohort receiving the maximum tolerated dose from the dose escalation phase of the study. This study aims to determine the safety of talazoparib in combination with conventional chemotherapy and to establish the maximum tolerated dose of all 3 drugs when given in combination. A preliminary estimate of efficacy through a dose expansion phase is a secondary aim."
   }
 ]

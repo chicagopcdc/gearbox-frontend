@@ -206,13 +206,13 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
 
 export const getIsFieldShowing = (
   { criteria, operator }: MatchFormFieldShowIfCondition,
-  fields: MatchFormFieldConfig[],
+  config: MatchFormConfig,
   values: { [x: string]: any }
 ) => {
   let isShowing = true
 
   showIfCritLoop: for (const crit of criteria)
-    for (const field of fields)
+    for (const field of config.fields)
       if (crit.id === field.id) {
         isShowing = testCriterion(crit.operator, crit.value, values[field.id])
 
@@ -227,12 +227,12 @@ export const getIsFieldShowing = (
 }
 
 export const clearShowIfField = (
-  { fields }: MatchFormConfig,
-  defaultValues: MatchFormValues,
+  config: MatchFormConfig,
   values: MatchFormValues
 ) => {
-  for (const { id, showIf } of fields)
-    if (showIf !== undefined && !getIsFieldShowing(showIf, fields, values))
+  const defaultValues = getDefaultValues(config)
+  for (const { id, showIf } of config.fields)
+    if (showIf !== undefined && !getIsFieldShowing(showIf, config, values))
       values[id] = defaultValues[id]
 
   return values

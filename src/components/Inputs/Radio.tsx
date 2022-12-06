@@ -36,12 +36,15 @@ function Radio({
   return (
     <div className={className}>
       {label && (
-        <label className="mb-1" htmlFor={name}>
+        <label className="mb-1" id={`${name}-group`}>
           {label}
         </label>
       )}
       {options && (
-        <div className="flex flex-wrap justify-between">
+        <div
+          className="flex flex-wrap justify-between"
+          aria-labelledby={`${name}-group`}
+        >
           {options.map((option) => (
             <div key={option.value}>
               <input

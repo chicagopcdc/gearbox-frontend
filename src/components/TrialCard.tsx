@@ -22,7 +22,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
-  return (
+  return study === undefined ? null : (
     <div className={styles.container}>
       <div>
         <div className="flex justify-between pb-4">

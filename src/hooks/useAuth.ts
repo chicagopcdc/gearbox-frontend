@@ -41,6 +41,7 @@ export default function useAuth(): {
           )
         ),
       signout: () => {
+        localStorage.clear()
         setUserData(undefined)
         logout()
       },

@@ -18,28 +18,17 @@ export type EligibilityCriterion = {
 
 export type MatchAlgorithm = {
   operator: 'AND' | 'OR'
-  criteria: (number | MatchAlgorithm)[]
+  criteria: (EligibilityCriterion['id'] | MatchAlgorithm)[]
 }
 
 export type MatchCondition = {
-  studyId: number
+  studyId: Study['id']
   algorithm: MatchAlgorithm
 }
 
 export type MatchFormGroupConfig = {
   id: number
   name: string
-}
-
-export type MatchFormFieldShowIfCriterion = {
-  id: number
-  operator: ComparisonOperator
-  value: any
-}
-
-export type MatchFormFieldShowIfCondition = {
-  operator: 'AND' | 'OR'
-  criteria: MatchFormFieldShowIfCriterion[]
 }
 
 export type MatchFormFieldOption = {
@@ -56,10 +45,21 @@ export type MatchFormFieldConfig = {
   label?: string
   options?: MatchFormFieldOption[]
   defaultValue?: any
-  showIf?: MatchFormFieldShowIfCondition
+  showIf?: {
+    operator: 'AND' | 'OR'
+    criteria: {
+      id: MatchFormFieldConfig['id']
+      operator: ComparisonOperator
+      value: any
+    }[]
+  }
   relevant?: boolean
   [key: string]: any
 }
+
+export type MatchFormFieldShowIfCondition = NonNullable<
+  MatchFormFieldConfig['showIf']
+>
 
 export type MatchFormConfig = {
   groups: MatchFormGroupConfig[]
@@ -67,7 +67,7 @@ export type MatchFormConfig = {
 }
 
 export type MatchFormValues = {
-  [id: number]: any
+  [fieldId: MatchFormFieldConfig['id']]: any
 }
 
 export type MatchInfo = {
@@ -84,7 +84,9 @@ export type MatchInfoAlgorithm = {
   isMatched?: boolean
 }
 
-export type MatchDetails = { [id: number]: MatchInfoAlgorithm }
+export type MatchDetails = {
+  [studyId: Study['id']]: MatchInfoAlgorithm
+}
 
 export type RegisterDocument = {
   formatted: string
@@ -112,7 +114,7 @@ export type RegisterInput = {
   role: string
   roleOther?: string
   reviewStatus: {
-    [id: number]: boolean
+    [documentId: RegisterDocument['id']]: boolean
   }
   accessCode?: string
 }
