@@ -104,7 +104,7 @@ function AboutPage() {
         <p>
           <LinkExternal
             className="underline text-primary"
-            to="https://commons.cri.uchicago.edu/wp-content/uploads/2021/04/PCDC-Privacy-Notice.pdf"
+            to="https://docs.pedscommons.org/PcdcPrivacyNotice/"
           >
             Read this Privacy Notice
           </LinkExternal>{' '}
