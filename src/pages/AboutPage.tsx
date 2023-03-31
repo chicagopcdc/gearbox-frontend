@@ -94,9 +94,12 @@ function AboutPage() {
       </AboutPageSection>
       <AboutPageSection title="Terms and conditions">
         <p>
-          <Link className="underline text-primary" to="/terms">
+          <LinkExternal
+            className="underline text-primary"
+            to="https://docs.pedscommons.org/GEARBOxTermsandConditions/"
+          >
             Read the GEARBOx Terms and Conditions
-          </Link>{' '}
+          </LinkExternal>{' '}
           for appropriate use of information on this site and limitations.
         </p>
       </AboutPageSection>

@@ -12,7 +12,6 @@ import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
-import TermsPage from './pages/TermsPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
 
@@ -75,7 +74,6 @@ function App() {
             }
           />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/terms" element={<TermsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Layout>

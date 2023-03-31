@@ -53,7 +53,9 @@ function Footer() {
             </li>
             •
             <li className="mx-2 inline underline">
-              <Link to="/terms">Terms</Link>
+              <LinkExternal to="https://docs.pedscommons.org/GEARBOxTermsandConditions/">
+                Terms
+              </LinkExternal>
             </li>
             •
             <li className="mx-2 inline underline">
