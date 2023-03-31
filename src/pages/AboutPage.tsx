@@ -94,9 +94,12 @@ function AboutPage() {
       </AboutPageSection>
       <AboutPageSection title="Terms and conditions">
         <p>
-          <Link className="underline text-primary" to="/terms">
+          <LinkExternal
+            className="underline text-primary"
+            to="https://docs.pedscommons.org/GEARBOxTermsandConditions/"
+          >
             Read the GEARBOx Terms and Conditions
-          </Link>{' '}
+          </LinkExternal>{' '}
           for appropriate use of information on this site and limitations.
         </p>
       </AboutPageSection>
@@ -104,7 +107,7 @@ function AboutPage() {
         <p>
           <LinkExternal
             className="underline text-primary"
-            to="https://commons.cri.uchicago.edu/wp-content/uploads/2021/04/PCDC-Privacy-Notice.pdf"
+            to="https://docs.pedscommons.org/PcdcPrivacyNotice/"
           >
             Read this Privacy Notice
           </LinkExternal>{' '}

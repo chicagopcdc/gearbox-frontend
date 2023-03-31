@@ -53,11 +53,13 @@ function Footer() {
             </li>
             •
             <li className="mx-2 inline underline">
-              <Link to="/terms">Terms</Link>
+              <LinkExternal to="https://docs.pedscommons.org/GEARBOxTermsandConditions/">
+                Terms
+              </LinkExternal>
             </li>
             •
             <li className="mx-2 inline underline">
-              <LinkExternal to="https://commons.cri.uchicago.edu/wp-content/uploads/2021/04/PCDC-Privacy-Notice.pdf">
+              <LinkExternal to="https://docs.pedscommons.org/PcdcPrivacyNotice/">
                 Privacy Notice
               </LinkExternal>
             </li>
