@@ -266,8 +266,7 @@ export const markRelevantMatchFields = ({
 }: markRelevantMatchFieldsArgs) => {
   // list of studies listed as options
   const studyIdSet: Set<number> = new Set()
-  for (const { id } of studies)
-    studyIdSet.add(id)
+  for (const { id } of studies) studyIdSet.add(id)
 
   // comment this otherwise it will miss excluding the questions for study that have not been loaded
   // if (unmatched?.length === 0)
