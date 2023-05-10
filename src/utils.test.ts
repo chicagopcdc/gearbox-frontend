@@ -7,6 +7,7 @@ import type {
   MatchFormFieldShowIfCondition,
   MatchInfoAlgorithm,
   MatchInfo,
+  Study,
 } from './model'
 import {
   addMatchStatus,
@@ -18,6 +19,47 @@ import {
   markRelevantMatchFields,
 } from './utils'
 
+const studies: Study[] = [
+  {
+    id: 0,
+    title: "Study 0",
+    code: "S0000",
+    locations: [],
+    links: [
+      {
+        name: "ClinicalTrials.gov",
+        href: "https://clinicaltrials.gov/ct2/show/NCT04726241"
+      }
+    ],
+    description: "Study 0"
+  },
+  {
+    id: 1,
+    title: "Study 1",
+    code: "S0001",
+    locations: [],
+    links: [
+      {
+        name: "ClinicalTrials.gov",
+        href: "https://clinicaltrials.gov/ct2/show/NCT04726241"
+      }
+    ],
+    description: "Study 1"
+  },
+  {
+    id: 2,
+    title: "Study 2",
+    code: "S0002",
+    locations: [],
+    links: [
+      {
+        name: "ClinicalTrials.gov",
+        href: "https://clinicaltrials.gov/ct2/show/NCT04726241"
+      }
+    ],
+    description: "Study 2"
+  },
+]
 const criteria: EligibilityCriterion[] = [
   { id: 0, fieldId: 0, fieldValue: [1, 2], operator: 'in' },
   { id: 1, fieldId: 1, fieldValue: false, operator: 'eq' },
@@ -633,6 +675,7 @@ describe('markRelevantMatchFields', () => {
         fields: config.fields,
         unmatched,
         values,
+        studies,
       }),
     ]
   }
@@ -641,7 +684,7 @@ describe('markRelevantMatchFields', () => {
     const [unmatched, markedFields] = testHelper({})
     const expected = config.fields.map((field) => ({
       ...field,
-      relevant: true,
+      relevant: field.id !== 3,
     }))
     expect(unmatched).toEqual([])
     expect(markedFields).toEqual(expected)
@@ -651,7 +694,7 @@ describe('markRelevantMatchFields', () => {
     const [unmatched, markedFields] = testHelper({ 0: 1 })
     const expected = config.fields.map((field) => ({
       ...field,
-      relevant: true,
+      relevant: field.id !== 3,
     }))
     expect(unmatched).toEqual([])
     expect(markedFields).toEqual(expected)
@@ -661,7 +704,7 @@ describe('markRelevantMatchFields', () => {
     const [unmatched, markedFields] = testHelper({ 0: 0 })
     const expected = config.fields.map((field) => ({
       ...field,
-      relevant: field.id !== 2,
+      relevant: field.id !== 2 && field.id !== 3,
     }))
     expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
@@ -671,7 +714,7 @@ describe('markRelevantMatchFields', () => {
     const [unmatched, markedFields] = testHelper({ 0: 0, 2: 0 })
     const expected = config.fields.map((field) => ({
       ...field,
-      relevant: true,
+      relevant: field.id !== 3,
     }))
     expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
