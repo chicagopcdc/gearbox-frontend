@@ -78,6 +78,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
     fields: config.fields,
     unmatched: matchGroups.unmatched,
     values: matchInput,
+    studies: studies,
   })
 
   function handleReset() {
