@@ -10,6 +10,7 @@ import type {
   MatchDetails,
   MatchFormFieldConfig,
   MatchFormFieldShowIfCondition,
+  Study,
 } from './model'
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
@@ -253,6 +254,7 @@ type markRelevantMatchFieldsArgs = {
   fields: MatchFormFieldConfig[]
   unmatched: number[]
   values: MatchFormValues
+  studies: Study[]
 }
 export const markRelevantMatchFields = ({
   conditions,
@@ -260,15 +262,22 @@ export const markRelevantMatchFields = ({
   fields,
   unmatched,
   values,
+  studies,
 }: markRelevantMatchFieldsArgs) => {
-  if (unmatched?.length === 0)
-    return fields.map((field) => ({ ...field, relevant: true }))
+  // list of studies listed as options
+  const studyIdSet: Set<number> = new Set()
+  for (const { id } of studies)
+    studyIdSet.add(id)
+
+  // comment this otherwise it will miss excluding the questions for study that have not been loaded
+  // if (unmatched?.length === 0)
+  //   return fields.map((field) => ({ ...field, relevant: true }))
 
   const unmatchedStudyIdSet = new Set(unmatched)
 
   const relevantCritIdSet: Set<number> = new Set()
   for (const { algorithm, studyId } of conditions)
-    if (!unmatchedStudyIdSet.has(studyId)) {
+    if (!unmatchedStudyIdSet.has(studyId) && studyIdSet.has(studyId)) {
       const uniqueCritIds = getUniqueCritIdsInAlgorithm(algorithm)
       for (const id of uniqueCritIds) relevantCritIdSet.add(id)
     }
