@@ -11,6 +11,7 @@ import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import { AdminPage } from './pages/AdminPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
@@ -42,6 +43,10 @@ function App() {
                 <MatchingPage {...gearboxData} />
               )
             }
+          />
+          <Route
+            path="/admin"
+            element={<AdminPage gearboxState={gearboxData.state} />}
           />
           <Route
             path="/login"

@@ -17,7 +17,15 @@ import {
   getFieldOptionLabelMap,
   getUniqueCritIdsInAlgorithm,
   markRelevantMatchFields,
+  getQueryBuilderConfig,
+  getQueryBuilderValue,
 } from './utils'
+import { MatchFormFieldConfig } from './model'
+import {
+  Fields,
+  JsonGroup,
+  Utils as QbUtils,
+} from '@react-awesome-query-builder/ui'
 
 const studies: Study[] = [
   {
@@ -136,6 +144,7 @@ describe('addMatchStatus', () => {
       operator: 'eq',
     }
   }
+
   const matchUndefined = createDummyMatchInfo(undefined)
   const matchTrue = createDummyMatchInfo(true)
   const matchFalse = createDummyMatchInfo(false)
@@ -718,5 +727,306 @@ describe('markRelevantMatchFields', () => {
     }))
     expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
+  })
+})
+
+describe('getQueryBuilderConfig', () => {
+  test('it gets query builder config', () => {
+    const matchFormFields: MatchFormFieldConfig[] = [
+      {
+        id: 1,
+        groupId: 1,
+        type: 'age',
+        name: 'age',
+      },
+      {
+        id: 2,
+        groupId: 1,
+        type: 'sex',
+        name: 'sex',
+        options: [
+          {
+            value: 1,
+            label: 'Male',
+          },
+          {
+            value: 2,
+            label: 'Female',
+          },
+        ],
+      },
+    ]
+
+    const expectedFields: Fields = {
+      age: {
+        label: 'age',
+        type: 'number',
+        valueSources: ['value'],
+        fieldSettings: { min: 0 },
+        preferWidgets: ['number'],
+      },
+      sex: {
+        label: 'sex',
+        type: 'select',
+        valueSources: ['value'],
+        fieldSettings: {
+          listValues: [
+            {
+              value: 1,
+              title: 'Male',
+            },
+            { value: 2, title: 'Female' },
+          ],
+        },
+      },
+    }
+    const queryBuilderConfig = getQueryBuilderConfig(matchFormFields)
+    const { immutableFieldsMode, immutableValuesMode, immutableOpsMode } =
+      queryBuilderConfig.settings
+    expect(queryBuilderConfig.fields).toEqual(expectedFields)
+    expect(immutableFieldsMode).toBeTruthy()
+    expect(immutableValuesMode).toBeTruthy()
+    expect(immutableOpsMode).toBeTruthy()
+  })
+})
+
+describe('getQueryBuilderValue', () => {
+  test('when algorithm is undefined or null', () => {
+    jest.spyOn(QbUtils, 'uuid').mockReturnValue('1')
+    const expected: JsonGroup = {
+      id: '1',
+      type: 'group',
+    }
+    expect(
+      getQueryBuilderValue(undefined, [], { groups: [], fields: [] })
+    ).toEqual(expected)
+    expect(getQueryBuilderValue(null, [], { groups: [], fields: [] })).toEqual(
+      expected
+    )
+  })
+
+  test('when algorithm is not undefined or null', () => {
+    jest.spyOn(QbUtils, 'uuid').mockReturnValue('1')
+    const algorithm: MatchAlgorithm = {
+      operator: 'AND',
+      criteria: [
+        {
+          operator: 'OR',
+          criteria: [
+            {
+              operator: 'AND',
+              criteria: [1, 2],
+            },
+            {
+              operator: 'OR',
+              criteria: [6],
+            },
+          ],
+        },
+        {
+          operator: 'AND',
+          criteria: [3, 4, 5],
+        },
+      ],
+    }
+    const eligibilityCriteria: EligibilityCriterion[] = [
+      {
+        id: 1,
+        fieldId: 1,
+        fieldValue: 22,
+        operator: 'lt',
+      },
+      {
+        id: 2,
+        fieldId: 2,
+        fieldValue: 'Male',
+        operator: 'eq',
+      },
+      {
+        id: 3,
+        fieldId: 3,
+        fieldValue: 'Heart Disease',
+        operator: 'eq',
+      },
+      {
+        id: 4,
+        fieldId: 4,
+        fieldValue: 'Cancer',
+        operator: 'eq',
+      },
+      {
+        id: 5,
+        fieldId: 5,
+        fieldValue: 0.4,
+        operator: 'lte',
+      },
+      {
+        id: 6,
+        fieldId: 6,
+        fieldValue: 0.2,
+        operator: 'gt',
+      },
+    ]
+
+    const matchForm: MatchFormConfig = {
+      groups: [
+        {
+          id: 1,
+          name: 'group 1',
+        },
+      ],
+      fields: [
+        {
+          id: 1,
+          groupId: 1,
+          name: 'age',
+          type: 'age',
+        },
+        {
+          id: 2,
+          groupId: 1,
+          name: 'sex',
+          type: 'sex',
+        },
+        {
+          id: 3,
+          groupId: 1,
+          name: 'med_condition',
+          type: 'med_condition',
+        },
+        {
+          id: 4,
+          groupId: 1,
+          name: 'past_med_condition',
+          type: 'past_med_condition',
+        },
+        {
+          id: 5,
+          groupId: 1,
+          name: 'blood_pressure',
+          type: 'blood_pressure',
+        },
+        {
+          id: 6,
+          groupId: 1,
+          name: 'body_fat',
+          type: 'body_fat',
+        },
+      ],
+    }
+    const expected: JsonGroup = {
+      children1: [
+        {
+          children1: [
+            {
+              children1: [
+                {
+                  id: '1',
+                  properties: {
+                    field: 'age',
+                    operator: 'less',
+                    value: [22],
+                    valueSrc: ['value'],
+                    valueType: ['number'],
+                  },
+                  type: 'rule',
+                },
+                {
+                  id: '1',
+                  properties: {
+                    field: 'sex',
+                    operator: 'equal',
+                    value: ['Male'],
+                    valueSrc: ['value'],
+                    valueType: ['number'],
+                  },
+                  type: 'rule',
+                },
+              ],
+              id: '1',
+              properties: {
+                conjunction: 'AND',
+              },
+              type: 'group',
+            },
+            {
+              children1: [
+                {
+                  id: '1',
+                  properties: {
+                    field: 'body_fat',
+                    operator: 'greater',
+                    value: [0.2],
+                    valueSrc: ['value'],
+                    valueType: ['number'],
+                  },
+                  type: 'rule',
+                },
+              ],
+              id: '1',
+              properties: {
+                conjunction: 'OR',
+              },
+              type: 'group',
+            },
+          ],
+          id: '1',
+          properties: {
+            conjunction: 'OR',
+          },
+          type: 'group',
+        },
+        {
+          children1: [
+            {
+              id: '1',
+              properties: {
+                field: 'med_condition',
+                operator: 'equal',
+                value: ['Heart Disease'],
+                valueSrc: ['value'],
+                valueType: ['number'],
+              },
+              type: 'rule',
+            },
+            {
+              id: '1',
+              properties: {
+                field: 'past_med_condition',
+                operator: 'equal',
+                value: ['Cancer'],
+                valueSrc: ['value'],
+                valueType: ['number'],
+              },
+              type: 'rule',
+            },
+            {
+              id: '1',
+              properties: {
+                field: 'blood_pressure',
+                operator: 'less_or_equal',
+                value: [0.4],
+                valueSrc: ['value'],
+                valueType: ['number'],
+              },
+              type: 'rule',
+            },
+          ],
+          id: '1',
+          properties: {
+            conjunction: 'AND',
+          },
+          type: 'group',
+        },
+      ],
+      id: '1',
+      properties: {
+        conjunction: 'AND',
+      },
+      type: 'group',
+    }
+    expect(
+      getQueryBuilderValue(algorithm, eligibilityCriteria, matchForm)
+    ).toEqual(expected)
   })
 })
