@@ -1,20 +1,11 @@
-import { useEffect } from 'react'
-import ReactGA from 'react-ga'
-import type { Location } from 'react-router-dom'
+import ReactGA from 'react-ga4'
 
 const gaTrackingId = process.env.REACT_APP_GA_TRACKING_ID ?? ''
-const isUsingGoogleAnalytics = /UA-\d+-\d+/.test(gaTrackingId)
+const isUsingGoogleAnalytics =
+  gaTrackingId.startsWith('G-') || gaTrackingId.startsWith('UA-')
 
-if (isUsingGoogleAnalytics) ReactGA.initialize(gaTrackingId)
-
-function useGoogleAnalytics(location: Location) {
-  useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search)
-  }, [location])
+export function useGoogleAnalytics() {
+  if (isUsingGoogleAnalytics) {
+    ReactGA.initialize(gaTrackingId)
+  }
 }
-
-export default isUsingGoogleAnalytics
-  ? useGoogleAnalytics
-  : () => {
-      /* noop */
-    }

@@ -26,3 +26,5 @@ yarn-error.log*
 .vscode
 
 /src/index.css
+
+.idea/
