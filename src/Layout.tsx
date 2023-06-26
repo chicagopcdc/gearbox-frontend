@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import useGoogleAnalytics from './hooks/useGoogleAnalytics'
+import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
 type LayoutProps = {
   children: React.ReactNode
@@ -22,7 +22,7 @@ function Layout({
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
-  useGoogleAnalytics(location)
+  useGoogleAnalytics()
 
   const isHomePage = location.pathname === '/'
   const isLoginPage = location.pathname === '/login'
