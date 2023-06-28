@@ -14,8 +14,10 @@ import RegisterPage from './pages/RegisterPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
+import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
 function App() {
+  useGoogleAnalytics()
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
 
