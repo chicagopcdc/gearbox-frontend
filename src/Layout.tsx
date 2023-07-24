@@ -8,6 +8,7 @@ import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 type LayoutProps = {
   children: React.ReactNode
   isAuthenticated: boolean
+  isAdmin: boolean
   username: string
   onLogout: () => void
 }
@@ -15,6 +16,7 @@ type LayoutProps = {
 function Layout({
   children,
   isAuthenticated,
+  isAdmin,
   username,
   onLogout,
 }: LayoutProps) {
@@ -34,7 +36,9 @@ function Layout({
 
   return (
     <>
-      {isLoginPage || <Header {...{ isAuthenticated, username, onLogout }} />}
+      {isLoginPage || (
+        <Header {...{ isAuthenticated, isAdmin, username, onLogout }} />
+      )}
       <main className={mainClassName}>{children}</main>
       {isHomeMatchingPage || <Footer />}
     </>

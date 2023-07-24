@@ -16,16 +16,28 @@ import DocumentReviewPage from './pages/DocumentReviewPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
 import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
+import { ErrorRetry } from './components/ErrorRetry'
 
 function App() {
   useGoogleAnalytics()
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
+  const isAdmin = !!auth.user?.is_admin
+
+  if (
+    auth.loadingStatus === 'not started' ||
+    auth.loadingStatus === 'loading'
+  ) {
+    return <h1>Loading...</h1>
+  } else if (auth.loadingStatus === 'error') {
+    return <ErrorRetry retry={auth.fetchAuth} />
+  }
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
       <Layout
         isAuthenticated={auth.isAuthenticated}
+        isAdmin={isAdmin}
         username={auth.user?.username ?? ''}
         onLogout={auth.signout}
       >
@@ -46,7 +58,13 @@ function App() {
           />
           <Route
             path="/admin"
-            element={<AdminPage gearboxState={gearboxData.state} />}
+            element={
+              isAdmin ? (
+                <AdminPage gearboxState={gearboxData.state} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
           />
           <Route
             path="/login"

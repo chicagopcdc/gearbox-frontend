@@ -12,6 +12,8 @@ import { MatchFormConfig, StudyVersion } from '../model'
 import { getInitQueryValue, getQueryBuilderValue } from '../utils'
 import { getEligibilityCriteriaById } from '../api/eligibilityCriteria'
 import { getStudyAlgorithm } from '../api/studyAlgorithm'
+import { useQueryBuilderState } from '../hooks/useQueryBuilderState'
+import { ErrorRetry } from './ErrorRetry'
 
 interface QueryBuilderState {
   tree: ImmutableTree
@@ -39,42 +41,13 @@ export function CriteriaBuilderModal({
     ],
   } = studyVersion
 
-  const [queryBuilderState, setQueryBuilderState] = useState<QueryBuilderState>(
-    {
-      tree: QbUtils.checkTree(
-        QbUtils.loadTree(getInitQueryValue()),
-        queryBuilderConfig
-      ),
-      config: queryBuilderConfig,
-    }
-  )
-
-  useEffect(() => {
-    getEligibilityCriteriaById(eligibilityCriteriaId).then((criteria) => {
-      getStudyAlgorithm(studyAlgorithmId).then((algorithm) => {
-        const queryValue = getQueryBuilderValue(algorithm, criteria, matchForm)
-        setQueryBuilderState((prevState) => ({
-          ...prevState,
-          tree: QbUtils.checkTree(
-            QbUtils.loadTree(queryValue),
-            queryBuilderConfig
-          ),
-          config: queryBuilderConfig,
-        }))
-      })
-    })
-  }, [eligibilityCriteriaId, studyAlgorithmId, matchForm, queryBuilderConfig])
-
-  const onChange = useCallback(
-    (immutableTree: ImmutableTree, config: Config) => {
-      setQueryBuilderState((prevState) => ({
-        ...prevState,
-        tree: immutableTree,
-        config,
-      }))
-    },
-    []
-  )
+  const [queryBuilderState, loadingStatus, fetchQueryBuilderState, onChange] =
+    useQueryBuilderState(
+      eligibilityCriteriaId,
+      studyAlgorithmId,
+      matchForm,
+      queryBuilderConfig
+    )
   const renderBuilder = (props: BuilderProps) => (
     <div className="query-builder-container" style={{ padding: '10px' }}>
       <div className="query-builder qb-lite">
@@ -119,12 +92,18 @@ export function CriteriaBuilderModal({
               </button>
             </div>
           </div>
-          <Query
-            {...queryBuilderConfig}
-            value={queryBuilderState.tree}
-            onChange={onChange}
-            renderBuilder={renderBuilder}
-          />
+          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+            <div>Loading...</div>
+          ) : loadingStatus === 'error' ? (
+            <ErrorRetry retry={fetchQueryBuilderState} />
+          ) : (
+            <Query
+              {...queryBuilderConfig}
+              value={queryBuilderState.tree}
+              onChange={onChange}
+              renderBuilder={renderBuilder}
+            />
+          )}
         </div>
       </div>
     </div>

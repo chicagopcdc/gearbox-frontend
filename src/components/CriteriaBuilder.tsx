@@ -49,52 +49,6 @@ export function CriteriaBuilder({
           <span>Click to edit Eligibility Criteria</span>
         </ReactTooltip>
       )}
-      {/*<div className="query-builder-result">*/}
-      {/*  <div>*/}
-      {/*    Query string:{' '}*/}
-      {/*    <pre>*/}
-      {/*      {JSON.stringify(*/}
-      {/*        QbUtils.queryString(*/}
-      {/*          queryBuilderState.tree,*/}
-      {/*          queryBuilderState.config*/}
-      {/*        )*/}
-      {/*      )}*/}
-      {/*    </pre>*/}
-      {/*  </div>*/}
-      {/*  <div>*/}
-      {/*    MongoDb query:{' '}*/}
-      {/*    <pre>*/}
-      {/*      {JSON.stringify(*/}
-      {/*        QbUtils.mongodbFormat(*/}
-      {/*          queryBuilderState.tree,*/}
-      {/*          queryBuilderState.config*/}
-      {/*        )*/}
-      {/*      )}*/}
-      {/*    </pre>*/}
-      {/*  </div>*/}
-      {/*  <div>*/}
-      {/*    SQL where:{' '}*/}
-      {/*    <pre>*/}
-      {/*      {JSON.stringify(*/}
-      {/*        QbUtils.sqlFormat(*/}
-      {/*          queryBuilderState.tree,*/}
-      {/*          queryBuilderState.config*/}
-      {/*        )*/}
-      {/*      )}*/}
-      {/*    </pre>*/}
-      {/*  </div>*/}
-      {/*  <div>*/}
-      {/*    JsonLogic:{' '}*/}
-      {/*    <pre>*/}
-      {/*      {JSON.stringify(*/}
-      {/*        QbUtils.jsonLogicFormat(*/}
-      {/*          queryBuilderState.tree,*/}
-      {/*          queryBuilderState.config*/}
-      {/*        )*/}
-      {/*      )}*/}
-      {/*    </pre>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </div>
   )
 }

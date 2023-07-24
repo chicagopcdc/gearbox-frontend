@@ -1,3 +1,4 @@
+export type LoadingStatus = 'not started' | 'loading' | 'success' | 'error'
 export type Study = {
   id: number
   code: string
