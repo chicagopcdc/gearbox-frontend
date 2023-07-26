@@ -1,0 +1,8 @@
+.group--actions, .rule--header {
+    @apply hidden
+}
+
+.group-or-rule {
+    @apply px-2
+}
+

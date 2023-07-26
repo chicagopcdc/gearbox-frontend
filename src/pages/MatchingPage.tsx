@@ -2,13 +2,12 @@ import type React from 'react'
 import { useState } from 'react'
 import {
   MoreHorizontal,
+  RotateCcw,
   ToggleLeft,
   ToggleRight,
-  RotateCcw,
 } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import Button from '../components/Inputs/Button'
-import LinkExternal from '../components/LinkExternal'
 import MatchForm from '../components/MatchForm'
 import MatchResult from '../components/MatchResult'
 import type useGearboxData from '../hooks/useGearboxData'
@@ -19,6 +18,7 @@ import {
   getMatchGroups,
   markRelevantMatchFields,
 } from '../utils'
+import { ErrorRetry } from '../components/ErrorRetry'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
@@ -33,42 +33,9 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   const [view, setView] = useState<'form' | 'result'>('form')
 
   if (status === 'loading') return <div>Loading...</div>
-  if (status === 'error')
-    return (
-      <>
-        <div className="pb-8">
-          <p className="pb-4">Something went wrong! Please try again.</p>
-          <Button size="normal" onClick={fetchAll}>
-            Try again
-          </Button>
-        </div>
-        <div className="pb-4">
-          <p>
-            &quot;Try again&quot; button did not fix the problem? Please try
-            hard refresh.
-          </p>
-          <ul className="list-disc pl-8">
-            <li>
-              Chrome or Firefox: Press <strong>Ctrl + F5</strong> on Windows or{' '}
-              <strong>Cmd + Shift + R</strong> on Mac
-            </li>
-            <li>
-              Safari (Mac): Press <strong>Cmd + Option + R</strong>
-            </li>
-          </ul>
-        </div>
-        <p>
-          Hard refresh did not fix the problem? Please reach out to{' '}
-          <LinkExternal
-            className="underline text-primary"
-            to="mailto:gearbox_help@lists.uchicago.edu"
-          >
-            gearbox_help@lists.uchicago.edu
-          </LinkExternal>
-          .
-        </p>
-      </>
-    )
+  if (status === 'error') {
+    return ErrorRetry({ retry: fetchAll })
+  }
 
   const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
   const matchGroups = getMatchGroups(matchDetails)
@@ -84,12 +51,15 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   function handleReset() {
     updateMatchInput(getDefaultValues(config))
   }
+
   function toggleFilter() {
     setIsFilterActive((isActive) => !isActive)
   }
+
   function toggleFormOptions() {
     setShowFormOptions((show) => !show)
   }
+
   function handleFormOptionsBlur(e: React.FocusEvent) {
     if (showFormOptions && !e.currentTarget.contains(e.relatedTarget))
       setShowFormOptions(false)

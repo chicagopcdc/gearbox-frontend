@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import { ChevronUp, ChevronDown } from 'react-feather'
+import { ReactNode, useState } from 'react'
+import { ChevronDown, ChevronUp } from 'react-feather'
 import LinkExternal from './LinkExternal'
-import TrialMatchInfo from './TrialMatchInfo'
-import type { MatchInfoAlgorithm, Study } from '../model'
+import type { Study } from '../model'
 
 const styles = {
   container: 'bg-gray-200 my-4 p-4',
@@ -14,11 +13,11 @@ const styles = {
 }
 
 type TrialCardProps = {
-  matchInfoAlgorithm?: MatchInfoAlgorithm
   study: Study
+  children?: ReactNode
 }
 
-function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
+function TrialCard({ study, children }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
@@ -28,12 +27,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
         <div className="flex justify-between pb-4">
           <h2 className="text-lg font-bold">{study.code}</h2>
           <div className="flex">
-            {matchInfoAlgorithm !== undefined && (
-              <TrialMatchInfo
-                study={study}
-                studyMatchInfo={matchInfoAlgorithm}
-              />
-            )}
+            {children}
             {isDropDownOpen ? (
               <button
                 type="button"
@@ -66,7 +60,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             <p>{study.description}</p>
           </div>
         ) : null}
-        {study.locations.length > 0 ? (
+        {study.locations?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
               {study.locations.length > 1 ? 'Locations' : 'Location'}
@@ -78,7 +72,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             </ul>
           </div>
         ) : null}
-        {study.links.length > 0 ? (
+        {study.links?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
               {study.links.length > 1 ? 'Links' : 'Link'}
