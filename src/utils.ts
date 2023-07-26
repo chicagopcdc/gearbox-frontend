@@ -12,6 +12,16 @@ import type {
   MatchFormFieldShowIfCondition,
   Study,
 } from './model'
+import {
+  BasicConfig,
+  Config,
+  Fields,
+  JsonGroup,
+  JsonItem,
+  JsonRule,
+  Utils as QbUtils,
+} from '@react-awesome-query-builder/ui'
+import { GroupProperties } from '@react-awesome-query-builder/core'
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
@@ -291,4 +301,126 @@ export const markRelevantMatchFields = ({
     markedFields.push({ ...field, relevant: relevantFieldIdSet.has(field.id) })
 
   return markedFields
+}
+
+export const initialQueryBuilderConfig = {
+  ...BasicConfig,
+  fields: {},
+}
+
+export const getQueryBuilderConfig = (
+  matchFormFields: MatchFormFieldConfig[]
+): Config => ({
+  ...initialQueryBuilderConfig,
+  settings: {
+    ...initialQueryBuilderConfig.settings,
+    immutableFieldsMode: true,
+    immutableValuesMode: true,
+    immutableOpsMode: true,
+  },
+  fields: getQueryBuilderField(matchFormFields),
+})
+
+function getQueryBuilderField(
+  matchingFormFields: MatchFormFieldConfig[]
+): Fields {
+  const result: Fields = {}
+  matchingFormFields.forEach((f) => {
+    const isSelect = !!f.options?.length
+    result[f.name] = {
+      label: f.name,
+      type: isSelect ? 'select' : 'number',
+      valueSources: ['value'],
+      fieldSettings: isSelect
+        ? {
+            listValues: f.options?.map((o) => ({
+              value: o.value,
+              title: o.label,
+            })),
+          }
+        : { min: 0 },
+      preferWidgets: !isSelect ? ['number'] : undefined,
+    }
+  })
+
+  return result
+}
+
+export const getInitQueryValue = (): JsonGroup => ({
+  id: QbUtils.uuid(),
+  type: 'group',
+})
+
+export function getQueryBuilderValue(
+  algorithm: MatchAlgorithm | undefined | null,
+  eligibilityCriteria: EligibilityCriterion[],
+  matchForm: MatchFormConfig
+): JsonGroup {
+  const result = getInitQueryValue()
+  if (!algorithm) {
+    return result
+  }
+  const children1 = algorithm.criteria
+    .map((c) => {
+      if (typeof c === 'number') {
+        const studyCriterion = eligibilityCriteria.find((ec) => ec.id === c)
+        return studyCriterion
+          ? getQueryBuilderRule(studyCriterion, matchForm)
+          : null
+      } else {
+        return getQueryBuilderValue(c, eligibilityCriteria, matchForm)
+      }
+    })
+    .filter(Boolean) as JsonItem[]
+  return {
+    ...result,
+    properties: {
+      conjunction: algorithm.operator,
+    },
+    children1,
+  }
+}
+
+function getQueryBuilderRule(
+  { fieldId, fieldValue, operator }: EligibilityCriterion,
+  { fields }: MatchFormConfig
+): JsonRule | null {
+  const field = fields.find((f) => f.id === fieldId)
+  if (!field) {
+    return null
+  }
+  const isSelect = !!field.options?.length
+  return {
+    id: QbUtils.uuid(),
+    type: 'rule',
+    properties: {
+      field: field.name,
+      value: [fieldValue],
+      operator: getQueryBuilderOperator(operator, isSelect),
+      valueSrc: ['value'],
+      valueType: [isSelect ? 'select' : 'number'],
+    },
+  }
+}
+
+function getQueryBuilderOperator(
+  comparisonOperator: ComparisonOperator,
+  isSelect: boolean
+): string {
+  switch (comparisonOperator) {
+    case 'gte':
+      return 'greater_or_equal'
+    case 'in':
+      return 'select_any_in'
+    case 'gt':
+      return 'greater'
+    case 'lte':
+      return 'less_or_equal'
+    case 'lt':
+      return 'less'
+    case 'eq':
+      return isSelect ? 'select_equals' : 'equal'
+    case 'ne':
+      return isSelect ? 'select_not_equals' : 'not_equal'
+  }
 }

@@ -16,3 +16,9 @@ export function getEligibilityCriteria() {
       return data
     })
 }
+
+export function getEligibilityCriteriaById(id: number) {
+  return fetchGearbox(`/gearbox/eligibility-criteria/${id}`).then(
+    (res) => res.json() as Promise<EligibilityCriterion[]>
+  )
+}

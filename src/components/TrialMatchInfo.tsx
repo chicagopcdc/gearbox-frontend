@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   Info,
   MoreHorizontal,
@@ -11,6 +11,7 @@ import {
 import ReactTooltip from 'react-tooltip'
 import type { MatchInfoAlgorithm, Study } from '../model'
 import MatchInfoDetails from './MatchInfoDetails'
+import { useModal } from '../hooks/useModal'
 
 type TrialMatchInfoProps = {
   study: Study
@@ -20,39 +21,15 @@ type TrialMatchInfoProps = {
 function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
   const matchInfoId = `match-info-${study.id}`
 
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, openModal, closeModal] = useModal()
   const [showModalOptions, setShowModalOptions] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(false)
   const [isHighlightActive, setIsHighlightActive] = useState(false)
 
-  const openModal = () => setShowModal(true)
-  const closeModal = () => {
-    setShowModal(false)
-    setShowModalOptions(false)
-    setIsFilterActive(false)
-    setIsHighlightActive(false)
-  }
-  useEffect(() => {
-    return closeModal
-  }, [])
-  useEffect(() => {
-    function closeModalOnEscape(e: KeyboardEvent) {
-      if (showModal && e.key === 'Escape') closeModal()
-    }
-    let isMissingEventListener = true
-
-    if (isMissingEventListener && showModal) {
-      window.addEventListener('keydown', closeModalOnEscape)
-      isMissingEventListener = false
-    }
-
-    return () => {
-      window.removeEventListener('keydown', closeModalOnEscape)
-    }
-  }, [showModal])
   const toggleModalOptions = () => setShowModalOptions((show) => !show)
   const toggleFilter = () => setIsFilterActive((isActive) => !isActive)
   const toggleHighlight = () => setIsHighlightActive((isActive) => !isActive)
+
   function handleModalOptionsBlur(e: React.FocusEvent) {
     if (showModalOptions && !e.currentTarget.contains(e.relatedTarget))
       setShowModalOptions(false)

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { RegisterInput, UserData } from '../model'
+import { LoadingStatus, RegisterInput, UserData } from '../model'
 import {
   fetchUser,
   keepUserSessionAlive,
@@ -13,11 +13,28 @@ export default function useAuth(): {
   isRegistered: boolean
   hasDocsToBeReviewed: boolean
   user?: UserData
+  loadingStatus: LoadingStatus
   register: (input: RegisterInput) => Promise<void>
   reviewDocuments: (status: RegisterInput['reviewStatus']) => Promise<void>
   signout: () => void
+  fetchAuth: () => void
 } {
   const [userData, setUserData] = useState<UserData>()
+  const [loadingStatus, setLoadingStatus] =
+    useState<LoadingStatus>('not started')
+
+  const fetchAuth = () => {
+    setLoadingStatus('loading')
+    fetchUser()
+      .then((ud) => {
+        setUserData(ud)
+        setLoadingStatus('success')
+      })
+      .catch((err) => {
+        console.error(err)
+        setLoadingStatus('error')
+      })
+  }
 
   const auth = useMemo(() => {
     const isAuthenticated = userData !== undefined
@@ -45,12 +62,15 @@ export default function useAuth(): {
         setUserData(undefined)
         logout()
       },
+      loadingStatus,
+      fetchAuth,
     }
-  }, [userData])
+  }, [userData, loadingStatus])
 
   useEffect(() => {
-    if (!auth.isAuthenticated)
-      fetchUser().then(setUserData).catch(console.error)
+    if (!auth.isAuthenticated) {
+      fetchAuth()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
