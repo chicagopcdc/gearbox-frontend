@@ -149,6 +149,7 @@ export type UserData = {
   docs_to_be_reviewed: RegisterDocument[]
   username: string
   is_admin: boolean
+  sub: string
   [key: string]: any
 }
 

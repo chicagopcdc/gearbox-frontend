@@ -10,6 +10,7 @@ type LayoutProps = {
   isAuthenticated: boolean
   isAdmin: boolean
   username: string
+  userId: string
   onLogout: () => void
 }
 
@@ -18,13 +19,14 @@ function Layout({
   isAuthenticated,
   isAdmin,
   username,
+  userId,
   onLogout,
 }: LayoutProps) {
   const location = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [location.pathname])
-  useGoogleAnalytics()
+  useGoogleAnalytics(userId)
 
   const isHomePage = location.pathname === '/'
   const isLoginPage = location.pathname === '/login'

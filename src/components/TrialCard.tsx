@@ -2,6 +2,7 @@ import { ReactNode, useState } from 'react'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import LinkExternal from './LinkExternal'
 import type { Study } from '../model'
+import { gaEvents } from '../hooks/useGoogleAnalytics'
 
 const styles = {
   container: 'bg-gray-200 my-4 p-4',
@@ -100,6 +101,7 @@ function TrialCard({ study, children }: TrialCardProps) {
             <LinkExternal
               className="text-blue-700"
               to="https://lls-forms.careboxhealth.com/?IRC=NOIRC"
+              onClick={gaEvents.clickLLSLinkEvent}
             >
               Clinical Trial Support Center referral form
             </LinkExternal>
