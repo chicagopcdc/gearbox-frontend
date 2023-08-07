@@ -6,3 +6,16 @@ export function getStudyAlgorithm(id: number) {
     .then((res) => res.json() as Promise<StudyAlgorithmEngine>)
     .then((algorithmEngine) => algorithmEngine.algorithm_logic)
 }
+
+export function updateStudyAlgorithm(
+  studyAlgorithmEngine: StudyAlgorithmEngine,
+  eligibilityCriteriaId: number
+) {
+  return fetchGearbox('/gearbox/update-study-algorithm-engine', {
+    method: 'POST',
+    body: JSON.stringify({
+      ...studyAlgorithmEngine,
+      eligibility_criteria_id: eligibilityCriteriaId,
+    }),
+  }).catch(console.error)
+}

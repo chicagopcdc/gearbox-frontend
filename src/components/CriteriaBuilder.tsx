@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { MatchingPageProps } from '../pages/MatchingPage'
-import { Edit } from 'react-feather'
+import { Check, Edit } from 'react-feather'
 import ReactTooltip from 'react-tooltip'
 import { StudyVersion } from '../model'
 import { useModal } from '../hooks/useModal'
@@ -19,17 +19,28 @@ export function CriteriaBuilder({
 
   const [showModal, openModal, closeModal] = useModal()
 
+  const [updated, setUpdated] = useState(false)
   return (
     <div>
-      <button
-        className={`mr-2 ${showModal ? 'text-red-700' : 'hover:text-red-700'}`}
-        onClick={openModal}
-        data-tip
-        data-for={matchInfoId}
-        aria-label="Open Edit Eligibility Criteria dialog"
-      >
-        <Edit />
-      </button>
+      <div className="flex">
+        {updated && (
+          <h2 className="text-base text-green-600 mr-4 flex">
+            <Check />
+            Updated Successfully
+          </h2>
+        )}
+        <button
+          className={`mr-2 ${
+            showModal ? 'text-red-700' : 'hover:text-red-700'
+          }`}
+          onClick={openModal}
+          data-tip
+          data-for={matchInfoId}
+          aria-label="Open Edit Eligibility Criteria dialog"
+        >
+          <Edit />
+        </button>
+      </div>
 
       {showModal ? (
         <CriteriaBuilderModal
@@ -37,6 +48,7 @@ export function CriteriaBuilder({
           studyVersion={studyVersion}
           closeModal={closeModal}
           queryBuilderConfig={getQueryBuilderConfig(gearboxState.config.fields)}
+          setUpdated={setUpdated}
         />
       ) : (
         <ReactTooltip

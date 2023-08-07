@@ -3,34 +3,32 @@ import {
   Builder,
   BuilderProps,
   Config,
-  ImmutableTree,
+  JsonGroup,
   Query,
   Utils as QbUtils,
 } from '@react-awesome-query-builder/ui'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 import { MatchFormConfig, StudyVersion } from '../model'
-import { getInitQueryValue, getQueryBuilderValue } from '../utils'
-import { getEligibilityCriteriaById } from '../api/eligibilityCriteria'
-import { getStudyAlgorithm } from '../api/studyAlgorithm'
+import { queryBuilderValueToAlgorithm } from '../utils'
+import { updateStudyAlgorithm } from '../api/studyAlgorithm'
 import { useQueryBuilderState } from '../hooks/useQueryBuilderState'
 import { ErrorRetry } from './ErrorRetry'
-
-interface QueryBuilderState {
-  tree: ImmutableTree
-  config: Config
-}
+import Button from './Inputs/Button'
 
 export function CriteriaBuilderModal({
   matchForm,
   studyVersion,
   closeModal,
   queryBuilderConfig,
+  setUpdated,
 }: {
   matchForm: MatchFormConfig
   studyVersion: StudyVersion
   closeModal: () => void
   queryBuilderConfig: Config
+  setUpdated: Dispatch<SetStateAction<boolean>>
 }) {
+  const timerIdRef = useRef<NodeJS.Timer | null>(null)
   const {
     study,
     eligibility_criteria_infos: [
@@ -56,6 +54,31 @@ export function CriteriaBuilderModal({
     </div>
   )
 
+  const saveCriteria = (studyAlgorithmId: number) => () => {
+    const studyAlgorithm = queryBuilderValueToAlgorithm(
+      QbUtils.getTree(queryBuilderState.tree) as JsonGroup
+    )
+    updateStudyAlgorithm(
+      {
+        id: studyAlgorithmId,
+        algorithm_logic: studyAlgorithm,
+      },
+      eligibilityCriteriaId
+    ).then(() => {
+      closeModal()
+      setUpdated(true)
+      timerIdRef.current = setTimeout(() => setUpdated(false), 3000)
+    })
+  }
+
+  useEffect(
+    () => () => {
+      if (timerIdRef.current) {
+        clearTimeout(timerIdRef.current)
+      }
+    },
+    []
+  )
   return (
     <div
       id="match-info-modal"
@@ -83,8 +106,9 @@ export function CriteriaBuilderModal({
               </span>
             </h3>
             <div className="min-w-max">
+              <Button onClick={saveCriteria(studyAlgorithmId)}>Save</Button>
               <button
-                className="ml-2 hover:text-red-700"
+                className="ml-4 hover:text-red-700"
                 onClick={closeModal}
                 aria-label="Close Eligibility Criteria dialog"
               >

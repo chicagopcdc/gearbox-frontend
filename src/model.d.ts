@@ -55,6 +55,7 @@ export type MatchCondition = {
 }
 
 export type StudyAlgorithmEngine = {
+  id: number
   algorithm_logic: MatchAlgorithm
 }
 

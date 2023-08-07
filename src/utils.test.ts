@@ -19,6 +19,7 @@ import {
   markRelevantMatchFields,
   getQueryBuilderConfig,
   getQueryBuilderValue,
+  queryBuilderValueToAlgorithm,
 } from './utils'
 import { MatchFormFieldConfig } from './model'
 import {
@@ -790,6 +791,139 @@ describe('getQueryBuilderConfig', () => {
   })
 })
 
+const algorithm: MatchAlgorithm = {
+  operator: 'AND',
+  criteria: [
+    {
+      operator: 'OR',
+      criteria: [
+        {
+          operator: 'AND',
+          criteria: [1, 2],
+        },
+        {
+          operator: 'OR',
+          criteria: [6],
+        },
+      ],
+    },
+    {
+      operator: 'AND',
+      criteria: [3, 4, 5],
+    },
+  ],
+}
+const jsonGroup: JsonGroup = {
+  children1: [
+    {
+      children1: [
+        {
+          children1: [
+            {
+              id: '1',
+              properties: {
+                field: 'age',
+                operator: 'less',
+                value: [22],
+                valueSrc: ['value'],
+                valueType: ['number'],
+              },
+              type: 'rule',
+            },
+            {
+              id: '2',
+              properties: {
+                field: 'sex',
+                operator: 'equal',
+                value: ['Male'],
+                valueSrc: ['value'],
+                valueType: ['number'],
+              },
+              type: 'rule',
+            },
+          ],
+          id: '1',
+          properties: {
+            conjunction: 'AND',
+          },
+          type: 'group',
+        },
+        {
+          children1: [
+            {
+              id: '6',
+              properties: {
+                field: 'body_fat',
+                operator: 'greater',
+                value: [0.2],
+                valueSrc: ['value'],
+                valueType: ['number'],
+              },
+              type: 'rule',
+            },
+          ],
+          id: '1',
+          properties: {
+            conjunction: 'OR',
+          },
+          type: 'group',
+        },
+      ],
+      id: '1',
+      properties: {
+        conjunction: 'OR',
+      },
+      type: 'group',
+    },
+    {
+      children1: [
+        {
+          id: '3',
+          properties: {
+            field: 'med_condition',
+            operator: 'equal',
+            value: ['Heart Disease'],
+            valueSrc: ['value'],
+            valueType: ['number'],
+          },
+          type: 'rule',
+        },
+        {
+          id: '4',
+          properties: {
+            field: 'past_med_condition',
+            operator: 'equal',
+            value: ['Cancer'],
+            valueSrc: ['value'],
+            valueType: ['number'],
+          },
+          type: 'rule',
+        },
+        {
+          id: '5',
+          properties: {
+            field: 'blood_pressure',
+            operator: 'less_or_equal',
+            value: [0.4],
+            valueSrc: ['value'],
+            valueType: ['number'],
+          },
+          type: 'rule',
+        },
+      ],
+      id: '1',
+      properties: {
+        conjunction: 'AND',
+      },
+      type: 'group',
+    },
+  ],
+  id: '1',
+  properties: {
+    conjunction: 'AND',
+  },
+  type: 'group',
+}
 describe('getQueryBuilderValue', () => {
   test('when algorithm is undefined or null', () => {
     jest.spyOn(QbUtils, 'uuid').mockReturnValue('1')
@@ -807,28 +941,7 @@ describe('getQueryBuilderValue', () => {
 
   test('when algorithm is not undefined or null', () => {
     jest.spyOn(QbUtils, 'uuid').mockReturnValue('1')
-    const algorithm: MatchAlgorithm = {
-      operator: 'AND',
-      criteria: [
-        {
-          operator: 'OR',
-          criteria: [
-            {
-              operator: 'AND',
-              criteria: [1, 2],
-            },
-            {
-              operator: 'OR',
-              criteria: [6],
-            },
-          ],
-        },
-        {
-          operator: 'AND',
-          criteria: [3, 4, 5],
-        },
-      ],
-    }
+
     const eligibilityCriteria: EligibilityCriterion[] = [
       {
         id: 1,
@@ -914,119 +1027,15 @@ describe('getQueryBuilderValue', () => {
         },
       ],
     }
-    const expected: JsonGroup = {
-      children1: [
-        {
-          children1: [
-            {
-              children1: [
-                {
-                  id: '1',
-                  properties: {
-                    field: 'age',
-                    operator: 'less',
-                    value: [22],
-                    valueSrc: ['value'],
-                    valueType: ['number'],
-                  },
-                  type: 'rule',
-                },
-                {
-                  id: '1',
-                  properties: {
-                    field: 'sex',
-                    operator: 'equal',
-                    value: ['Male'],
-                    valueSrc: ['value'],
-                    valueType: ['number'],
-                  },
-                  type: 'rule',
-                },
-              ],
-              id: '1',
-              properties: {
-                conjunction: 'AND',
-              },
-              type: 'group',
-            },
-            {
-              children1: [
-                {
-                  id: '1',
-                  properties: {
-                    field: 'body_fat',
-                    operator: 'greater',
-                    value: [0.2],
-                    valueSrc: ['value'],
-                    valueType: ['number'],
-                  },
-                  type: 'rule',
-                },
-              ],
-              id: '1',
-              properties: {
-                conjunction: 'OR',
-              },
-              type: 'group',
-            },
-          ],
-          id: '1',
-          properties: {
-            conjunction: 'OR',
-          },
-          type: 'group',
-        },
-        {
-          children1: [
-            {
-              id: '1',
-              properties: {
-                field: 'med_condition',
-                operator: 'equal',
-                value: ['Heart Disease'],
-                valueSrc: ['value'],
-                valueType: ['number'],
-              },
-              type: 'rule',
-            },
-            {
-              id: '1',
-              properties: {
-                field: 'past_med_condition',
-                operator: 'equal',
-                value: ['Cancer'],
-                valueSrc: ['value'],
-                valueType: ['number'],
-              },
-              type: 'rule',
-            },
-            {
-              id: '1',
-              properties: {
-                field: 'blood_pressure',
-                operator: 'less_or_equal',
-                value: [0.4],
-                valueSrc: ['value'],
-                valueType: ['number'],
-              },
-              type: 'rule',
-            },
-          ],
-          id: '1',
-          properties: {
-            conjunction: 'AND',
-          },
-          type: 'group',
-        },
-      ],
-      id: '1',
-      properties: {
-        conjunction: 'AND',
-      },
-      type: 'group',
-    }
+
     expect(
       getQueryBuilderValue(algorithm, eligibilityCriteria, matchForm)
-    ).toEqual(expected)
+    ).toEqual(jsonGroup)
+  })
+})
+
+describe('queryBuilderValueToAlgorithm', () => {
+  test('convert json group to study algorithm', () => {
+    expect(queryBuilderValueToAlgorithm(jsonGroup)).toEqual(algorithm)
   })
 })
