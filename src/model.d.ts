@@ -1,11 +1,23 @@
 export type LoadingStatus = 'not started' | 'loading' | 'success' | 'error'
-export type Study = {
+type Site = {
+  id: number
+  active: boolean
+  name: string
+}
+type CommonStudy = {
   id: number
   code: string
-  title: string
+  name: string
   description: string
-  locations: string[]
   links: { name: string; href: string }[]
+}
+
+export type StudyApi = CommonStudy & {
+  sites: { site: Site }[]
+}
+
+export type Study = CommonStudy & {
+  sites: Site[]
 }
 
 export type StudyVersion = {

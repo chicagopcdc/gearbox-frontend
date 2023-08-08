@@ -50,7 +50,7 @@ function TrialCard({ study, children }: TrialCardProps) {
         </div>
         <div className={styles.field.container}>
           <h3 className={styles.field.title}>Title</h3>
-          <p className={isDropDownOpen ? '' : 'truncate'}>{study.title}</p>
+          <p className={isDropDownOpen ? '' : 'truncate'}>{study.name}</p>
         </div>
       </div>
 
@@ -61,14 +61,14 @@ function TrialCard({ study, children }: TrialCardProps) {
             <p>{study.description}</p>
           </div>
         ) : null}
-        {study.locations?.length > 0 ? (
+        {study.sites?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
-              {study.locations.length > 1 ? 'Locations' : 'Location'}
+              {study.sites.length > 1 ? 'Locations' : 'Location'}
             </h3>
             <ul className="list-disc ml-8">
-              {study.locations.map((location) => (
-                <li key={location}>{location}</li>
+              {study.sites.map((site) => (
+                <li key={site.id}>{site.name}</li>
               ))}
             </ul>
           </div>

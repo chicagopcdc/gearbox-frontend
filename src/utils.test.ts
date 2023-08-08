@@ -30,42 +30,42 @@ import {
 const studies: Study[] = [
   {
     id: 0,
-    title: "Study 0",
-    code: "S0000",
-    locations: [],
+    name: 'Study 0',
+    code: 'S0000',
+    sites: [],
     links: [
       {
-        name: "ClinicalTrials.gov",
-        href: "https://clinicaltrials.gov/ct2/show/NCT04726241"
-      }
+        name: 'ClinicalTrials.gov',
+        href: 'https://clinicaltrials.gov/ct2/show/NCT04726241',
+      },
     ],
-    description: "Study 0"
+    description: 'Study 0',
   },
   {
     id: 1,
-    title: "Study 1",
-    code: "S0001",
-    locations: [],
+    name: 'Study 1',
+    code: 'S0001',
+    sites: [],
     links: [
       {
-        name: "ClinicalTrials.gov",
-        href: "https://clinicaltrials.gov/ct2/show/NCT04726241"
-      }
+        name: 'ClinicalTrials.gov',
+        href: 'https://clinicaltrials.gov/ct2/show/NCT04726241',
+      },
     ],
-    description: "Study 1"
+    description: 'Study 1',
   },
   {
     id: 2,
-    title: "Study 2",
-    code: "S0002",
-    locations: [],
+    name: 'Study 2',
+    code: 'S0002',
+    sites: [],
     links: [
       {
-        name: "ClinicalTrials.gov",
-        href: "https://clinicaltrials.gov/ct2/show/NCT04726241"
-      }
+        name: 'ClinicalTrials.gov',
+        href: 'https://clinicaltrials.gov/ct2/show/NCT04726241',
+      },
     ],
-    description: "Study 2"
+    description: 'Study 2',
   },
 ]
 const criteria: EligibilityCriterion[] = [
