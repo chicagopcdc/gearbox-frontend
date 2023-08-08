@@ -1,4 +1,4 @@
-import type { Study } from '../model'
+import type { Study, StudyApi } from '../model'
 import { fetchGearbox, readCache, writeCache } from './utils'
 
 const LOCAL_STORAGE_KEY = 'gearbox:studies'
@@ -10,7 +10,18 @@ export function getStudies() {
   return fetchGearbox('/gearbox/studies')
     .then((res) => res.json())
     .then(fetch)
-    .then((res) => res.json() as Promise<Study[]>)
+    .then((res) => res.json() as Promise<StudyApi[]>)
+    .then((studiesApi) =>
+      studiesApi.map(
+        (studyApi) =>
+          ({
+            ...studyApi,
+            sites: studyApi.sites
+              .map((site) => site.site)
+              .filter((site) => site.active),
+          } as Study)
+      )
+    )
     .then((data) => {
       writeCache(LOCAL_STORAGE_KEY, JSON.stringify(data))
       return data

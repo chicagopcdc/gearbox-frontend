@@ -79,7 +79,7 @@ export function CriteriaBuilderModal({
                 Eligibility Criteria for{' '}
               </span>
               <span className="italic block">
-                {study.code}: {study.title}
+                {study.code}: {study.name}
               </span>
             </h3>
             <div className="min-w-max">
