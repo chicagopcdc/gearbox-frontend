@@ -19,10 +19,11 @@ import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 import { ErrorRetry } from './components/ErrorRetry'
 
 function App() {
-  useGoogleAnalytics()
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
   const isAdmin = !!auth.user?.is_admin
+  const userId = auth.user?.sub ?? ''
+  useGoogleAnalytics(userId)
 
   if (
     auth.loadingStatus === 'not started' ||
@@ -39,6 +40,7 @@ function App() {
         isAuthenticated={auth.isAuthenticated}
         isAdmin={isAdmin}
         username={auth.user?.username ?? ''}
+        userId={userId}
         onLogout={auth.signout}
       >
         <Routes>

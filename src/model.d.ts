@@ -1,11 +1,23 @@
 export type LoadingStatus = 'not started' | 'loading' | 'success' | 'error'
-export type Study = {
+type Site = {
+  id: number
+  active: boolean
+  name: string
+}
+type CommonStudy = {
   id: number
   code: string
-  title: string
+  name: string
   description: string
-  locations: string[]
   links: { name: string; href: string }[]
+}
+
+export type StudyApi = CommonStudy & {
+  sites: { site: Site }[]
+}
+
+export type Study = CommonStudy & {
+  sites: Site[]
 }
 
 export type StudyVersion = {
@@ -43,6 +55,7 @@ export type MatchCondition = {
 }
 
 export type StudyAlgorithmEngine = {
+  id: number
   algorithm_logic: MatchAlgorithm
 }
 
@@ -149,6 +162,7 @@ export type UserData = {
   docs_to_be_reviewed: RegisterDocument[]
   username: string
   is_admin: boolean
+  sub: string
   [key: string]: any
 }
 

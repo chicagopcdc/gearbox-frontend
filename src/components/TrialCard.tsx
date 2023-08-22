@@ -1,7 +1,10 @@
 import { ReactNode, useState } from 'react'
+import parse from 'html-react-parser'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import LinkExternal from './LinkExternal'
 import type { Study } from '../model'
+import { gaEvents } from '../hooks/useGoogleAnalytics'
+import { replace } from '../html-react-parser-utils'
 
 const styles = {
   container: 'bg-gray-200 my-4 p-4',
@@ -16,6 +19,38 @@ type TrialCardProps = {
   study: Study
   children?: ReactNode
 }
+
+// TODO: Tianyun 08/16/2023 - this html string should return from the backend in the future
+const extraInfo = `
+        <div className="mb-2 italic mt-12 text-sm">
+          <h3 className="font-bold inline pr-2">
+            Pediatric Clinical Trial Nurse Navigator One-on-One Support
+          </h3>
+          <p>
+            To connect with a Pediatric Clinical Trial Nurse Navigator at the
+            Leukemia & Lymphoma Society who will personally assist your
+            patient throughout the entire clinical-trial process, click this
+            link to fill out a
+            <LinkExternal
+              className="text-blue-700"
+              to="https://lls-forms.careboxhealth.com/?IRC=NOIRC"
+              onClick={gaEvents.clickLLSLinkEvent}
+            >
+              Clinical Trial Support Center referral form
+            </LinkExternal>
+            . One of our pediatric oncology nurses will call your patient within
+            1 business day and provide you with a copy of the individualized
+            trial search results. For general inquiries, simply email
+            <LinkExternal
+              className="text-blue-700"
+              to="mailto:askPedAL@lls.org"
+            >
+              askPedAL@lls.org
+            </LinkExternal>
+            .
+          </p>
+        </div>
+`
 
 function TrialCard({ study, children }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
@@ -49,7 +84,7 @@ function TrialCard({ study, children }: TrialCardProps) {
         </div>
         <div className={styles.field.container}>
           <h3 className={styles.field.title}>Title</h3>
-          <p className={isDropDownOpen ? '' : 'truncate'}>{study.title}</p>
+          <p className={isDropDownOpen ? '' : 'truncate'}>{study.name}</p>
         </div>
       </div>
 
@@ -60,14 +95,14 @@ function TrialCard({ study, children }: TrialCardProps) {
             <p>{study.description}</p>
           </div>
         ) : null}
-        {study.locations?.length > 0 ? (
+        {study.sites?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
-              {study.locations.length > 1 ? 'Locations' : 'Location'}
+              {study.sites.length > 1 ? 'Locations' : 'Location'}
             </h3>
             <ul className="list-disc ml-8">
-              {study.locations.map((location) => (
-                <li key={location}>{location}</li>
+              {study.sites.map((site) => (
+                <li key={site.id}>{site.name}</li>
               ))}
             </ul>
           </div>

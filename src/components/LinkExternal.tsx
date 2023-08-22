@@ -5,11 +5,18 @@ type LinkExternalProps = {
   className?: string
   children: React.ReactNode
   to: string
+  onClick?: () => void
 }
 
-function LinkExternal({ className, children, to }: LinkExternalProps) {
+function LinkExternal({ className, children, to, onClick }: LinkExternalProps) {
   return (
-    <a className={className} href={to} target="blank" rel="noreferrer">
+    <a
+      className={className}
+      href={to}
+      target="blank"
+      rel="noreferrer"
+      onClick={onClick}
+    >
       {children}
       <sup>
         <ExternalLink className="inline" size="1em" />

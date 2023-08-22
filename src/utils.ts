@@ -317,6 +317,7 @@ export const getQueryBuilderConfig = (
     immutableFieldsMode: true,
     immutableValuesMode: true,
     immutableOpsMode: true,
+    showNot: false,
   },
   fields: getQueryBuilderField(matchFormFields),
 })
@@ -381,8 +382,28 @@ export function getQueryBuilderValue(
   }
 }
 
+export function queryBuilderValueToAlgorithm(
+  queryBuilderValue: JsonGroup
+): MatchAlgorithm {
+  const children = queryBuilderValue.children1
+
+  const criteria =
+    children && Array.isArray(children)
+      ? children.map((c) => {
+          if (c.type === 'rule') {
+            return parseInt(c.id || '', 10)
+          }
+          return queryBuilderValueToAlgorithm(c as JsonGroup)
+        })
+      : []
+  return {
+    operator: queryBuilderValue.properties?.conjunction as 'AND' | 'OR',
+    criteria,
+  }
+}
+
 function getQueryBuilderRule(
-  { fieldId, fieldValue, operator }: EligibilityCriterion,
+  { id, fieldId, fieldValue, operator }: EligibilityCriterion,
   { fields }: MatchFormConfig
 ): JsonRule | null {
   const field = fields.find((f) => f.id === fieldId)
@@ -391,7 +412,7 @@ function getQueryBuilderRule(
   }
   const isSelect = !!field.options?.length
   return {
-    id: QbUtils.uuid(),
+    id: id.toString(10),
     type: 'rule',
     properties: {
       field: field.name,
