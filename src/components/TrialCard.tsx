@@ -123,6 +123,7 @@ function TrialCard({ study, children }: TrialCardProps) {
             </ul>
           </div>
         ) : null}
+        {parse(extraInfo, { replace })}
       </div>
     </div>
   )
