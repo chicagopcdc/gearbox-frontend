@@ -21,7 +21,6 @@ import {
   JsonRule,
   Utils as QbUtils,
 } from '@react-awesome-query-builder/ui'
-import { GroupProperties } from '@react-awesome-query-builder/core'
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}

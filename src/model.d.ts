@@ -25,7 +25,7 @@ export type StudyVersion = {
   study_version: number
   eligibility_criteria_infos: [
     {
-      study_algorithm_engine_id: number
+      study_algorithm_engine_id: number | null
       eligibility_criteria_id: number
       status: StudyVersionStatus
     }
