@@ -16,7 +16,7 @@ interface QueryBuilderState {
 
 export function useQueryBuilderState(
   eligibilityCriteriaId: number,
-  studyAlgorithmId: number,
+  studyAlgorithmId: number | null,
   matchForm: MatchFormConfig,
   queryBuilderConfig: Config
 ): [
@@ -39,27 +39,31 @@ export function useQueryBuilderState(
     useState<LoadingStatus>('not started')
   const fetchQueryBuilderState = (
     ecId: number,
-    saId: number,
+    saId: number | null,
     mf: MatchFormConfig,
     qbc: Config
   ) => {
-    setLoadingStatus('loading')
-    getEligibilityCriteriaById(ecId)
-      .then((criteria) => {
-        getStudyAlgorithm(saId).then((algorithm) => {
-          const queryValue = getQueryBuilderValue(algorithm, criteria, mf)
-          setQueryBuilderState((prevState) => ({
-            ...prevState,
-            tree: QbUtils.checkTree(QbUtils.loadTree(queryValue), qbc),
-            config: qbc,
-          }))
-          setLoadingStatus('success')
+    if (saId) {
+      setLoadingStatus('loading')
+      getEligibilityCriteriaById(ecId)
+        .then((criteria) => {
+          getStudyAlgorithm(saId).then((algorithm) => {
+            const queryValue = getQueryBuilderValue(algorithm, criteria, mf)
+            setQueryBuilderState((prevState) => ({
+              ...prevState,
+              tree: QbUtils.checkTree(QbUtils.loadTree(queryValue), qbc),
+              config: qbc,
+            }))
+            setLoadingStatus('success')
+          })
         })
-      })
-      .catch((err) => {
-        console.error(err)
-        setLoadingStatus('error')
-      })
+        .catch((err) => {
+          console.error(err)
+          setLoadingStatus('error')
+        })
+    } else {
+      setLoadingStatus('success')
+    }
   }
 
   useEffect(() => {

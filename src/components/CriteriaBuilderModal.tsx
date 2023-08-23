@@ -106,7 +106,9 @@ export function CriteriaBuilderModal({
               </span>
             </h3>
             <div className="min-w-max">
-              <Button onClick={saveCriteria(studyAlgorithmId)}>Save</Button>
+              {!!studyAlgorithmId && (
+                <Button onClick={saveCriteria(studyAlgorithmId)}>Save</Button>
+              )}
               <button
                 className="ml-4 hover:text-red-700"
                 onClick={closeModal}
@@ -116,7 +118,11 @@ export function CriteriaBuilderModal({
               </button>
             </div>
           </div>
-          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+          {!studyAlgorithmId ? (
+            <h2 className="font-bold m-4 text-lg">
+              No Study Algorithm Set Yet
+            </h2>
+          ) : loadingStatus === 'not started' || loadingStatus === 'loading' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchQueryBuilderState} />
