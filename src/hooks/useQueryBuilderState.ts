@@ -1,4 +1,4 @@
-import { LoadingStatus, MatchFormConfig } from '../model'
+import { LoadingStatus, MatchFormConfig, StudyVersion } from '../model'
 import {
   Config,
   ImmutableTree,
@@ -7,7 +7,13 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 import { getEligibilityCriteriaById } from '../api/eligibilityCriteria'
 import { getStudyAlgorithm } from '../api/studyAlgorithm'
-import { getInitQueryValue, getQueryBuilderValue } from '../utils'
+import {
+  getInitQueryValue,
+  getQueryBuilderConfig,
+  getQueryBuilderValue,
+  initialQueryBuilderConfig,
+} from '../utils'
+import { getStudyVersionById } from '../api/studyVersions'
 
 interface QueryBuilderState {
   tree: ImmutableTree
@@ -15,11 +21,10 @@ interface QueryBuilderState {
 }
 
 export function useQueryBuilderState(
-  eligibilityCriteriaId: number,
-  studyAlgorithmId: number | null,
-  matchForm: MatchFormConfig,
-  queryBuilderConfig: Config
+  studyVersionId: number,
+  matchForm: MatchFormConfig
 ): [
+  StudyVersion | null,
   QueryBuilderState,
   LoadingStatus,
   () => void,
@@ -29,51 +34,66 @@ export function useQueryBuilderState(
     {
       tree: QbUtils.checkTree(
         QbUtils.loadTree(getInitQueryValue()),
-        queryBuilderConfig
+        initialQueryBuilderConfig
       ),
-      config: queryBuilderConfig,
+      config: initialQueryBuilderConfig,
     }
   )
 
   const [loadingStatus, setLoadingStatus] =
     useState<LoadingStatus>('not started')
-  const fetchQueryBuilderState = (
-    ecId: number,
-    saId: number | null,
-    mf: MatchFormConfig,
-    qbc: Config
-  ) => {
-    if (saId) {
-      setLoadingStatus('loading')
-      getEligibilityCriteriaById(ecId)
-        .then((criteria) => {
-          getStudyAlgorithm(saId).then((algorithm) => {
-            const queryValue = getQueryBuilderValue(algorithm, criteria, mf)
+
+  const [studyVersion, setStudyVersion] = useState<StudyVersion | null>(null)
+  const fetchQueryBuilderState = (svId: number, mf: MatchFormConfig) => {
+    setLoadingStatus('loading')
+    getStudyVersionById(svId)
+      .then((sv) => {
+        setStudyVersion(sv)
+        const {
+          eligibility_criteria_infos: [
+            { eligibility_criteria_id: ecId, study_algorithm_engine_id: saId },
+          ],
+        } = sv
+        getEligibilityCriteriaById(ecId).then((criteria) => {
+          const queryBuilderConfig = getQueryBuilderConfig(
+            matchForm.fields,
+            criteria
+          )
+          if (saId) {
+            getStudyAlgorithm(saId).then((algorithm) => {
+              const queryValue = getQueryBuilderValue(algorithm, criteria, mf)
+              setQueryBuilderState((prevState) => ({
+                ...prevState,
+                tree: QbUtils.checkTree(
+                  QbUtils.loadTree(queryValue),
+                  queryBuilderConfig
+                ),
+                config: queryBuilderConfig,
+              }))
+              setLoadingStatus('success')
+            })
+          } else {
             setQueryBuilderState((prevState) => ({
               ...prevState,
-              tree: QbUtils.checkTree(QbUtils.loadTree(queryValue), qbc),
-              config: qbc,
+              tree: QbUtils.checkTree(
+                QbUtils.loadTree(getInitQueryValue()),
+                queryBuilderConfig
+              ),
+              config: queryBuilderConfig,
             }))
             setLoadingStatus('success')
-          })
+          }
         })
-        .catch((err) => {
-          console.error(err)
-          setLoadingStatus('error')
-        })
-    } else {
-      setLoadingStatus('success')
-    }
+      })
+      .catch((err) => {
+        console.error(err)
+        setLoadingStatus('error')
+      })
   }
 
   useEffect(() => {
-    fetchQueryBuilderState(
-      eligibilityCriteriaId,
-      studyAlgorithmId,
-      matchForm,
-      queryBuilderConfig
-    )
-  }, [eligibilityCriteriaId, studyAlgorithmId, matchForm, queryBuilderConfig])
+    fetchQueryBuilderState(studyVersionId, matchForm)
+  }, [studyVersionId, matchForm])
 
   const onChange = useCallback(
     (immutableTree: ImmutableTree, config: Config) => {
@@ -86,15 +106,10 @@ export function useQueryBuilderState(
     []
   )
   return [
+    studyVersion,
     queryBuilderState,
     loadingStatus,
-    () =>
-      fetchQueryBuilderState(
-        eligibilityCriteriaId,
-        studyAlgorithmId,
-        matchForm,
-        queryBuilderConfig
-      ),
+    () => fetchQueryBuilderState(studyVersionId, matchForm),
     onChange,
   ]
 }

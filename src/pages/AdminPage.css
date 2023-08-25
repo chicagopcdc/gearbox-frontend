@@ -1,7 +1,13 @@
-.group--actions, .rule--header {
-    @apply hidden
+.group--header {
+    @apply py-2
+}
+.group--actions > button {
+    @apply mr-4 p-1 border-2
 }
 
+.rule--operator, .rule--value {
+    @apply hidden
+}
 .group-or-rule {
     @apply px-2
 }

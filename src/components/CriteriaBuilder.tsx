@@ -5,7 +5,6 @@ import ReactTooltip from 'react-tooltip'
 import { StudyVersion } from '../model'
 import { useModal } from '../hooks/useModal'
 import { CriteriaBuilderModal } from './CriteriaBuilderModal'
-import { getQueryBuilderConfig } from '../utils'
 
 export function CriteriaBuilder({
   gearboxState,
@@ -45,9 +44,8 @@ export function CriteriaBuilder({
       {showModal ? (
         <CriteriaBuilderModal
           matchForm={gearboxState.config}
-          studyVersion={studyVersion}
+          studyVersionId={studyVersion.id}
           closeModal={closeModal}
-          queryBuilderConfig={getQueryBuilderConfig(gearboxState.config.fields)}
           setUpdated={setUpdated}
         />
       ) : (
