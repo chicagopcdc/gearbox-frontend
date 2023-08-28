@@ -17,5 +17,21 @@ export function updateStudyAlgorithm(
       ...studyAlgorithmEngine,
       eligibility_criteria_id: eligibilityCriteriaId,
     }),
-  }).catch(console.error)
+  }).then((res) => res.json() as Promise<StudyAlgorithmEngine>)
+}
+
+export function createStudyAlgorithm(
+  studyAlgorithmEngine: StudyAlgorithmEngine,
+  eligibilityCriteriaId: number,
+  studyVersionId: number
+) {
+  return fetchGearbox('/gearbox/study-algorithm-engine', {
+    method: 'POST',
+    body: JSON.stringify({
+      ...studyAlgorithmEngine,
+      eligibility_criteria_id: eligibilityCriteriaId,
+      study_version_id: studyVersionId,
+      eligibility_criteria_info_id: eligibilityCriteriaId,
+    }),
+  }).then((res) => res.json() as Promise<StudyAlgorithmEngine>)
 }

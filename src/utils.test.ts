@@ -756,20 +756,51 @@ describe('getQueryBuilderConfig', () => {
           },
         ],
       },
+      {
+        id: 3,
+        groupId: 1,
+        type: 'diagnose',
+        name: 'diagnose',
+        options: [
+          {
+            value: 3,
+            label: 'Diabetes',
+          },
+          {
+            value: 4,
+            label: 'Heart Disease',
+          },
+        ],
+      },
     ]
 
-    const expectedFields: Fields = {
-      age: {
-        label: 'age',
-        type: 'number',
-        valueSources: ['value'],
-        fieldSettings: { min: 0 },
-        preferWidgets: ['number'],
+    const criteria: EligibilityCriterion[] = [
+      {
+        id: 1,
+        fieldId: 1,
+        fieldValue: 22,
+        operator: 'lt',
       },
-      sex: {
-        label: 'sex',
+      {
+        id: 2,
+        fieldId: 2,
+        fieldValue: 1,
+        operator: 'eq',
+      },
+    ]
+    const expectedFields: Fields = {
+      '1': {
+        label: 'age < 22',
+        type: 'number',
+        fieldSettings: { min: 0 },
+        defaultOperator: 'less',
+        defaultValue: 22,
+      },
+      '2': {
+        label: 'sex == Male',
         type: 'select',
-        valueSources: ['value'],
+        defaultValue: 1,
+        defaultOperator: 'select_equals',
         fieldSettings: {
           listValues: [
             {
@@ -781,11 +812,10 @@ describe('getQueryBuilderConfig', () => {
         },
       },
     }
-    const queryBuilderConfig = getQueryBuilderConfig(matchFormFields)
-    const { immutableFieldsMode, immutableValuesMode, immutableOpsMode } =
+    const queryBuilderConfig = getQueryBuilderConfig(matchFormFields, criteria)
+    const { immutableValuesMode, immutableOpsMode } =
       queryBuilderConfig.settings
     expect(queryBuilderConfig.fields).toEqual(expectedFields)
-    expect(immutableFieldsMode).toBeTruthy()
     expect(immutableValuesMode).toBeTruthy()
     expect(immutableOpsMode).toBeTruthy()
   })
@@ -822,7 +852,7 @@ const jsonGroup: JsonGroup = {
             {
               id: '1',
               properties: {
-                field: 'age',
+                field: '1',
                 operator: 'less',
                 value: [22],
                 valueSrc: ['value'],
@@ -831,9 +861,9 @@ const jsonGroup: JsonGroup = {
               type: 'rule',
             },
             {
-              id: '2',
+              id: '1',
               properties: {
-                field: 'sex',
+                field: '2',
                 operator: 'equal',
                 value: ['Male'],
                 valueSrc: ['value'],
@@ -851,9 +881,9 @@ const jsonGroup: JsonGroup = {
         {
           children1: [
             {
-              id: '6',
+              id: '1',
               properties: {
-                field: 'body_fat',
+                field: '6',
                 operator: 'greater',
                 value: [0.2],
                 valueSrc: ['value'],
@@ -878,9 +908,9 @@ const jsonGroup: JsonGroup = {
     {
       children1: [
         {
-          id: '3',
+          id: '1',
           properties: {
-            field: 'med_condition',
+            field: '3',
             operator: 'equal',
             value: ['Heart Disease'],
             valueSrc: ['value'],
@@ -889,9 +919,9 @@ const jsonGroup: JsonGroup = {
           type: 'rule',
         },
         {
-          id: '4',
+          id: '1',
           properties: {
-            field: 'past_med_condition',
+            field: '4',
             operator: 'equal',
             value: ['Cancer'],
             valueSrc: ['value'],
@@ -900,9 +930,9 @@ const jsonGroup: JsonGroup = {
           type: 'rule',
         },
         {
-          id: '5',
+          id: '1',
           properties: {
-            field: 'blood_pressure',
+            field: '5',
             operator: 'less_or_equal',
             value: [0.4],
             valueSrc: ['value'],

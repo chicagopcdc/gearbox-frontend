@@ -2,50 +2,41 @@ import { XCircle } from 'react-feather'
 import {
   Builder,
   BuilderProps,
-  Config,
   JsonGroup,
   Query,
   Utils as QbUtils,
 } from '@react-awesome-query-builder/ui'
 import React, { Dispatch, SetStateAction, useEffect, useRef } from 'react'
-import { MatchFormConfig, StudyVersion } from '../model'
+import { MatchFormConfig, StudyAlgorithmEngine } from '../model'
 import { queryBuilderValueToAlgorithm } from '../utils'
-import { updateStudyAlgorithm } from '../api/studyAlgorithm'
+import {
+  createStudyAlgorithm,
+  updateStudyAlgorithm,
+} from '../api/studyAlgorithm'
 import { useQueryBuilderState } from '../hooks/useQueryBuilderState'
 import { ErrorRetry } from './ErrorRetry'
 import Button from './Inputs/Button'
 
 export function CriteriaBuilderModal({
   matchForm,
-  studyVersion,
+  studyVersionId,
   closeModal,
-  queryBuilderConfig,
   setUpdated,
 }: {
   matchForm: MatchFormConfig
-  studyVersion: StudyVersion
+  studyVersionId: number
   closeModal: () => void
-  queryBuilderConfig: Config
   setUpdated: Dispatch<SetStateAction<boolean>>
 }) {
   const timerIdRef = useRef<NodeJS.Timer | null>(null)
-  const {
-    study,
-    eligibility_criteria_infos: [
-      {
-        eligibility_criteria_id: eligibilityCriteriaId,
-        study_algorithm_engine_id: studyAlgorithmId,
-      },
-    ],
-  } = studyVersion
+  const [
+    studyVersion,
+    queryBuilderState,
+    loadingStatus,
+    fetchQueryBuilderState,
+    onChange,
+  ] = useQueryBuilderState(studyVersionId, matchForm)
 
-  const [queryBuilderState, loadingStatus, fetchQueryBuilderState, onChange] =
-    useQueryBuilderState(
-      eligibilityCriteriaId,
-      studyAlgorithmId,
-      matchForm,
-      queryBuilderConfig
-    )
   const renderBuilder = (props: BuilderProps) => (
     <div className="query-builder-container" style={{ padding: '10px' }}>
       <div className="query-builder qb-lite">
@@ -54,21 +45,36 @@ export function CriteriaBuilderModal({
     </div>
   )
 
-  const saveCriteria = (studyAlgorithmId: number) => () => {
-    const studyAlgorithm = queryBuilderValueToAlgorithm(
-      QbUtils.getTree(queryBuilderState.tree) as JsonGroup
-    )
-    updateStudyAlgorithm(
-      {
+  const saveCriteria = () => {
+    if (studyVersion) {
+      const studyAlgorithm = queryBuilderValueToAlgorithm(
+        QbUtils.getTree(queryBuilderState.tree) as JsonGroup
+      )
+      const studyAlgorithmId =
+        studyVersion.eligibility_criteria_infos[0].study_algorithm_engine_id ||
+        0
+      const eligibilityCriteriaId =
+        studyVersion.eligibility_criteria_infos[0].eligibility_criteria_id
+      const studyAlgorithmEngine: StudyAlgorithmEngine = {
         id: studyAlgorithmId,
         algorithm_logic: studyAlgorithm,
-      },
-      eligibilityCriteriaId
-    ).then(() => {
-      closeModal()
-      setUpdated(true)
-      timerIdRef.current = setTimeout(() => setUpdated(false), 3000)
-    })
+      }
+      const saveResponse = studyAlgorithmId
+        ? updateStudyAlgorithm(studyAlgorithmEngine, eligibilityCriteriaId)
+        : createStudyAlgorithm(
+            studyAlgorithmEngine,
+            eligibilityCriteriaId,
+            studyVersionId
+          )
+
+      saveResponse
+        .then(() => {
+          closeModal()
+          setUpdated(true)
+          timerIdRef.current = setTimeout(() => setUpdated(false), 3000)
+        })
+        .catch(console.error)
+    }
   }
 
   useEffect(
@@ -101,14 +107,14 @@ export function CriteriaBuilderModal({
               <span className="text-gray-500 text-sm">
                 Eligibility Criteria for{' '}
               </span>
-              <span className="italic block">
-                {study.code}: {study.name}
-              </span>
+              {studyVersion && (
+                <span className="italic block">
+                  {studyVersion.study.code}: {studyVersion.study.name}
+                </span>
+              )}
             </h3>
             <div className="min-w-max">
-              {!!studyAlgorithmId && (
-                <Button onClick={saveCriteria(studyAlgorithmId)}>Save</Button>
-              )}
+              <Button onClick={saveCriteria}>Save</Button>
               <button
                 className="ml-4 hover:text-red-700"
                 onClick={closeModal}
@@ -118,17 +124,13 @@ export function CriteriaBuilderModal({
               </button>
             </div>
           </div>
-          {!studyAlgorithmId ? (
-            <h2 className="font-bold m-4 text-lg">
-              No Study Algorithm Set Yet
-            </h2>
-          ) : loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchQueryBuilderState} />
           ) : (
             <Query
-              {...queryBuilderConfig}
+              {...queryBuilderState.config}
               value={queryBuilderState.tree}
               onChange={onChange}
               renderBuilder={renderBuilder}
