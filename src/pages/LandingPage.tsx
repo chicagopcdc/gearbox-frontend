@@ -10,6 +10,8 @@ import nciClinician from '../assets/nci-clinician.jpg'
 import nciPatient from '../assets/nci-patient.jpg'
 import pedalBeehives from '../assets/pedal-beehives.png'
 import pedalGraphic from '../assets/CI19-pedal-graphic.png'
+import nihLogo from '../assets/nih-logo.png'
+import iciLogo from '../assets/ici-logo.png'
 import './LandingPage.css'
 
 function LandingPageSection1() {
@@ -29,7 +31,7 @@ function LandingPageSection1() {
           <p className="max-w-xs sm:max-w-md sm:text-lg md:text-xl mr-16 sm:mr-0 mb-16">
             GEARBOx{' '}
             <span className="text-xs text-gray-400">
-              Genomic Eligibility Algorithm at Relapse for Better Outcomes
+              Genomic Eligibility AlgoRithm for Better Outcomes
             </span>{' '}
             helps you rapidly match patients with relapsed or refractory disease
             to appropriate clinical trials.
@@ -88,32 +90,53 @@ function LandingPageSection3() {
   )
 }
 
-function LandingPageSection4() {
+function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
   return (
-    <section className="min-h-screen flex items-center my-16">
-      <div className="lg:flex max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
-        <div className="mx-auto lg:mx-0 lg:mr-8">
-          <h2 className="leading-tight text-4xl md:text-5xl mb-8 lg:mb-16">
-            Built and maintained by the <strong>LLS PedAL Initiative</strong>
-          </h2>
-          <p className="md:text-xl mb-8">
-            The Leukemia & Lymphoma Society PedAL initiative is working to usher
-            in a new era of treatment for relapsed and refractory pediatric
-            leukemias. GEARBOx is part of the data infrastructure projects of
-            the PedAL initiative.
-          </p>
-          <LinkExternal
-            className="underline text-primary md:text-xl"
-            to="https://www.lls.org/childrens-initiative/pedal"
-          >
-            Learn more about LLS PedAL initiative
-          </LinkExternal>
+    <>
+      <section className="min-h-screen items-center my-16">
+        <div className="lg:flex max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
+          <div className="mx-auto lg:mx-0 lg:mr-8">
+            <h2 className="leading-tight text-4xl md:text-5xl mb-8 lg:mb-16">
+              {isLLS
+                ? 'Built and maintained by the'
+                : 'GEARBOx is supported by:'}{' '}
+              <strong>LLS PedAL Initiative</strong>
+            </h2>
+            <p className="md:text-xl mb-8">
+              The Leukemia & Lymphoma Society PedAL initiative is working to
+              usher in a new era of treatment for relapsed and refractory
+              pediatric leukemias. GEARBOx is part of the data infrastructure
+              projects of the PedAL initiative.
+            </p>
+            <LinkExternal
+              className="underline text-primary md:text-xl"
+              to="https://www.lls.org/childrens-initiative/pedal"
+            >
+              Learn more about LLS PedAL initiative
+            </LinkExternal>
+          </div>
+          <div className="mt-12 md:mt-24 mx-auto md:min-w-1/2">
+            <img src={pedalGraphic} alt="CI19 PedAL graphic" />
+          </div>
         </div>
-        <div className="mt-12 md:mt-24 mx-auto md:min-w-1/2">
-          <img src={pedalGraphic} alt="CI19 PedAL graphic" />
-        </div>
-      </div>
-    </section>
+        {!isLLS && (
+          <>
+            <div className="max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
+              <img src={nihLogo} alt="National Cancer Institute" />
+              <a href="https://cancer.gov" className="text-lg">
+                cancer.gov
+              </a>
+            </div>
+            <div className="max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
+              <img src={iciLogo} alt="Innovation In Cancer Informatics" />
+              <a href="https://www.the-ici-fund.org/" className="text-lg">
+                The Fund for Innovation in Cancer Informatics (ICI)
+              </a>
+            </div>
+          </>
+        )}
+      </section>
+    </>
   )
 }
 
@@ -130,13 +153,13 @@ function LandingPageSection5() {
   )
 }
 
-function LandingPage() {
+function LandingPage({ isLLS }: { isLLS: boolean }) {
   return (
     <>
       <LandingPageSection1 />
       <LandingPageSection2 />
       <LandingPageSection3 />
-      <LandingPageSection4 />
+      <LandingPageSection4 isLLS={isLLS} />
       <LandingPageSection5 />
     </>
   )
