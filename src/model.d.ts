@@ -13,7 +13,7 @@ type CommonStudy = {
 }
 
 export type StudyApi = CommonStudy & {
-  sites: { site: Site }[]
+  sites: Site[]
 }
 
 export type Study = CommonStudy & {
