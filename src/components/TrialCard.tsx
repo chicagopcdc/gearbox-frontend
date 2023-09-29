@@ -21,7 +21,7 @@ type TrialCardProps = {
 }
 
 // TODO: Tianyun 08/16/2023 - this html string should return from the backend in the future
-const extraInfo = ""
+const extraInfo = ''
 
 function TrialCard({ study, children }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
