@@ -16,9 +16,7 @@ export function getStudies() {
         (studyApi) =>
           ({
             ...studyApi,
-            sites: studyApi.sites
-              .map((site) => site.site)
-              .filter((site) => site.active),
+            sites: studyApi.sites.filter((site) => site.active),
           } as Study)
       )
     )

@@ -48,7 +48,7 @@ function App() {
             path="/"
             element={
               !auth.isAuthenticated ? (
-                <LandingPage />
+                <LandingPage isLLS={false} />
               ) : !auth.isRegistered ? (
                 <Navigate to="/register" replace />
               ) : auth.hasDocsToBeReviewed ? (
@@ -58,6 +58,7 @@ function App() {
               )
             }
           />
+          <Route path="/LLS" element={<LandingPage isLLS={true} />} />
           <Route
             path="/admin"
             element={

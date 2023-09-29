@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom'
 import uchicagoLogo from '../assets/uchicago-logo.svg'
-import pcdcLogo from '../assets/pcdc-logo.png'
+import d4cgLogo from '../assets/d4cg-logo.png'
 import llsLogo from '../assets/lls-logo.svg'
+import nihLogo from '../assets/nih-logo.png'
+import iciLogo from '../assets/ici-logo.png'
 import LinkExternal from './LinkExternal'
 
-function Footer() {
+function Footer({ isLLS }: { isLLS: boolean }) {
   return (
     <footer className="p-4 border-t border-solid border-primary">
       <section className="flex flex-col md:flex-row items-center justify-between max-w-screen-lg mx-auto mb-12 md:mb-20">
@@ -27,11 +29,39 @@ function Footer() {
           rel="noreferrer"
         >
           <img
-            src={pcdcLogo}
-            alt="Pediatric Center Data Commons"
+            src={d4cgLogo}
+            alt="Data For The Common Good"
             style={{ height: '60px' }}
           />
         </a>
+        {!isLLS && (
+          <>
+            <a
+              href="https://www.cancer.gov/"
+              className="m-2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src={nihLogo}
+                alt="National Cancer Institute"
+                style={{ height: '60px', padding: '6px' }}
+              />
+            </a>
+            <a
+              href="https://www.the-ici-fund.org/"
+              className="m-2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img
+                src={iciLogo}
+                alt="Innovation In Cancer Informatics"
+                style={{ height: '100px', width: '100px', padding: '6px' }}
+              />
+            </a>
+          </>
+        )}
         <a
           href="https://www.lls.org/lls-childrens-initiative-pedal"
           className="m-2"
