@@ -9,9 +9,9 @@ import matchScreenshotRight from '../assets/match-screenshot-right.png'
 import nciClinician from '../assets/nci-clinician.jpg'
 import nciPatient from '../assets/nci-patient.jpg'
 import pedalBeehives from '../assets/pedal-beehives.png'
-import pedalGraphic from '../assets/CI19-pedal-graphic.png'
-import nihLogo from '../assets/nih-logo.png'
-import iciLogo from '../assets/ici-logo.png'
+import llsSponsor from '../assets/lls-sponsor.png'
+import nihSponsor from '../assets/nih-sponsor.jpg'
+import iciSponsor from '../assets/ici-sponsor.png'
 import './LandingPage.css'
 
 function LandingPageSection1() {
@@ -97,44 +97,46 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
         <div className="lg:flex max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
           <div className="mx-auto lg:mx-0 lg:mr-8">
             <h2 className="leading-tight text-4xl md:text-5xl mb-8 lg:mb-16">
-              {isLLS
-                ? 'Built and maintained by the'
-                : 'GEARBOx is supported by:'}{' '}
-              <strong>LLS PedAL Initiative</strong>
+              {isLLS ? 'Built and maintained by:' : 'GEARBOx is supported by:'}{' '}
             </h2>
+            <div className="flex md:min-w-1/2 items-center justify-between mb-8 lg:mb-16">
+              <img src={llsSponsor} alt="LLS" />
+              {!isLLS && (
+                <>
+                  <a
+                    href="https://www.the-ici-fund.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img className="" src={iciSponsor} alt="ICI" />
+                  </a>
+                  <a
+                    href="https://www.cancer.gov/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img className="" src={nihSponsor} alt="NIH" />
+                  </a>
+                </>
+              )}
+            </div>
+            <h3 className="leading-tight text-2xl md:text-3xl font-bold mb-2 lg:mb-4">
+              LLS PedAL Master Clinical Trial
+            </h3>
             <p className="md:text-xl mb-8">
-              The Leukemia & Lymphoma Society PedAL initiative is working to
-              usher in a new era of treatment for relapsed and refractory
-              pediatric leukemias. GEARBOx is part of the data infrastructure
-              projects of the PedAL initiative.
+              The PedAL initiative, a pillar of The Dare to Dream Project, is
+              working to usher in a new era of treatment for relapsed and
+              refractory pediatric leukemias. GEARBOx is part of the data
+              infrastructure projects of the PedAL initiative.{' '}
+              <LinkExternal
+                className="underline text-primary md:text-xl"
+                to="https://www.lls.org/childrens-initiative/pedal"
+              >
+                LLS PedAL Master Clinical Trial
+              </LinkExternal>
             </p>
-            <LinkExternal
-              className="underline text-primary md:text-xl"
-              to="https://www.lls.org/childrens-initiative/pedal"
-            >
-              Learn more about LLS PedAL initiative
-            </LinkExternal>
-          </div>
-          <div className="mt-12 md:mt-24 mx-auto md:min-w-1/2">
-            <img src={pedalGraphic} alt="CI19 PedAL graphic" />
           </div>
         </div>
-        {!isLLS && (
-          <>
-            <div className="max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
-              <img src={nihLogo} alt="National Cancer Institute" />
-              <a href="https://cancer.gov" className="text-lg">
-                cancer.gov
-              </a>
-            </div>
-            <div className="max-w-screen-md lg:max-w-screen-xl mx-auto px-4">
-              <img src={iciLogo} alt="Innovation In Cancer Informatics" />
-              <a href="https://www.the-ici-fund.org/" className="text-lg">
-                The Fund for Innovation in Cancer Informatics (ICI)
-              </a>
-            </div>
-          </>
-        )}
       </section>
     </>
   )
