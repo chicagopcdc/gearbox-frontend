@@ -9,7 +9,7 @@ import LinkExternal from './LinkExternal'
 function Footer({ isLLS }: { isLLS: boolean }) {
   return (
     <footer className="p-4 border-t border-solid border-primary">
-      <section className="flex flex-col md:flex-row items-center justify-between max-w-screen-lg mx-auto mb-12 md:mb-20">
+      <section className="flex flex-col md:flex-row items-center justify-between max-w-screen-lg mx-auto mb-12 md:mb-20 gap-2">
         <a
           href="https://biologicalsciences.uchicago.edu/"
           className="m-2"
@@ -19,7 +19,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
           <img
             src={uchicagoLogo}
             alt="University of Chicago"
-            style={{ height: '60px', padding: '6px' }}
+            style={{ height: '60px', maxHeight: '60px' }}
           />
         </a>
         <a
@@ -31,7 +31,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
           <img
             src={d4cgLogo}
             alt="Data For The Common Good"
-            style={{ height: '60px' }}
+            style={{ height: '60px', maxHeight: '60px' }}
           />
         </a>
         {!isLLS && (
@@ -45,7 +45,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
               <img
                 src={nihLogo}
                 alt="National Cancer Institute"
-                style={{ height: '60px', padding: '6px' }}
+                style={{ height: '60px', maxHeight: '60px' }}
               />
             </a>
             <a
@@ -57,7 +57,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
               <img
                 src={iciLogo}
                 alt="Innovation In Cancer Informatics"
-                style={{ height: '100px', width: '100px', padding: '6px' }}
+                style={{ height: '60px', maxHeight: '60px', width: '80px' }}
               />
             </a>
           </>
@@ -71,7 +71,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
           <img
             src={llsLogo}
             alt="LLS PedAL"
-            style={{ height: '60px', padding: '6px' }}
+            style={{ height: '60px', maxHeight: '60px' }}
           />
         </a>
       </section>

@@ -1,0 +1,19 @@
+#google-login-btn {
+    background-image: url("../assets/btn_google_signin_dark_normal_web.png");
+    width: 191px; /* You might need to adjust this based on the image's actual size */
+    height: 46px; /* Adjust this too, if needed */
+}
+
+#google-login-btn:focus {
+    background-image: url("../assets/btn_google_signin_dark_focus_web.png");
+    @apply outline-0;
+}
+
+#google-login-btn:active {
+    background-image: url("../assets/btn_google_signin_dark_pressed_web.png");
+}
+
+#google-login-btn:hover {
+    /* slightly reduce opacity for a subtle hover effect */
+    @apply opacity-90;
+}
