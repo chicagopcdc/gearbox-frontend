@@ -28,11 +28,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
           target="_blank"
           rel="noreferrer"
         >
-          <img
-            src={d4cgLogo}
-            alt="Data For The Common Good"
-            style={{ height: '60px', maxHeight: '60px' }}
-          />
+          <img src={d4cgLogo} alt="Data For The Common Good" />
         </a>
         {!isLLS && (
           <>
@@ -42,11 +38,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
               target="_blank"
               rel="noreferrer"
             >
-              <img
-                src={nihLogo}
-                alt="National Cancer Institute"
-                style={{ height: '60px', maxHeight: '60px' }}
-              />
+              <img src={nihLogo} alt="National Cancer Institute" />
             </a>
             <a
               href="https://www.the-ici-fund.org/"
