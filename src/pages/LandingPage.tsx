@@ -10,8 +10,8 @@ import nciClinician from '../assets/nci-clinician.jpg'
 import nciPatient from '../assets/nci-patient.jpg'
 import pedalBeehives from '../assets/pedal-beehives.png'
 import llsSponsor from '../assets/lls-sponsor.png'
-import nihSponsor from '../assets/nih-sponsor.jpg'
-import iciSponsor from '../assets/ici-sponsor.png'
+import nihSponsor from '../assets/nih-logo.jpg'
+import iciSponsor from '../assets/ici-logo.png'
 import './LandingPage.css'
 
 function LandingPageSection1() {
