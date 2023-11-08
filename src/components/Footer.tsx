@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import uchicagoLogo from '../assets/uchicago-logo.svg'
 import d4cgLogo from '../assets/d4cg-logo.png'
 import llsLogo from '../assets/lls-logo.svg'
-import nihLogo from '../assets/nih-logo.png'
+import nihLogo from '../assets/nih-logo.jpg'
 import iciLogo from '../assets/ici-logo.png'
 import LinkExternal from './LinkExternal'
 
@@ -38,7 +38,11 @@ function Footer({ isLLS }: { isLLS: boolean }) {
               target="_blank"
               rel="noreferrer"
             >
-              <img src={nihLogo} alt="National Cancer Institute" />
+              <img
+                src={nihLogo}
+                alt="National Cancer Institute"
+                style={{ height: '100px', maxHeight: '100px' }}
+              />
             </a>
             <a
               href="https://www.the-ici-fund.org/"
@@ -49,7 +53,7 @@ function Footer({ isLLS }: { isLLS: boolean }) {
               <img
                 src={iciLogo}
                 alt="Innovation In Cancer Informatics"
-                style={{ height: '60px', maxHeight: '60px', width: '80px' }}
+                style={{ height: '100px', maxHeight: '100px', width: '80px' }}
               />
             </a>
           </>
