@@ -15,7 +15,7 @@ export function updateStudyAlgorithm(
     method: 'POST',
     body: JSON.stringify({
       ...studyAlgorithmEngine,
-      eligibility_criteria_id: eligibilityCriteriaId,
+      eligibility_criteria_info_id: eligibilityCriteriaId,
     }),
   }).then((res) => res.json() as Promise<StudyAlgorithmEngine>)
 }
