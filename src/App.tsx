@@ -21,7 +21,8 @@ import { ErrorRetry } from './components/ErrorRetry'
 function App() {
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
-  const isAdmin = !!auth.user?.is_admin
+  const gearboxGateway = auth.user?.authz['/gearbox_gateway']
+  const isAdmin = !!gearboxGateway && !!gearboxGateway.length
   const userId = auth.user?.sub ?? ''
   useGoogleAnalytics(userId)
 
