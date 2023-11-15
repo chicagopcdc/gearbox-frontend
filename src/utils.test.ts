@@ -41,10 +41,12 @@ const studies: Study[] = [
       },
     ],
     description: 'Study 0',
+    follow_up_info: '',
   },
   {
     id: 1,
     name: 'Study 1',
+    follow_up_info: '',
     code: 'S0001',
     sites: [],
     links: [
@@ -58,6 +60,7 @@ const studies: Study[] = [
   {
     id: 2,
     name: 'Study 2',
+    follow_up_info: '',
     code: 'S0002',
     sites: [],
     links: [
