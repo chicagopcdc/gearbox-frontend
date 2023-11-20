@@ -4,20 +4,15 @@ type Site = {
   active: boolean
   name: string
 }
-type CommonStudy = {
+
+export type Study = {
   id: number
   code: string
   name: string
   description: string
   links: { name: string; href: string }[]
-}
-
-export type StudyApi = CommonStudy & {
   sites: Site[]
-}
-
-export type Study = CommonStudy & {
-  sites: Site[]
+  follow_up_info: string | null
 }
 
 export type StudyVersion = {

@@ -6,10 +6,20 @@ import {
   domToReact,
   attributesToProps,
 } from 'html-react-parser'
+import { gaEvents } from './hooks/useGoogleAnalytics'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const componentMap: { [key: string]: (props: any) => JSX.Element } = {
-  linkexternal: LinkExternal,
+type ComponentMapType = {
+  [key: string]: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    component: (props: any) => JSX.Element
+    onClick?: () => void
+  }
+}
+const componentMap: ComponentMapType = {
+  linkexternal: {
+    component: LinkExternal,
+    onClick: gaEvents.clickLLSLinkEvent,
+  },
 }
 
 export const replace: HTMLReactParserOptions['replace'] = (
@@ -19,11 +29,10 @@ export const replace: HTMLReactParserOptions['replace'] = (
   if (element.type === 'tag' && componentMap[element.name]) {
     const Component = componentMap[element.name]
     const props = attributesToProps(element.attribs)
-
     return (
-      <Component {...props}>
+      <Component.component onClick={Component.onClick} {...props}>
         {domToReact(element.children, { replace })}
-      </Component>
+      </Component.component>
     )
   }
 }
