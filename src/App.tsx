@@ -11,12 +11,14 @@ import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
-import { AdminPage } from './pages/AdminPage'
+import { CriteriaBuilderPage } from './pages/CriteriaBuilderPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
 import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 import { ErrorRetry } from './components/ErrorRetry'
+import { AdminPage } from './pages/AdminPage'
+import { QuestionEditorPage } from './pages/QuestionEditorPage'
 
 function App() {
   const auth = useAuth()
@@ -62,9 +64,25 @@ function App() {
           <Route path="/LLS" element={<LandingPage isLLS={true} />} />
           <Route
             path="/admin"
+            element={isAdmin ? <AdminPage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/admin/criteria-builder"
             element={
               isAdmin ? (
-                <AdminPage gearboxState={gearboxData.state} />
+                <CriteriaBuilderPage gearboxState={gearboxData.state} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/admin/question-editor"
+            element={
+              isAdmin ? (
+                <QuestionEditorPage
+                  matchFormConfig={gearboxData.state.config}
+                />
               ) : (
                 <Navigate to="/" replace />
               )
