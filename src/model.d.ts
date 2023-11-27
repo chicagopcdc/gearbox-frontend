@@ -1,11 +1,34 @@
+export type LoadingStatus = 'not started' | 'loading' | 'success' | 'error'
+type Site = {
+  id: number
+  active: boolean
+  name: string
+}
+
 export type Study = {
   id: number
   code: string
-  title: string
+  name: string
   description: string
-  locations: string[]
   links: { name: string; href: string }[]
+  sites: Site[]
+  follow_up_info: string | null
 }
+
+export type StudyVersion = {
+  id: number
+  study_version: number
+  eligibility_criteria_infos: [
+    {
+      study_algorithm_engine_id: number | null
+      eligibility_criteria_id: number
+      status: StudyVersionStatus
+    }
+  ]
+  study: Study
+}
+
+export type StudyVersionStatus = 'ACTIVE' | 'IN_PROCESS' | 'INACTIVE'
 
 type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne' | 'in'
 
@@ -24,6 +47,11 @@ export type MatchAlgorithm = {
 export type MatchCondition = {
   studyId: Study['id']
   algorithm: MatchAlgorithm
+}
+
+export type StudyAlgorithmEngine = {
+  id: number
+  algorithm_logic: MatchAlgorithm
 }
 
 export type MatchFormGroupConfig = {
@@ -128,6 +156,8 @@ export type UserData = {
   }
   docs_to_be_reviewed: RegisterDocument[]
   username: string
+  is_admin: boolean
+  sub: string
   [key: string]: any
 }
 

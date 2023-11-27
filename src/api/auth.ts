@@ -3,7 +3,10 @@ import { fetchGearbox } from './utils'
 
 export function fetchUser() {
   return fetchGearbox('/user/user/').then((res) => {
-    if (!res.ok) throw new Error('Error: Failed to fetch user information!')
+    if (res.status === 401) {
+      return Promise.resolve(undefined)
+    } else if (!res.ok)
+      throw new Error('Error: Failed to fetch user information!')
     return res.json() as Promise<UserData>
   })
 }

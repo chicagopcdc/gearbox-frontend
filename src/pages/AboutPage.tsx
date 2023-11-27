@@ -1,5 +1,4 @@
 import type React from 'react'
-import { Link } from 'react-router-dom'
 import LinkExternal from '../components/LinkExternal'
 import './AboutPage.css'
 
@@ -45,51 +44,53 @@ function AboutPage() {
       <AboutPageSection>
         <p className="mb-4">
           There are currently limited resources for a clinician to match their
-          acute myelogenous leukemia (AML) patients against open clinical trials
-          for relapsed or refractory disease.{' '}
+          patients against open clinical trials.{' '}
           <em className="font-bold not-italic text-primary">
             GEARBOx aims to solve that by providing clinicians near-instant
             matching to open trials
           </em>
-          , based on their patient’s clinical and genomic testing and
+          , based on their patient’s clinical and genomic testing, and
           information abstracted from the trial protocol. The clinician is also
           provided with information to help facilitate the enrollment of the
-          child on the trial.
+          patients on the trial.
         </p>
         <p>
-          GEARBOx is developed by the University of Chicago’s Pediatric Cancer
-          Data Commons (PCDC) team with funding from the Leukemia & Lymphoma
-          Society (LLS) as part of PedAL: Precision Medicine for Pediatric Acute
-          Leukemia initiative.
+          GEARBOx is developed by the University of Chicago’s Data for the
+          Common Good (D4CG) team with funding from the{' '}
+          <span className="font-bold">Leukemia & Lymphoma Society</span> (LLS)
+          as part of PedAL: Precision Medicine for Pediatric Acute Leukemia
+          initiative,{' '}
+          <span className="font-bold">
+            The Fund for Innovation in Cancer Informatics
+          </span>{' '}
+          (ICI) and the{' '}
+          <span className="font-bold">National Cancer Institute</span> (NCI).
         </p>
       </AboutPageSection>
       <AboutPageSection title="Who is GEARBOx for?">
         <p>
-          GEARBOx is a decision-support tool that is meant for use by{' '}
+          GEARBOx is a decision-support tool used by{' '}
           <em className="font-bold not-italic text-primary">
             clinicians and nurse navigators
           </em>{' '}
-          to identify potential clinical trials to enroll their patients. It is
-          a rich resource for clinicians to explore the landscape of available
-          clinical trials and also be able to match children to Phase I/II
-          trials.
+          to identify potential clinical trials for their patients. It is a rich
+          resource for clinicians to explore the landscape of available clinical
+          trials and also be able to match patients to Phase I/II trials.
         </p>
       </AboutPageSection>
       <AboutPageSection title="What information is available on GEARBOX?">
         <p>
-          GEARBOx will include LLS-sponsored trials in its initial rollout, and
-          will expand to include trials from other sponsors. Eligibility
-          criteria, including inclusion and exclusion criteria, will be
-          abstracted from the trial protocols. Location information and
-          enrollment status will be obtained from{' '}
+          GEARBOx contains eligibility criteria, including inclusion and
+          exclusion criteria, abstracted from trial protocols. Location
+          information and enrollment status are obtained from{' '}
           <LinkExternal
             className="underline text-primary"
             to="https://clinicaltrials.gov/"
           >
             ClinicalTrials.gov
           </LinkExternal>{' '}
-          and the project sponsors. This information will be periodically
-          updated to ensure that the records are up to date.
+          and the project sponsors. This information is periodically updated to
+          ensure that the records are up to date.
         </p>
       </AboutPageSection>
       <AboutPageSection title="Terms and conditions">
@@ -111,8 +112,8 @@ function AboutPage() {
           >
             Read this Privacy Notice
           </LinkExternal>{' '}
-          to find out how the Pediatric Cancer Data Commons uses the personal
-          data collected from you when you visit the GEARBOx website.
+          to find out how Data for the Common Good (D4CG) uses the personal data
+          collected from you when you visit the GEARBOx website.
         </p>
       </AboutPageSection>
       <AboutPageSection title="Get regular updates">
@@ -130,7 +131,7 @@ function AboutPage() {
               className="underline text-primary"
               to="http://sam.am/PCDCnews"
             >
-              Pediatric Cancer Data Commons newsletter
+              Data for the Common Good (D4CG) newsletter
             </LinkExternal>
           </li>
         </ul>

@@ -1,8 +1,9 @@
-import { useState } from 'react'
-import { ChevronUp, ChevronDown } from 'react-feather'
+import { ReactNode, useState } from 'react'
+import parse from 'html-react-parser'
+import { ChevronDown, ChevronUp } from 'react-feather'
 import LinkExternal from './LinkExternal'
-import TrialMatchInfo from './TrialMatchInfo'
-import type { MatchInfoAlgorithm, Study } from '../model'
+import type { Study } from '../model'
+import { replace } from '../html-react-parser-utils'
 
 const styles = {
   container: 'bg-gray-200 my-4 p-4',
@@ -14,11 +15,11 @@ const styles = {
 }
 
 type TrialCardProps = {
-  matchInfoAlgorithm?: MatchInfoAlgorithm
   study: Study
+  children?: ReactNode
 }
 
-function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
+function TrialCard({ study, children }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
@@ -28,12 +29,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
         <div className="flex justify-between pb-4">
           <h2 className="text-lg font-bold">{study.code}</h2>
           <div className="flex">
-            {matchInfoAlgorithm !== undefined && (
-              <TrialMatchInfo
-                study={study}
-                studyMatchInfo={matchInfoAlgorithm}
-              />
-            )}
+            {children}
             {isDropDownOpen ? (
               <button
                 type="button"
@@ -55,7 +51,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
         </div>
         <div className={styles.field.container}>
           <h3 className={styles.field.title}>Title</h3>
-          <p className={isDropDownOpen ? '' : 'truncate'}>{study.title}</p>
+          <p className={isDropDownOpen ? '' : 'truncate'}>{study.name}</p>
         </div>
       </div>
 
@@ -66,19 +62,19 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             <p>{study.description}</p>
           </div>
         ) : null}
-        {study.locations.length > 0 ? (
+        {study.sites?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
-              {study.locations.length > 1 ? 'Locations' : 'Location'}
+              {study.sites.length > 1 ? 'Locations' : 'Location'}
             </h3>
             <ul className="list-disc ml-8">
-              {study.locations.map((location) => (
-                <li key={location}>{location}</li>
+              {study.sites.map((site) => (
+                <li key={site.id}>{site.name}</li>
               ))}
             </ul>
           </div>
         ) : null}
-        {study.links.length > 0 ? (
+        {study.links?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
               {study.links.length > 1 ? 'Links' : 'Link'}
@@ -94,33 +90,7 @@ function TrialCard({ matchInfoAlgorithm, study }: TrialCardProps) {
             </ul>
           </div>
         ) : null}
-        <div className={`${styles.field.container} italic mt-12 text-sm`}>
-          <h3 className={styles.field.title}>
-            Pediatric Clinical Trial Nurse Navigator One-on-One Support
-          </h3>
-          <p>
-            To connect with a Pediatric Clinical Trial Nurse Navigator at the
-            Leukemia {'&'} Lymphoma Society who will personally assist your
-            patient throughout the entire clinical-trial process, click this
-            link to fill out a{' '}
-            <LinkExternal
-              className="text-blue-700"
-              to="https://lls-forms.careboxhealth.com/?IRC=NOIRC"
-            >
-              Clinical Trial Support Center referral form
-            </LinkExternal>
-            . One of our pediatric oncology nurses will call your patient within
-            1 business day and provide you with a copy of the individualized
-            trial search results. For general inquiries, simply email{' '}
-            <LinkExternal
-              className="text-blue-700"
-              to="mailto:askPedAL@lls.org"
-            >
-              askPedAL@lls.org
-            </LinkExternal>
-            .
-          </p>
-        </div>
+        {!!study.follow_up_info && parse(study.follow_up_info, { replace })}
       </div>
     </div>
   )

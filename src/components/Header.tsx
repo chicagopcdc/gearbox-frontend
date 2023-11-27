@@ -6,22 +6,34 @@ import { UserActionButton, UserActionCard } from './UserAction'
 import gearboxLogo from '../assets/gearbox-logo.svg'
 import useScreenSize from '../hooks/useScreenSize'
 
-const navItems = [{ name: 'ABOUT GEARBOx', path: '/about' }]
-
 type HeaderProps = {
   isAuthenticated: boolean
+  isAdmin: boolean
   username: string
   onLogout: () => void
 }
 
-function Header({ isAuthenticated, username, onLogout }: HeaderProps) {
+type NavItem = {
+  name: string
+  path: string
+}
+
+function Header({ isAuthenticated, isAdmin, username, onLogout }: HeaderProps) {
   const screenSize = useScreenSize()
   const [showUserAction, setShowUserAction] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
+
+  const navItems: NavItem[] = [{ name: 'ABOUT GEARBOx', path: '/about' }]
+
+  if (isAdmin) {
+    navItems.push({ name: 'Admin', path: '/admin' })
+  }
+
   function toggleUserAction() {
     setShowUserAction(!showUserAction)
     setShowMenu(false)
   }
+
   function toggleMenu() {
     setShowMenu(!showMenu)
     setShowUserAction(false)

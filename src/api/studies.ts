@@ -11,6 +11,15 @@ export function getStudies() {
     .then((res) => res.json())
     .then(fetch)
     .then((res) => res.json() as Promise<Study[]>)
+    .then((studies) =>
+      studies.map(
+        (study) =>
+          ({
+            ...study,
+            sites: study.sites.filter((site) => site.active),
+          } as Study)
+      )
+    )
     .then((data) => {
       writeCache(LOCAL_STORAGE_KEY, JSON.stringify(data))
       return data

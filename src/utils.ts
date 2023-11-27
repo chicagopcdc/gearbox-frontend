@@ -1,17 +1,26 @@
 import type {
   ComparisonOperator,
   EligibilityCriterion,
-  MatchFormConfig,
-  MatchFormValues,
-  MatchCondition,
   MatchAlgorithm,
-  MatchInfo,
-  MatchInfoAlgorithm,
+  MatchCondition,
   MatchDetails,
+  MatchFormConfig,
   MatchFormFieldConfig,
   MatchFormFieldShowIfCondition,
+  MatchFormValues,
+  MatchInfo,
+  MatchInfoAlgorithm,
   Study,
 } from './model'
+import {
+  BasicConfig,
+  Config,
+  Fields,
+  JsonGroup,
+  JsonItem,
+  JsonRule,
+  Utils as QbUtils,
+} from '@react-awesome-query-builder/ui'
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
@@ -291,4 +300,188 @@ export const markRelevantMatchFields = ({
     markedFields.push({ ...field, relevant: relevantFieldIdSet.has(field.id) })
 
   return markedFields
+}
+
+export const initialQueryBuilderConfig: Config = {
+  ...BasicConfig,
+  fields: {},
+}
+
+export const getQueryBuilderConfig = (
+  matchFormFields: MatchFormFieldConfig[],
+  criteria: EligibilityCriterion[]
+): Config => ({
+  ...initialQueryBuilderConfig,
+  settings: {
+    ...initialQueryBuilderConfig.settings,
+    immutableValuesMode: true,
+    immutableOpsMode: true,
+    showNot: false,
+  },
+  fields: getQueryBuilderField(matchFormFields, criteria),
+})
+
+function getQueryBuilderField(
+  matchingFormFields: MatchFormFieldConfig[],
+  criteria: EligibilityCriterion[]
+): Fields {
+  const result: Fields = {}
+
+  criteria.forEach((c) => {
+    const { id, fieldId, fieldValue, operator } = c
+    const field = matchingFormFields.find((f) => f.id === fieldId)
+
+    if (field) {
+      const isSelect = !!field.options?.length
+      result[id.toString(10)] = {
+        label: `${field.name} ${getOperatorString(operator)} ${getValueString(
+          fieldValue,
+          field
+        )}`,
+        type: isSelect ? 'select' : 'number',
+        defaultOperator: getQueryBuilderOperator(operator, isSelect),
+        defaultValue: fieldValue,
+        fieldSettings: isSelect
+          ? {
+              listValues: field.options?.map((o) => ({
+                value: o.value,
+                title: o.label,
+              })),
+            }
+          : { min: 0 },
+      }
+    }
+  })
+
+  return result
+}
+
+export const getInitQueryValue = (): JsonGroup => ({
+  id: QbUtils.uuid(),
+  type: 'group',
+})
+
+export function getQueryBuilderValue(
+  algorithm: MatchAlgorithm | undefined | null,
+  eligibilityCriteria: EligibilityCriterion[],
+  matchForm: MatchFormConfig
+): JsonGroup {
+  const result = getInitQueryValue()
+  if (!algorithm) {
+    return result
+  }
+  const children1 = algorithm.criteria
+    .map((c) => {
+      if (typeof c === 'number') {
+        const studyCriterion = eligibilityCriteria.find((ec) => ec.id === c)
+        return studyCriterion
+          ? getQueryBuilderRule(studyCriterion, matchForm)
+          : null
+      } else {
+        return getQueryBuilderValue(c, eligibilityCriteria, matchForm)
+      }
+    })
+    .filter(Boolean) as JsonItem[]
+  return {
+    ...result,
+    properties: {
+      conjunction: algorithm.operator,
+    },
+    children1,
+  }
+}
+
+export function queryBuilderValueToAlgorithm(
+  queryBuilderValue: JsonGroup
+): MatchAlgorithm {
+  const children = queryBuilderValue.children1
+
+  const criteria =
+    children && Array.isArray(children)
+      ? children
+          .map((c) => {
+            if (c.type === 'rule') {
+              const criteriaId = parseInt(c.properties.field || '', 10)
+              return isNaN(criteriaId) ? 0 : criteriaId
+            }
+            return queryBuilderValueToAlgorithm(c as JsonGroup)
+          })
+          .filter(Boolean)
+      : []
+  return {
+    operator: (queryBuilderValue.properties?.conjunction || 'AND') as
+      | 'AND'
+      | 'OR',
+    criteria,
+  }
+}
+
+function getQueryBuilderRule(
+  { id, fieldId, fieldValue, operator }: EligibilityCriterion,
+  { fields }: MatchFormConfig
+): JsonRule | null {
+  const field = fields.find((f) => f.id === fieldId)
+  if (!field) {
+    return null
+  }
+  const isSelect = !!field.options?.length
+  return {
+    id: QbUtils.uuid(),
+    type: 'rule',
+    properties: {
+      field: id.toString(10),
+      value: [fieldValue],
+      operator: getQueryBuilderOperator(operator, isSelect),
+      valueSrc: ['value'],
+      valueType: [isSelect ? 'select' : 'number'],
+    },
+  }
+}
+
+function getQueryBuilderOperator(
+  comparisonOperator: ComparisonOperator,
+  isSelect: boolean
+): string {
+  switch (comparisonOperator) {
+    case 'gte':
+      return 'greater_or_equal'
+    case 'in':
+      return 'select_any_in'
+    case 'gt':
+      return 'greater'
+    case 'lte':
+      return 'less_or_equal'
+    case 'lt':
+      return 'less'
+    case 'eq':
+      return isSelect ? 'select_equals' : 'equal'
+    case 'ne':
+      return isSelect ? 'select_not_equals' : 'not_equal'
+  }
+}
+
+function getOperatorString(comparisonOperator: ComparisonOperator): string {
+  switch (comparisonOperator) {
+    case 'gte':
+      return '>='
+    case 'in':
+      return 'in'
+    case 'gt':
+      return '>'
+    case 'lte':
+      return '<='
+    case 'lt':
+      return '<'
+    case 'eq':
+      return '=='
+    case 'ne':
+      return '!='
+  }
+}
+
+function getValueString(fieldValue: any, field: MatchFormFieldConfig): string {
+  if (field.options?.length) {
+    return field.options.find((o) => o.value === fieldValue)?.label || ''
+  }
+  return fieldValue
 }

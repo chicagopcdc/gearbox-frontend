@@ -11,19 +11,39 @@ import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import { CriteriaBuilderPage } from './pages/CriteriaBuilderPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
+import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
+import { ErrorRetry } from './components/ErrorRetry'
+import { AdminPage } from './pages/AdminPage'
+import { QuestionEditorPage } from './pages/QuestionEditorPage'
 
 function App() {
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
+  const gearboxGateway = auth.user?.authz['/gearbox_gateway']
+  const isAdmin = !!gearboxGateway && !!gearboxGateway.length
+  const userId = auth.user?.sub ?? ''
+  useGoogleAnalytics(userId)
+
+  if (
+    auth.loadingStatus === 'not started' ||
+    auth.loadingStatus === 'loading'
+  ) {
+    return <h1>Loading...</h1>
+  } else if (auth.loadingStatus === 'error') {
+    return <ErrorRetry retry={auth.fetchAuth} />
+  }
 
   return (
     <Router basename={process.env?.PUBLIC_URL}>
       <Layout
         isAuthenticated={auth.isAuthenticated}
+        isAdmin={isAdmin}
         username={auth.user?.username ?? ''}
+        userId={userId}
         onLogout={auth.signout}
       >
         <Routes>
@@ -31,13 +51,40 @@ function App() {
             path="/"
             element={
               !auth.isAuthenticated ? (
-                <LandingPage />
+                <LandingPage isLLS={false} />
               ) : !auth.isRegistered ? (
                 <Navigate to="/register" replace />
               ) : auth.hasDocsToBeReviewed ? (
                 <Navigate to="/document-review" replace />
               ) : (
                 <MatchingPage {...gearboxData} />
+              )
+            }
+          />
+          <Route path="/LLS" element={<LandingPage isLLS={true} />} />
+          <Route
+            path="/admin"
+            element={isAdmin ? <AdminPage /> : <Navigate to="/" replace />}
+          />
+          <Route
+            path="/admin/criteria-builder"
+            element={
+              isAdmin ? (
+                <CriteriaBuilderPage gearboxState={gearboxData.state} />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/admin/question-editor"
+            element={
+              isAdmin ? (
+                <QuestionEditorPage
+                  matchFormConfig={gearboxData.state.config}
+                />
+              ) : (
+                <Navigate to="/" replace />
               )
             }
           />
