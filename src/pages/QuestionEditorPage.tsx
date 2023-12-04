@@ -9,8 +9,12 @@ import {
   Draggable,
   DropResult,
 } from 'react-beautiful-dnd'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { updateMatchFormConfig } from '../api/matchFormConfig'
+import DropdownSection from '../components/DropdownSection'
+import FieldWrapper from '../components/FieldWrapper'
+import Field from '../components/Inputs/Field'
+import Button from '../components/Inputs/Button'
 
 function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
   list: T[],
@@ -30,6 +34,7 @@ export function QuestionEditorPage({
 }) {
   const [fields, setFields] = useState(matchFormConfig.fields)
   const [groups, setGroups] = useState(matchFormConfig.groups)
+  const [confirmDisabled, setConfirmDisabled] = useState(true)
 
   useEffect(() => {
     setGroups(matchFormConfig.groups)
@@ -37,48 +42,101 @@ export function QuestionEditorPage({
   }, [matchFormConfig.groups, matchFormConfig.fields])
 
   const onDragEnd = (result: DropResult) => {
-    if (result.destination) {
-      const oldGroups = Array.from(groups)
-      const newGroups = reorder(
-        groups,
-        result.source.index,
-        result.destination.index
+    const { destination, source } = result
+    if (destination && destination.droppableId === source.droppableId) {
+      const fieldsWithinGroup = fields.filter(
+        (f) => f.groupId === +destination.droppableId
       )
-      setGroups(newGroups)
-      updateMatchFormConfig({
-        fields,
-        groups: newGroups,
-      }).catch(() => setGroups(oldGroups))
+      const fromField = fieldsWithinGroup[source.index]
+      const toField = fieldsWithinGroup[destination.index]
+      const fromIndex = fields.findIndex((f) => f.id === fromField.id)
+      const toIndex = fields.findIndex((f) => f.id === toField.id)
+      const newFields = reorder(fields, fromIndex, toIndex)
+      setFields(newFields)
+      setConfirmDisabled(false)
     }
   }
+
+  const confirm = () => {
+    updateMatchFormConfig({
+      groups,
+      fields,
+    })
+      .then(() => setConfirmDisabled(true))
+      .catch(() => setFields(matchFormConfig.fields))
+  }
+
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="question-editor">
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {groups.map((g, index) => (
-              <Draggable key={g.id} draggableId={g.id.toString()} index={index}>
-                {(provided) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps}
-                    style={{
-                      ...provided.draggableProps.style,
-                      marginBottom: '8px',
-                      border: '1px solid lightgrey',
-                      padding: '8px',
-                    }}
-                  >
-                    {g.name}
-                  </div>
-                )}
-              </Draggable>
+    <div className="h-screen pb-8">
+      <section className="h-full overflow-scroll">
+        <div className="flex px-8 py-2 z-10 items-center justify-between">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold ">
+            <span>Question List</span>
+          </h1>
+          <Button disabled={confirmDisabled} onClick={confirm}>
+            Confirm
+          </Button>
+        </div>
+        <div className="px-8 pb-4">
+          <DragDropContext onDragEnd={onDragEnd}>
+            {groups.map((group) => (
+              <DropdownSection
+                key={group.id}
+                backgroundColor="bg-white"
+                name={group.name || 'General'}
+                isCollapsedAtStart
+              >
+                <Droppable droppableId={group.id.toString()}>
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      className="mt-2"
+                    >
+                      {fields
+                        .filter((field) => field.groupId === group.id)
+                        .map((field, index) => (
+                          <Draggable
+                            key={field.id}
+                            draggableId={field.id.toString()}
+                            index={index}
+                          >
+                            {(provided) => (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={{
+                                  ...provided.draggableProps.style,
+                                  marginBottom: '8px',
+                                  border: '1px solid lightgrey',
+                                  padding: '8px',
+                                }}
+                              >
+                                <FieldWrapper key={field.id} isShowing>
+                                  <Field
+                                    config={{
+                                      type: field.type,
+                                      options: field.options,
+                                      label: field.label,
+                                      name: field.id.toString(),
+                                      disabled: false,
+                                    }}
+                                  />
+                                </FieldWrapper>
+                              </div>
+                            )}
+                          </Draggable>
+                        ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DropdownSection>
             ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+          </DragDropContext>
+        </div>
+      </section>
+    </div>
   )
 }
