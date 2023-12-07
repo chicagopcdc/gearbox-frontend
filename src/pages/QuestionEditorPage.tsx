@@ -69,8 +69,8 @@ export function QuestionEditorPage({
   return (
     <div className="h-screen pb-8">
       <section className="h-full overflow-scroll">
-        <div className="flex px-8 py-2 z-10 items-center justify-between">
-          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold ">
+        <div className="top-0 sticky flex items-center justify-between bg-white px-8 py-2">
+          <h1 className="uppercase text-primary font-bold z-10">
             <span>Question List</span>
           </h1>
           <Button disabled={confirmDisabled} onClick={confirm}>

@@ -20,10 +20,7 @@ export const gaEvents = {
 
 export function useGoogleAnalytics(userId: string) {
   if (isUsingGoogleAnalytics) {
-    ReactGA.initialize(gaTrackingId, {
-      gaOptions: {
-        userId,
-      },
-    })
+    ReactGA.initialize(gaTrackingId)
+    ReactGA.set({ userId })
   }
 }
