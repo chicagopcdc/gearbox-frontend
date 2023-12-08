@@ -13,7 +13,7 @@ function AboutPageSplash() {
         style={{ maxWidth: '66%', lineHeight: '1.375em' }}
       >
         <span className="text-primary font-bold">GEARBOx</span> provides
-        clinicians near-instant matching to open trial for their patients
+        clinicians near-instant matching to open trials for their patients
       </p>
     </section>
   )
