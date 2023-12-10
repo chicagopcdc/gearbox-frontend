@@ -1,20 +1,18 @@
-import {
-  MatchFormConfig,
-  MatchFormFieldConfig,
-  MatchFormGroupConfig,
-} from '../model'
+import { ApiStatus, MatchFormFieldConfig, MatchFormGroupConfig } from '../model'
 import {
   DragDropContext,
-  Droppable,
   Draggable,
+  Droppable,
   DropResult,
 } from 'react-beautiful-dnd'
-import React, { useEffect, useState } from 'react'
-import { updateMatchFormConfig } from '../api/matchFormConfig'
+import React, { useEffect, useRef, useState } from 'react'
+import { buildMatchForm, updateMatchFormConfig } from '../api/matchFormConfig'
 import DropdownSection from '../components/DropdownSection'
 import FieldWrapper from '../components/FieldWrapper'
 import Field from '../components/Inputs/Field'
 import Button from '../components/Inputs/Button'
+import { ErrorRetry } from '../components/ErrorRetry'
+import { AlertCircle, Check, Loader } from 'react-feather'
 
 function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
   list: T[],
@@ -27,19 +25,37 @@ function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
   return result
 }
 
-export function QuestionEditorPage({
-  matchFormConfig,
-}: {
-  matchFormConfig: MatchFormConfig
-}) {
-  const [fields, setFields] = useState(matchFormConfig.fields)
-  const [groups, setGroups] = useState(matchFormConfig.groups)
+export function QuestionEditorPage() {
+  const [fields, setFields] = useState<MatchFormFieldConfig[]>([])
+  const [originalFields, setOriginalFields] = useState<MatchFormFieldConfig[]>(
+    []
+  )
+  const [groups, setGroups] = useState<MatchFormGroupConfig[]>([])
   const [confirmDisabled, setConfirmDisabled] = useState(true)
+  const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
+  const [confirmStatus, setConfirmStatus] = useState<ApiStatus>('not started')
+  const timerIdRef = useRef<NodeJS.Timer | null>(null)
+
+  const loadMatchForm = () => {
+    setLoadingStatus('sending')
+    buildMatchForm(false)
+      .then((res) => {
+        setFields(res.fields)
+        setOriginalFields(res.fields)
+        setGroups(res.groups)
+        setLoadingStatus('success')
+      })
+      .catch(() => setLoadingStatus('error'))
+  }
 
   useEffect(() => {
-    setGroups(matchFormConfig.groups)
-    setFields(matchFormConfig.fields)
-  }, [matchFormConfig.groups, matchFormConfig.fields])
+    loadMatchForm()
+    return () => {
+      if (timerIdRef.current) {
+        clearTimeout(timerIdRef.current)
+      }
+    }
+  }, [])
 
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result
@@ -58,12 +74,30 @@ export function QuestionEditorPage({
   }
 
   const confirm = () => {
+    setConfirmStatus('sending')
+    setConfirmDisabled(true)
     updateMatchFormConfig({
       groups,
       fields,
     })
-      .then(() => setConfirmDisabled(true))
-      .catch(() => setFields(matchFormConfig.fields))
+      .then(() => setConfirmStatus('success'))
+      .catch(() => {
+        setConfirmStatus('error')
+        setFields(originalFields)
+      })
+      .finally(
+        () =>
+          (timerIdRef.current = setTimeout(
+            () => setConfirmStatus('not started'),
+            3000
+          ))
+      )
+  }
+
+  if (loadingStatus === 'not started' || loadingStatus === 'sending') {
+    return <div>Loading...</div>
+  } else if (loadingStatus === 'error') {
+    return <ErrorRetry retry={loadMatchForm} />
   }
 
   return (
@@ -73,9 +107,26 @@ export function QuestionEditorPage({
           <h1 className="uppercase text-primary font-bold z-10">
             <span>Question List</span>
           </h1>
-          <Button disabled={confirmDisabled} onClick={confirm}>
-            Confirm
-          </Button>
+          <div className="flex items-center">
+            {confirmStatus === 'sending' ? (
+              <Loader className="mr-2" />
+            ) : confirmStatus === 'success' ? (
+              <h2 className="text-base text-green-600 mr-4 flex">
+                <Check />
+                Updated Successfully
+              </h2>
+            ) : (
+              confirmStatus === 'error' && (
+                <h2 className="text-base text-red-600 mr-4 flex">
+                  <AlertCircle />
+                  Updated Unsuccessfully
+                </h2>
+              )
+            )}
+            <Button disabled={confirmDisabled} onClick={confirm}>
+              Confirm
+            </Button>
+          </div>
         </div>
         <div className="px-8 pb-4">
           <DragDropContext onDragEnd={onDragEnd}>

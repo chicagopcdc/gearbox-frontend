@@ -30,7 +30,7 @@ function App() {
 
   if (
     auth.loadingStatus === 'not started' ||
-    auth.loadingStatus === 'loading'
+    auth.loadingStatus === 'sending'
   ) {
     return <h1>Loading...</h1>
   } else if (auth.loadingStatus === 'error') {
@@ -79,13 +79,7 @@ function App() {
           <Route
             path="/admin/question-editor"
             element={
-              isAdmin ? (
-                <QuestionEditorPage
-                  matchFormConfig={gearboxData.state.config}
-                />
-              ) : (
-                <Navigate to="/" replace />
-              )
+              isAdmin ? <QuestionEditorPage /> : <Navigate to="/" replace />
             }
           />
           <Route

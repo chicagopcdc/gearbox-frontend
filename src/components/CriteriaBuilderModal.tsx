@@ -124,7 +124,7 @@ export function CriteriaBuilderModal({
               </button>
             </div>
           </div>
-          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+          {loadingStatus === 'not started' || loadingStatus === 'sending' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchQueryBuilderState} />

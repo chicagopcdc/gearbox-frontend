@@ -1,4 +1,4 @@
-export type LoadingStatus = 'not started' | 'loading' | 'success' | 'error'
+export type ApiStatus = 'not started' | 'sending' | 'success' | 'error'
 type Site = {
   id: number
   active: boolean

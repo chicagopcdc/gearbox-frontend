@@ -32,7 +32,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
 
-  if (status === 'loading') return <div>Loading...</div>
+  if (status === 'sending') return <div>Loading...</div>
   if (status === 'error') {
     return ErrorRetry({ retry: fetchAll })
   }

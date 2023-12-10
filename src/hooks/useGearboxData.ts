@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import type {
+  ApiStatus,
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,
@@ -13,8 +14,6 @@ import { getStudies } from '../api/studies'
 import { getLatestUserInput, postUserInput } from '../api/userInput'
 import type useAuth from './useAuth'
 
-type GearboxDataStatus = 'loading' | 'error' | undefined
-
 export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({
@@ -27,10 +26,10 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [userInputId, setUserInputId] = useState(
     undefined as number | undefined
   )
-  const [status, setStatus] = useState(undefined as GearboxDataStatus)
+  const [status, setStatus] = useState<ApiStatus>('not started')
 
   const fetchAll = () => {
-    setStatus('loading')
+    setStatus('sending')
     Promise.all([
       getMatchConditions(),
       getMatchFormConfig(),
@@ -45,8 +44,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
         setMatchInput(latestUserInput.values)
         setStudies(studies)
         setUserInputId(latestUserInput.id)
-
-        setStatus(undefined)
+        setStatus('not started')
       })
       .catch(() => {
         setStatus('error')
