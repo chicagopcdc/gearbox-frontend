@@ -14,3 +14,9 @@ export function updateMatchFormConfig(matchFormConfig: MatchFormConfig) {
     body: JSON.stringify(matchFormConfig),
   }).then((res) => res.json())
 }
+
+export function buildMatchForm(save: boolean) {
+  return fetchGearbox(`/gearbox/build-match-form/?save=${save}`, {
+    method: 'POST',
+  }).then((res) => res.json() as Promise<MatchFormConfig>)
+}

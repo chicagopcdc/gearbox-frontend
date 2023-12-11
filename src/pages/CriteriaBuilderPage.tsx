@@ -47,7 +47,7 @@ export function CriteriaBuilderPage({
       </TabList>
       {tabs.map((tab) => (
         <TabPanel key={tab.id}>
-          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+          {loadingStatus === 'not started' || loadingStatus === 'sending' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchStudyVersion} />
