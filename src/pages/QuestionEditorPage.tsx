@@ -45,7 +45,10 @@ export function QuestionEditorPage() {
         setGroups(res.groups)
         setLoadingStatus('success')
       })
-      .catch(() => setLoadingStatus('error'))
+      .catch((err) => {
+        console.error(err)
+        setLoadingStatus('error')
+      })
   }
 
   useEffect(() => {
@@ -81,9 +84,10 @@ export function QuestionEditorPage() {
       fields,
     })
       .then(() => setConfirmStatus('success'))
-      .catch(() => {
+      .catch((err) => {
         setConfirmStatus('error')
         setFields(originalFields)
+        console.error(err)
       })
       .finally(
         () =>

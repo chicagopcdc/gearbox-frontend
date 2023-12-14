@@ -46,7 +46,8 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
         setUserInputId(latestUserInput.id)
         setStatus('not started')
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err)
         setStatus('error')
       })
   }
