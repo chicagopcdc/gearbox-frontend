@@ -165,3 +165,12 @@ export type UserInput = {
   id?: number
   results: { id: string; value: string }[]
 }
+
+export type EligibilityCriteriaInfo = {
+  create_date?: string
+  status: StudyVersionStatus
+  study_version_id?: number
+  study_algorithm_engine_id?: number
+  eligibility_criteria_id?: number
+  id?: number
+}

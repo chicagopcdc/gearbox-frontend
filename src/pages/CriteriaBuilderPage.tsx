@@ -34,9 +34,8 @@ export function CriteriaBuilderPage({
   const [currentTab, setCurrentTab] = useState(0)
   const handleTabSelect = (index: number) => setCurrentTab(index)
 
-  const [studyVersions, loadingStatus, fetchStudyVersion] = useStudyVersions(
-    tabs[currentTab].id
-  )
+  const [studyVersions, setStudyVersions, loadingStatus, fetchStudyVersion] =
+    useStudyVersions(tabs[currentTab].id)
 
   return (
     <Tabs tabIndex={currentTab} onSelect={handleTabSelect}>
@@ -55,6 +54,8 @@ export function CriteriaBuilderPage({
             studyVersions.map((sv) => (
               <TrialCard study={sv.study} key={sv.id}>
                 <CriteriaBuilder
+                  studyVersions={studyVersions}
+                  setStudyVersions={setStudyVersions}
                   studyVersion={sv}
                   gearboxState={gearboxState}
                 />

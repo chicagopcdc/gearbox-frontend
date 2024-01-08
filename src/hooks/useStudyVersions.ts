@@ -4,7 +4,7 @@ import { ApiStatus, StudyVersion, StudyVersionStatus } from '../model'
 
 export function useStudyVersions(
   status: StudyVersionStatus
-): [StudyVersion[], ApiStatus, () => void] {
+): [StudyVersion[], (svs: StudyVersion[]) => void, ApiStatus, () => void] {
   const [studyVersions, setStudyVersions] = useState<StudyVersion[]>([])
   const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
 
@@ -24,5 +24,10 @@ export function useStudyVersions(
     fetchStudyVersions(status)
   }, [status])
 
-  return [studyVersions, loadingStatus, () => fetchStudyVersions(status)]
+  return [
+    studyVersions,
+    setStudyVersions,
+    loadingStatus,
+    () => fetchStudyVersions(status),
+  ]
 }
