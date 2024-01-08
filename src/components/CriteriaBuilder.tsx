@@ -29,7 +29,7 @@ export function CriteriaBuilder({
 
   const [updated, setUpdated] = useState(false)
 
-  const confirmStudy = () => {
+  const changeStudyStatus = () => {
     return updateEligibilityCriteriaInfo(eligibility_criteria_id, {
       status: status === 'ACTIVE' ? 'IN_PROCESS' : 'ACTIVE',
     })
@@ -50,7 +50,7 @@ export function CriteriaBuilder({
             Updated Successfully
           </h2>
         )}
-        <Button onClick={confirmStudy}>
+        <Button onClick={changeStudyStatus}>
           {status === 'ACTIVE' ? 'Mark as In Progress' : 'Confirm'}
         </Button>
         <button
