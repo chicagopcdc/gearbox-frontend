@@ -20,6 +20,7 @@ import {
   getQueryBuilderConfig,
   getQueryBuilderValue,
   queryBuilderValueToAlgorithm,
+  getShowIfDetails,
 } from './utils'
 import { MatchFormFieldConfig } from './model'
 import {
@@ -1070,5 +1071,92 @@ describe('getQueryBuilderValue', () => {
 describe('queryBuilderValueToAlgorithm', () => {
   test('convert json group to study algorithm', () => {
     expect(queryBuilderValueToAlgorithm(jsonGroup)).toEqual(algorithm)
+  })
+})
+
+describe('getShowIfDetails', () => {
+  test('convert fields and showIf to readable match info', () => {
+    const fields: MatchFormFieldConfig[] = [
+      {
+        id: 1,
+        groupId: 1,
+        name: 'weight',
+        type: 'number',
+        label: 'What is the patient weight',
+        showIf: {
+          operator: 'AND',
+          criteria: [{ id: 2, operator: 'in', value: ['Med1', 'Med2'] }],
+        },
+      },
+      {
+        id: 2,
+        groupId: 1,
+        name: 'medications',
+        type: 'multipleselect',
+        label: 'What is the patient medications',
+        options: [
+          {
+            value: 'Med1',
+            label: 'Medication 1',
+          },
+          {
+            value: 'Med2',
+            label: 'Medication 2',
+          },
+          {
+            value: 'Med3',
+            label: 'Medication 3',
+          },
+        ],
+      },
+      {
+        id: 3,
+        groupId: 1,
+        name: 'gender',
+        type: 'select',
+        options: [
+          { value: 'M', label: 'Male' },
+          { value: 'F', label: 'Female' },
+        ],
+        showIf: {
+          operator: 'AND',
+          criteria: [
+            { id: 1, operator: 'gt', value: 160 },
+            { id: 2, operator: 'eq', value: 'Med3' },
+          ],
+        },
+      },
+    ]
+    expect(
+      fields[0].showIf && getShowIfDetails(fields, fields[0].showIf)
+    ).toEqual({
+      operator: 'AND',
+      criteria: [
+        {
+          fieldName: 'What is the patient medications',
+          fieldValue: ['Med1', 'Med2'],
+          fieldValueLabel: ['Medication 1', 'Medication 2'],
+          operator: 'in',
+        },
+      ],
+    })
+    expect(
+      fields[2].showIf && getShowIfDetails(fields, fields[2].showIf)
+    ).toEqual({
+      operator: 'AND',
+      criteria: [
+        {
+          fieldName: 'What is the patient weight',
+          fieldValue: 160,
+          operator: 'gt',
+        },
+        {
+          fieldName: 'What is the patient medications',
+          fieldValue: 'Med3',
+          fieldValueLabel: 'Medication 3',
+          operator: 'eq',
+        },
+      ],
+    })
   })
 })
