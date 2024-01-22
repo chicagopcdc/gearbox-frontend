@@ -485,3 +485,25 @@ function getValueString(fieldValue: any, field: MatchFormFieldConfig): string {
   }
   return fieldValue
 }
+
+export function getShowIfDetails(
+  fields: MatchFormFieldConfig[],
+  showIf: MatchFormFieldShowIfCondition
+): MatchInfoAlgorithm {
+  const fieldOptionLabelMap = getFieldOptionLabelMap(fields)
+  return {
+    operator: showIf.operator || 'AND',
+    criteria: showIf.criteria.map((c) => {
+      const field = fields.find((f) => f.id === c.id)
+      const fieldValueLabel = Array.isArray(c.value)
+        ? c.value.map((v) => fieldOptionLabelMap[c.id]?.[v])
+        : fieldOptionLabelMap[c.id]?.[c.value]
+      return {
+        fieldName: field?.label || field?.name || '',
+        fieldValue: c.value,
+        operator: c.operator,
+        fieldValueLabel,
+      }
+    }),
+  }
+}
