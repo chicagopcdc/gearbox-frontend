@@ -13,6 +13,8 @@ import Field from '../components/Inputs/Field'
 import Button from '../components/Inputs/Button'
 import { ErrorRetry } from '../components/ErrorRetry'
 import { AlertCircle, Check, Loader } from 'react-feather'
+import MatchInfoDetails from '../components/MatchInfoDetails'
+import { getShowIfDetails } from '../utils'
 
 function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
   list: T[],
@@ -178,6 +180,26 @@ export function QuestionEditorPage() {
                                       disabled: false,
                                     }}
                                   />
+                                  <div className="mt-4 border p-4">
+                                    <div className="mb-4 flex justify-between">
+                                      <h1>
+                                        {field.showIf
+                                          ? 'Show If:'
+                                          : 'Always show'}{' '}
+                                      </h1>
+                                      <Button size="small">
+                                        Edit Show If Conditions
+                                      </Button>
+                                    </div>
+                                    {field.showIf && (
+                                      <MatchInfoDetails
+                                        matchInfoAlgorithm={getShowIfDetails(
+                                          fields,
+                                          field.showIf
+                                        )}
+                                      />
+                                    )}
+                                  </div>
                                 </FieldWrapper>
                               </div>
                             )}
