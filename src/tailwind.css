@@ -70,4 +70,17 @@ input:invalid.touched {
 }
 /* purgecss end ignore */
 
+.group--header {
+  @apply py-2
+}
+.group--actions > button {
+  @apply mr-4 p-1 border-2
+}
+
+.hide-op-and-value .rule--operator, .hide-op-and-value .rule--value {
+  @apply hidden
+}
+.group-or-rule {
+  @apply px-2
+}
 @tailwind utilities;

@@ -68,7 +68,14 @@ export type MatchFormFieldOption = {
 export type MatchFormFieldConfig = {
   id: number
   groupId: number
-  type: string
+  type:
+    | 'text'
+    | 'age'
+    | 'number'
+    | 'checkbox'
+    | 'radio'
+    | 'multiselect'
+    | 'select'
   name: string
   label?: string
   options?: MatchFormFieldOption[]
@@ -127,7 +134,7 @@ export type RegisterDocument = {
 }
 
 export type RegisterFormFieldConfig = {
-  type: string
+  type: MatchFormFieldConfig['type']
   name: string
   label?: string | React.ReactNode
   options?: { value: string; label: string }[]

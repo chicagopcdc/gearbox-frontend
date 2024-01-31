@@ -14,7 +14,9 @@ import Button from '../components/Inputs/Button'
 import { ErrorRetry } from '../components/ErrorRetry'
 import { AlertCircle, Check, Loader } from 'react-feather'
 import MatchInfoDetails from '../components/MatchInfoDetails'
-import { getShowIfDetails } from '../utils'
+import { getShowIfDetails, getShowIfFields } from '../utils'
+import { ShowIfBuilder } from '../components/ShowIfBuilder'
+import { Fields } from '@react-awesome-query-builder/ui'
 import { PublishMatchForm } from '../components/PublishMatchForm'
 
 function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
@@ -30,6 +32,7 @@ function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
 
 export function QuestionEditorPage() {
   const [fields, setFields] = useState<MatchFormFieldConfig[]>([])
+  const [showIfFields, setShowIfFields] = useState<Fields>({})
   const [originalFields, setOriginalFields] = useState<MatchFormFieldConfig[]>(
     []
   )
@@ -44,6 +47,7 @@ export function QuestionEditorPage() {
     buildMatchForm(false)
       .then((res) => {
         setFields(res.fields)
+        setShowIfFields(getShowIfFields(res.fields))
         setOriginalFields(res.fields)
         setGroups(res.groups)
         setLoadingStatus('success')
@@ -184,25 +188,15 @@ export function QuestionEditorPage() {
                                       disabled: false,
                                     }}
                                   />
-                                  <div className="mt-4 border p-4">
-                                    <div className="mb-4 flex justify-between">
-                                      <h1>
-                                        {field.showIf
-                                          ? 'Show If:'
-                                          : 'Always show'}{' '}
-                                      </h1>
-                                      <Button size="small">
-                                        Edit Show If Conditions
-                                      </Button>
-                                    </div>
-                                    {field.showIf && (
-                                      <MatchInfoDetails
-                                        matchInfoAlgorithm={getShowIfDetails(
-                                          fields,
-                                          field.showIf
-                                        )}
-                                      />
-                                    )}
+                                  <div className="mt-4">
+                                    <h1>Show If: </h1>
+                                    <ShowIfBuilder
+                                      matchFormFields={fields}
+                                      showIfFields={showIfFields}
+                                      currentField={field}
+                                      setFields={setFields}
+                                      setConfirmDisabled={setConfirmDisabled}
+                                    />
                                   </div>
                                 </FieldWrapper>
                               </div>

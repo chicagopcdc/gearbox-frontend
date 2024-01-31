@@ -1,5 +1,4 @@
 import '@react-awesome-query-builder/ui/css/compact_styles.css'
-import './CriteriaBuilderPage.css'
 import React, { useState } from 'react'
 import { MatchingPageProps } from './MatchingPage'
 import TrialCard from '../components/TrialCard'

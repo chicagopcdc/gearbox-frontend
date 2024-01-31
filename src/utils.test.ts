@@ -87,20 +87,20 @@ const config: MatchFormConfig = {
       id: 0,
       name: 'field 0',
       groupId: 0,
-      type: '',
+      type: 'select',
       options: [
         { label: 'foo', value: 0 },
         { label: 'bar', value: 1 },
         { label: 'baz', value: 2 },
       ],
     },
-    { id: 1, name: 'field 1', groupId: 0, type: '' },
-    { id: 2, name: 'field 2', groupId: 0, type: '' },
+    { id: 1, name: 'field 1', groupId: 0, type: 'text' },
+    { id: 2, name: 'field 2', groupId: 0, type: 'text' },
     {
       id: 3,
       name: 'field 3',
       groupId: 0,
-      type: '',
+      type: 'select',
       options: [
         { label: 'Yes', value: 0 },
         { label: 'No', value: 1 },
@@ -747,7 +747,7 @@ describe('getQueryBuilderConfig', () => {
       {
         id: 2,
         groupId: 1,
-        type: 'sex',
+        type: 'select',
         name: 'sex',
         options: [
           {
@@ -763,7 +763,7 @@ describe('getQueryBuilderConfig', () => {
       {
         id: 3,
         groupId: 1,
-        type: 'diagnose',
+        type: 'select',
         name: 'diagnose',
         options: [
           {
@@ -1033,31 +1033,31 @@ describe('getQueryBuilderValue', () => {
           id: 2,
           groupId: 1,
           name: 'sex',
-          type: 'sex',
+          type: 'select',
         },
         {
           id: 3,
           groupId: 1,
           name: 'med_condition',
-          type: 'med_condition',
+          type: 'select',
         },
         {
           id: 4,
           groupId: 1,
           name: 'past_med_condition',
-          type: 'past_med_condition',
+          type: 'select',
         },
         {
           id: 5,
           groupId: 1,
           name: 'blood_pressure',
-          type: 'blood_pressure',
+          type: 'number',
         },
         {
           id: 6,
           groupId: 1,
           name: 'body_fat',
-          type: 'body_fat',
+          type: 'number',
         },
       ],
     }
@@ -1092,7 +1092,7 @@ describe('getShowIfDetails', () => {
         id: 2,
         groupId: 1,
         name: 'medications',
-        type: 'multipleselect',
+        type: 'multiselect',
         label: 'What is the patient medications',
         options: [
           {

@@ -3,10 +3,10 @@ import Select from './Select'
 import TextField from './TextField'
 import Radio from './Radio'
 import MultiSelect from './MultiSelect'
-import type { MatchFormFieldOption } from '../../model'
+import { MatchFormFieldConfig, MatchFormFieldOption } from '../../model'
 
 type FieldConfig = {
-  type: string
+  type: MatchFormFieldConfig['type']
   name: string
   label?: string | React.ReactNode
   options?: MatchFormFieldOption[]
