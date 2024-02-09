@@ -16,3 +16,13 @@ export function getMatchConditions() {
       return data
     })
 }
+
+export function buildMatchConditions() {
+  return fetchGearbox('/gearbox/build-match-conditions', {
+    method: 'POST',
+  }).then((res) => {
+    if (res.status !== 200) {
+      throw new Error('build match conditions failed')
+    }
+  })
+}

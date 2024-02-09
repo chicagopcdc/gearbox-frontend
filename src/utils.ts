@@ -21,6 +21,9 @@ import {
   JsonRule,
   Utils as QbUtils,
 } from '@react-awesome-query-builder/ui'
+import { buildEligibilityCriteria } from './api/eligibilityCriteria'
+import { buildMatchConditions } from './api/matchConditions'
+import { buildStudies } from './api/studies'
 
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
@@ -506,4 +509,12 @@ export function getShowIfDetails(
       }
     }),
   }
+}
+
+export function publishMatchForm() {
+  return Promise.all([
+    buildEligibilityCriteria(),
+    buildMatchConditions(),
+    buildStudies(),
+  ])
 }

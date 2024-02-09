@@ -11,6 +11,7 @@ type ButtonProps = {
   size?: ButtonSize
   type?: ButtonType
   onClick?: React.MouseEventHandler<HTMLButtonElement>
+  otherClassName?: string
 }
 
 function Button({
@@ -20,6 +21,7 @@ function Button({
   outline = false,
   size = 'normal',
   type = 'button',
+  otherClassName = '',
   onClick,
 }: ButtonProps) {
   const blockClassName = block ? 'w-full' : ''
@@ -40,7 +42,7 @@ function Button({
       : size === 'small'
       ? 'px-2 py-1 text-xs'
       : ''
-  const className = `tracking-wider uppercase ${blockClassName} ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName}`
+  const className = `tracking-wider uppercase ${blockClassName} ${disabledClassName} ${hoverClassName} ${outlineClassName} ${sizeClassName} ${otherClassName}`
 
   const attrs = { className, disabled, type, onClick }
   return <button {...attrs}>{children}</button>

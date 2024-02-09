@@ -1,14 +1,18 @@
 import '@react-awesome-query-builder/ui/css/compact_styles.css'
 import './CriteriaBuilderPage.css'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { MatchingPageProps } from './MatchingPage'
 import TrialCard from '../components/TrialCard'
 import { CriteriaBuilder } from '../components/CriteriaBuilder'
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
-import { StudyVersionStatus } from '../model'
+import { ApiStatus, StudyVersionStatus } from '../model'
 import { useStudyVersions } from '../hooks/useStudyVersions'
 import { ErrorRetry } from '../components/ErrorRetry'
+import Button from '../components/Inputs/Button'
+import { publishMatchForm } from '../utils'
+import { AlertCircle, Check, Loader } from 'react-feather'
+import { PublishMatchForm } from '../components/PublishMatchForm'
 
 type TabType = {
   id: StudyVersionStatus
@@ -51,16 +55,19 @@ export function CriteriaBuilderPage({
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchStudyVersion} />
           ) : (
-            studyVersions.map((sv) => (
-              <TrialCard study={sv.study} key={sv.id}>
-                <CriteriaBuilder
-                  studyVersions={studyVersions}
-                  setStudyVersions={setStudyVersions}
-                  studyVersion={sv}
-                  gearboxState={gearboxState}
-                />
-              </TrialCard>
-            ))
+            <>
+              <PublishMatchForm />
+              {studyVersions.map((sv) => (
+                <TrialCard study={sv.study} key={sv.id}>
+                  <CriteriaBuilder
+                    studyVersions={studyVersions}
+                    setStudyVersions={setStudyVersions}
+                    studyVersion={sv}
+                    gearboxState={gearboxState}
+                  />
+                </TrialCard>
+              ))}
+            </>
           )}
         </TabPanel>
       ))}

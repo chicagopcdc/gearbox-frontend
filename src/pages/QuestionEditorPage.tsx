@@ -15,6 +15,7 @@ import { ErrorRetry } from '../components/ErrorRetry'
 import { AlertCircle, Check, Loader } from 'react-feather'
 import MatchInfoDetails from '../components/MatchInfoDetails'
 import { getShowIfDetails } from '../utils'
+import { PublishMatchForm } from '../components/PublishMatchForm'
 
 function reorder<T extends MatchFormGroupConfig | MatchFormFieldConfig>(
   list: T[],
@@ -109,32 +110,35 @@ export function QuestionEditorPage() {
   return (
     <div className="h-screen pb-8">
       <section className="h-full overflow-scroll">
-        <div className="top-0 sticky flex items-center justify-between bg-white px-8 py-2">
+        <div className="top-0 sticky bg-white px-8 py-2">
           <h1 className="uppercase text-primary font-bold z-10">
             <span>Question List</span>
           </h1>
-          <div className="flex items-center">
-            {confirmStatus === 'sending' ? (
-              <Loader className="mr-2" />
-            ) : confirmStatus === 'success' ? (
-              <h2 className="text-base text-green-600 mr-4 flex">
-                <Check />
-                Updated Successfully
-              </h2>
-            ) : (
-              confirmStatus === 'error' && (
-                <h2 className="text-base text-red-600 mr-4 flex">
-                  <AlertCircle />
-                  Updated Unsuccessfully
-                </h2>
-              )
-            )}
-            <Button disabled={confirmDisabled} onClick={confirm}>
-              Confirm
-            </Button>
-          </div>
         </div>
         <div className="px-8 pb-4">
+          <div className="flex items-center justify-between">
+            <PublishMatchForm />
+            <div className="flex items-center">
+              {confirmStatus === 'sending' ? (
+                <Loader className="mr-2" />
+              ) : confirmStatus === 'success' ? (
+                <h2 className="text-base text-green-600 mr-4 flex">
+                  <Check />
+                  Updated Successfully
+                </h2>
+              ) : (
+                confirmStatus === 'error' && (
+                  <h2 className="text-base text-red-600 mr-4 flex">
+                    <AlertCircle />
+                    Updated Unsuccessfully
+                  </h2>
+                )
+              )}
+              <Button disabled={confirmDisabled} onClick={confirm}>
+                Confirm
+              </Button>
+            </div>
+          </div>
           <DragDropContext onDragEnd={onDragEnd}>
             {groups.map((group) => (
               <DropdownSection
