@@ -22,6 +22,7 @@ export function PublishMatchForm() {
       })
       .finally(() => {
         setPublishDisabled(false)
+        // This is to clear the publish status message (success or failure) after 3 seconds.
         timerIdRef.current = setTimeout(
           () => setPublishStatus('not started'),
           3000
