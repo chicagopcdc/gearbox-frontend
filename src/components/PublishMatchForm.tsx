@@ -14,7 +14,6 @@ export function PublishMatchForm() {
     publishMatchForm()
       .then(() => {
         setPublishStatus('success')
-        console.log('success')
       })
       .catch((err) => {
         setPublishStatus('error')
