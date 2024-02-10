@@ -29,9 +29,10 @@ export function CriteriaBuilder({
 
   const [updated, setUpdated] = useState(false)
 
+  const isActive = status === 'ACTIVE'
   const changeStudyStatus = () => {
     return updateEligibilityCriteriaInfo(eligibility_criteria_id, {
-      status: status === 'ACTIVE' ? 'IN_PROCESS' : 'ACTIVE',
+      status: isActive ? 'IN_PROCESS' : 'ACTIVE',
     })
       .then(() => {
         setStudyVersions(

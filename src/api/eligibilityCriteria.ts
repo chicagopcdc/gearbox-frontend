@@ -22,3 +22,13 @@ export function getEligibilityCriteriaById(id: number) {
     (res) => res.json() as Promise<EligibilityCriterion[]>
   )
 }
+
+export function buildEligibilityCriteria() {
+  return fetchGearbox('/gearbox/build-eligibility-criteria', {
+    method: 'POST',
+  }).then((res) => {
+    if (res.status !== 200) {
+      throw new Error('build eligibility criteria failed')
+    }
+  })
+}

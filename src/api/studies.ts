@@ -25,3 +25,13 @@ export function getStudies() {
       return data
     })
 }
+
+export function buildStudies() {
+  return fetchGearbox('/gearbox/build-studies', {
+    method: 'POST',
+  }).then((res) => {
+    if (res.status !== 200) {
+      throw new Error('build studies failed')
+    }
+  })
+}

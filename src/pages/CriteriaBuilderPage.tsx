@@ -9,6 +9,7 @@ import 'react-tabs/style/react-tabs.css'
 import { StudyVersionStatus } from '../model'
 import { useStudyVersions } from '../hooks/useStudyVersions'
 import { ErrorRetry } from '../components/ErrorRetry'
+import { PublishMatchForm } from '../components/PublishMatchForm'
 
 type TabType = {
   id: StudyVersionStatus
@@ -51,16 +52,19 @@ export function CriteriaBuilderPage({
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchStudyVersion} />
           ) : (
-            studyVersions.map((sv) => (
-              <TrialCard study={sv.study} key={sv.id}>
-                <CriteriaBuilder
-                  studyVersions={studyVersions}
-                  setStudyVersions={setStudyVersions}
-                  studyVersion={sv}
-                  gearboxState={gearboxState}
-                />
-              </TrialCard>
-            ))
+            <>
+              <PublishMatchForm />
+              {studyVersions.map((sv) => (
+                <TrialCard study={sv.study} key={sv.id}>
+                  <CriteriaBuilder
+                    studyVersions={studyVersions}
+                    setStudyVersions={setStudyVersions}
+                    studyVersion={sv}
+                    gearboxState={gearboxState}
+                  />
+                </TrialCard>
+              ))}
+            </>
           )}
         </TabPanel>
       ))}
