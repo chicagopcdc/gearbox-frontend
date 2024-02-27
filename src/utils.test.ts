@@ -553,7 +553,7 @@ describe('getIsFieldShowing', () => {
   test('for one criterion (in)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 0, operator: 'in', value: [1, 2] }],
+      criteria: [{ id: 0, operator: 'in', value: [1, 2], is_numeric: true }],
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: undefined }
 
@@ -563,7 +563,7 @@ describe('getIsFieldShowing', () => {
   test('for one criterion (gt)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 2, operator: 'gt', value: 1 }],
+      criteria: [{ id: 2, operator: 'gt', value: 1, is_numeric: true }],
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: 2 }
 
@@ -574,9 +574,9 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
       criteria: [
-        { id: 0, operator: 'in', value: [1, 2] },
-        { id: 1, operator: 'eq', value: true },
-        { id: 2, operator: 'gt', value: 1 },
+        { id: 0, operator: 'in', value: [1, 2], is_numeric: true },
+        { id: 1, operator: 'eq', value: true, is_numeric: false },
+        { id: 2, operator: 'gt', value: 1, is_numeric: true },
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
@@ -596,9 +596,9 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'AND',
       criteria: [
-        { id: 0, operator: 'in', value: [1, 2] },
-        { id: 1, operator: 'eq', value: true },
-        { id: 2, operator: 'gt', value: 1 },
+        { id: 0, operator: 'in', value: [1, 2], is_numeric: true },
+        { id: 1, operator: 'eq', value: true, is_numeric: false },
+        { id: 2, operator: 'gt', value: 1, is_numeric: true },
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
@@ -1085,7 +1085,14 @@ describe('getShowIfDetails', () => {
         label: 'What is the patient weight',
         showIf: {
           operator: 'AND',
-          criteria: [{ id: 2, operator: 'in', value: ['Med1', 'Med2'] }],
+          criteria: [
+            {
+              id: 2,
+              operator: 'in',
+              value: ['Med1', 'Med2'],
+              is_numeric: false,
+            },
+          ],
         },
       },
       {
@@ -1121,8 +1128,8 @@ describe('getShowIfDetails', () => {
         showIf: {
           operator: 'AND',
           criteria: [
-            { id: 1, operator: 'gt', value: 160 },
-            { id: 2, operator: 'eq', value: 'Med3' },
+            { id: 1, operator: 'gt', value: 160, is_numeric: true },
+            { id: 2, operator: 'eq', value: 'Med3', is_numeric: false },
           ],
         },
       },

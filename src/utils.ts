@@ -559,8 +559,11 @@ export function getShowIfFields(
 
   matchingFormFields.forEach((f) => {
     const isSelect = !!f.options?.length
+    const unitTextMatch = f.label?.match(/\(in\s(.+?)\)/)
+    const unitText = unitTextMatch ? unitTextMatch[0] : ''
+
     result[f.id] = {
-      label: f.name,
+      label: `${f.name} ${unitText}`,
       type: getCriteriaBuilderFieldType(f.type),
       operators: getCriteriaBuilderFieldOperator(f.type),
       valueSources: ['value'],
@@ -628,7 +631,8 @@ export function getShowIfInitValue(
 }
 
 export function jsonGroupToShowIf(
-  jsonGroup: JsonGroup
+  jsonGroup: JsonGroup,
+  matchFormFields: MatchFormFieldConfig[]
 ): MatchFormFieldShowIfCondition | undefined {
   const children1 = jsonGroup.children1 as JsonRule[]
   const criteria = children1
@@ -638,11 +642,21 @@ export function jsonGroupToShowIf(
         c.properties.operator &&
         c.properties.value.filter(Boolean).length
     )
-    .map((c) => ({
-      id: parseInt(c.properties.field as string),
-      operator: getComparisonOperator(c.properties.operator as string),
-      value: c.properties.value[0],
-    }))
+    .map((c) => {
+      const id = parseInt(c.properties.field as string)
+      const field = matchFormFields.find((f) => f.id === id)
+      const isNumeric = field?.type === 'number' || field?.type === 'age'
+      const unitTextMatch = field?.label?.match(/\(in\s(.+?)\)/)
+      const unit = unitTextMatch ? unitTextMatch[1] : 'none'
+      return {
+        id,
+        operator: getComparisonOperator(c.properties.operator as string),
+        value: c.properties.value[0].toString(),
+        is_numeric: isNumeric,
+        unit,
+        valueId: field?.options?.length ? c.properties.value[0] : undefined,
+      }
+    })
   return criteria.length
     ? {
         operator: (jsonGroup.properties?.conjunction || 'AND') as 'AND' | 'OR',

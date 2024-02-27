@@ -8,11 +8,10 @@ import {
   Query,
   Utils as QbUtils,
 } from '@react-awesome-query-builder/ui'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { QueryBuilderState } from '../hooks/useQueryBuilderState'
 import {
   getInitQueryValue,
-  getShowIfFields,
   getShowIfInitValue,
   initialQueryBuilderConfig,
   jsonGroupToShowIf,
@@ -58,14 +57,14 @@ export function ShowIfBuilder({
 
   const onChange = useCallback(
     (immutableTree: ImmutableTree, config: Config) => {
-      console.log('callback')
       setQueryBuilderState((prevState) => ({
         ...prevState,
         tree: immutableTree,
         config,
       }))
       const showIf = jsonGroupToShowIf(
-        QbUtils.getTree(immutableTree) as JsonGroup
+        QbUtils.getTree(immutableTree) as JsonGroup,
+        matchFormFields
       )
       setFields(
         matchFormFields.map((f) =>
