@@ -378,7 +378,7 @@ export function getQueryBuilderValue(
       if (typeof c === 'number') {
         const studyCriterion = eligibilityCriteria.find((ec) => ec.id === c)
         return studyCriterion
-          ? getQueryBuilderRule(studyCriterion, matchForm)
+          ? getQueryBuilderRule(studyCriterion, matchForm.fields)
           : null
       } else {
         return getQueryBuilderValue(c, eligibilityCriteria, matchForm)
@@ -403,8 +403,8 @@ export function queryBuilderValueToAlgorithm(
     children && Array.isArray(children)
       ? children
           .map((c) => {
-            if (c.type === 'rule') {
-              const criteriaId = parseInt(c.properties.field || '', 10)
+            if (c.type === 'rule' && typeof c.properties.field === 'string') {
+              const criteriaId = parseInt(c.properties.field, 10)
               return isNaN(criteriaId) ? 0 : criteriaId
             }
             return queryBuilderValueToAlgorithm(c as JsonGroup)
@@ -421,7 +421,7 @@ export function queryBuilderValueToAlgorithm(
 
 function getQueryBuilderRule(
   { id, fieldId, fieldValue, operator }: EligibilityCriterion,
-  { fields }: MatchFormConfig
+  fields: MatchFormFieldConfig[]
 ): JsonRule | null {
   const field = fields.find((f) => f.id === fieldId)
   if (!field) {
@@ -463,6 +463,26 @@ function getQueryBuilderOperator(
   }
 }
 
+function getComparisonOperator(operator: string): ComparisonOperator {
+  switch (operator) {
+    case 'greater_or_equal':
+      return 'gte'
+    case 'select_any_in':
+      return 'in'
+    case 'greater':
+      return 'gt'
+    case 'less_or_equal':
+      return 'lte'
+    case 'less':
+      return 'lt'
+    case 'select_not_equals':
+    case 'not_equal':
+      return 'ne'
+    default:
+      return 'eq'
+  }
+}
+
 function getOperatorString(comparisonOperator: ComparisonOperator): string {
   switch (comparisonOperator) {
     case 'gte':
@@ -489,6 +509,78 @@ function getValueString(fieldValue: any, field: MatchFormFieldConfig): string {
   return fieldValue
 }
 
+function getCriteriaBuilderFieldType(
+  type: MatchFormFieldConfig['type']
+): string {
+  switch (type) {
+    case 'radio':
+    case 'select':
+      return 'select'
+    case 'multiselect':
+    case 'checkbox':
+      return 'multiselect'
+    case 'age':
+    case 'number':
+      return 'number'
+    case 'text':
+      return 'text'
+  }
+}
+
+function getCriteriaBuilderFieldOperator(
+  type: MatchFormFieldConfig['type']
+): string[] {
+  switch (type) {
+    case 'radio':
+    case 'select':
+      return ['select_equals', 'select_not_equals']
+    case 'multiselect':
+    case 'checkbox':
+      return ['select_any_in']
+    case 'age':
+    case 'number':
+      return [
+        'equal',
+        'not_equal',
+        'greater',
+        'less',
+        'greater_or_equal',
+        'less_or_equal',
+      ]
+    case 'text':
+      return ['equal', 'not_equal']
+  }
+}
+
+export function getShowIfFields(
+  matchingFormFields: MatchFormFieldConfig[]
+): Fields {
+  const result: Fields = {}
+
+  matchingFormFields.forEach((f) => {
+    const isSelect = !!f.options?.length
+    const unitTextMatch = f.label?.match(/\(in\s(.+?)\)/)
+    const unitText = unitTextMatch ? unitTextMatch[0] : ''
+
+    result[f.id] = {
+      label: `${f.name} ${unitText}`,
+      type: getCriteriaBuilderFieldType(f.type),
+      operators: getCriteriaBuilderFieldOperator(f.type),
+      valueSources: ['value'],
+      fieldSettings: isSelect
+        ? {
+            listValues: f.options?.map((o) => ({
+              value: o.value,
+              title: o.label,
+            })),
+          }
+        : { min: 0 },
+    }
+  })
+
+  return result
+}
+
 export function getShowIfDetails(
   fields: MatchFormFieldConfig[],
   showIf: MatchFormFieldShowIfCondition
@@ -509,6 +601,68 @@ export function getShowIfDetails(
       }
     }),
   }
+}
+
+export function getShowIfInitValue(
+  { operator, criteria }: MatchFormFieldShowIfCondition,
+  fields: MatchFormFieldConfig[]
+): JsonGroup {
+  const result: JsonGroup = getInitQueryValue()
+  const children1: JsonRule[] = criteria
+    .map((c) =>
+      getQueryBuilderRule(
+        {
+          id: c.id,
+          fieldId: c.id,
+          fieldValue: c.value,
+          operator: c.operator,
+        },
+        fields
+      )
+    )
+    .filter(Boolean) as JsonRule[]
+  return {
+    ...result,
+    properties: {
+      conjunction: operator,
+    },
+    children1,
+  }
+}
+
+export function jsonGroupToShowIf(
+  jsonGroup: JsonGroup,
+  matchFormFields: MatchFormFieldConfig[]
+): MatchFormFieldShowIfCondition | undefined {
+  const children1 = jsonGroup.children1 as JsonRule[]
+  const criteria = children1
+    .filter(
+      (c) =>
+        c.properties.field &&
+        c.properties.operator &&
+        c.properties.value.filter(Boolean).length
+    )
+    .map((c) => {
+      const id = parseInt(c.properties.field as string)
+      const field = matchFormFields.find((f) => f.id === id)
+      const isNumeric = field?.type === 'number' || field?.type === 'age'
+      const unitTextMatch = field?.label?.match(/\(in\s(.+?)\)/)
+      const unit = unitTextMatch ? unitTextMatch[1] : 'none'
+      return {
+        id,
+        operator: getComparisonOperator(c.properties.operator as string),
+        value: c.properties.value[0].toString(),
+        is_numeric: isNumeric,
+        unit,
+        valueId: field?.options?.length ? c.properties.value[0] : undefined,
+      }
+    })
+  return criteria.length
+    ? {
+        operator: (jsonGroup.properties?.conjunction || 'AND') as 'AND' | 'OR',
+        criteria,
+      }
+    : undefined
 }
 
 export function publishMatchForm() {

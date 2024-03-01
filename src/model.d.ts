@@ -68,7 +68,14 @@ export type MatchFormFieldOption = {
 export type MatchFormFieldConfig = {
   id: number
   groupId: number
-  type: string
+  type:
+    | 'text'
+    | 'age'
+    | 'number'
+    | 'checkbox'
+    | 'radio'
+    | 'multiselect'
+    | 'select'
   name: string
   label?: string
   options?: MatchFormFieldOption[]
@@ -79,6 +86,9 @@ export type MatchFormFieldConfig = {
       id: MatchFormFieldConfig['id']
       operator: ComparisonOperator
       value: any
+      is_numeric?: boolean
+      unit?: string
+      valueId?: number | null
     }[]
   }
   relevant?: boolean
@@ -127,7 +137,7 @@ export type RegisterDocument = {
 }
 
 export type RegisterFormFieldConfig = {
-  type: string
+  type: MatchFormFieldConfig['type']
   name: string
   label?: string | React.ReactNode
   options?: { value: string; label: string }[]
@@ -173,4 +183,9 @@ export type EligibilityCriteriaInfo = {
   study_algorithm_engine_id?: number
   eligibility_criteria_id?: number
   id?: number
+}
+
+export type Unit = {
+  id: number
+  name: string
 }

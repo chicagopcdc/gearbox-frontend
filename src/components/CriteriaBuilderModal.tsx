@@ -129,12 +129,14 @@ export function CriteriaBuilderModal({
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchQueryBuilderState} />
           ) : (
-            <Query
-              {...queryBuilderState.config}
-              value={queryBuilderState.tree}
-              onChange={onChange}
-              renderBuilder={renderBuilder}
-            />
+            <div className="hide-op-and-value">
+              <Query
+                {...queryBuilderState.config}
+                value={queryBuilderState.tree}
+                onChange={onChange}
+                renderBuilder={renderBuilder}
+              />
+            </div>
           )}
         </div>
       </div>

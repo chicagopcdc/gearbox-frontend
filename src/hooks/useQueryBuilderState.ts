@@ -15,7 +15,7 @@ import {
 } from '../utils'
 import { getStudyVersionById } from '../api/studyVersions'
 
-interface QueryBuilderState {
+export interface QueryBuilderState {
   tree: ImmutableTree
   config: Config
 }

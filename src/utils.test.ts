@@ -87,20 +87,20 @@ const config: MatchFormConfig = {
       id: 0,
       name: 'field 0',
       groupId: 0,
-      type: '',
+      type: 'select',
       options: [
         { label: 'foo', value: 0 },
         { label: 'bar', value: 1 },
         { label: 'baz', value: 2 },
       ],
     },
-    { id: 1, name: 'field 1', groupId: 0, type: '' },
-    { id: 2, name: 'field 2', groupId: 0, type: '' },
+    { id: 1, name: 'field 1', groupId: 0, type: 'text' },
+    { id: 2, name: 'field 2', groupId: 0, type: 'text' },
     {
       id: 3,
       name: 'field 3',
       groupId: 0,
-      type: '',
+      type: 'select',
       options: [
         { label: 'Yes', value: 0 },
         { label: 'No', value: 1 },
@@ -553,7 +553,7 @@ describe('getIsFieldShowing', () => {
   test('for one criterion (in)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 0, operator: 'in', value: [1, 2] }],
+      criteria: [{ id: 0, operator: 'in', value: [1, 2], is_numeric: true }],
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: undefined }
 
@@ -563,7 +563,7 @@ describe('getIsFieldShowing', () => {
   test('for one criterion (gt)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 2, operator: 'gt', value: 1 }],
+      criteria: [{ id: 2, operator: 'gt', value: 1, is_numeric: true }],
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: 2 }
 
@@ -574,9 +574,9 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
       criteria: [
-        { id: 0, operator: 'in', value: [1, 2] },
-        { id: 1, operator: 'eq', value: true },
-        { id: 2, operator: 'gt', value: 1 },
+        { id: 0, operator: 'in', value: [1, 2], is_numeric: true },
+        { id: 1, operator: 'eq', value: true, is_numeric: false },
+        { id: 2, operator: 'gt', value: 1, is_numeric: true },
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
@@ -596,9 +596,9 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'AND',
       criteria: [
-        { id: 0, operator: 'in', value: [1, 2] },
-        { id: 1, operator: 'eq', value: true },
-        { id: 2, operator: 'gt', value: 1 },
+        { id: 0, operator: 'in', value: [1, 2], is_numeric: true },
+        { id: 1, operator: 'eq', value: true, is_numeric: false },
+        { id: 2, operator: 'gt', value: 1, is_numeric: true },
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
@@ -747,7 +747,7 @@ describe('getQueryBuilderConfig', () => {
       {
         id: 2,
         groupId: 1,
-        type: 'sex',
+        type: 'select',
         name: 'sex',
         options: [
           {
@@ -763,7 +763,7 @@ describe('getQueryBuilderConfig', () => {
       {
         id: 3,
         groupId: 1,
-        type: 'diagnose',
+        type: 'select',
         name: 'diagnose',
         options: [
           {
@@ -1033,31 +1033,31 @@ describe('getQueryBuilderValue', () => {
           id: 2,
           groupId: 1,
           name: 'sex',
-          type: 'sex',
+          type: 'select',
         },
         {
           id: 3,
           groupId: 1,
           name: 'med_condition',
-          type: 'med_condition',
+          type: 'select',
         },
         {
           id: 4,
           groupId: 1,
           name: 'past_med_condition',
-          type: 'past_med_condition',
+          type: 'select',
         },
         {
           id: 5,
           groupId: 1,
           name: 'blood_pressure',
-          type: 'blood_pressure',
+          type: 'number',
         },
         {
           id: 6,
           groupId: 1,
           name: 'body_fat',
-          type: 'body_fat',
+          type: 'number',
         },
       ],
     }
@@ -1085,14 +1085,21 @@ describe('getShowIfDetails', () => {
         label: 'What is the patient weight',
         showIf: {
           operator: 'AND',
-          criteria: [{ id: 2, operator: 'in', value: ['Med1', 'Med2'] }],
+          criteria: [
+            {
+              id: 2,
+              operator: 'in',
+              value: ['Med1', 'Med2'],
+              is_numeric: false,
+            },
+          ],
         },
       },
       {
         id: 2,
         groupId: 1,
         name: 'medications',
-        type: 'multipleselect',
+        type: 'multiselect',
         label: 'What is the patient medications',
         options: [
           {
@@ -1121,8 +1128,8 @@ describe('getShowIfDetails', () => {
         showIf: {
           operator: 'AND',
           criteria: [
-            { id: 1, operator: 'gt', value: 160 },
-            { id: 2, operator: 'eq', value: 'Med3' },
+            { id: 1, operator: 'gt', value: 160, is_numeric: true },
+            { id: 2, operator: 'eq', value: 'Med3', is_numeric: false },
           ],
         },
       },
