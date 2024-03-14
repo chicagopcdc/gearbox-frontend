@@ -1,4 +1,4 @@
-import type React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import {
   MoreHorizontal,
@@ -12,13 +12,10 @@ import MatchForm from '../components/MatchForm'
 import MatchResult from '../components/MatchResult'
 import type useGearboxData from '../hooks/useGearboxData'
 import useScreenSize from '../hooks/useScreenSize'
-import {
-  getDefaultValues,
-  getMatchDetails,
-  getMatchGroups,
-  markRelevantMatchFields,
-} from '../utils'
+import { getDefaultValues, markRelevantMatchFields } from '../utils'
 import { ErrorRetry } from '../components/ErrorRetry'
+import { getMatchDetails, getMatchGroups } from '../api/middleware'
+import { MatchDetails, MatchGroups } from '../model'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
@@ -31,14 +28,24 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   const screenSize = useScreenSize()
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [view, setView] = useState<'form' | 'result'>('form')
+  const [matchDetails, setMatchDetails] = useState<MatchDetails>(
+    {} as MatchDetails
+  )
+  const [matchGroups, setMatchGroups] = useState<MatchGroups>({
+    matched: [],
+    unmatched: [],
+    undetermined: [],
+  })
+  useEffect(() => {
+    getMatchDetails(matchInput).then(setMatchDetails)
+    getMatchGroups(matchInput).then(setMatchGroups)
+  }, [matchInput])
 
   if (status === 'sending') return <div>Loading...</div>
   if (status === 'error') {
     return ErrorRetry({ retry: fetchAll })
   }
 
-  const matchDetails = getMatchDetails(criteria, conditions, config, matchInput)
-  const matchGroups = getMatchGroups(matchDetails)
   const markedFields = markRelevantMatchFields({
     conditions,
     criteria,

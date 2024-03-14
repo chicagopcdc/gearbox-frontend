@@ -3,7 +3,6 @@ import type {
   EligibilityCriterion,
   MatchAlgorithm,
   MatchCondition,
-  MatchDetails,
   MatchFormConfig,
   MatchFormFieldConfig,
   MatchFormFieldShowIfCondition,
@@ -125,85 +124,6 @@ export const addMatchStatus = (
     criteria,
     isMatched: mergeStatus(algorithm.operator, hasStatus),
   }
-}
-
-export const getMatchDetails = (
-  criteria: EligibilityCriterion[],
-  matchConditions: MatchCondition[],
-  { fields }: MatchFormConfig,
-  values: MatchFormValues
-) => {
-  if (
-    criteria.length === 0 ||
-    matchConditions.length === 0 ||
-    fields === undefined
-  )
-    return {} as MatchDetails
-
-  const critById: { [id: number]: EligibilityCriterion } = {}
-  for (const crit of criteria) critById[crit.id] = crit
-
-  const fieldById: { [id: number]: MatchFormFieldConfig } = {}
-  for (const field of fields) fieldById[field.id] = field
-
-  const fieldOptionLabelMap = getFieldOptionLabelMap(fields)
-
-  const getMatchInfo = (critId: number) => {
-    const crit = critById[critId]
-    if (crit === undefined) return {} as MatchInfo
-
-    const field = fieldById[crit.fieldId]
-    if (field === undefined) return {} as MatchInfo
-
-    return {
-      fieldName: field.label || field.name,
-      fieldValue: crit.fieldValue,
-      isMatched:
-        values[crit.fieldId] === undefined ||
-        values[crit.fieldId] === '' ||
-        fieldOptionLabelMap[field.id]?.[values[crit.fieldId]] === 'Not sure'
-          ? undefined
-          : testCriterion(crit.operator, crit.fieldValue, values[crit.fieldId]),
-      fieldValueLabel: Array.isArray(crit.fieldValue)
-        ? crit.fieldValue.map((v) => fieldOptionLabelMap[field.id]?.[v])
-        : fieldOptionLabelMap[field.id]?.[crit.fieldValue],
-      operator: crit.operator,
-    }
-  }
-
-  const parseAlgorithm = (algorithm: MatchAlgorithm): MatchInfoAlgorithm => ({
-    operator: algorithm.operator,
-    criteria: algorithm.criteria.map((critIdOrAlgo) =>
-      typeof critIdOrAlgo === 'number'
-        ? getMatchInfo(critIdOrAlgo)
-        : parseAlgorithm(critIdOrAlgo)
-    ),
-  })
-
-  const matchDetails = {} as MatchDetails
-  for (const { studyId, algorithm } of matchConditions)
-    matchDetails[studyId] = addMatchStatus(parseAlgorithm(algorithm))
-
-  return matchDetails
-}
-
-export const getMatchGroups = (matchDetails: MatchDetails) => {
-  const matched: number[] = []
-  const undetermined: number[] = []
-  const unmatched: number[] = []
-  for (const [studyId, studyMatchDetail] of Object.entries(matchDetails))
-    switch (studyMatchDetail.isMatched) {
-      case true:
-        matched.push(parseInt(studyId))
-        break
-      case undefined:
-        undetermined.push(parseInt(studyId))
-        break
-      case false:
-        unmatched.push(parseInt(studyId))
-    }
-
-  return { matched, undetermined, unmatched }
 }
 
 export const getDefaultValues = ({ fields }: MatchFormConfig) => {
