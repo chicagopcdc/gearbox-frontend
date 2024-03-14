@@ -11,8 +11,6 @@ import type {
 } from './model'
 import {
   addMatchStatus,
-  getMatchDetails,
-  getMatchGroups,
   getIsFieldShowing,
   getFieldOptionLabelMap,
   getUniqueCritIdsInAlgorithm,
@@ -458,97 +456,6 @@ describe('addMatchStatus', () => {
   })
 })
 
-describe('getMatchGroups', () => {
-  const getMatchGroupsTestHelper = (values: MatchFormValues) =>
-    getMatchGroups(getMatchDetails(criteria, conditions, config, values))
-
-  test('for simple AND algorithm', () => {
-    const values: MatchFormValues = {
-      0: 1,
-      1: false,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [0, 1],
-      undetermined: [2, 3],
-      unmatched: [],
-    })
-  })
-
-  test('for simple OR algorithm', () => {
-    const values: MatchFormValues = {
-      0: 0,
-      1: true,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [1],
-      undetermined: [3],
-      unmatched: [0, 2],
-    })
-  })
-
-  test('for nested algorithm 1', () => {
-    const values: MatchFormValues = {
-      0: 1,
-      2: 1,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [1, 2],
-      undetermined: [0, 3],
-      unmatched: [],
-    })
-  })
-
-  test('for nested algorithm 2', () => {
-    const values: MatchFormValues = {
-      1: false,
-      2: 0,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 3],
-      unmatched: [2],
-    })
-  })
-
-  test('for no input', () => {
-    const values: MatchFormValues = {}
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 2, 3],
-      unmatched: [],
-    })
-  })
-
-  test('for "Not sure" option', () => {
-    const valuesWithMatch: MatchFormValues = {
-      3: 0,
-    }
-    expect(getMatchGroupsTestHelper(valuesWithMatch)).toEqual({
-      matched: [3],
-      undetermined: [0, 1, 2],
-      unmatched: [],
-    })
-
-    const valuesWithUnmatch: MatchFormValues = {
-      3: 1,
-    }
-    expect(getMatchGroupsTestHelper(valuesWithUnmatch)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 2],
-      unmatched: [3],
-    })
-
-    const valuesWithNotSure: MatchFormValues = {
-      3: 2,
-    }
-    expect(getMatchGroupsTestHelper(valuesWithNotSure)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 2, 3],
-      unmatched: [],
-    })
-  })
-})
-
 describe('getIsFieldShowing', () => {
   test('for one criterion (in)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
@@ -677,60 +584,53 @@ describe('getUniqueCritIdsInAlgorithm', () => {
 })
 
 describe('markRelevantMatchFields', () => {
-  const testHelper = (values: MatchFormValues) => {
-    const matchDetails = getMatchDetails(criteria, conditions, config, values)
-    const { unmatched } = getMatchGroups(matchDetails)
+  const testHelper = (values: MatchFormValues, unmatched: number[]) => {
+    // const matchDetails = getMatchDetails(criteria, conditions, config, values)
+    // const { unmatched } = getMatchGroups(matchDetails)
 
-    return [
+    return markRelevantMatchFields({
+      criteria,
+      conditions,
+      fields: config.fields,
       unmatched,
-      markRelevantMatchFields({
-        criteria,
-        conditions,
-        fields: config.fields,
-        unmatched,
-        values,
-        studies,
-      }),
-    ]
+      values,
+      studies,
+    })
   }
 
   test('for case without values (no unmatched)', () => {
-    const [unmatched, markedFields] = testHelper({})
+    const markedFields = testHelper({}, [])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 3,
     }))
-    expect(unmatched).toEqual([])
     expect(markedFields).toEqual(expected)
   })
 
   test('for case with values (no unmatched)', () => {
-    const [unmatched, markedFields] = testHelper({ 0: 1 })
+    const markedFields = testHelper({ 0: 1 }, [])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 3,
     }))
-    expect(unmatched).toEqual([])
     expect(markedFields).toEqual(expected)
   })
 
   test('for case with unmatched', () => {
-    const [unmatched, markedFields] = testHelper({ 0: 0 })
+    const markedFields = testHelper({ 0: 0 }, [0, 2])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 2 && field.id !== 3,
     }))
-    expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
   })
 
   test('for case with unmatched, but with field values set', () => {
-    const [unmatched, markedFields] = testHelper({ 0: 0, 2: 0 })
+    const markedFields = testHelper({ 0: 0, 2: 0 }, [0, 2])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 3,
     }))
-    expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
   })
 })

@@ -125,7 +125,9 @@ export type MatchInfoAlgorithm = {
 export type MatchDetails = {
   [studyId: Study['id']]: MatchInfoAlgorithm
 }
-
+export type MatchGroups = {
+  [group in 'matched' | 'undetermined' | 'unmatched']: number[]
+}
 export type RegisterDocument = {
   formatted: string
   id: number
