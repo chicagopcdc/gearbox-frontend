@@ -1,10 +1,10 @@
 import type { Study } from '../model'
 import { fetchGearbox, readCache, writeCache } from './utils'
 
-const LOCAL_STORAGE_KEY = 'gearbox:studies'
+const SESSION_STORAGE_KEY = 'gearbox:studies'
 
 export function getStudies() {
-  const cache = readCache<Study[]>(LOCAL_STORAGE_KEY)
+  const cache = readCache<Study[]>(SESSION_STORAGE_KEY)
   if (cache !== null) return Promise.resolve(cache)
 
   return fetchGearbox('/gearbox/studies')
@@ -21,7 +21,13 @@ export function getStudies() {
       )
     )
     .then((data) => {
-      writeCache(LOCAL_STORAGE_KEY, JSON.stringify(data))
+      writeCache(SESSION_STORAGE_KEY, JSON.stringify(data))
       return data
     })
+}
+
+export function buildStudies() {
+  return fetchGearbox('/gearbox/build-studies', {
+    method: 'POST',
+  })
 }

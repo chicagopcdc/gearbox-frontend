@@ -1,18 +1,16 @@
 import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
-import type { MatchDetails, Study } from '../model'
+import type { MatchDetails, MatchGroups, Study } from '../model'
 import TrialMatchInfo from './TrialMatchInfo'
 
 export type MatchResultProps = {
   matchDetails: MatchDetails
-  matchGroups: {
-    [group in 'matched' | 'undetermined' | 'unmatched']: number[]
-  }
+  matchGroups: MatchGroups
   studies: Study[]
 }
 
 function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
-  const { matched, undetermined, unmatched } = matchGroups
+  const { matched = [], undetermined = [], unmatched = [] } = matchGroups
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study
 

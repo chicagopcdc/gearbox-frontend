@@ -1,4 +1,4 @@
-export type LoadingStatus = 'not started' | 'loading' | 'success' | 'error'
+export type ApiStatus = 'not started' | 'sending' | 'success' | 'error'
 type Site = {
   id: number
   active: boolean
@@ -68,7 +68,14 @@ export type MatchFormFieldOption = {
 export type MatchFormFieldConfig = {
   id: number
   groupId: number
-  type: string
+  type:
+    | 'text'
+    | 'age'
+    | 'number'
+    | 'checkbox'
+    | 'radio'
+    | 'multiselect'
+    | 'select'
   name: string
   label?: string
   options?: MatchFormFieldOption[]
@@ -79,6 +86,9 @@ export type MatchFormFieldConfig = {
       id: MatchFormFieldConfig['id']
       operator: ComparisonOperator
       value: any
+      is_numeric?: boolean
+      unit?: string
+      valueId?: number | null
     }[]
   }
   relevant?: boolean
@@ -115,7 +125,9 @@ export type MatchInfoAlgorithm = {
 export type MatchDetails = {
   [studyId: Study['id']]: MatchInfoAlgorithm
 }
-
+export type MatchGroups = {
+  [group in 'matched' | 'undetermined' | 'unmatched']: number[]
+}
 export type RegisterDocument = {
   formatted: string
   id: number
@@ -127,7 +139,7 @@ export type RegisterDocument = {
 }
 
 export type RegisterFormFieldConfig = {
-  type: string
+  type: MatchFormFieldConfig['type']
   name: string
   label?: string | React.ReactNode
   options?: { value: string; label: string }[]
@@ -164,4 +176,18 @@ export type UserData = {
 export type UserInput = {
   id?: number
   results: { id: string; value: string }[]
+}
+
+export type EligibilityCriteriaInfo = {
+  create_date?: string
+  status: StudyVersionStatus
+  study_version_id?: number
+  study_algorithm_engine_id?: number
+  eligibility_criteria_id?: number
+  id?: number
+}
+
+export type Unit = {
+  id: number
+  name: string
 }

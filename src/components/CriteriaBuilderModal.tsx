@@ -124,17 +124,19 @@ export function CriteriaBuilderModal({
               </button>
             </div>
           </div>
-          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+          {loadingStatus === 'not started' || loadingStatus === 'sending' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchQueryBuilderState} />
           ) : (
-            <Query
-              {...queryBuilderState.config}
-              value={queryBuilderState.tree}
-              onChange={onChange}
-              renderBuilder={renderBuilder}
-            />
+            <div className="hide-op-and-value">
+              <Query
+                {...queryBuilderState.config}
+                value={queryBuilderState.tree}
+                onChange={onChange}
+                renderBuilder={renderBuilder}
+              />
+            </div>
           )}
         </div>
       </div>

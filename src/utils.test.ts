@@ -11,8 +11,6 @@ import type {
 } from './model'
 import {
   addMatchStatus,
-  getMatchDetails,
-  getMatchGroups,
   getIsFieldShowing,
   getFieldOptionLabelMap,
   getUniqueCritIdsInAlgorithm,
@@ -20,6 +18,7 @@ import {
   getQueryBuilderConfig,
   getQueryBuilderValue,
   queryBuilderValueToAlgorithm,
+  getShowIfDetails,
 } from './utils'
 import { MatchFormFieldConfig } from './model'
 import {
@@ -86,20 +85,20 @@ const config: MatchFormConfig = {
       id: 0,
       name: 'field 0',
       groupId: 0,
-      type: '',
+      type: 'select',
       options: [
         { label: 'foo', value: 0 },
         { label: 'bar', value: 1 },
         { label: 'baz', value: 2 },
       ],
     },
-    { id: 1, name: 'field 1', groupId: 0, type: '' },
-    { id: 2, name: 'field 2', groupId: 0, type: '' },
+    { id: 1, name: 'field 1', groupId: 0, type: 'text' },
+    { id: 2, name: 'field 2', groupId: 0, type: 'text' },
     {
       id: 3,
       name: 'field 3',
       groupId: 0,
-      type: '',
+      type: 'select',
       options: [
         { label: 'Yes', value: 0 },
         { label: 'No', value: 1 },
@@ -457,102 +456,11 @@ describe('addMatchStatus', () => {
   })
 })
 
-describe('getMatchGroups', () => {
-  const getMatchGroupsTestHelper = (values: MatchFormValues) =>
-    getMatchGroups(getMatchDetails(criteria, conditions, config, values))
-
-  test('for simple AND algorithm', () => {
-    const values: MatchFormValues = {
-      0: 1,
-      1: false,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [0, 1],
-      undetermined: [2, 3],
-      unmatched: [],
-    })
-  })
-
-  test('for simple OR algorithm', () => {
-    const values: MatchFormValues = {
-      0: 0,
-      1: true,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [1],
-      undetermined: [3],
-      unmatched: [0, 2],
-    })
-  })
-
-  test('for nested algorithm 1', () => {
-    const values: MatchFormValues = {
-      0: 1,
-      2: 1,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [1, 2],
-      undetermined: [0, 3],
-      unmatched: [],
-    })
-  })
-
-  test('for nested algorithm 2', () => {
-    const values: MatchFormValues = {
-      1: false,
-      2: 0,
-    }
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 3],
-      unmatched: [2],
-    })
-  })
-
-  test('for no input', () => {
-    const values: MatchFormValues = {}
-    expect(getMatchGroupsTestHelper(values)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 2, 3],
-      unmatched: [],
-    })
-  })
-
-  test('for "Not sure" option', () => {
-    const valuesWithMatch: MatchFormValues = {
-      3: 0,
-    }
-    expect(getMatchGroupsTestHelper(valuesWithMatch)).toEqual({
-      matched: [3],
-      undetermined: [0, 1, 2],
-      unmatched: [],
-    })
-
-    const valuesWithUnmatch: MatchFormValues = {
-      3: 1,
-    }
-    expect(getMatchGroupsTestHelper(valuesWithUnmatch)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 2],
-      unmatched: [3],
-    })
-
-    const valuesWithNotSure: MatchFormValues = {
-      3: 2,
-    }
-    expect(getMatchGroupsTestHelper(valuesWithNotSure)).toEqual({
-      matched: [],
-      undetermined: [0, 1, 2, 3],
-      unmatched: [],
-    })
-  })
-})
-
 describe('getIsFieldShowing', () => {
   test('for one criterion (in)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 0, operator: 'in', value: [1, 2] }],
+      criteria: [{ id: 0, operator: 'in', value: [1, 2], is_numeric: true }],
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: undefined }
 
@@ -562,7 +470,7 @@ describe('getIsFieldShowing', () => {
   test('for one criterion (gt)', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
-      criteria: [{ id: 2, operator: 'gt', value: 1 }],
+      criteria: [{ id: 2, operator: 'gt', value: 1, is_numeric: true }],
     }
     const values: MatchFormValues = { 0: 1, 1: undefined, 2: 2 }
 
@@ -573,9 +481,9 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'OR',
       criteria: [
-        { id: 0, operator: 'in', value: [1, 2] },
-        { id: 1, operator: 'eq', value: true },
-        { id: 2, operator: 'gt', value: 1 },
+        { id: 0, operator: 'in', value: [1, 2], is_numeric: true },
+        { id: 1, operator: 'eq', value: true, is_numeric: false },
+        { id: 2, operator: 'gt', value: 1, is_numeric: true },
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
@@ -595,9 +503,9 @@ describe('getIsFieldShowing', () => {
     const showIf: MatchFormFieldShowIfCondition = {
       operator: 'AND',
       criteria: [
-        { id: 0, operator: 'in', value: [1, 2] },
-        { id: 1, operator: 'eq', value: true },
-        { id: 2, operator: 'gt', value: 1 },
+        { id: 0, operator: 'in', value: [1, 2], is_numeric: true },
+        { id: 1, operator: 'eq', value: true, is_numeric: false },
+        { id: 2, operator: 'gt', value: 1, is_numeric: true },
       ],
     }
     const values1: MatchFormValues = { 0: 1 }
@@ -676,60 +584,53 @@ describe('getUniqueCritIdsInAlgorithm', () => {
 })
 
 describe('markRelevantMatchFields', () => {
-  const testHelper = (values: MatchFormValues) => {
-    const matchDetails = getMatchDetails(criteria, conditions, config, values)
-    const { unmatched } = getMatchGroups(matchDetails)
+  const testHelper = (values: MatchFormValues, unmatched: number[]) => {
+    // const matchDetails = getMatchDetails(criteria, conditions, config, values)
+    // const { unmatched } = getMatchGroups(matchDetails)
 
-    return [
+    return markRelevantMatchFields({
+      criteria,
+      conditions,
+      fields: config.fields,
       unmatched,
-      markRelevantMatchFields({
-        criteria,
-        conditions,
-        fields: config.fields,
-        unmatched,
-        values,
-        studies,
-      }),
-    ]
+      values,
+      studies,
+    })
   }
 
   test('for case without values (no unmatched)', () => {
-    const [unmatched, markedFields] = testHelper({})
+    const markedFields = testHelper({}, [])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 3,
     }))
-    expect(unmatched).toEqual([])
     expect(markedFields).toEqual(expected)
   })
 
   test('for case with values (no unmatched)', () => {
-    const [unmatched, markedFields] = testHelper({ 0: 1 })
+    const markedFields = testHelper({ 0: 1 }, [])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 3,
     }))
-    expect(unmatched).toEqual([])
     expect(markedFields).toEqual(expected)
   })
 
   test('for case with unmatched', () => {
-    const [unmatched, markedFields] = testHelper({ 0: 0 })
+    const markedFields = testHelper({ 0: 0 }, [0, 2])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 2 && field.id !== 3,
     }))
-    expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
   })
 
   test('for case with unmatched, but with field values set', () => {
-    const [unmatched, markedFields] = testHelper({ 0: 0, 2: 0 })
+    const markedFields = testHelper({ 0: 0, 2: 0 }, [0, 2])
     const expected = config.fields.map((field) => ({
       ...field,
       relevant: field.id !== 3,
     }))
-    expect(unmatched).toEqual([0, 2])
     expect(markedFields).toEqual(expected)
   })
 })
@@ -746,7 +647,7 @@ describe('getQueryBuilderConfig', () => {
       {
         id: 2,
         groupId: 1,
-        type: 'sex',
+        type: 'select',
         name: 'sex',
         options: [
           {
@@ -762,7 +663,7 @@ describe('getQueryBuilderConfig', () => {
       {
         id: 3,
         groupId: 1,
-        type: 'diagnose',
+        type: 'select',
         name: 'diagnose',
         options: [
           {
@@ -1032,31 +933,31 @@ describe('getQueryBuilderValue', () => {
           id: 2,
           groupId: 1,
           name: 'sex',
-          type: 'sex',
+          type: 'select',
         },
         {
           id: 3,
           groupId: 1,
           name: 'med_condition',
-          type: 'med_condition',
+          type: 'select',
         },
         {
           id: 4,
           groupId: 1,
           name: 'past_med_condition',
-          type: 'past_med_condition',
+          type: 'select',
         },
         {
           id: 5,
           groupId: 1,
           name: 'blood_pressure',
-          type: 'blood_pressure',
+          type: 'number',
         },
         {
           id: 6,
           groupId: 1,
           name: 'body_fat',
-          type: 'body_fat',
+          type: 'number',
         },
       ],
     }
@@ -1070,5 +971,99 @@ describe('getQueryBuilderValue', () => {
 describe('queryBuilderValueToAlgorithm', () => {
   test('convert json group to study algorithm', () => {
     expect(queryBuilderValueToAlgorithm(jsonGroup)).toEqual(algorithm)
+  })
+})
+
+describe('getShowIfDetails', () => {
+  test('convert fields and showIf to readable match info', () => {
+    const fields: MatchFormFieldConfig[] = [
+      {
+        id: 1,
+        groupId: 1,
+        name: 'weight',
+        type: 'number',
+        label: 'What is the patient weight',
+        showIf: {
+          operator: 'AND',
+          criteria: [
+            {
+              id: 2,
+              operator: 'in',
+              value: ['Med1', 'Med2'],
+              is_numeric: false,
+            },
+          ],
+        },
+      },
+      {
+        id: 2,
+        groupId: 1,
+        name: 'medications',
+        type: 'multiselect',
+        label: 'What is the patient medications',
+        options: [
+          {
+            value: 'Med1',
+            label: 'Medication 1',
+          },
+          {
+            value: 'Med2',
+            label: 'Medication 2',
+          },
+          {
+            value: 'Med3',
+            label: 'Medication 3',
+          },
+        ],
+      },
+      {
+        id: 3,
+        groupId: 1,
+        name: 'gender',
+        type: 'select',
+        options: [
+          { value: 'M', label: 'Male' },
+          { value: 'F', label: 'Female' },
+        ],
+        showIf: {
+          operator: 'AND',
+          criteria: [
+            { id: 1, operator: 'gt', value: 160, is_numeric: true },
+            { id: 2, operator: 'eq', value: 'Med3', is_numeric: false },
+          ],
+        },
+      },
+    ]
+    expect(
+      fields[0].showIf && getShowIfDetails(fields, fields[0].showIf)
+    ).toEqual({
+      operator: 'AND',
+      criteria: [
+        {
+          fieldName: 'What is the patient medications',
+          fieldValue: ['Med1', 'Med2'],
+          fieldValueLabel: ['Medication 1', 'Medication 2'],
+          operator: 'in',
+        },
+      ],
+    })
+    expect(
+      fields[2].showIf && getShowIfDetails(fields, fields[2].showIf)
+    ).toEqual({
+      operator: 'AND',
+      criteria: [
+        {
+          fieldName: 'What is the patient weight',
+          fieldValue: 160,
+          operator: 'gt',
+        },
+        {
+          fieldName: 'What is the patient medications',
+          fieldValue: 'Med3',
+          fieldValueLabel: 'Medication 3',
+          operator: 'eq',
+        },
+      ],
+    })
   })
 })

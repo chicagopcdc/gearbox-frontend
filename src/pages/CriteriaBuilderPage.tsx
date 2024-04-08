@@ -1,5 +1,4 @@
 import '@react-awesome-query-builder/ui/css/compact_styles.css'
-import './CriteriaBuilderPage.css'
 import React, { useState } from 'react'
 import { MatchingPageProps } from './MatchingPage'
 import TrialCard from '../components/TrialCard'
@@ -9,6 +8,7 @@ import 'react-tabs/style/react-tabs.css'
 import { StudyVersionStatus } from '../model'
 import { useStudyVersions } from '../hooks/useStudyVersions'
 import { ErrorRetry } from '../components/ErrorRetry'
+import { PublishMatchForm } from '../components/PublishMatchForm'
 
 type TabType = {
   id: StudyVersionStatus
@@ -34,9 +34,8 @@ export function CriteriaBuilderPage({
   const [currentTab, setCurrentTab] = useState(0)
   const handleTabSelect = (index: number) => setCurrentTab(index)
 
-  const [studyVersions, loadingStatus, fetchStudyVersion] = useStudyVersions(
-    tabs[currentTab].id
-  )
+  const [studyVersions, setStudyVersions, loadingStatus, fetchStudyVersion] =
+    useStudyVersions(tabs[currentTab].id)
 
   return (
     <Tabs tabIndex={currentTab} onSelect={handleTabSelect}>
@@ -47,19 +46,24 @@ export function CriteriaBuilderPage({
       </TabList>
       {tabs.map((tab) => (
         <TabPanel key={tab.id}>
-          {loadingStatus === 'not started' || loadingStatus === 'loading' ? (
+          {loadingStatus === 'not started' || loadingStatus === 'sending' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
             <ErrorRetry retry={fetchStudyVersion} />
           ) : (
-            studyVersions.map((sv) => (
-              <TrialCard study={sv.study} key={sv.id}>
-                <CriteriaBuilder
-                  studyVersion={sv}
-                  gearboxState={gearboxState}
-                />
-              </TrialCard>
-            ))
+            <>
+              <PublishMatchForm />
+              {studyVersions.map((sv) => (
+                <TrialCard study={sv.study} key={sv.id}>
+                  <CriteriaBuilder
+                    studyVersions={studyVersions}
+                    setStudyVersions={setStudyVersions}
+                    studyVersion={sv}
+                    gearboxState={gearboxState}
+                  />
+                </TrialCard>
+              ))}
+            </>
           )}
         </TabPanel>
       ))}

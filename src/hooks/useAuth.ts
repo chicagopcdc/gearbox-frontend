@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { LoadingStatus, RegisterInput, UserData } from '../model'
+import { ApiStatus, RegisterInput, UserData } from '../model'
 import {
   fetchUser,
   keepUserSessionAlive,
@@ -13,18 +13,17 @@ export default function useAuth(): {
   isRegistered: boolean
   hasDocsToBeReviewed: boolean
   user?: UserData
-  loadingStatus: LoadingStatus
+  loadingStatus: ApiStatus
   register: (input: RegisterInput) => Promise<void>
   reviewDocuments: (status: RegisterInput['reviewStatus']) => Promise<void>
   signout: () => void
   fetchAuth: () => void
 } {
   const [userData, setUserData] = useState<UserData>()
-  const [loadingStatus, setLoadingStatus] =
-    useState<LoadingStatus>('not started')
+  const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
 
   const fetchAuth = () => {
-    setLoadingStatus('loading')
+    setLoadingStatus('sending')
     fetchUser()
       .then((ud) => {
         setUserData(ud)

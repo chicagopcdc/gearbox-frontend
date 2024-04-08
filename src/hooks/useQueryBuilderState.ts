@@ -1,4 +1,4 @@
-import { LoadingStatus, MatchFormConfig, StudyVersion } from '../model'
+import { ApiStatus, MatchFormConfig, StudyVersion } from '../model'
 import {
   Config,
   ImmutableTree,
@@ -15,7 +15,7 @@ import {
 } from '../utils'
 import { getStudyVersionById } from '../api/studyVersions'
 
-interface QueryBuilderState {
+export interface QueryBuilderState {
   tree: ImmutableTree
   config: Config
 }
@@ -26,7 +26,7 @@ export function useQueryBuilderState(
 ): [
   StudyVersion | null,
   QueryBuilderState,
-  LoadingStatus,
+  ApiStatus,
   () => void,
   (immutableTree: ImmutableTree, config: Config) => void
 ] {
@@ -40,12 +40,11 @@ export function useQueryBuilderState(
     }
   )
 
-  const [loadingStatus, setLoadingStatus] =
-    useState<LoadingStatus>('not started')
+  const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
 
   const [studyVersion, setStudyVersion] = useState<StudyVersion | null>(null)
   const fetchQueryBuilderState = (svId: number, mf: MatchFormConfig) => {
-    setLoadingStatus('loading')
+    setLoadingStatus('sending')
     getStudyVersionById(svId)
       .then((sv) => {
         setStudyVersion(sv)

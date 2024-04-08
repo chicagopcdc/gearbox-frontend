@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react'
 import { getStudyVersions } from '../api/studyVersions'
-import { LoadingStatus, StudyVersion, StudyVersionStatus } from '../model'
+import { ApiStatus, StudyVersion, StudyVersionStatus } from '../model'
 
 export function useStudyVersions(
   status: StudyVersionStatus
-): [StudyVersion[], LoadingStatus, () => void] {
+): [StudyVersion[], (svs: StudyVersion[]) => void, ApiStatus, () => void] {
   const [studyVersions, setStudyVersions] = useState<StudyVersion[]>([])
-  const [loadingStatus, setLoadingStatus] =
-    useState<LoadingStatus>('not started')
+  const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
 
   const fetchStudyVersions = (studyVersionStatus: StudyVersionStatus) => {
-    setLoadingStatus('loading')
+    setLoadingStatus('sending')
     getStudyVersions(studyVersionStatus)
       .then((studyVersions) => {
         setStudyVersions(studyVersions)
@@ -25,5 +24,10 @@ export function useStudyVersions(
     fetchStudyVersions(status)
   }, [status])
 
-  return [studyVersions, loadingStatus, () => fetchStudyVersions(status)]
+  return [
+    studyVersions,
+    setStudyVersions,
+    loadingStatus,
+    () => fetchStudyVersions(status),
+  ]
 }
