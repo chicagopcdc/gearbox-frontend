@@ -10,7 +10,7 @@ export type MatchResultProps = {
 }
 
 function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
-  const { matched, undetermined, unmatched } = matchGroups
+  const { matched = [], undetermined = [], unmatched = [] } = matchGroups
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study
 
