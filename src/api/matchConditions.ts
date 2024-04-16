@@ -20,5 +20,9 @@ export function getMatchConditions() {
 export function buildMatchConditions() {
   return fetchGearbox('/gearbox/build-match-conditions', {
     method: 'POST',
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error('build match conditions failed')
+    }
   })
 }
