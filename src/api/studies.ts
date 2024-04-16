@@ -29,5 +29,9 @@ export function getStudies() {
 export function buildStudies() {
   return fetchGearbox('/gearbox/build-studies', {
     method: 'POST',
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error('build studies failed')
+    }
   })
 }

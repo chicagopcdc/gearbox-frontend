@@ -26,5 +26,9 @@ export function getEligibilityCriteriaById(id: number) {
 export function buildEligibilityCriteria() {
   return fetchGearbox('/gearbox/build-eligibility-criteria', {
     method: 'POST',
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error('build eligibility criteria failed')
+    }
   })
 }

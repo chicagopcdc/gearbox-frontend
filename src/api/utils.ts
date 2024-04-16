@@ -20,8 +20,6 @@ export function fetchGearbox(input: RequestInfo, init: RequestInit = {}) {
       if (status === 401 || status === 403) {
         localStorage.clear()
         logout()
-      } else if (!res.ok) {
-        throw new Error('The API request failed!')
       }
     }
     return res
