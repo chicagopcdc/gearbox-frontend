@@ -48,14 +48,6 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     setCriteria([])
     setStudies([])
   }
-  // const updateMatchInput = (newMatchInput: MatchFormValues) => {
-  //   if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
-  //     setMatchInput(newMatchInput)
-  //     postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
-  //       if (userInputId === undefined) setUserInputId(latestUserInputId)
-  //     })
-  //   }
-  // }
 
   useEffect(() => {
     if (auth.isRegistered) fetchAll() // load data on login
