@@ -27,6 +27,8 @@ import {
   getLatestUserInput,
   postUserInput,
 } from '../api/userInput'
+import { useModal } from '../hooks/useModal'
+import { UserInputModal } from '../components/UserInputModal'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
@@ -53,6 +55,8 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   })
   const [markedFields, setMarkedFields] = useState<MatchFormFieldConfig[]>([])
   const [showAllUserInput, setShowAllUserInput] = useState<boolean>(true)
+  const [showModal, openModal, closeModal] = useModal()
+
   useEffect(() => {
     getAllUserInput()
       .then(setAllUserInput)
@@ -330,7 +334,11 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
             <label htmlFor="userInputSelect" className="mb-1">
               User Input
             </label>
-            <select id="userInputSelect" onChange={loadUserInput}>
+            <select
+              id="userInputSelect"
+              onChange={loadUserInput}
+              defaultValue=""
+            >
               <option disabled value="">
                 Select One
               </option>
@@ -340,9 +348,12 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
                 </option>
               ))}
             </select>
-            <Button otherClassName="mt-4 w-1/4">Create</Button>
+            <Button otherClassName="mt-4 w-1/4" onClick={openModal}>
+              Create
+            </Button>
           </div>
         )}
+        {showModal && <UserInputModal closeModal={closeModal} />}
         <div className="px-4 lg:px-8 pb-4">
           <MatchForm
             {...{

@@ -34,7 +34,7 @@ export function postUserInput(
     body: JSON.stringify({
       data,
       id: currentUserInput.id,
-      name: currentUserInput.name,
+      name: currentUserInput.name || undefined,
     }),
   })
     .then((res) => res.json() as Promise<UserInputApi>)
