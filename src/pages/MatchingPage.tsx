@@ -349,7 +349,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
               ))}
             </select>
             <Button otherClassName="mt-4 w-1/4" onClick={openModal}>
-              Create
+              Add New User
             </Button>
           </div>
         )}
