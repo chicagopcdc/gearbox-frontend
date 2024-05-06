@@ -4,14 +4,12 @@ import type {
   EligibilityCriterion,
   MatchCondition,
   MatchFormConfig,
-  MatchFormValues,
   Study,
 } from '../model'
 import { getEligibilityCriteria } from '../api/eligibilityCriteria'
 import { getMatchConditions } from '../api/matchConditions'
 import { getMatchFormConfig } from '../api/matchFormConfig'
 import { getStudies } from '../api/studies'
-import { getLatestUserInput, postUserInput } from '../api/userInput'
 import type useAuth from './useAuth'
 
 export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
@@ -21,11 +19,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     fields: [],
   } as MatchFormConfig)
   const [criteria, setCriteria] = useState([] as EligibilityCriterion[])
-  const [matchInput, setMatchInput] = useState({} as MatchFormValues)
   const [studies, setStudies] = useState([] as Study[])
-  const [userInputId, setUserInputId] = useState(
-    undefined as number | undefined
-  )
   const [status, setStatus] = useState<ApiStatus>('not started')
 
   const fetchAll = () => {
@@ -35,15 +29,12 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
       getMatchFormConfig(),
       getEligibilityCriteria(),
       getStudies(),
-      getLatestUserInput(),
     ])
-      .then(([conditions, config, criteria, studies, latestUserInput]) => {
+      .then(([conditions, config, criteria, studies]) => {
         setConditions(conditions)
         setConfig(config)
         setCriteria(criteria)
-        setMatchInput(latestUserInput.values)
         setStudies(studies)
-        setUserInputId(latestUserInput.id)
         setStatus('not started')
       })
       .catch((err) => {
@@ -55,17 +46,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     setConditions([])
     setConfig({ groups: [], fields: [] } as MatchFormConfig)
     setCriteria([])
-    setMatchInput({})
     setStudies([])
-    setUserInputId(undefined)
-  }
-  const updateMatchInput = (newMatchInput: MatchFormValues) => {
-    if (JSON.stringify(newMatchInput) !== JSON.stringify(matchInput)) {
-      setMatchInput(newMatchInput)
-      postUserInput(newMatchInput, userInputId).then((latestUserInputId) => {
-        if (userInputId === undefined) setUserInputId(latestUserInputId)
-      })
-    }
   }
 
   useEffect(() => {
@@ -76,13 +57,11 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   return {
     action: {
       fetchAll,
-      updateMatchInput,
     },
     state: {
       conditions,
       config,
       criteria,
-      matchInput,
       studies,
     },
     status,

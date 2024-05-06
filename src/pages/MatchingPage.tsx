@@ -15,13 +15,26 @@ import useScreenSize from '../hooks/useScreenSize'
 import { getDefaultValues, markRelevantMatchFields } from '../utils'
 import { ErrorRetry } from '../components/ErrorRetry'
 import { getMatchDetails, getMatchGroups } from '../api/middleware'
-import { MatchDetails, MatchGroups } from '../model'
+import {
+  MatchDetails,
+  MatchFormFieldConfig,
+  MatchFormValues,
+  MatchGroups,
+  UserInputUi,
+} from '../model'
+import {
+  getAllUserInput,
+  getLatestUserInput,
+  postUserInput,
+} from '../api/userInput'
+import { useModal } from '../hooks/useModal'
+import { UserInputModal } from '../components/UserInputModal'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
 function MatchingPage({ action, state, status }: MatchingPageProps) {
-  const { fetchAll, updateMatchInput } = action
-  const { conditions, config, criteria, studies, matchInput } = state
+  const { fetchAll } = action
+  const { conditions, config, criteria, studies } = state
 
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(true)
@@ -36,24 +49,74 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
     unmatched: [],
     undetermined: [],
   })
+  const [allUserInput, setAllUserInput] = useState<UserInputUi[]>([])
+  const [currentUserInput, setCurrentUserInput] = useState<UserInputUi>({
+    values: {},
+  })
+  const [markedFields, setMarkedFields] = useState<MatchFormFieldConfig[]>([])
+  const [showAllUserInput, setShowAllUserInput] = useState<boolean>(true)
+  const [showModal, openModal, closeModal] = useModal()
+
   useEffect(() => {
+    getAllUserInput()
+      .then(setAllUserInput)
+      .catch(() => {
+        setShowAllUserInput(false)
+        getLatestUserInput().then(setCurrentUserInput)
+      })
+  }, [])
+
+  useEffect(() => {
+    const matchInput = currentUserInput.values
     getMatchDetails(matchInput).then(setMatchDetails)
     getMatchGroups(matchInput).then(setMatchGroups)
-  }, [matchInput])
+  }, [currentUserInput])
 
+  useEffect(() => {
+    setMarkedFields(
+      markRelevantMatchFields({
+        conditions,
+        criteria,
+        fields: config.fields,
+        unmatched: matchGroups.unmatched,
+        values: currentUserInput.values,
+        studies: studies,
+      })
+    )
+  }, [
+    conditions,
+    criteria,
+    config.fields,
+    matchGroups.unmatched,
+    currentUserInput,
+    studies,
+  ])
   if (status === 'sending') return <div>Loading...</div>
   if (status === 'error') {
     return ErrorRetry({ retry: fetchAll })
   }
 
-  const markedFields = markRelevantMatchFields({
-    conditions,
-    criteria,
-    fields: config.fields,
-    unmatched: matchGroups.unmatched,
-    values: matchInput,
-    studies: studies,
-  })
+  function updateMatchInput(newMatchedInput: MatchFormValues) {
+    if (
+      JSON.stringify(newMatchedInput) !==
+      JSON.stringify(currentUserInput.values)
+    ) {
+      postUserInput(newMatchedInput, currentUserInput).then((res) => {
+        setCurrentUserInput(res)
+        if (showAllUserInput) {
+          setAllUserInput(
+            allUserInput.map((u) => {
+              if (u.id === res.id) {
+                return res
+              } else {
+                return u
+              }
+            })
+          )
+        }
+      })
+    }
+  }
 
   function handleReset() {
     updateMatchInput(getDefaultValues(config))
@@ -70,6 +133,15 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   function handleFormOptionsBlur(e: React.FocusEvent) {
     if (showFormOptions && !e.currentTarget.contains(e.relatedTarget))
       setShowFormOptions(false)
+  }
+
+  function loadUserInput(e: React.ChangeEvent<HTMLSelectElement>) {
+    const currentUserInput = allUserInput.find(
+      (userInput) => userInput.id === +e.target.value
+    )
+    if (currentUserInput) {
+      setCurrentUserInput(currentUserInput)
+    }
   }
 
   return screenSize.smAndDown ? (
@@ -171,7 +243,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
         <MatchForm
           {...{
             config: { groups: config.groups, fields: markedFields },
-            matchInput,
+            matchInput: currentUserInput.values,
             isFilterActive,
             updateMatchInput,
             setIsUpdating,
@@ -257,11 +329,36 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
             )}
           </div>
         </h1>
+        {showAllUserInput && (
+          <div className="flex flex-col px-4 lg:px-8 pt-4">
+            <label htmlFor="userInputSelect" className="mb-1">
+              User Input
+            </label>
+            <select
+              id="userInputSelect"
+              onChange={loadUserInput}
+              defaultValue=""
+            >
+              <option disabled value="">
+                Select One
+              </option>
+              {allUserInput.map((userInput) => (
+                <option key={userInput.id} value={userInput.id}>
+                  {userInput.name}
+                </option>
+              ))}
+            </select>
+            <Button otherClassName="mt-4 w-1/4" onClick={openModal}>
+              Add New User
+            </Button>
+          </div>
+        )}
+        {showModal && <UserInputModal closeModal={closeModal} />}
         <div className="px-4 lg:px-8 pb-4">
           <MatchForm
             {...{
               config: { groups: config.groups, fields: markedFields },
-              matchInput,
+              matchInput: currentUserInput.values,
               isFilterActive,
               updateMatchInput,
               setIsUpdating,
