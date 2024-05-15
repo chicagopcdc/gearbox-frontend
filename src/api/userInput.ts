@@ -20,7 +20,8 @@ export function getLatestUserInput(): Promise<UserInputUi> {
 
 export function postUserInput(
   values: MatchFormValues,
-  currentUserInput: UserInputUi
+  id?: number,
+  name?: string
 ): Promise<UserInputUi> {
   const data = Object.keys(values).reduce((acc, id) => {
     const value = values[Number(id)]
@@ -33,8 +34,8 @@ export function postUserInput(
     method: 'POST',
     body: JSON.stringify({
       data,
-      id: currentUserInput.id,
-      name: currentUserInput.name || undefined,
+      id,
+      name,
     }),
   })
     .then((res) => res.json() as Promise<UserInputApi>)
@@ -47,7 +48,9 @@ export function postUserInput(
 export function getAllUserInput(): Promise<UserInputUi[]> {
   return fetchGearbox('/gearbox/user-input/all')
     .then((res) => {
-      if (!res.ok) {
+      if (res.status === 404) {
+        return Promise.resolve([] as UserInputApi[])
+      } else if (!res.ok) {
         throw new Error('Failed to get all user input')
       }
       return res.json() as Promise<UserInputApi[]>

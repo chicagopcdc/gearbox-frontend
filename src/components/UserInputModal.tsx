@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { XCircle } from 'react-feather'
 import Button from './Inputs/Button'
-import TextField from './Inputs/TextField'
 
-export function UserInputModal({ closeModal }: { closeModal: () => void }) {
+export function UserInputModal({
+  closeModal,
+  createMatchInput,
+}: {
+  closeModal: () => void
+  createMatchInput: (name?: string) => void
+}) {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  function createUserInput(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const userInputName = inputRef.current?.value
+    if (userInputName) {
+      createMatchInput(userInputName)
+    }
+    closeModal()
+  }
+
   return (
     <div
       id="user-input-modal"
@@ -33,8 +49,13 @@ export function UserInputModal({ closeModal }: { closeModal: () => void }) {
               <XCircle className="inline" />
             </button>
           </div>
-          <form>
-            <TextField {...{ type: 'text', label: 'User Input Name: ' }} />
+          <form onSubmit={createUserInput}>
+            <div className="flex flex-col">
+              <label className="mb-1" htmlFor="userInputName">
+                User Input Name:
+              </label>
+              <input type="text" id="userInputName" ref={inputRef} />
+            </div>
             <Button type="submit" otherClassName="mt-4">
               Save
             </Button>

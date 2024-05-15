@@ -60,7 +60,8 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   useEffect(() => {
     getAllUserInput()
       .then(setAllUserInput)
-      .catch(() => {
+      .catch((e) => {
+        console.error(e)
         setShowAllUserInput(false)
         getLatestUserInput().then(setCurrentUserInput)
       })
@@ -101,7 +102,11 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
       JSON.stringify(newMatchedInput) !==
       JSON.stringify(currentUserInput.values)
     ) {
-      postUserInput(newMatchedInput, currentUserInput).then((res) => {
+      postUserInput(
+        newMatchedInput,
+        currentUserInput.id,
+        currentUserInput.name
+      ).then((res) => {
         setCurrentUserInput(res)
         if (showAllUserInput) {
           setAllUserInput(
@@ -116,6 +121,15 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
         }
       })
     }
+  }
+
+  function createMatchInput(name?: string) {
+    postUserInput({}, undefined, name).then((res) => {
+      setCurrentUserInput(res)
+      if (showAllUserInput) {
+        setAllUserInput([...allUserInput, res])
+      }
+    })
   }
 
   function handleReset() {
@@ -337,23 +351,30 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
             <select
               id="userInputSelect"
               onChange={loadUserInput}
-              defaultValue=""
+              value={currentUserInput.id || ''}
             >
               <option disabled value="">
                 Select One
               </option>
-              {allUserInput.map((userInput) => (
-                <option key={userInput.id} value={userInput.id}>
-                  {userInput.name}
-                </option>
-              ))}
+              {allUserInput
+                .filter((userInput) => !!userInput.name)
+                .map((userInput) => (
+                  <option key={userInput.id} value={userInput.id}>
+                    {userInput.name}
+                  </option>
+                ))}
             </select>
-            <Button otherClassName="mt-4 w-1/4" onClick={openModal}>
-              Add New User
+            <Button otherClassName="mt-4 w-1/2" onClick={openModal}>
+              Add New User Input
             </Button>
           </div>
         )}
-        {showModal && <UserInputModal closeModal={closeModal} />}
+        {showModal && (
+          <UserInputModal
+            closeModal={closeModal}
+            createMatchInput={createMatchInput}
+          />
+        )}
         <div className="px-4 lg:px-8 pb-4">
           <MatchForm
             {...{
