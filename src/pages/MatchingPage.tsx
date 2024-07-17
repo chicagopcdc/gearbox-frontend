@@ -32,9 +32,14 @@ import { UserInputModal } from '../components/UserInputModal'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
-function MatchingPage({ action, state, status }: MatchingPageProps) {
+function MatchingPage({
+  action,
+  state,
+  status,
+  importantQuestionsConfig,
+}: MatchingPageProps) {
   const { fetchAll } = action
-  const { conditions, config, criteria, studies } = state
+  const { conditions, config, criteria, studies } = state //Add
 
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(true)
@@ -261,6 +266,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
             isFilterActive,
             updateMatchInput,
             setIsUpdating,
+            importantQuestionsConfig,
           }}
         />
       </section>
@@ -383,6 +389,7 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
               isFilterActive,
               updateMatchInput,
               setIsUpdating,
+              importantQuestionsConfig,
             }}
           />
         </div>

@@ -155,5 +155,6 @@ export const defaultView: React.FC = () => (
     isFilterActive={false}
     updateMatchInput={action('updateMatchInput')}
     setIsUpdating={action('isUpdating')}
+    importantQuestionsConfig={{ groups: [] }}
   />
 )

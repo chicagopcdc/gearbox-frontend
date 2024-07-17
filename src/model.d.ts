@@ -59,6 +59,17 @@ export type MatchFormGroupConfig = {
   name: string
 }
 
+//Add
+export type ImportantQuestionGroupConfig = {
+  id: number
+  name: string
+}
+
+//Add
+export type ImportantQuestionConfig = {
+  groups: ImportantQuestionGroupConfig[]
+}
+
 export type MatchFormFieldOption = {
   value: any
   label: string
