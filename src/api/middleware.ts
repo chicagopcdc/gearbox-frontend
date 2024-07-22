@@ -20,3 +20,9 @@ export function getMatchDetails(
 
   return fetchGearbox(url).then((res) => res.json() as Promise<MatchDetails>)
 }
+
+export function getVersion(): Promise<string> {
+  const url = `${baseUrl}/_version`
+
+  return fetchGearbox(url).then((res) => res.json() as Promise<string>)
+}

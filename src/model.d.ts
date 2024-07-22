@@ -173,9 +173,16 @@ export type UserData = {
   [key: string]: any
 }
 
-export type UserInput = {
+export type UserInputApi = {
   id?: number
   results: { id: string; value: string }[]
+  name?: string | null
+}
+
+export type UserInputUi = {
+  values: MatchFormValues
+  id?: number
+  name?: string
 }
 
 export type EligibilityCriteriaInfo = {

@@ -1,6 +1,8 @@
 import { User } from 'react-feather'
 import Button from './Inputs/Button'
 import LinkExternal from './LinkExternal'
+import { useEffect, useState } from 'react'
+import { getVersion } from '../api/middleware'
 
 function joinClassNames(...args: string[]) {
   return args.filter(Boolean).join(' ')
@@ -43,6 +45,12 @@ export function UserActionCard({
   username,
   onLogout,
 }: UserActionCardProps) {
+  const [middlewareVersion, setMiddlewareVersion] = useState<string>('')
+
+  useEffect(() => {
+    getVersion().then(setMiddlewareVersion)
+  }, [])
+
   return (
     <div
       className={joinClassNames(
@@ -70,6 +78,9 @@ export function UserActionCard({
       </ul>
       <p className="italic text-xs">
         UI version: {process.env.REACT_APP_VERSION}
+      </p>
+      <p className="italic text-xs">
+        Gearbox Middleware version: {middlewareVersion}
       </p>
     </div>
   )
