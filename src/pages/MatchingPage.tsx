@@ -58,13 +58,22 @@ function MatchingPage({ action, state, status }: MatchingPageProps) {
   const [showModal, openModal, closeModal] = useModal()
 
   useEffect(() => {
-    getAllUserInput()
-      .then(setAllUserInput)
-      .catch((e) => {
+    const fetchData = async () => {
+      try {
+        if (process.env.ENABLE_PHI) {
+          const allUserInput = await getAllUserInput()
+          setAllUserInput(allUserInput)
+          setShowAllUserInput(true)
+        } else {
+          const latestUserInput = await getLatestUserInput()
+          setCurrentUserInput(latestUserInput)
+          setShowAllUserInput(false)
+        }
+      } catch (e) {
         console.error(e)
-        setShowAllUserInput(false)
-        getLatestUserInput().then(setCurrentUserInput)
-      })
+      }
+    }
+    fetchData()
   }, [])
 
   useEffect(() => {

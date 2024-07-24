@@ -5,6 +5,8 @@ type LatestUserInputBody =
   | UserInputApi // exists
   | { detail: string } // does not exist
 
+type AllUserInputsBody = UserInputApi[] | { detail: string }
+
 export function getLatestUserInput(): Promise<UserInputUi> {
   return fetchGearbox('/gearbox/user-input/latest')
     .then((res) => res.json())
@@ -47,15 +49,17 @@ export function postUserInput(
 
 export function getAllUserInput(): Promise<UserInputUi[]> {
   return fetchGearbox('/gearbox/user-input/all')
-    .then((res) => {
-      if (res.status === 404) {
-        return Promise.resolve([] as UserInputApi[])
-      } else if (!res.ok) {
-        throw new Error('Failed to get all user input')
+    .then((res) => res.json())
+    .then((data: AllUserInputsBody) => {
+      if (Array.isArray(data)) {
+        return data.map(userInputApiToUi)
+      } else if (data.detail.includes('this endpoint is not active')) {
+        throw new Error(`Failed to fetch all user inputs: ${data.detail}`)
+      } else if (data.detail.includes('Saved input not found for user')) {
+        return []
       }
-      return res.json() as Promise<UserInputApi[]>
+      throw new Error('Failed to fetch all user inputs')
     })
-    .then((data) => data.map(userInputApiToUi))
 }
 
 function userInputApiToUi(userInputApi: UserInputApi): UserInputUi {
