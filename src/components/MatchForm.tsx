@@ -4,7 +4,6 @@ import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
 import Field from './Inputs/Field'
 import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
-// import importantQuestionConfig from '../ImportantQuestionConfig.json'
 import type {
   MatchFormValues,
   MatchFormConfig,
