@@ -26,7 +26,7 @@ export function UserInputModal({
       className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-50"
       style={{ background: '#cccc' }}
       role="dialog"
-      aria-labelledby="eligibility-criteria-dialog-title"
+      aria-labelledby="user-input-dialog-title"
       aria-modal="true"
     >
       <div
@@ -35,16 +35,13 @@ export function UserInputModal({
       >
         <div className="text-sm sm:text-base px-4 pb-4 pt-2 sm:px-8 sm:pb-8">
           <div className="flex items-baseline justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
-            <h3
-              id="eligibility-criteria-dialog-title"
-              className="font-bold mr-4"
-            >
+            <h3 id="user-input-dialog-title" className="font-bold mr-4">
               Create New User Input
             </h3>
             <button
               className="ml-2 hover:text-red-700"
               onClick={closeModal}
-              aria-label="Close Eligibility Criteria dialog"
+              aria-label="Close User Input dialog"
             >
               <XCircle className="inline" />
             </button>

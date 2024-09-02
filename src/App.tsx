@@ -19,6 +19,7 @@ import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 import { ErrorRetry } from './components/ErrorRetry'
 import { AdminPage } from './pages/AdminPage'
 import { QuestionEditorPage } from './pages/QuestionEditorPage'
+import { QuestionAdjudicationPage } from './pages/QuestionAdjudicationPage'
 
 function App() {
   const auth = useAuth()
@@ -62,26 +63,17 @@ function App() {
             }
           />
           <Route path="/LLS" element={<LandingPage isLLS={true} />} />
-          <Route
-            path="/admin"
-            element={isAdmin ? <AdminPage /> : <Navigate to="/" replace />}
-          />
-          <Route
-            path="/admin/criteria-builder"
-            element={
-              isAdmin ? (
-                <CriteriaBuilderPage gearboxState={gearboxData.state} />
-              ) : (
-                <Navigate to="/" replace />
-              )
-            }
-          />
-          <Route
-            path="/admin/question-editor"
-            element={
-              isAdmin ? <QuestionEditorPage /> : <Navigate to="/" replace />
-            }
-          />
+          <Route path="/admin" element={<AdminPage isAdmin={isAdmin} />}>
+            <Route
+              path="criteria-builder"
+              element={<CriteriaBuilderPage gearboxState={gearboxData.state} />}
+            />
+            <Route path="question-editor" element={<QuestionEditorPage />} />
+            <Route
+              path="question-adjudication"
+              element={<QuestionAdjudicationPage />}
+            />
+          </Route>
           <Route
             path="/login"
             element={
