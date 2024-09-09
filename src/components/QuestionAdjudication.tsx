@@ -240,6 +240,15 @@ export function QuestionAdjudication({
         <Field
           config={{
             type: 'text',
+            name: 'text',
+            label: 'Text',
+            readOnly: true,
+            defaultValue: stagingCriterion.text || '',
+          }}
+        />
+        <Field
+          config={{
+            type: 'text',
             name: 'code',
             label: 'Code',
             readOnly: !isEditable,
