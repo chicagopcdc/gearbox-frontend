@@ -46,7 +46,7 @@ export function QuestionAdjudicationPage() {
     loadPage()
   }, [])
 
-  const studyAdjudicationChanged = (
+  const onStudyAdjudicationChanged = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const index = +event.target.value
@@ -78,7 +78,7 @@ export function QuestionAdjudicationPage() {
           })),
         }}
         value={svaIndex}
-        onChange={studyAdjudicationChanged}
+        onChange={onStudyAdjudicationChanged}
       />
       {stagingCriteria.length ? (
         stagingCriteria

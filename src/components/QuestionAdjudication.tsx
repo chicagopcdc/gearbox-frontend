@@ -13,7 +13,7 @@ import {
   publishStagingCriterion,
   updateStagingCriterion,
 } from '../api/studyAdjudication'
-import { AlertCircle, Check, Loader } from 'react-feather'
+import { RequestStatusBar } from './RequestStatusBar'
 
 export function QuestionAdjudication({
   stagingCriterion,
@@ -142,7 +142,7 @@ export function QuestionAdjudication({
         )
     }
   }
-  const inputTypeSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onInputTypeSelected = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const inputTypeId = +event.target.value
     setSelectedInputTypeId(inputTypeId)
     const isListSelected = checkIsList(inputTypeId)
@@ -190,33 +190,12 @@ export function QuestionAdjudication({
     })
   }
 
-  const reqStatusBar = () => {
-    if (isSendingReq) {
-      return <Loader className="mr-4" />
-    } else if (loadingStatus === 'success') {
-      return (
-        <h2 className="text-base text-green-600 mr-4 flex">
-          <Check />
-          OK!
-        </h2>
-      )
-    } else if (loadingStatus === 'error') {
-      return (
-        <h2 className="text-base text-red-600 mr-4 flex">
-          <AlertCircle className="mr-2" />
-          {errorMsg}
-        </h2>
-      )
-    }
-    return false
-  }
-
   const formChanged = () => setCanPublish((prev) => (prev ? !prev : prev))
   return (
     <div className="my-4 p-4 border border-gray-400">
       <form ref={formRef} onChange={formChanged}>
         <div className="flex justify-end">
-          {reqStatusBar()}
+          <RequestStatusBar loadingStatus={loadingStatus} errorMsg={errorMsg} />
           {isEditable && (
             <>
               <Button
@@ -287,7 +266,7 @@ export function QuestionAdjudication({
           readOnly: !isEditable,
         }}
         value={selectedInputTypeId}
-        onChange={inputTypeSelected}
+        onChange={onInputTypeSelected}
       />
       {isList && (
         <>
