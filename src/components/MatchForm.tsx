@@ -4,7 +4,11 @@ import DropdownSection from './DropdownSection'
 import FieldWrapper from './FieldWrapper'
 import Field from './Inputs/Field'
 import { clearShowIfField, getDefaultValues, getIsFieldShowing } from '../utils'
-import type { MatchFormValues, MatchFormConfig } from '../model'
+import type {
+  MatchFormValues,
+  MatchFormConfig,
+  ImportantQuestionConfig,
+} from '../model'
 
 export type MatchFormProps = {
   config: MatchFormConfig
@@ -12,6 +16,7 @@ export type MatchFormProps = {
   isFilterActive: boolean
   updateMatchInput(values: MatchFormValues): void
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
+  importantQuestionsConfig: ImportantQuestionConfig
 }
 
 function MatchForm({
@@ -20,6 +25,7 @@ function MatchForm({
   isFilterActive,
   updateMatchInput,
   setIsUpdating,
+  importantQuestionsConfig,
 }: MatchFormProps) {
   const [values, setValues] = useState(getDefaultValues(config))
   useEffect(() => setValues({ ...matchInput }), [matchInput])
@@ -46,8 +52,45 @@ function MatchForm({
     } else setIsUpdating(false)
   }
 
+  // Separate important fields from the rest
+  const importantFields = config.fields.filter((field) =>
+    importantQuestionsConfig.groups.some(
+      (importantGroup) => importantGroup.name === field.name
+    )
+  )
+
+  const otherFields = config.fields.filter(
+    (field) =>
+      !importantQuestionsConfig.groups.some(
+        (importantGroup) => importantGroup.name === field.name
+      )
+  )
+
   return (
     <form ref={formEl}>
+      {/* Render important questions */}
+      {importantFields.map(
+        ({ id, groupId, relevant, showIf, ...fieldConfig }) => {
+          const isFieldShowing =
+            (!isFilterActive || relevant) &&
+            (showIf === undefined || getIsFieldShowing(showIf, config, values))
+
+          return (
+            <FieldWrapper key={id} isShowing={isFieldShowing}>
+              <Field
+                config={{
+                  ...fieldConfig,
+                  name: String(id),
+                  disabled: !relevant,
+                }}
+                value={values[id]}
+                onChange={handleChange}
+              />
+            </FieldWrapper>
+          )
+        }
+      )}
+
       {config.groups.map((group, i) => (
         <DropdownSection
           key={group.id}
@@ -55,7 +98,7 @@ function MatchForm({
           name={group.name || 'General'}
           isCollapsedAtStart={i !== 0}
         >
-          {config.fields.map(
+          {otherFields.map(
             ({
               id,
               groupId,

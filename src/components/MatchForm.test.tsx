@@ -39,6 +39,7 @@ function MatchFormWrapper() {
         matchInput={matchInput}
         setIsUpdating={() => /* noop */ null}
         updateMatchInput={setMatchInput}
+        importantQuestionsConfig={{ groups: [] }}
       />
     </>
   )
