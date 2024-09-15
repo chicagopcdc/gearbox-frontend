@@ -8,6 +8,7 @@ type SelectProps = {
   placeholder?: string
   disabled?: boolean
   required?: boolean
+  readOnly?: boolean
   value?: any
   onChange?: React.ChangeEventHandler<HTMLSelectElement>
 }
@@ -24,6 +25,7 @@ function Select({
   placeholder,
   value,
   disabled = false,
+  readOnly,
   onChange,
   ...attrs
 }: SelectProps) {
@@ -38,7 +40,8 @@ function Select({
   const disabledInputClassName = `${baseInputClassName} cursor-not-allowed bg-gray-200 border-gray-400`
   const selectAttrs = {
     ...attrs,
-    className: disabled ? disabledInputClassName : baseInputClassName,
+    className:
+      disabled || readOnly ? disabledInputClassName : baseInputClassName,
     disabled,
     id: name,
     name,

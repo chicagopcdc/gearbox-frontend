@@ -205,7 +205,62 @@ export type EligibilityCriteriaInfo = {
   id?: number
 }
 
-export type Unit = {
+export type InputType = {
   id: number
-  name: string
+  data_type: 'Integer' | 'list' | 'percentage' | 'Float' | 'integer'
+  render_type: 'number' | 'radio' | 'select' | 'age'
+}
+
+export type StudyVersionAdjudication = {
+  study_id: number
+  study_version_num: number
+  id: number
+  active: boolean
+  eligibility_criteria_id: number
+  study_algorithm_engine_id: number
+  study: Study
+}
+
+type StagingCriterion = {
+  code: string
+  criterion_adjudication_status: 'NEW' | 'EXISTING'
+  criterion_id: number | null
+  description: string
+  display_name: string
+  echc_adjudication_status: 'NEW' | 'EXISTING'
+  eligibility_criteria_id: number
+  id: number
+  text: string
+  input_id: number
+  input_type_id: number
+}
+
+export type CriteriaValue = {
+  id: number
+  description: string | null
+  is_numeric: boolean
+  active: boolean
+  value_string: string | null
+  operator: ComparisonOperator | null
+  unit_name: string | null
+  unit_id: number
+}
+
+export type StagingCriterionWithValues = StagingCriterion & {
+  values: number[]
+}
+
+export type StagingCriterionWithValueList = StagingCriterion & {
+  value_list: CriteriaValue[] | null
+}
+
+export type StagingCriterionPublish = {
+  code: string
+  display_name: string
+  description: string
+  active: boolean
+  ontology_code_id?: number | null
+  input_type_id: number
+  criterion_staging_id: number
+  values: number[]
 }

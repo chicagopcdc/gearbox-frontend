@@ -1,4 +1,7 @@
-import { MultiSelect as ReactMultiSelect } from 'react-multi-select-component'
+import {
+  MultiSelect as ReactMultiSelect,
+  SelectProps,
+} from 'react-multi-select-component'
 import type { MatchFormFieldOption } from '../../model'
 
 type MultiSelectProps = {
@@ -7,14 +10,11 @@ type MultiSelectProps = {
   options: MatchFormFieldOption[]
   disabled?: boolean
   placeholder?: string
-  value?: any[]
+  value?: MatchFormFieldOption[]
   onChange?(event: any): void
-}
-
-function reshapeToMulti(options: MatchFormFieldOption[], value?: any[]) {
-  return value === undefined
-    ? options.map(({ label, value }) => ({ label, value }))
-    : options.filter((option) => value.includes(option.value))
+  onCreateOptions?(label: string): void
+  isCreatable?: boolean
+  isLoading?: boolean
 }
 
 function MultiSelect({
@@ -23,32 +23,31 @@ function MultiSelect({
   options,
   placeholder,
   value = [],
-  onChange,
+  disabled,
+  isCreatable = true,
+  isLoading = false,
   ...attrs
 }: MultiSelectProps) {
-  const multiOptions = reshapeToMulti(options)
-  function handleChange(selected: MatchFormFieldOption[]) {
-    if (onChange && name)
-      onChange({ target: { name, value: selected.map(({ value }) => value) } })
+  const baseClassName = 'flex flex-col'
+  const multiSelectAttrs: SelectProps = {
+    ...attrs,
+    disabled,
+    labelledBy: name || '',
+    value,
+    options,
+    isCreatable,
+    isLoading,
   }
 
   return (
-    <ReactMultiSelect
-      {...attrs}
-      options={multiOptions}
-      value={reshapeToMulti(options, value)}
-      onChange={handleChange}
-      filterOptions={(options, filter) =>
-        filter
-          ? options.filter(
-              ({ label }) => label && label.match(new RegExp(filter, 'i'))
-            )
-          : options
-      }
-      hasSelectAll={false}
-      labelledBy={label || ''}
-      overrideStrings={{ selectSomeItems: placeholder || '' }}
-    />
+    <div className={baseClassName}>
+      {label && (
+        <label className="mb-1" htmlFor={name}>
+          {label}
+        </label>
+      )}
+      <ReactMultiSelect {...multiSelectAttrs} />
+    </div>
   )
 }
 

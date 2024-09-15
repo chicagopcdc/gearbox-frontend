@@ -170,7 +170,7 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                   <button
                     className="ml-2 hover:text-red-700"
                     onClick={closeModal}
-                    aria-label="Close Eligibility Criteria dialog"
+                    aria-label="Close Trial Match Info dialog"
                   >
                     <XCircle className="inline" />
                   </button>
