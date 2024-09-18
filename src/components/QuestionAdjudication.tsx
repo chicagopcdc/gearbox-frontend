@@ -3,15 +3,17 @@ import {
   CriteriaValue,
   InputType,
   MatchFormFieldOption,
+  StagingCriterion,
   StagingCriterionWithValueList,
 } from '../model'
 import Field from './Inputs/Field'
 import Button from './Inputs/Button'
 import React, { useEffect, useRef, useState } from 'react'
 import {
+  acceptStagingCriterion,
   createValue,
   publishStagingCriterion,
-  updateStagingCriterion,
+  saveStagingCriterion,
 } from '../api/studyAdjudication'
 import { RequestStatusBar } from './RequestStatusBar'
 
@@ -26,16 +28,18 @@ export function QuestionAdjudication({
   inputTypes: InputType[]
   setLookupValues: React.Dispatch<React.SetStateAction<CriteriaValue[]>>
 }) {
-  const adjudicationStatus = stagingCriterion.criterion_adjudication_status
   const checkIsList = (id: number): boolean => {
     return (
       inputTypes.find((inputType) => inputType.id === id)?.data_type === 'list'
     )
   }
 
-  const [isEditable, setIsEditable] = useState<boolean>(
-    adjudicationStatus === 'NEW'
-  )
+  const [status, setStatus] = useState<
+    StagingCriterion['criterion_adjudication_status']
+  >(stagingCriterion.criterion_adjudication_status)
+
+  const isEditable = status === 'NEW' || status === 'IN_PROCESS'
+
   const [selectedValues, setSelectedValues] = useState<MatchFormFieldOption[]>(
     stagingCriterion.value_list?.map((v) => ({
       value: v.id,
@@ -63,7 +67,7 @@ export function QuestionAdjudication({
       }
     }
   }, [])
-  const update = () => {
+  const save = () => {
     if (!formRef.current) {
       return
     }
@@ -74,7 +78,7 @@ export function QuestionAdjudication({
 
     const { value_list, ...updatedStagingCriterion } = stagingCriterion
     setLoadingStatus('sending')
-    updateStagingCriterion({
+    saveStagingCriterion({
       ...updatedStagingCriterion,
       code,
       display_name: displayName,
@@ -85,6 +89,7 @@ export function QuestionAdjudication({
     })
       .then(() => {
         setLoadingStatus('success')
+        setStatus('IN_PROCESS')
         setCanPublish(true)
       })
       .catch((err) => {
@@ -127,10 +132,38 @@ export function QuestionAdjudication({
       })
         .then(() => {
           setLoadingStatus('success')
-          setIsEditable(false)
+          setStatus('ACTIVE')
         })
         .catch((err) => {
           setErrorMsg(err.message)
+          setLoadingStatus('error')
+        })
+        .finally(
+          () =>
+            (timerIdRef.current = setTimeout(
+              () => setLoadingStatus('not started'),
+              3000
+            ))
+        )
+    }
+  }
+
+  const edit = () => setStatus('IN_PROCESS')
+
+  const accept = () => {
+    if (
+      confirm(
+        'Accepting the staging criterion will finalized the changes and can not be reverted. Are you sure to accept?'
+      )
+    ) {
+      setLoadingStatus('sending')
+      acceptStagingCriterion(stagingCriterion.id)
+        .then(() => {
+          setLoadingStatus('success')
+          setStatus('ACTIVE')
+        })
+        .catch((err) => {
+          console.error(err)
           setLoadingStatus('error')
         })
         .finally(
@@ -191,30 +224,59 @@ export function QuestionAdjudication({
   }
 
   const formChanged = () => setCanPublish((prev) => (prev ? !prev : prev))
+
+  const actionButtons = () => {
+    if (status === 'NEW' || status === 'IN_PROCESS') {
+      return (
+        <>
+          <Button
+            size="small"
+            otherClassName="mr-4"
+            disabled={isSendingReq}
+            onClick={save}
+          >
+            Save
+          </Button>
+          <Button
+            size="small"
+            onClick={publish}
+            disabled={isSendingReq || !canPublish}
+          >
+            Publish
+          </Button>
+        </>
+      )
+    } else if (status === 'EXISTING') {
+      return (
+        <>
+          <Button
+            size="small"
+            otherClassName="mr-4"
+            disabled={isSendingReq}
+            onClick={edit}
+          >
+            Edit
+          </Button>
+          <Button size="small" onClick={accept} disabled={isSendingReq}>
+            Accept
+          </Button>
+        </>
+      )
+    }
+    return null
+  }
   return (
     <div className="my-4 p-4 border border-gray-400">
       <form ref={formRef} onChange={formChanged}>
-        <div className="flex justify-end">
-          <RequestStatusBar loadingStatus={loadingStatus} errorMsg={errorMsg} />
-          {isEditable && (
-            <>
-              <Button
-                size="small"
-                otherClassName="mr-4"
-                disabled={isSendingReq}
-                onClick={update}
-              >
-                Update
-              </Button>
-              <Button
-                size="small"
-                onClick={publish}
-                disabled={isSendingReq || !canPublish}
-              >
-                Publish
-              </Button>
-            </>
-          )}
+        <div className="flex justify-between items-center mb-2">
+          <h1>Status: {status}</h1>
+          <div className="flex items-center">
+            <RequestStatusBar
+              loadingStatus={loadingStatus}
+              errorMsg={errorMsg}
+            />
+            {actionButtons()}
+          </div>
         </div>
         <Field
           config={{
