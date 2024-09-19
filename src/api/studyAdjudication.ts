@@ -29,10 +29,10 @@ export function getCriterionStaging(
   })
 }
 
-export function updateStagingCriterion(
+export function saveStagingCriterion(
   updatedStagingCriterion: StagingCriterionWithValues
 ): Promise<StagingCriterionWithValues> {
-  return fetchGearbox('/gearbox/update-criterion-staging', {
+  return fetchGearbox('/gearbox/save-criterion-staging', {
     method: 'POST',
     body: JSON.stringify(updatedStagingCriterion),
   }).then((res) => res.json() as Promise<StagingCriterionWithValues>)
@@ -53,6 +53,14 @@ export function publishStagingCriterion(
     }
     return res.json() as Promise<string>
   })
+}
+
+export function acceptStagingCriterion(
+  id: number
+): Promise<StagingCriterionWithValues> {
+  return fetchGearbox('/gearbox/accept-criterion-staging/' + id, {
+    method: 'POST',
+  }).then((res) => res.json() as Promise<StagingCriterionWithValues>)
 }
 
 export function getValues(): Promise<CriteriaValue[]> {
