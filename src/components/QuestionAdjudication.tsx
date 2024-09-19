@@ -225,46 +225,6 @@ export function QuestionAdjudication({
 
   const formChanged = () => setCanPublish((prev) => (prev ? !prev : prev))
 
-  const actionButtons = () => {
-    if (status === 'NEW' || status === 'IN_PROCESS') {
-      return (
-        <>
-          <Button
-            size="small"
-            otherClassName="mr-4"
-            disabled={isSendingReq}
-            onClick={save}
-          >
-            Save
-          </Button>
-          <Button
-            size="small"
-            onClick={publish}
-            disabled={isSendingReq || !canPublish}
-          >
-            Publish
-          </Button>
-        </>
-      )
-    } else if (status === 'EXISTING') {
-      return (
-        <>
-          <Button
-            size="small"
-            otherClassName="mr-4"
-            disabled={isSendingReq}
-            onClick={edit}
-          >
-            Edit
-          </Button>
-          <Button size="small" onClick={accept} disabled={isSendingReq}>
-            Accept
-          </Button>
-        </>
-      )
-    }
-    return null
-  }
   return (
     <div className="my-4 p-4 border border-gray-400">
       <form ref={formRef} onChange={formChanged}>
@@ -275,7 +235,15 @@ export function QuestionAdjudication({
               loadingStatus={loadingStatus}
               errorMsg={errorMsg}
             />
-            {actionButtons()}
+            <ActionButtons
+              status={status}
+              isSendingReq={isSendingReq}
+              canPublish={canPublish}
+              save={save}
+              publish={publish}
+              edit={edit}
+              accept={accept}
+            />
           </div>
         </div>
         <Field
@@ -356,4 +324,61 @@ export function QuestionAdjudication({
       )}
     </div>
   )
+}
+
+function ActionButtons({
+  status,
+  isSendingReq,
+  canPublish,
+  save,
+  publish,
+  edit,
+  accept,
+}: {
+  status: StagingCriterion['criterion_adjudication_status']
+  isSendingReq: boolean
+  canPublish: boolean
+  save: () => void
+  publish: () => void
+  edit: () => void
+  accept: () => void
+}) {
+  if (status === 'NEW' || status === 'IN_PROCESS') {
+    return (
+      <>
+        <Button
+          size="small"
+          otherClassName="mr-4"
+          disabled={isSendingReq}
+          onClick={save}
+        >
+          Save
+        </Button>
+        <Button
+          size="small"
+          onClick={publish}
+          disabled={isSendingReq || !canPublish}
+        >
+          Publish
+        </Button>
+      </>
+    )
+  } else if (status === 'EXISTING') {
+    return (
+      <>
+        <Button
+          size="small"
+          otherClassName="mr-4"
+          disabled={isSendingReq}
+          onClick={edit}
+        >
+          Edit
+        </Button>
+        <Button size="small" onClick={accept} disabled={isSendingReq}>
+          Accept
+        </Button>
+      </>
+    )
+  }
+  return null
 }
