@@ -36,7 +36,15 @@ function App() {
   ) {
     return <h1>Loading...</h1>
   } else if (auth.loadingStatus === 'error') {
-    return <ErrorRetry retry={auth.fetchAuth} />
+    console.error("Authentication failed with status 'error'. Retry attempted."); // Log error for debugging
+    return (
+      <ErrorRetry
+        retry={() => {
+          console.log("Retry button clicked, attempting to fetch auth..."); // Log retry action
+          auth.fetchAuth(); // Call the retry function
+        }}
+      />
+    );
   }
 
   return (
