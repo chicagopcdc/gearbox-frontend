@@ -4,7 +4,7 @@ import { clamp, escapeHtml, getOrCreate } from '../utils'
 
 function collectSpans(rc: RawCriterion | null): HighlightSpan[] {
   const result: HighlightSpan[] = []
-  rc?.pre_annotated.forEach((p) => {
+  rc?.pre_annotated?.forEach((p) => {
     const [s, e, label] = p.span
     if (Number.isFinite(s) && Number.isFinite(e) && e > s) {
       result.push({
@@ -16,7 +16,7 @@ function collectSpans(rc: RawCriterion | null): HighlightSpan[] {
     }
   })
 
-  rc?.entities.forEach((ent) => {
+  rc?.entities?.forEach((ent) => {
     const { start_offset: s, end_offset: e, label } = ent
     if (Number.isFinite(s) && Number.isFinite(e) && e > s) {
       result.push({ start: s, end: e, label, source: 'entity' })

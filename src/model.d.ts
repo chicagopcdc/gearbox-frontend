@@ -300,8 +300,8 @@ export type RawCriterion = {
   id: number
   uuid: string | null
   nct: string | null
-  pre_annotated: PreAnnotatedItem[]
-  entities: EntityItem[]
+  pre_annotated: PreAnnotatedItem[] | null
+  entities: EntityItem[] | null
 
   // Present in your payload; keep them typed so parsing is lossless
   Comments: unknown[]
