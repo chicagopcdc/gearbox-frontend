@@ -1,11 +1,5 @@
-// ---------------------------------------------
-// Types used by the UI
-// ---------------------------------------------
 export type SectionStatus = 'met' | 'not-met' | 'unknown'
 
-// Each bullet in a section is either:
-// - a leaf item:    { text, matched? }
-// - a group parent: { text?, logic: 'all'|'any', children: SectionItem[] }
 export type SectionItem = {
   text?: string
   matched?: boolean
@@ -13,7 +7,6 @@ export type SectionItem = {
   logic?: 'all' | 'any'
 }
 
-// A rendered section panel in the UI
 export type Section = {
   id: string
   title: string
@@ -21,7 +14,6 @@ export type Section = {
   items: SectionItem[]
 }
 
-// Fixed order the UI should display (and default statuses when empty)
 const BASE_SECTIONS: Array<{
   id: Section['id']
   title: string
@@ -35,12 +27,6 @@ const BASE_SECTIONS: Array<{
   { id: 'biomarkers', title: 'Biomarkers', defaultStatus: 'not-met' },
 ]
 
-// ---------------------------------------------
-// Entry point: take the raw eligibility payload (a tree of groups/leaves,
-// often under numeric keys at the top level) and produce the 6 UI sections.
-// The result preserves logical nesting (AND/OR) within a section and
-// flattens mixed-section groups so items appear under their proper panels.
-// ---------------------------------------------
 export function buildEligibilitySections(root: any): Section[] {
   // Create the 6 sections and bookkeeping for de-dup + status aggregation
   const sections: Record<string, Section> = {}
@@ -100,18 +86,9 @@ export function buildEligibilitySections(root: any): Section[] {
   // Return in the fixed order the UI expects
   return BASE_SECTIONS.map((s) => sections[s.id])
 
-  // -------------------------------------------
-  // Walker: handles either groups or leaf rules
-  // -------------------------------------------
   function addGroupOrLeaf(node: any) {
     if (!node) return
 
-    // GROUP node shape:
-    // { operator: 'AND' | 'OR', criteria: [ <group|leaf> , ... ] }
-    // If all children resolve to the SAME section, we return ONE parent item
-    // with nested children (logic: 'all' for AND, 'any' for OR).
-    // If children span MULTIPLE sections, we FLATTEN and return an array of
-    // [sectionId, item] tuples so each child lands in its correct section.
     if (Array.isArray(node.criteria)) {
       const grouped = buildGroupedItem(node) // ← returns Array<[sectionId, item]> | null
       if (!grouped) return
@@ -136,14 +113,6 @@ export function buildEligibilitySections(root: any): Section[] {
     if (typeof node === 'object') Object.values(node).forEach(addGroupOrLeaf)
   }
 
-  // -------------------------------------------
-  // Build a nested item when a group’s children
-  // all map to the same section; otherwise flatten.
-  //
-  // IMPORTANT: This returns an ARRAY OF TUPLES:
-  //   Array<[ sectionId: string, item: SectionItem ]>
-  // (We used Map before; arrays are simpler to consume and avoid key mistakes.)
-  // -------------------------------------------
   function buildGroupedItem(
     groupNode: any
   ): Array<[string, SectionItem]> | null {
@@ -233,16 +202,11 @@ export function buildEligibilitySections(root: any): Section[] {
 
     const out: Array<[string, SectionItem]> = []
     for (const [sec, items] of bySection.entries()) {
-      // We push items one-by-one; serializeItem prevents duplicates in `add`
       for (const it of dedupeItems(items)) out.push([sec, it]) // keep the REAL section id here
     }
     return out
   }
 }
-
-// ---------------------------------------------
-// Helper utilities (dedupe, status, coercions)
-// ---------------------------------------------
 
 // Create a stable string representation so we can skip duplicates
 function serializeItem(it: SectionItem): string | null {
@@ -288,10 +252,6 @@ function asBool(v: unknown): boolean | undefined {
   return typeof v === 'boolean' ? v : undefined
 }
 
-// ---------------------------------------------
-// Router: map a fieldName to one of the 6 sections
-// (Simple keyword routing; easy to extend as new fields appear.)
-// ---------------------------------------------
 function pickSection(fieldName: string): Section['id'] {
   const t = fieldName.toLowerCase()
 
@@ -397,9 +357,6 @@ function pickSection(fieldName: string): Section['id'] {
   return 'additional'
 }
 
-// ---------------------------------------------
-// Humanizer: convert a raw field/operator/value into a friendly bullet
-// ---------------------------------------------
 function humanize(
   fieldName: string,
   op?: string,
