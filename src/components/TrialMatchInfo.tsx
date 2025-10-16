@@ -85,11 +85,7 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                 <div className="flex items-center gap-2">
                   {/* Options menu */}
                   <div className="min-w-max">
-                    <div
-                      className="inline relative font-normal normal-case text-base"
-                      onBlur={handleModalOptionsBlur}
-                      tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
-                    >
+                    <div className="inline relative font-normal normal-case text-base">
                       <button
                         className={`p-1 ${
                           showModalOptions
@@ -121,6 +117,8 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                           id="criteria-options-menu"
                           className="absolute right-0 origin-top-right w-56 bg-white border border-gray-300 shadow-md mt-2 p-1"
                           role="menu"
+                          onBlur={handleModalOptionsBlur}
+                          tabIndex={-1}
                         >
                           <ul className="w-full text-sm text-primary">
                             {/* Filter toggle */}

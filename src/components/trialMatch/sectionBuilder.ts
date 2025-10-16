@@ -1,477 +1,450 @@
-export type SectionStatus = 'met' | 'not-met' | 'unknown'
+// Builds outline sections from an eligibility tree and the form map/group names.
+// - Groups leaves by form group; orders sections by match_form group order.
+// - Collapses simple OR-of-same-field choices into a parent with child bullets.
+// - Propagates matched from leaves to determine section status.
 
-export type SectionItem = {
+type Logic = 'all' | 'any'
+
+export type Item = {
   text?: string
   matched?: boolean
-  children?: SectionItem[]
-  logic?: 'all' | 'any'
+  logic?: Logic
+  children?: Item[]
+
+  _group?: string
+  field?: string
+  opText?: string
+  valueText?: string
 }
 
 export type Section = {
   id: string
   title: string
-  status: SectionStatus
-  items: SectionItem[]
+  status: 'met' | 'not_met' | 'unknown'
+  items: Item[]
 }
 
-const BASE_SECTIONS: Array<{
-  id: Section['id']
-  title: string
-  defaultStatus: SectionStatus
-}> = [
-  { id: 'additional', title: 'Additional Criteria', defaultStatus: 'unknown' },
-  { id: 'demographics', title: 'Demographics', defaultStatus: 'met' },
-  { id: 'disease', title: 'Disease', defaultStatus: 'met' },
-  { id: 'treatment', title: 'Treatment and Exposure', defaultStatus: 'met' },
-  { id: 'organ', title: 'Organ Function', defaultStatus: 'not-met' },
-  { id: 'biomarkers', title: 'Biomarkers', defaultStatus: 'not-met' },
-]
-
-export function buildEligibilitySections(root: any): Section[] {
-  // Create the 6 sections and bookkeeping for de-dup + status aggregation
-  const sections: Record<string, Section> = {}
-  const defaults: Record<string, SectionStatus> = {}
-  const seen: Record<string, Set<string>> = {} // per-section “already added” cache
-  const perSectionMatches: Record<string, boolean[]> = {} // raw matched flags to compute status
-
-  for (const s of BASE_SECTIONS) {
-    sections[s.id] = {
-      id: s.id,
-      title: s.title,
-      status: s.defaultStatus,
-      items: [],
+type FormMapEntry =
+  | string
+  | {
+      label: string
+      options?: Record<string, string>
+      shortLabel?: string
+      section?: string
     }
-    defaults[s.id] = s.defaultStatus
-    seen[s.id] = new Set()
-    perSectionMatches[s.id] = []
+
+type FormMap = Record<string, FormMapEntry>
+
+type BuildOpts = {
+  formMap?: FormMap
+  groupNames?: Record<string, string>
+}
+
+/* helpers */
+
+function canon(s: string | undefined | null): string {
+  return String(s ?? '')
+    .replace(/[’‘]/g, "'")
+    .replace(/[“”]/g, '"')
+    .replace(/[–—]/g, '-')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+function titleCase(s: string): string {
+  return s.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.slice(1))
+}
+
+function slugify(s: string): string {
+  return canon(s).replace(/[^\w]+/g, '-')
+}
+
+function normalizeMatched(x: any): boolean | undefined {
+  return x === true ? true : x === false ? false : undefined
+}
+
+function getEntry(
+  fieldKey: string | undefined,
+  formMap?: FormMap
+): FormMapEntry | undefined {
+  if (!fieldKey || !formMap) return undefined
+  const key = canon(fieldKey)
+  if (key in formMap) return formMap[key]
+  for (const k of Object.keys(formMap)) {
+    if (canon(k) === key) return (formMap as any)[k]
+  }
+  return undefined
+}
+
+function fieldToText(fieldKeyNorm: string, formMap?: FormMap): string {
+  const e = getEntry(fieldKeyNorm, formMap)
+  if (typeof e === 'string') return fieldKeyNorm
+  if (e && typeof e === 'object' && e.label) return e.label
+  return fieldKeyNorm
+}
+
+function valueToText(
+  value: any,
+  fieldKeyNorm: string,
+  formMap?: FormMap
+): string {
+  const e = getEntry(fieldKeyNorm, formMap)
+  if (e && typeof e === 'object' && e.options) {
+    if (Array.isArray(value))
+      return value.map((v) => e.options![String(v)] ?? String(v)).join(', ')
+    return e.options[String(value)] ?? String(value)
+  }
+  if (Array.isArray(value)) return value.map(String).join(', ')
+  return String(value)
+}
+
+function sectionForField(fieldKeyNorm: string, formMap?: FormMap): string {
+  const e = getEntry(fieldKeyNorm, formMap)
+  if (typeof e === 'string') return e
+  if (e && typeof e === 'object') return e.section || e.label || 'Eligibility'
+  return 'Eligibility'
+}
+
+function liftMatchedFromChildren(children: Item[]): boolean | undefined {
+  let sawTrue = false
+  let sawFalse = false
+  for (const ch of children) {
+    if (ch.matched === true) sawTrue = true
+    else if (ch.matched === false) sawFalse = true
+  }
+  if (sawFalse) return false
+  if (sawTrue) return true
+  return undefined
+}
+
+function sectionStatus(items: Item[]): 'met' | 'not_met' | 'unknown' {
+  const m = liftMatchedFromChildren(items)
+  if (m === true) return 'met'
+  if (m === false) return 'not_met'
+  return 'unknown'
+}
+
+function opPhrase(op?: string): string {
+  switch ((op || '').toLowerCase()) {
+    case 'gte':
+      return 'is greater than or equal to'
+    case 'lte':
+      return 'is less than or equal to'
+    case 'gt':
+      return 'is greater than'
+    case 'lt':
+      return 'is less than'
+    case 'eq':
+      return 'is equal to'
+    case 'in':
+      return 'is one of'
+    case 'nin':
+      return 'is not one of'
+    default:
+      return (op || '').trim()
+  }
+}
+
+// matcher shape
+// Group node: { operator, criteria: [...] }
+// Leaf node:  { fieldName, operator, fieldValue?, fieldValueLabel?, isMatched?/matched? }
+function isCriteriaGroup(node: any): boolean {
+  return !!node && typeof node === 'object' && Array.isArray(node.criteria)
+}
+function isLeaf(node: any): boolean {
+  return !!node && typeof node === 'object' && 'fieldName' in node
+}
+
+function leafToItem(node: any, formMap?: FormMap): Item {
+  const fieldKeyNorm = canon(String(node.fieldName || ''))
+  const lhs = fieldToText(fieldKeyNorm, formMap)
+  const op = opPhrase(node.operator)
+  const rawValue =
+    node.fieldValueLabel != null && String(node.fieldValueLabel).trim() !== ''
+      ? node.fieldValueLabel
+      : node.fieldValue != null
+      ? node.fieldValue
+      : ''
+  const rhs =
+    rawValue !== '' ? valueToText(rawValue, fieldKeyNorm, formMap) : ''
+
+  const grp = sectionForField(fieldKeyNorm, formMap)
+
+  const hasIsMatched = Object.prototype.hasOwnProperty.call(node, 'isMatched')
+  const hasMatched = Object.prototype.hasOwnProperty.call(node, 'matched')
+  const matchedRaw = hasIsMatched
+    ? node.isMatched
+    : hasMatched
+    ? node.matched
+    : undefined
+  const matched =
+    matchedRaw === true ? true : matchedRaw === false ? false : undefined
+
+  return {
+    field: lhs,
+    opText: op,
+    valueText: rhs !== '' ? String(rhs) : undefined,
+
+    text: rhs !== '' ? `${lhs} ${op} ${rhs}` : `${lhs} ${op}`,
+
+    matched,
+    _group: grp,
+  }
+}
+
+/**
+ * Collapses OR groups where all children are simple equals on the same field.
+ * Produces a parent item with a child list of values.
+ */
+function tryCollapseSameFieldOR(node: any, formMap?: FormMap): Item[] | null {
+  if (!isCriteriaGroup(node)) return null
+  const isOR = String(node.operator || '')
+    .toUpperCase()
+    .includes('OR')
+  if (!isOR) return null
+
+  const children = node.criteria || []
+  if (!children.length) return null
+
+  let fieldKey: string | undefined
+  const values: { label: string; matched?: boolean }[] = []
+
+  for (const ch of children) {
+    if (!isLeaf(ch)) return null
+    const fk = canon(String(ch.fieldName || ''))
+    if (!fk) return null
+    if (!fieldKey) fieldKey = fk
+    if (fieldKey !== fk) return null
+
+    const label =
+      ch.fieldValueLabel != null && String(ch.fieldValueLabel).trim() !== ''
+        ? String(ch.fieldValueLabel)
+        : ch.fieldValue != null
+        ? String(ch.fieldValue)
+        : ''
+
+    const opLower = String(ch.operator || '').toLowerCase()
+    if (!['', 'eq', 'in'].includes(opLower)) return null
+
+    values.push({ label, matched: normalizeMatched(ch.isMatched) })
   }
 
-  // Helper: push an item into a section, avoiding duplicates, and collect match flags
-  const add = (sectionId: string, item: SectionItem) => {
-    const sec = sections[sectionId] || sections['additional']
-    const key = serializeItem(item) // stable key to avoid dup bullets
-    if (!key) return
-    if (!seen[sec.id].has(key)) {
-      seen[sec.id].add(key)
-      sec.items.push(item)
-      collectMatchFlags(item, perSectionMatches[sec.id])
-    }
+  if (!fieldKey || values.length < 3) return null
+
+  const fieldLabel = fieldToText(fieldKey, formMap)
+  const grp = sectionForField(fieldKey, formMap)
+  const parentText = `The patient must have a ${fieldLabel.toLowerCase()} of one of the following:`
+  const kids: Item[] = values.map((v) => ({
+    text: v.label,
+    matched: v.matched,
+    _group: grp,
+  }))
+  const parent: Item = {
+    text: parentText,
+    children: kids,
+    logic: 'any',
+    matched: liftMatchedFromChildren(kids),
+    _group: grp,
   }
+  return [parent]
+}
 
-  // The payload root is usually an object with numbered keys ("1","2",...)
-  if (root && typeof root === 'object' && !Array.isArray(root)) {
-    Object.values(root).forEach((node: any) => addGroupOrLeaf(node))
-  } else {
-    addGroupOrLeaf(root)
-  }
-
-  // Compute each section’s status from child matched flags
-  for (const id of Object.keys(sections)) {
-    const flags = perSectionMatches[id]
-    if (!flags.length) {
-      sections[id].status = defaults[id]
-      continue
-    }
-    if (flags.some((m) => m === false)) {
-      sections[id].status = 'not-met'
-      continue
-    }
-    if (flags.every((m) => m === true)) {
-      sections[id].status = 'met'
-      continue
-    }
-    sections[id].status = 'unknown'
-  }
-
-  // Return in the fixed order the UI expects
-  return BASE_SECTIONS.map((s) => sections[s.id])
-
-  function addGroupOrLeaf(node: any) {
-    if (!node) return
-
-    if (Array.isArray(node.criteria)) {
-      const grouped = buildGroupedItem(node) // ← returns Array<[sectionId, item]> | null
-      if (!grouped) return
-      for (const [sectionId, item] of grouped) add(sectionId, item) // ← iterate tuples directly
-      return
-    }
-
-    // LEAF: { fieldName, fieldValueLabel, fieldValue, operator, isMatched }
-    if (node.fieldName) {
-      const sectionId = pickSection(String(node.fieldName)) // route to one of the 6 sections
-      const text = humanize(
-        String(node.fieldName),
-        node.operator,
-        node.fieldValue,
-        node.fieldValueLabel
-      ) // make a readable bullet
-      add(sectionId, { text, matched: asBool(node.isMatched) })
-      return
-    }
-
-    // Unknown shape: walk nested values defensively
-    if (typeof node === 'object') Object.values(node).forEach(addGroupOrLeaf)
-  }
-
-  function buildGroupedItem(
-    groupNode: any
-  ): Array<[string, SectionItem]> | null {
-    // Normalize operator to 'all' (AND) or 'any' (OR)
-    const op: 'all' | 'any' = String(groupNode.operator || '')
+/**
+ * Converts a group/leaf node into renderable items (recurses).
+ */
+function nodeToItems(node: any, formMap?: FormMap): Item[] {
+  if (isCriteriaGroup(node)) {
+    const collapsed = tryCollapseSameFieldOR(node, formMap)
+    if (collapsed) return collapsed
+    const joiner: Logic = String(node.operator || '')
       .toUpperCase()
       .includes('OR')
       ? 'any'
       : 'all'
-
-    // Gather children with their eventual sections
-    const childResults: Array<{ sectionId: string; item: SectionItem }> = []
-    for (const child of groupNode.criteria as any[]) {
-      if (!child) continue
-
-      if (Array.isArray(child.criteria)) {
-        // Nested group → recurse
-        const nested = buildGroupedItem(child)
-        if (nested) {
-          // NOTE: `nested` is an array of [secId, item] tuples — iterate directly
-          for (const [secId, nestedItem] of nested) {
-            childResults.push({ sectionId: secId, item: nestedItem })
-          }
-        }
-      } else if (child.fieldName) {
-        const sectionId = pickSection(String(child.fieldName))
-        const text = humanize(
-          String(child.fieldName),
-          child.operator,
-          child.fieldValue,
-          child.fieldValueLabel
-        )
-        childResults.push({
-          sectionId,
-          item: { text, matched: asBool(child.isMatched) },
-        })
-      } else if (typeof child === 'object') {
-        // Defensive: some payloads wrap leaves under extra keys
-        Object.values(child).forEach((leaf: any) => {
-          if (leaf?.fieldName) {
-            const sectionId = pickSection(String(leaf.fieldName))
-            const text = humanize(
-              String(leaf.fieldName),
-              leaf.operator,
-              leaf.fieldValue,
-              leaf.fieldValueLabel
-            )
-            childResults.push({
-              sectionId,
-              item: { text, matched: asBool(leaf.isMatched) },
-            })
-          }
-        })
-      }
-    }
-
-    if (childResults.length === 0) return null
-
-    // If all children belong to ONE section → emit a nested parent item for that section
-    const singleSection = childResults.every(
-      (cr) => cr.sectionId === childResults[0].sectionId
+    const children = (node.criteria || []).flatMap((ch: any) =>
+      nodeToItems(ch, formMap)
     )
-    if (singleSection) {
-      const sectionId = childResults[0].sectionId
-      const parentLabel =
-        op === 'all' ? 'All of the following:' : 'Any of the following:'
-      const children = dedupeItems(childResults.map((cr) => cr.item))
-      const parent: SectionItem = {
-        text: parentLabel, // change to '' if you want no label on parents
-        logic: op, // helps the UI show (AND)/(OR)
-        children,
-        matched: aggregateMatched(
-          children.map((c) => c.matched),
-          op
-        ),
-      }
-      return [[sectionId, parent]]
+    const parent: Item = {
+      logic: joiner,
+      children,
+      matched: liftMatchedFromChildren(children),
     }
-
-    // Mixed sections → flatten: return individual items for their own sections
-    const bySection = new Map<string, SectionItem[]>()
-    for (const cr of childResults) {
-      const arr = bySection.get(cr.sectionId) || []
-      arr.push(cr.item)
-      bySection.set(cr.sectionId, arr)
-    }
-
-    const out: Array<[string, SectionItem]> = []
-    for (const [sec, items] of bySection.entries()) {
-      for (const it of dedupeItems(items)) out.push([sec, it]) // keep the REAL section id here
-    }
-    return out
+    return [parent]
   }
+
+  if (isLeaf(node)) return [leafToItem(node, formMap)]
+  if (Array.isArray(node)) return node.flatMap((n) => nodeToItems(n, formMap))
+  return []
 }
 
-// Create a stable string representation so we can skip duplicates
-function serializeItem(it: SectionItem): string | null {
-  if (it.children && it.children.length) {
-    const kids = it.children.map(serializeItem).filter(Boolean).join('||')
-    return `${it.logic || ''}|${it.text || ''}|${kids}`
-  }
-  return it.text ? it.text : null
-}
+/**
+ * Normalizes inclusion/exclusion into an array of nodes that represent logical groups.
+ * Handles: single tree, array of trees, or an object keyed by numeric ids.
+ */
+function normalizeGroupNodes(objOrArr: any): Array<{ id?: string; node: any }> {
+  if (!objOrArr) return []
 
-// De-dupe an array of items by their serialized form (text + child tree)
-function dedupeItems(items: SectionItem[]): SectionItem[] {
-  const seen = new Set<string>()
-  const out: SectionItem[] = []
-  for (const it of items) {
-    const key = serializeItem(it) || ''
-    if (!seen.has(key)) {
-      seen.add(key)
-      out.push(it)
+  if (isCriteriaGroup(objOrArr)) return [{ id: undefined, node: objOrArr }]
+  if (Array.isArray(objOrArr))
+    return objOrArr.map((n) => ({ id: undefined, node: n }))
+  if (typeof objOrArr === 'object') {
+    const entries = Object.keys(objOrArr)
+      .filter((k) => isCriteriaGroup(objOrArr[k]))
+      .sort((a, b) => Number(a) - Number(b))
+    if (entries.length > 0) {
+      return entries.map((k) => ({ id: k, node: objOrArr[k] }))
     }
+
+    if ('criteria' in objOrArr) return [{ id: undefined, node: objOrArr }]
   }
-  return out
+  return []
 }
 
-// Collect matched flags from a (possibly nested) item; used for section status
-function collectMatchFlags(item: SectionItem, bucket: boolean[]) {
-  if (typeof item.matched === 'boolean') bucket.push(item.matched)
-  if (item.children)
-    item.children.forEach((ch) => collectMatchFlags(ch, bucket))
-}
-
-// Combine child match flags to infer the parent’s match state (optional)
-function aggregateMatched(
-  flags: Array<boolean | undefined>,
-  op: 'all' | 'any'
-): boolean | undefined {
-  const vals = flags.filter((f): f is boolean => typeof f === 'boolean')
-  if (!vals.length) return undefined
-  return op === 'all' ? vals.every(Boolean) : vals.some(Boolean)
-}
-
-function asBool(v: unknown): boolean | undefined {
-  return typeof v === 'boolean' ? v : undefined
-}
-
-function pickSection(fieldName: string): Section['id'] {
-  const t = fieldName.toLowerCase()
-
-  // Demographics
-  if (
-    t.includes('current age') ||
-    t.includes('biological sex') ||
-    t.includes('cns status')
-  )
-    return 'demographics'
-
-  // Disease
-  if (
-    t.includes('current diagnosis') ||
-    t.includes('ecog') ||
-    t.includes('bclc stage')
-  )
-    return 'disease'
-  if (
-    t.includes('child-pugh') ||
-    t.includes('child pugh') ||
-    t.includes('relapse') ||
-    t.includes('refractory')
-  )
-    return 'disease'
-  if (
-    t.includes('curative therapy') ||
-    t.includes('hiv') ||
-    t.includes('hepatitis') ||
-    t.includes('infection')
-  )
-    return 'disease'
-
-  // Treatment & Exposure
-  if (
-    t.includes('hematopoietic cell transplantation') ||
-    t.includes('transplant')
-  )
-    return 'treatment'
-  if (
-    t.includes('prior exposure') ||
-    t.includes('venetoclax') ||
-    t.includes('anthracycline')
-  )
-    return 'treatment'
-  if (
-    t.includes('radiotherapy') ||
-    t.includes('rt') ||
-    t.includes('cyp3a') ||
-    t.includes('cytokines') ||
-    t.includes('growth factor')
-  )
-    return 'treatment'
-  if (
-    t.includes('antibody-drug conjugate') ||
-    t.includes('cytotoxic chemotherapy')
-  )
-    return 'treatment'
-
-  // Organ function (labs & panels)
-  if (
-    t.includes('liver function') ||
-    t.includes('renal function') ||
-    t.includes('cardiac function')
-  )
-    return 'organ'
-  if (
-    t.includes('left ventricular function') ||
-    t.includes('ejection fraction') ||
-    t.includes('shortening fraction')
-  )
-    return 'organ'
-  if (
-    t.includes('bilirubin') ||
-    t.includes('sgot') ||
-    t.includes('ast') ||
-    t.includes('sgpt') ||
-    t.includes('alt')
-  )
-    return 'organ'
-  if (t.includes('serum creatinine') || t.includes('creatinine clearance'))
-    return 'organ'
-  if (
-    t.includes('hemoglobin') ||
-    t.includes('platelet') ||
-    t.includes('absolute neutrophil count') ||
-    /\banc\b/.test(t)
-  )
-    return 'organ'
-  if (t.includes('international normalized ratio') || /\binr\b/.test(t))
-    return 'organ'
-
-  // Biomarkers
-  if (
-    t.includes('kmt2a') ||
-    t.includes('kmt2ar') ||
-    t.includes('gpc3') ||
-    t.includes('glypican')
-  )
-    return 'biomarkers'
-
-  // Fallback bucket (for anything not matched above)
-  return 'additional'
-}
-
-function humanize(
-  fieldName: string,
-  op?: string,
-  value?: unknown,
-  label?: string | null
+/**
+ * Picks a title for a node: groupNames[id] if present - else most common form group among its leaves; else a fallback.
+ */
+function titleFromGroup(
+  node: any,
+  groupId: string | undefined,
+  formMap?: FormMap,
+  groupNames?: Record<string, string>
 ): string {
-  const t = fieldName.toLowerCase()
-  const v = (label ?? (value != null ? String(value) : '')).trim()
-  const normOp =
-    op === 'gte'
-      ? '≥'
-      : op === 'lte'
-      ? '≤'
-      : op === 'gt'
-      ? '>'
-      : op === 'lt'
-      ? '<'
-      : op === 'eq'
-      ? '='
-      : op || ''
+  if (groupId && groupNames && groupNames[groupId]) {
+    return groupNames[groupId]
+  }
 
-  // Demographics
-  if (t.includes('current age'))
-    return v ? `Age ${normOp} ${v} years.` : 'Age requirement applies.'
-  if (t.includes('biological sex')) return `Biological sex: ${v || '—'}.`
-  if (t.includes('cns status')) return `CNS status: ${v || '—'}.`
+  const tally = new Map<string, number>()
+  const stack = [node]
+  while (stack.length) {
+    const cur: any = stack.pop()
+    if (!cur || typeof cur !== 'object') continue
+    if (Array.isArray(cur.criteria)) {
+      for (let i = cur.criteria.length - 1; i >= 0; i--)
+        stack.push(cur.criteria[i])
+    } else if ('fieldName' in cur) {
+      const fk = canon(String(cur.fieldName || ''))
+      const sec = sectionForField(fk, formMap)
+      tally.set(sec, (tally.get(sec) ?? 0) + 1)
+    } else if (Array.isArray(cur)) {
+      cur.forEach((v: any) => stack.push(v))
+    }
+  }
 
-  // Disease
-  if (t.includes('current diagnosis'))
-    return v
-      ? `Diagnosis must include: ${v}.`
-      : 'Diagnosis requirement applies.'
-  if (t.includes('ecog'))
-    return v
-      ? `ECOG performance status: ${v}.`
-      : 'ECOG performance status requirement applies.'
-  if (t.includes('bclc stage'))
-    return v ? `BCLC stage: ${v}.` : 'BCLC stage requirement applies.'
-  if (t.includes('child-pugh') || t.includes('child pugh'))
-    return v
-      ? `Child–Pugh–Turcotte ${normOp} ${v}.`
-      : 'Child–Pugh–Turcotte requirement applies.'
-  if (t.includes('curative therapy'))
-    return `No known curative therapy: ${v || '—'}.`
-  if (t.includes('refractory'))
-    return v
-      ? `Refractory disease: ${v}.`
-      : 'Refractory disease requirement applies.'
-  if (t.includes('relapse'))
-    return v ? `Relapse: ${v}.` : 'Relapse requirement applies.'
-  if (t.includes('hiv')) return `HIV infection: ${v || '—'}.`
-  if (t.includes('hepatitis b') || t.includes('hepatitis c'))
-    return `Hepatitis B/C infection: ${v || '—'}.`
-  if (t.includes('infection'))
-    return `Active, uncontrolled infection: ${v || '—'}.`
+  if (tally.size > 0) {
+    let best = 'Eligibility'
+    let max = -1
+    for (const [k, n] of tally)
+      if (n > max) {
+        best = k
+        max = n
+      }
+    return titleCase(best)
+  }
 
-  // Treatment & Exposure
-  if (t.includes('hematopoietic cell transplantation'))
-    return `Prior HCT exposure: ${v || '—'}.`
-  if (t.includes('transplant'))
-    return `Transplant: ${v || `${normOp} ${String(value ?? '')}`}`.trim() + '.'
-  if (t.includes('venetoclax')) return `Prior venetoclax exposure: ${v || '—'}.`
-  if (t.includes('cyp3a'))
-    return `Exposure to strong CYP3A/3A4 inhibitors: ${v || '—'}.`
-  if (t.includes('radiotherapy')) return `Radiotherapy: ${v || '—'}.`
-  if (t.includes('cytotoxic chemotherapy'))
-    return `Cytotoxic chemotherapy: ${v || '—'}.`
-  if (t.includes('antibody-drug conjugate'))
-    return `Antibody–drug conjugate: ${v || '—'}.`
-  if (t.includes('interleukins') || t.includes('cytokines'))
-    return `Interleukins/Interferons/Cytokines: ${v || '—'}.`
-  if (t.includes('growth factor')) return `Growth factor exposure: ${v || '—'}.`
-  if (t.includes('how many days have elapsed'))
-    return `Elapsed days since last exposure: ${normOp} ${v}.`
-  if (t.includes('how much cumulative anthracycline'))
-    return `Cumulative anthracycline dose ${normOp} ${v} mg/m².`
+  return groupId ? `Eligibility Group ${groupId}` : 'Eligibility'
+}
 
-  // Organ function & labs
-  if (t.includes('cardiac function test results'))
-    return `Cardiac function: ${v || '—'}.`
-  if (t.includes('left ventricular function'))
-    return `Left ventricular function: ${v || '—'}.`
-  if (t.includes('ejection fraction'))
-    return `Ejection Fraction (EF) ${normOp} ${v}%.`
-  if (t.includes('shortening fraction'))
-    return `Shortening Fraction (SF) ${normOp} ${v}%.`
-  if (t.includes('renal function test results'))
-    return `Renal function: ${v || '—'}.`
-  if (t.includes('calculated creatinine clearance'))
-    return `Calculated creatinine clearance ${normOp} ${v} mL/min/1.73m².`
-  if (t.includes('serum creatinine'))
-    return `Serum creatinine ${normOp} ${v} mg/dL.`
-  if (t.includes('liver function test results'))
-    return `Liver function: ${v || '—'}.`
-  if (t.includes('direct bilirubin'))
-    return `Direct bilirubin ${normOp} ${v} ×ULN.`
-  if (t.includes('bilirubin (sum of conjugated'))
-    return `Bilirubin (sum of conjugated + unconjugated) ${normOp} ${v} ×ULN (age).`
-  if (t.includes('sgot (ast)')) return `SGOT (AST) ${normOp} ${v} ×ULN.`
-  if (t.includes('sgpt (alt)')) return `SGPT (ALT) ${normOp} ${v} ×ULN.`
-  if (t.includes('hemoglobin')) return `Hemoglobin ${normOp} ${v} g/dL.`
-  if (t.includes('platelet count'))
-    return `Platelet count ${normOp} ${v} ×10^3/µL.`
-  if (t.includes('absolute neutrophil count') || /\banc\b/.test(t))
-    return `Absolute neutrophil count (ANC) ${normOp} ${v} ×10^3/µL.`
-  if (t.includes('international normalized ratio') || /\binr\b/.test(t))
-    return `International Normalized Ratio (INR) ${normOp} ${v}.`
+/**
+ * Buckets items into sections by form group name.
+ */
+function bucketItemsByGroup(items: Item[]): Map<string, Item[]> {
+  const buckets = new Map<string, Item[]>()
 
-  // Biomarkers
-  if (t.includes('kmt2a') || t.includes('kmt2ar'))
-    return `KMT2A rearrangement: ${v || '—'}.`
-  if (t.includes('gpc3') || t.includes('glypican'))
-    return `GPC3 expression: ${v || '—'}.`
+  function place(it: Item) {
+    const grp = it._group
+    if (grp) {
+      if (!buckets.has(grp)) buckets.set(grp, [])
+      buckets.get(grp)!.push(it)
+      return
+    }
+    if (it.children && it.children.length) {
+      it.children.forEach(place)
+    }
+  }
 
-  // Fallback (unmapped field): show something readable so nothing is lost
-  const base = [fieldName, normOp, v].filter(Boolean).join(' ').trim()
-  return base ? `${base}.` : ''
+  items.forEach(place)
+  return buckets
+}
+
+/* public API */
+
+export function buildEligibilitySections(
+  alg: any,
+  opts: BuildOpts = {}
+): Section[] {
+  const { formMap, groupNames } = opts
+
+  const inclusion = alg?.eligibility?.inclusion
+  const exclusion = alg?.eligibility?.exclusion
+
+  const inclusionGroups = normalizeGroupNodes(inclusion)
+  const exclusionGroups = normalizeGroupNodes(exclusion)
+
+  const sections: Section[] = []
+
+  // Multiple inclusion groups - one section per node.
+  if (
+    inclusionGroups.length > 1 ||
+    (inclusionGroups.length === 1 && inclusionGroups[0].id !== undefined)
+  ) {
+    for (const { id, node } of inclusionGroups) {
+      const items = nodeToItems(node, formMap)
+      const title = titleFromGroup(node, id, formMap, groupNames)
+      sections.push({
+        id: `${id ?? slugify(title)}-inclusion`,
+        title,
+        status: sectionStatus(items),
+        items,
+      })
+    }
+  } else if (inclusionGroups.length === 1) {
+    // Single inclusion tree - split by form group in match_form order.
+    const only = inclusionGroups[0].node
+    const items = nodeToItems(only, formMap)
+    const buckets = bucketItemsByGroup(items)
+
+    // Use groupNames order if provided - else alphabetical by bucket name
+    const orderedGroupNames = groupNames
+      ? Object.keys(groupNames)
+          .sort((a, b) => Number(a) - Number(b))
+          .map((id) => groupNames[id])
+      : Array.from(buckets.keys()).sort((a, b) => a.localeCompare(b))
+
+    for (const gName of orderedGroupNames) {
+      const groupItems = buckets.get(gName)
+      if (!groupItems || groupItems.length === 0) continue
+      sections.push({
+        id: `${slugify(gName)}-inclusion`,
+        title: gName,
+        status: sectionStatus(groupItems),
+        items: groupItems,
+      })
+    }
+  }
+
+  // Exclusion (mirrors inclusion handling).
+  for (const { id, node } of exclusionGroups) {
+    const items = nodeToItems(node, formMap)
+    const base = titleFromGroup(node, id, formMap, groupNames)
+    sections.push({
+      id: `${id ?? slugify(base)}-exclusion`,
+      title: `${base} (Exclusion)`,
+      status: sectionStatus(items),
+      items,
+    })
+  }
+
+  // Fallback.
+  if (sections.length === 0) {
+    const items = nodeToItems(alg?.eligibility ?? alg, formMap)
+    sections.push({
+      id: 'eligibility',
+      title: 'Eligibility Criteria',
+      status: sectionStatus(items),
+      items,
+    })
+  }
+
+  return sections
 }
