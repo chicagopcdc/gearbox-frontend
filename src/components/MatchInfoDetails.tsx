@@ -241,14 +241,14 @@ type MatchInfoDetailsProps = {
   viewMode?: 'outline' | 'boolean'
 }
 
-const MatchInfoDetails: React.FC<MatchInfoDetailsProps> = ({
+function MatchInfoDetails({
   isFilterActive = false,
   isHighlightActive = false,
   matchInfoAlgorithm,
   matchInfoId,
   matchDetailsUrl,
   viewMode = 'outline',
-}) => {
+}: MatchInfoDetailsProps) {
   // Form schema (map + groups)
   const fm: any = useEnsureFormMap('/gearbox/match-form')
   const formMap = (fm?.map ?? fm?.formMap ?? {}) as Record<string, string>
