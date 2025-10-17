@@ -7,9 +7,23 @@ export type MatchResultProps = {
   matchDetails: MatchDetails
   matchGroups: MatchGroups
   studies: Study[]
+  userInputValues?: Record<string | number, any>
 }
 
-function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
+function MatchResult({
+  matchDetails,
+  matchGroups,
+  studies,
+  userInputValues,
+}: MatchResultProps) {
+  if (process.env.NODE_ENV !== 'production') {
+    const kind = Array.isArray(userInputValues)
+      ? 'array'
+      : userInputValues && Array.isArray((userInputValues as any).data)
+      ? 'wrapped-array'
+      : typeof userInputValues
+    console.debug('[MatchResult] userInputValues kind:', kind)
+  }
   const { matched = [], undetermined = [], unmatched = [] } = matchGroups
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study
@@ -24,12 +38,14 @@ function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
                 <TrialMatchInfo
                   study={studyById[id]}
                   studyMatchInfo={matchDetails[id]}
+                  userInputValues={userInputValues}
                 />
               )}
             </TrialCard>
           ))}
         </div>
       </DropdownSection>
+
       <DropdownSection name={`Undetermined (${undetermined.length})`}>
         <div className="mx-2">
           {undetermined.map((id) => (
@@ -38,12 +54,14 @@ function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
                 <TrialMatchInfo
                   study={studyById[id]}
                   studyMatchInfo={matchDetails[id]}
+                  userInputValues={userInputValues}
                 />
               )}
             </TrialCard>
           ))}
         </div>
       </DropdownSection>
+
       <DropdownSection name={`Unmatched (${unmatched.length})`}>
         <div className="mx-2">
           {unmatched.map((id) => (
@@ -52,6 +70,7 @@ function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
                 <TrialMatchInfo
                   study={studyById[id]}
                   studyMatchInfo={matchDetails[id]}
+                  userInputValues={userInputValues}
                 />
               )}
             </TrialCard>

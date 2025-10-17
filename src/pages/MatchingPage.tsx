@@ -39,7 +39,7 @@ function MatchingPage({
   importantQuestionsConfig,
 }: MatchingPageProps) {
   const { fetchAll } = action
-  const { conditions, config, criteria, studies } = state //Add
+  const { conditions, config, criteria, studies } = state
 
   const [isUpdating, setIsUpdating] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(true)
@@ -109,6 +109,24 @@ function MatchingPage({
   if (status === 'sending') return <div>Loading...</div>
   if (status === 'error') {
     return ErrorRetry({ retry: fetchAll })
+  }
+
+  // normalize user input into { [id]: value }
+  function toIdValueMap(raw: any): Record<string, any> {
+    if (!raw) return {}
+    // already a map?
+    if (!Array.isArray(raw) && !(raw && Array.isArray(raw.data))) {
+      return raw as Record<string, any>
+    }
+    const arr: Array<{ id: number | string; value: any }> = Array.isArray(raw)
+      ? raw
+      : Array.isArray(raw?.data)
+      ? raw.data
+      : []
+    return arr.reduce((acc, { id, value }) => {
+      acc[String(id)] = value
+      return acc
+    }, {} as Record<string, any>)
   }
 
   function updateMatchInput(newMatchedInput: MatchFormValues) {
@@ -284,7 +302,21 @@ function MatchingPage({
           isUpdating ? 'bg-gray-100' : 'bg-white'
         } ${view === 'result' ? '' : 'hidden'} `}
       >
-        <MatchResult {...{ matchDetails, matchGroups, studies }} />
+        {process.env.NODE_ENV !== 'production' &&
+          console.debug('[MatchingPage] userInput map:', {
+            count: Object.keys(toIdValueMap(currentUserInput?.values || {}))
+              .length,
+            sample: Object.entries(
+              toIdValueMap(currentUserInput?.values || {})
+            ).slice(0, 5),
+          })}
+        <MatchResult
+          {...{ matchDetails, matchGroups, studies }}
+          // ensure downstream gets a stable { [id]: value } map
+          userInputValues={toIdValueMap(
+            currentUserInput?.values ?? currentUserInput
+          )}
+        />
       </section>
     </>
   ) : (
@@ -412,7 +444,12 @@ function MatchingPage({
             isUpdating ? 'bg-gray-100' : 'bg-white'
           }`}
         >
-          <MatchResult {...{ matchDetails, matchGroups, studies }} />
+          <MatchResult
+            {...{ matchDetails, matchGroups, studies }}
+            userInputValues={toIdValueMap(
+              currentUserInput?.values ?? currentUserInput
+            )}
+          />
         </div>
       </section>
     </div>

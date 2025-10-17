@@ -17,9 +17,15 @@ import { useModal } from '../hooks/useModal'
 type TrialMatchInfoProps = {
   study: Study
   studyMatchInfo: MatchInfoAlgorithm
+  // map of { fieldId: value } from the current filters/user selections
+  userInputValues?: Record<string | number, any>
 }
 
-function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
+function TrialMatchInfo({
+  study,
+  studyMatchInfo,
+  userInputValues,
+}: TrialMatchInfoProps) {
   const matchInfoId = `match-info-${study.id}`
 
   // Modal open/close state and helpers
@@ -237,13 +243,14 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                 </div>
               </div>
 
-              {/* Modal body: pass options to details renderer */}
+              {/* Modal body: pass options and user selections to details */}
               <MatchInfoDetails
                 isFilterActive={isFilterActive}
                 isHighlightActive={isHighlightActive}
                 matchInfoId={matchInfoId}
                 matchInfoAlgorithm={studyMatchInfo}
                 viewMode={viewMode}
+                userInputValues={userInputValues} // Decouple from waiting on the endpoint to return
               />
             </div>
           </div>
