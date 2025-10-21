@@ -1,5 +1,7 @@
 // builds "boolean" lines; can color leaves using user selections
 
+type Logic = 'all' | 'any'
+
 export type BoolLine =
   | { kind: 'group-open'; indent: number }
   | { kind: 'group-close'; indent: number; trailingJoiner?: 'AND' | 'OR' }
@@ -30,7 +32,7 @@ const canon = (s?: string | null) =>
 
 // safe hasOwnProperty
 const has = (o: unknown, k: PropertyKey): boolean =>
-  Object.prototype.hasOwnProperty.call(o, k)
+  Object.prototype.hasOwnProperty.call(o as object, k)
 
 // operator, words
 function opPhrase(op?: string): string {
@@ -46,15 +48,49 @@ function opPhrase(op?: string): string {
     case 'eq':
       return 'is equal to'
     case 'in':
-      return 'is one of'
-    case 'nin':
-      return 'is not one of'
+      return 'is one of the following:'
     default:
       return (op || '').trim()
   }
 }
 
-// compare a leaf with user's chosen value
+/* value mapping via formMap */
+
+type FormMapEntry =
+  | string
+  | { label: string; options?: Record<string, string>; shortLabel?: string }
+type FormMap = Record<string, FormMapEntry>
+
+function getEntry(
+  fieldKeyNorm: string,
+  formMap?: FormMap
+): FormMapEntry | undefined {
+  if (!formMap) return undefined
+  if (fieldKeyNorm in formMap) return formMap[fieldKeyNorm]
+  for (const k of Object.keys(formMap))
+    if (canon(k) === fieldKeyNorm) return (formMap as any)[k]
+  return undefined
+}
+
+function valueToDisplay(
+  fieldKeyNorm: string,
+  raw: unknown,
+  formMap?: FormMap
+): string | undefined {
+  if (raw == null || raw === '') return undefined
+  const entry = getEntry(fieldKeyNorm, formMap)
+  const rawStr = String(raw)
+  if (entry && typeof entry === 'object' && entry.options) {
+    // try exact, then numeric-normalized (so "113" matches "113.0")
+    const byExact = entry.options[rawStr]
+    const byNum = entry.options[String(Number(rawStr))]
+    return byExact ?? byNum ?? rawStr
+  }
+  return rawStr
+}
+
+/* user-answer comparison */
+
 function evaluateAgainstUserAnswer(
   fieldLabel: string,
   opText: string | undefined,
@@ -89,10 +125,11 @@ function evaluateAgainstUserAnswer(
     if (!leafValueText) return undefined
     return canon(String(chosen.value)) === canon(leafValueText)
   }
+
   if (chosen.kind === 'number') {
     const n = Number(chosen.value)
     const leafN = Number(
-      (leafValueText ?? '').toString().replace(/[^0-9.+-]/g, '')
+      (leafValueText ?? '').toString().replace(/[^0-9.-]/g, '')
     )
     if (!Number.isFinite(n) || !Number.isFinite(leafN)) return undefined
     switch (op) {
@@ -110,10 +147,12 @@ function evaluateAgainstUserAnswer(
         return undefined
     }
   }
+
   return undefined
 }
 
-// shape checks
+/* shape checks */
+
 function isGroup(n: any): boolean {
   return !!n && typeof n === 'object' && Array.isArray(n.criteria)
 }
@@ -121,22 +160,14 @@ function isLeaf(n: any): boolean {
   return !!n && typeof n === 'object' && 'fieldName' in n
 }
 
-// value text resolver (keeps label if present)
-function valueToText(
-  fieldValue: any,
-  fieldValueLabel?: any
-): string | undefined {
-  const raw =
-    fieldValueLabel != null && String(fieldValueLabel).trim() !== ''
-      ? fieldValueLabel
-      : fieldValue != null
-      ? fieldValue
-      : ''
-  return raw === '' ? undefined : String(raw)
-}
+/* walk to lines */
 
-// walk a node into lines (keeps indent and AND/OR)
-function nodeToLines(node: any, indent: number, acc: BoolLine[]): void {
+function nodeToLines(
+  node: any,
+  indent: number,
+  acc: BoolLine[],
+  opts?: { formMap?: FormMap }
+): void {
   if (isGroup(node)) {
     const isOR = String(node.operator || '')
       .toUpperCase()
@@ -144,7 +175,7 @@ function nodeToLines(node: any, indent: number, acc: BoolLine[]): void {
     acc.push({ kind: 'group-open', indent })
     const crit = node.criteria || []
     for (let i = 0; i < crit.length; i++) {
-      nodeToLines(crit[i], indent + 16, acc)
+      nodeToLines(crit[i], indent + 16, acc, opts)
       const hasMore = i < crit.length - 1
       if (hasMore) {
         acc.push({
@@ -160,9 +191,15 @@ function nodeToLines(node: any, indent: number, acc: BoolLine[]): void {
   }
 
   if (isLeaf(node)) {
+    const fieldKeyNorm = canon(String(node.fieldName || ''))
     const field = String(node.fieldName || '')
     const opText = opPhrase(node.operator)
-    const valueText = valueToText(node.fieldValue, node.fieldValueLabel)
+    const valueText = valueToDisplay(
+      fieldKeyNorm,
+      node.fieldValueLabel ?? node.fieldValue,
+      opts?.formMap
+    )
+
     const matched =
       has(node, 'isMatched') || has(node, 'matched')
         ? (node as any).isMatched ?? (node as any).matched
@@ -173,21 +210,27 @@ function nodeToLines(node: any, indent: number, acc: BoolLine[]): void {
   }
 
   if (Array.isArray(node)) {
-    for (const ch of node) nodeToLines(ch, indent, acc)
+    for (const ch of node) nodeToLines(ch, indent, acc, opts)
   }
 }
 
-// build lines; optionally apply user selections for matched coloring
+/* public API */
+
 export function buildBooleanRich(
   alg: any,
-  opts?: { userSelectedByField?: UserSelected }
+  opts?: {
+    userSelectedByField?: UserSelected
+    formMap?: FormMap
+  }
 ): BoolLine[] {
   const root = alg?.eligibility ?? alg
   const lines: BoolLine[] = []
   if (!root) return lines
 
-  if (root.inclusion) nodeToLines(root.inclusion, 0, lines)
-  if (root.exclusion) nodeToLines(root.exclusion, 0, lines)
+  if (root.inclusion)
+    nodeToLines(root.inclusion, 0, lines, { formMap: opts?.formMap })
+  if (root.exclusion)
+    nodeToLines(root.exclusion, 0, lines, { formMap: opts?.formMap })
 
   if (opts?.userSelectedByField) {
     for (const ln of lines) {

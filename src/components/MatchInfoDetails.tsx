@@ -1,13 +1,13 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { buildEligibilitySections } from './trialMatch/sectionBuilder'
 import { buildBooleanRich } from './trialMatch/booleanBuilder'
 import { useEnsureFormMap } from './trialMatch/useEnsureFormMap'
 
-const DEBUG = false // false = debug off, true = debug on
+/* simple flag for local debug */
+const DEBUG = false
 
-// small normalizer for label keys
+/* normalize for loose matching */
 const canon = (s?: string | null) =>
   String(s ?? '')
     .replace(/[’‘]/g, "'")
@@ -17,12 +17,46 @@ const canon = (s?: string | null) =>
     .replace(/\s+/g, ' ')
     .trim()
 
-// quick form schema check
+// count leaf-like items (field/op/value OR text-only bullets) recursively
+function countRenderable(items: any[]): number {
+  if (!Array.isArray(items) || items.length === 0) return 0
+  let n = 0
+  for (const it of items) {
+    const isRenderable = !!(
+      it?.field ||
+      it?.opText ||
+      it?.valueText ||
+      it?.text
+    )
+    if (isRenderable) n++
+    if (Array.isArray(it?.children) && it.children.length) {
+      n += countRenderable(it.children)
+    }
+  }
+  return n
+}
+
+// turn boolean lines into outline-ish rows for fallback rendering
+function booleanLinesToOutlineItems(lines: any[]) {
+  const items: any[] = []
+  for (const ln of lines) {
+    if (ln.kind !== 'leaf') continue
+    items.push({
+      field: ln.field,
+      opText: ln.opText,
+      valueText: ln.valueText,
+      matched: ln.matched,
+    })
+  }
+  return items
+}
+
+/* check basic match_form shape */
 function looksLikeFormSchema(obj: any): boolean {
   return !!obj && Array.isArray(obj?.groups) && Array.isArray(obj?.fields)
 }
 
-// find a node with eligibility
+/* find nested node that has { eligibility } */
 function findEligibilityRoot(input: any): any | null {
   if (!input || typeof input !== 'object') return null
   const q = [input]
@@ -41,20 +75,21 @@ function findEligibilityRoot(input: any): any | null {
   return null
 }
 
-// loose coercion for various shapes
 type CriteriaNode = {
-  operator?: 'AND' | 'OR'
+  operator?: string
   criteria?: any[]
   fieldName?: string
   fieldValue?: any
   fieldValueLabel?: string | null
   isMatched?: boolean | null
 }
+
 function isCriteriaNode(v: any): v is CriteriaNode {
   if (!v || typeof v !== 'object') return false
   if (Array.isArray(v.criteria)) return true
-  return !!v.fieldName && typeof v.operator === 'string'
+  return typeof v.operator === 'string' && ('fieldName' in v || 'criteria' in v)
 }
+
 function looksLikeNumberedCriteriaMap(obj: any): boolean {
   if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return false
   const entries = Object.entries(obj)
@@ -63,9 +98,16 @@ function looksLikeNumberedCriteriaMap(obj: any): boolean {
   for (const [k, v] of entries) if (/^\d+$/.test(k) && isCriteriaNode(v)) ok++
   return ok >= Math.max(1, Math.floor(entries.length * 0.5))
 }
-function coerceToEligibility(input: any) {
-  if (!input || typeof input !== 'object')
-    return { eligibility: {}, _coerced: false, _source: 'unknown' as const }
+
+function coerceToEligibility(input: any): {
+  eligibility: { inclusion?: any; exclusion?: any }
+  _coerced: boolean
+  _source: 'direct' | 'single' | 'map' | 'unknown'
+} {
+  if (!input || typeof input !== 'object') {
+    return { eligibility: {}, _coerced: false, _source: 'unknown' }
+  }
+  // already shaped
   if (
     input.eligibility &&
     (input.eligibility.inclusion || input.eligibility.exclusion)
@@ -73,40 +115,41 @@ function coerceToEligibility(input: any) {
     return {
       eligibility: input.eligibility,
       _coerced: false,
-      _source: 'direct' as const,
+      _source: 'direct',
     }
   }
-  if (isCriteriaNode(input))
+  // a single criteria tree
+  if (isCriteriaNode(input)) {
     return {
       eligibility: { inclusion: input },
       _coerced: true,
-      _source: 'single' as const,
+      _source: 'single',
     }
+  }
+  // a numbered map of criteria trees
   if (looksLikeNumberedCriteriaMap(input)) {
     const nodes = Object.keys(input)
       .sort((a, b) => Number(a) - Number(b))
       .map((k) => input[k])
       .filter(isCriteriaNode)
-    return {
-      eligibility: {
-        inclusion:
-          nodes.length === 1 ? nodes[0] : { operator: 'OR', criteria: nodes },
-      },
-      _coerced: true,
-      _source: 'map' as const,
-    }
+    const inclusion =
+      nodes.length === 1 ? nodes[0] : { operator: 'OR', criteria: nodes }
+    return { eligibility: { inclusion }, _coerced: true, _source: 'map' }
   }
-  for (const v of Object.values(input))
-    if (isCriteriaNode(v))
+  // scan values for the first tree
+  for (const v of Object.values(input)) {
+    if (isCriteriaNode(v)) {
       return {
         eligibility: { inclusion: v },
         _coerced: true,
-        _source: 'found' as const,
+        _source: 'single',
       }
-  return { eligibility: {}, _coerced: false, _source: 'unknown' as const }
+    }
+  }
+  return { eligibility: {}, _coerced: false, _source: 'unknown' }
 }
 
-// GET that also follows plain-text URL bodies
+/* GET helper that also follows plain-text URL bodies containing another URL */
 async function fetchJSONMaybeRedirect(url: string) {
   const r1 = await fetch(url, { method: 'GET' })
   if (!r1.ok) throw new Error(`Failed to load ${url}: ${r1.status}`)
@@ -132,6 +175,7 @@ async function fetchJSONMaybeRedirect(url: string) {
   }
 }
 
+/* props */
 type MatchInfoDetailsProps = {
   isFilterActive?: boolean
   isHighlightActive?: boolean
@@ -139,10 +183,11 @@ type MatchInfoDetailsProps = {
   matchInfoId?: string
   matchDetailsUrl?: string
   viewMode?: 'outline' | 'boolean'
-  // accepts map, array of {id,value}, wrapped array { data: [...] }
+  // accepts map {id:value}, array [{id,value}], or { data: [...] }
   userInputValues?: any
 }
 
+/* component */
 function MatchInfoDetails({
   isFilterActive = false,
   isHighlightActive = false,
@@ -152,14 +197,23 @@ function MatchInfoDetails({
   viewMode = 'outline',
   userInputValues,
 }: MatchInfoDetailsProps) {
-  // form map + group names
+  // form map + group names (used for section building and option labels)
   const fm: any = useEnsureFormMap('/gearbox/match-form')
-  const formMap = (fm?.map ?? fm?.formMap ?? {}) as Record<string, any>
+  const formMap = (fm?.map ?? fm?.formMap ?? {}) as Record<
+    string,
+    | string
+    | {
+        label: string
+        shortLabel?: string
+        options?: Record<string, string>
+        section?: string
+      }
+  >
   const groupNames = (fm?.groupNames ?? {}) as Record<string, string>
   const formLoading = !!fm?.loading
   const formError = (fm?.error ?? null) as string | null
 
-  // id -> field meta
+  // load full match_form for field id -> meta (label/options)
   const [fieldsById, setFieldsById] = useState<Record<string, any>>({})
   useEffect(() => {
     let cancelled = false
@@ -180,7 +234,7 @@ function MatchInfoDetails({
         for (const f of data?.fields ?? []) byId[String(f.id)] = f
         if (!cancelled) setFieldsById(byId)
       } catch {
-        /* ignore */
+        /* no-op */
       }
     })()
     return () => {
@@ -188,7 +242,7 @@ function MatchInfoDetails({
     }
   }, [])
 
-  // listen for broadcasted user input (from postUserInput)
+  // read latest user selections from window event if props not provided
   const [liveUserMap, setLiveUserMap] = useState<Record<string, any>>({})
   useEffect(() => {
     const seed = (window as any).__gearboxUserInput
@@ -203,7 +257,7 @@ function MatchInfoDetails({
     return () => window.removeEventListener('gearbox:user-input', onUserInput)
   }, [])
 
-  // normalize any shape into { [id]: value }
+  // normalize incoming user input into { [id]: value }
   const normalizeToMap = (raw: any): Record<string, any> => {
     if (!raw) return {}
     if (raw instanceof Map) {
@@ -223,24 +277,6 @@ function MatchInfoDetails({
         return acc
       }, {})
     }
-    if (typeof raw === 'object') {
-      for (const v of Object.values(raw)) {
-        if (
-          Array.isArray(v) &&
-          v.length &&
-          typeof v[0] === 'object' &&
-          'id' in (v[0] as any)
-        ) {
-          return (v as Array<{ id: number | string; value: any }>).reduce(
-            (acc, { id, value }) => {
-              acc[String(id)] = value
-              return acc
-            },
-            {} as Record<string, any>
-          )
-        }
-      }
-    }
     return Object.entries(raw as Record<string, any>).reduce((acc, [k, v]) => {
       if (v == null) return acc
       if (typeof v === 'object' && !Array.isArray(v)) return acc
@@ -249,14 +285,13 @@ function MatchInfoDetails({
     }, {} as Record<string, any>)
   }
 
-  // prefer prop map; else event map
   const propMap = useMemo(
     () => normalizeToMap(userInputValues),
     [userInputValues]
   )
   const finalUserMap = Object.keys(propMap).length > 0 ? propMap : liveUserMap
 
-  // build canon(field label) -> { kind, value }
+  // build canon(field label) -> selected {kind,value}
   const selectedByField = useMemo(() => {
     if (!finalUserMap || !fieldsById) return {}
     const out: Record<
@@ -271,9 +306,12 @@ function MatchInfoDetails({
         const n = Number(raw)
         if (Number.isFinite(n)) out[key] = { kind: 'number', value: n }
       } else if (Array.isArray(f.options)) {
-        const lab =
-          f.options.find((o: any) => String(o.value) === String(raw))?.label ??
-          String(raw)
+        // compare option.value loosely to handle 113 vs 113.0
+        const hit =
+          f.options.find(
+            (o: any) => String(Number(o.value)) === String(Number(raw))
+          ) ?? f.options.find((o: any) => String(o.value) === String(raw))
+        const lab = hit?.label ?? String(raw)
         out[key] = { kind: 'label', value: lab }
       } else {
         out[key] = { kind: 'label', value: String(raw) }
@@ -282,7 +320,7 @@ function MatchInfoDetails({
     return out
   }, [finalUserMap, fieldsById])
 
-  // fetch match details if not provided
+  // fetch match details when not passed
   const [fetched, setFetched] = useState<any>(null)
   const [algLoading, setAlgLoading] = useState(false)
   const [algError, setAlgError] = useState<string | null>(null)
@@ -307,16 +345,17 @@ function MatchInfoDetails({
     }
   }, [matchInfoAlgorithm, matchDetailsUrl])
 
-  // coerce to { eligibility }
+  // resolve { eligibility } (prefer nested; else coerce)
   const { eligibility, _coerced, _source } = useMemo(() => {
     const chosen = matchInfoAlgorithm ?? fetched
     const nested = chosen ? findEligibilityRoot(chosen) : null
-    if (nested)
+    if (nested && nested.eligibility) {
       return {
         eligibility: nested.eligibility,
         _coerced: false,
         _source: 'direct' as const,
       }
+    }
     return coerceToEligibility(chosen)
   }, [matchInfoAlgorithm, fetched])
 
@@ -330,60 +369,25 @@ function MatchInfoDetails({
   const outlineSections = useMemo(
     () =>
       ready
-        ? buildEligibilitySections({ eligibility }, { formMap, groupNames })
+        ? buildEligibilitySections(
+            { eligibility },
+            { formMap, groupNames, userSelectedByField: selectedByField }
+          )
         : [],
-    [ready, eligibility, formMap, groupNames]
+    [ready, eligibility, formMap, groupNames, selectedByField]
   )
   const booleanLines = useMemo(
-    () => (ready ? buildBooleanRich({ eligibility }) : []),
-    [ready, eligibility]
+    () =>
+      ready
+        ? buildBooleanRich(
+            { eligibility },
+            { userSelectedByField: selectedByField, formMap }
+          )
+        : [],
+    [ready, eligibility, selectedByField, formMap]
   )
 
-  // matching helpers
-  const parseMaybeNumber = (s: string | number | null | undefined) => {
-    if (s == null) return null
-    const raw = typeof s === 'number' ? String(s) : s
-    const trimmed = raw.trim()
-    if (trimmed === '') return null
-    const n = Number(trimmed.replace(/[^0-9.-]/g, ''))
-    return Number.isFinite(n) ? n : null
-  }
-
-  // uses user selection to decide match
-  const deriveMatch = (
-    fieldLabel?: string,
-    opText?: string,
-    valueText?: string
-  ): boolean | undefined => {
-    if (!fieldLabel) return undefined
-    const sel = selectedByField[canon(fieldLabel)]
-    if (!sel) return undefined
-
-    const op = (opText || '').toLowerCase()
-
-    if (sel.kind === 'label') {
-      if (op.includes('equal')) {
-        return canon(String(sel.value)) === canon(String(valueText))
-      }
-      return undefined
-    }
-
-    if (sel.kind === 'number') {
-      const target = parseMaybeNumber(valueText)
-      if (target == null) return undefined
-      const val = Number(sel.value)
-      if (op.includes('greater') && op.includes('equal')) return val >= target
-      if (op.includes('greater')) return val > target
-      if (op.includes('less') && op.includes('equal')) return val <= target
-      if (op.includes('less')) return val < target
-      if (op.includes('equal')) return val === target
-      return undefined
-    }
-
-    return undefined
-  }
-
-  // debug
+  // small debug object
   const debugInfo = {
     hasEligibility,
     coerced: _coerced,
@@ -398,91 +402,69 @@ function MatchInfoDetails({
     algError,
     userInput: {
       source:
-        Object.keys(normalizeToMap(userInputValues)).length > 0
+        Object.keys(propMap).length > 0
           ? 'prop'
           : Object.keys(liveUserMap).length > 0
           ? 'event'
           : 'none',
-      rawKeyCount: Object.keys(
-        Object.keys(normalizeToMap(userInputValues)).length > 0
-          ? normalizeToMap(userInputValues)
-          : liveUserMap
-      ).length,
+      rawKeyCount: Object.keys(finalUserMap).length,
       selectedCount: Object.keys(selectedByField).length,
       preview: Object.keys(selectedByField)
-        .slice(0, 10)
+        .slice(0, 8)
         .map((k) => ({ field: k, sel: selectedByField[k] })),
     },
   }
   if (DEBUG) console.debug('[MatchInfoDetails] debug', debugInfo)
 
-  // BOOLEAN VIEW
+  /* BOOLEAN VIEW */
   if (viewMode === 'boolean') {
     if (!ready) {
       return (
         <div className="rounded-lg border bg-white p-4 text-sm">
           <div className="font-semibold">Preparing boolean view…</div>
-          <pre className="text-xs bg-gray-50 border p-2 rounded mt-3">
-            {JSON.stringify(debugInfo, null, 2)}
-          </pre>
+          {DEBUG && (
+            <pre className="text-xs bg-gray-50 border p-2 rounded mt-3">
+              {JSON.stringify(debugInfo, null, 2)}
+            </pre>
+          )}
         </div>
       )
     }
     const lines = booleanLines || []
     const visible = isFilterActive
-      ? lines.filter((ln) => {
-          if (ln.kind !== 'leaf') return true
-          const eff =
-            (ln as any).matched ??
-            deriveMatch(ln.field, ln.opText, ln.valueText) ??
-            false
-          return eff !== false
-        })
+      ? lines.filter((ln: any) =>
+          ln.kind === 'leaf' ? (ln.matched ?? false) !== false : true
+        )
       : lines
 
     return (
-      <div className="rounded-lg border bg-white p-4">
+      <div className="rounded-lg border bg-white p-3">
         {DEBUG && (
           <pre className="text-xs bg-gray-50 border p-2 rounded mb-3">
             {JSON.stringify(debugInfo, null, 2)}
           </pre>
         )}
-        <div className="text-sm leading-6 font-mono">
+        <div className="text-sm leading-6">
           {visible.map((ln: any, i: number) => {
-            const effMatched =
-              ln.kind === 'leaf'
-                ? (ln as any).matched ??
-                  deriveMatch(ln.field, ln.opText, ln.valueText) ??
-                  false
-                : undefined
             switch (ln.kind) {
               case 'group-open':
                 return (
-                  <div
-                    key={i}
-                    style={{ paddingLeft: ln.indent }}
-                    className="whitespace-pre"
-                  >
+                  <div key={i} style={{ paddingLeft: ln.indent }}>
                     (
                   </div>
                 )
               case 'group-close':
                 return (
-                  <div
-                    key={i}
-                    style={{ paddingLeft: ln.indent }}
-                    className="whitespace-pre"
-                  >
-                    )
-                    {ln.trailingJoiner ? (
-                      <span className="ml-2 text-gray-500">
-                        {ln.trailingJoiner}
-                      </span>
-                    ) : null}
+                  <div key={i} style={{ paddingLeft: ln.indent }}>
+                    ){ln.trailingJoiner ? ` ${ln.trailingJoiner}` : ''}
                   </div>
                 )
               case 'leaf': {
-                const valueColor = effMatched ? 'text-blue-700' : 'text-red-700'
+                const valueColor = isHighlightActive
+                  ? ln.matched === true
+                    ? 'text-blue-700'
+                    : 'text-red-700'
+                  : undefined
                 return (
                   <div key={i} style={{ paddingLeft: ln.indent }}>
                     <span className="whitespace-pre-wrap">{ln.field} </span>
@@ -494,7 +476,7 @@ function MatchInfoDetails({
                         <span
                           className={`inline-block align-middle mx-1 ${valueColor}`}
                         >
-                          {effMatched ? '✓' : '✕'}
+                          {ln.matched === true ? '✓' : '✕'}
                         </span>
                       </>
                     ) : null}
@@ -506,6 +488,8 @@ function MatchInfoDetails({
                   </div>
                 )
               }
+              default:
+                return null
             }
           })}
         </div>
@@ -513,7 +497,7 @@ function MatchInfoDetails({
     )
   }
 
-  // OUTLINE VIEW
+  /* OUTLINE VIEW */
   if (!ready) {
     return (
       <div className="rounded-lg border bg-white p-4 text-sm">
@@ -526,39 +510,55 @@ function MatchInfoDetails({
             Form error: {String(formError)}
           </div>
         )}
-        <pre className="text-xs bg-gray-50 border p-2 rounded mt-3">
-          {JSON.stringify(debugInfo, null, 2)}
-        </pre>
+        {DEBUG && (
+          <pre className="text-xs bg-gray-50 border p-2 rounded mt-3">
+            {JSON.stringify(debugInfo, null, 2)}
+          </pre>
+        )}
       </div>
     )
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {DEBUG && (
         <pre className="text-xs bg-gray-50 border p-2 rounded">
           {JSON.stringify(debugInfo, null, 2)}
         </pre>
       )}
 
-      {outlineSections.map((sec: any) => {
-        // compute per-item effective match (default red)
-        const itemsWithMatch = sec.items.map((it: any) => {
-          const m =
-            it.matched ??
-            deriveMatch(it.field, it.opText, it.valueText) ??
-            false // default red
-          return { ...it, _effMatched: m }
-        })
+      {outlineSections.map((sec: any, idx: number) => {
+        // preserve computed matched (don’t invent false)
+        const itemsWithMatch = (sec.items || []).map((it: any) => ({
+          ...it,
+          _effMatched: it.matched,
+        }))
 
-        const visible = itemsWithMatch.filter(
+        // visibility
+        const visibleTop = itemsWithMatch.filter(
           (it: any) => !(isFilterActive && it._effMatched === false)
         )
 
-        // leaf-only evaluation for status (default not_met if not all true)
-        const leafMatches = itemsWithMatch
-          .filter((it: any) => it.field || it.valueText || it.opText)
-          .map((it: any) => it._effMatched as boolean)
+        // deep count
+        const deepCount = countRenderable(visibleTop)
+
+        // Fallback
+        const needsFallback = deepCount === 0
+        const fallbackItems = needsFallback
+          ? booleanLinesToOutlineItems(booleanLines)
+          : []
+
+        // status: blue only if all leaves are true (and at least one)
+        const leafMatches = (needsFallback ? fallbackItems : visibleTop)
+          .filter((it: any) => it.field || it.valueText || it.opText || it.text)
+          .map((it: any) =>
+            it.matched === true
+              ? true
+              : it.matched === false
+              ? false
+              : undefined
+          )
+          .filter((x: any) => x !== undefined)
 
         const status: 'met' | 'not_met' =
           leafMatches.length > 0 &&
@@ -566,32 +566,54 @@ function MatchInfoDetails({
             ? 'met'
             : 'not_met'
 
+        if (DEBUG) {
+          // quick peek so we can see why a section is empty
+          // eslint-disable-next-line no-console
+          console.debug('[Outline sec]', {
+            idx,
+            id: sec.id,
+            title: sec.title,
+            itemsTop: sec.items?.length ?? 0,
+            deepCount,
+            needsFallback,
+          })
+        }
+
         return (
-          <details key={sec.id} className="rounded-lg border bg-white" open>
+          <details
+            key={sec.id || idx}
+            className="rounded-lg border bg-white"
+            open
+          >
             <summary className="cursor-pointer select-none list-none p-3 font-semibold">
               {sec.title}{' '}
-              {status === 'met' && (
+              {status === 'met' ? (
                 <span className="ml-2 text-blue-600">
                   (Screening Criteria Met)
                 </span>
-              )}
-              {status === 'not_met' && (
+              ) : (
                 <span className="ml-2 text-red-600">
                   (Screening Criteria Not Met)
                 </span>
               )}
             </summary>
 
-            {visible.length === 0 ? (
-              <div className="p-4 text-sm text-gray-500 italic">
-                No criteria listed.
+            {needsFallback ? (
+              // Fallback
+              <RenderItems
+                items={fallbackItems}
+                isHighlightActive={isHighlightActive}
+                isFilterActive={isFilterActive}
+              />
+            ) : deepCount === 0 ? (
+              <div className="px-4 pb-3 text-sm text-gray-500">
+                No visible items for current filters.
               </div>
             ) : (
               <RenderItems
-                items={visible}
+                items={visibleTop}
                 isHighlightActive={isHighlightActive}
                 isFilterActive={isFilterActive}
-                deriveMatch={deriveMatch}
               />
             )}
           </details>
@@ -601,12 +623,11 @@ function MatchInfoDetails({
   )
 }
 
-// outline item list; red color if builder didn’t set matched
+/* outline list renderer */
 function RenderItems({
   items,
   isHighlightActive,
   isFilterActive,
-  deriveMatch,
 }: {
   items: Array<{
     text?: string
@@ -619,17 +640,12 @@ function RenderItems({
   }>
   isHighlightActive: boolean
   isFilterActive: boolean
-  deriveMatch: (
-    field?: string,
-    opText?: string,
-    valueText?: string
-  ) => boolean | undefined
 }) {
   if (!items?.length) return null
 
   const valueClass = (m?: boolean) => {
     if (!isHighlightActive) return undefined
-    return m ? 'text-blue-700' : 'text-red-700' // default red
+    return m ? 'text-blue-700' : 'text-red-700'
   }
 
   const iconFor = (m?: boolean) =>
@@ -637,11 +653,82 @@ function RenderItems({
       <span className="inline-block align-middle mx-1 text-blue-700">✓</span>
     ) : (
       <span className="inline-block align-middle mx-1 text-red-700">✕</span>
-    ) // default red icon
+    )
+
+  // Collapses consecutive leaf items that share the same field + opText
+  // into a single parent line with a child list of values.
+  const collapseSiblingLeaves = (arr: any[]): any[] => {
+    const out: any[] = []
+    let i = 0
+    while (i < arr.length) {
+      const it = arr[i]
+
+      // Recurse into existing parent nodes first
+      if (
+        it?.children &&
+        Array.isArray(it.children) &&
+        it.children.length > 0
+      ) {
+        out.push({
+          ...it,
+          children: collapseSiblingLeaves(it.children),
+        })
+        i += 1
+        continue
+      }
+
+      const canGroup =
+        it && it.field && it.opText && !it.children && (it.valueText || it.text)
+
+      if (!canGroup) {
+        out.push(it)
+        i += 1
+        continue
+      }
+
+      // Start a run of siblings with same field + opText
+      const run: any[] = [it]
+      let j = i + 1
+      while (j < arr.length) {
+        const nxt = arr[j]
+        const sameShape =
+          nxt &&
+          nxt.field === it.field &&
+          nxt.opText === it.opText &&
+          !nxt.children &&
+          (nxt.valueText || nxt.text)
+        if (!sameShape) break
+        run.push(nxt)
+        j += 1
+      }
+
+      // If we got 2+ in a row, fold them into a parent with children list
+      if (run.length > 1) {
+        const children = run.map((n) => ({
+          text: n.text,
+          valueText: n.valueText,
+          matched: n.matched,
+        }))
+        out.push({
+          field: it.field,
+          opText: it.opText, // ..."is equal to"
+          logic: 'any',
+          children,
+        })
+        i = j
+      } else {
+        out.push(it)
+        i += 1
+      }
+    }
+    return out
+  }
+
+  const displayItems = collapseSiblingLeaves(items)
 
   return (
     <ul className="p-4 list-disc pl-6">
-      {items.map((it, i) => {
+      {displayItems.map((it, i: number) => {
         // grouping-only node
         if (!it.text && !it.field && it.children && it.children.length > 0) {
           return (
@@ -651,16 +738,55 @@ function RenderItems({
                   items={it.children as any}
                   isHighlightActive={isHighlightActive}
                   isFilterActive={isFilterActive}
-                  deriveMatch={deriveMatch}
                 />
               </div>
             </li>
           )
         }
 
+        // parent-once with children options
+        if (
+          it.field &&
+          it.opText &&
+          Array.isArray(it.children) &&
+          it.children.length > 0
+        ) {
+          const visibleKids = it.children.filter(
+            (c: any) => !(isFilterActive && c?.matched === false)
+          )
+          return (
+            <li key={`p-${i}`} className="mb-2">
+              <span className="whitespace-pre-wrap">{it.field}</span>
+              <span className="italic text-gray-500"> {it.opText}</span>
+              <span className="ml-2 text-xs text-gray-500">(ANY)</span>
+
+              {visibleKids.length ? (
+                <ul className="mt-2 list-none pl-0">
+                  {visibleKids.map((c: any, j: number) => {
+                    const label = c.valueText ?? c.text
+                    return (
+                      <li key={`p-${i}-c-${j}`} className="mb-0.5">
+                        <span className={valueClass(c.matched)}>{label}</span>
+                        {iconFor(c.matched)}
+                        {j < visibleKids.length - 1 ? (
+                          <span className="text-gray-500"> or</span>
+                        ) : null}
+                      </li>
+                    )
+                  })}
+                </ul>
+              ) : (
+                <div className="text-sm text-gray-500 mt-1">
+                  No visible items for current filters.
+                </div>
+              )}
+            </li>
+          )
+        }
+
+        // standard leaf / structured line
         const hasStructured = !!(it.field || it.opText || it.valueText)
-        const effMatched =
-          it.matched ?? deriveMatch(it.field, it.opText, it.valueText) ?? false // default red
+        const effMatched = it.matched ?? false
 
         return (
           <li key={i}>
@@ -688,18 +814,17 @@ function RenderItems({
               <span className="whitespace-pre-wrap">{it.text}</span>
             ) : null}
 
-            {it.children && it.children.length > 0 && it.logic && (
+            {it.children && (it.children as any[]).length > 0 && it.logic && (
               <span className="ml-2 text-xs text-gray-500">
-                ({(it.logic as string).toUpperCase()})
+                ({String(it.logic).toUpperCase()})
               </span>
             )}
-            {it.children && it.children.length > 0 && (
+            {it.children && (it.children as any[]).length > 0 && (
               <div className="mt-1">
                 <RenderItems
                   items={it.children as any}
                   isHighlightActive={isHighlightActive}
                   isFilterActive={isFilterActive}
-                  deriveMatch={deriveMatch}
                 />
               </div>
             )}
