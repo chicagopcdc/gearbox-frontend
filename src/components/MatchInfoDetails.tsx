@@ -636,12 +636,27 @@ function RenderItems({
     valueText?: string
     matched?: boolean
     children?: any[]
+    values?: any[]
+    items?: any[]
     logic?: 'all' | 'any'
   }>
   isHighlightActive: boolean
   isFilterActive: boolean
 }) {
   if (!items?.length) return null
+
+  // helpers
+  const getKids = (it: any): any[] =>
+    Array.isArray(it?.children)
+      ? it.children
+      : Array.isArray(it?.values)
+      ? it.values
+      : Array.isArray(it?.items)
+      ? it.items
+      : []
+
+  const effMatch = (m?: boolean) =>
+    m === true ? true : m === false ? false : false
 
   const valueClass = (m?: boolean) => {
     if (!isHighlightActive) return undefined
@@ -655,87 +670,42 @@ function RenderItems({
       <span className="inline-block align-middle mx-1 text-red-700">✕</span>
     )
 
-  // Collapses consecutive leaf items that share the same field + opText
-  // into a single parent line with a child list of values.
-  const collapseSiblingLeaves = (arr: any[]): any[] => {
-    const out: any[] = []
-    let i = 0
-    while (i < arr.length) {
-      const it = arr[i]
-
-      // Recurse into existing parent nodes first
-      if (
-        it?.children &&
-        Array.isArray(it.children) &&
-        it.children.length > 0
-      ) {
-        out.push({
-          ...it,
-          children: collapseSiblingLeaves(it.children),
-        })
-        i += 1
-        continue
+  // Apply filtering to a list of children (hide explicit false when filter is active)
+  const filterKids = (arr: any[]): any[] => {
+    if (!isFilterActive) return arr
+    return arr.filter((k) => {
+      const kidsOfKid = getKids(k)
+      if (kidsOfKid.length > 0) {
+        return filterKids(kidsOfKid).length > 0
       }
-
-      const canGroup =
-        it && it.field && it.opText && !it.children && (it.valueText || it.text)
-
-      if (!canGroup) {
-        out.push(it)
-        i += 1
-        continue
-      }
-
-      // Start a run of siblings with same field + opText
-      const run: any[] = [it]
-      let j = i + 1
-      while (j < arr.length) {
-        const nxt = arr[j]
-        const sameShape =
-          nxt &&
-          nxt.field === it.field &&
-          nxt.opText === it.opText &&
-          !nxt.children &&
-          (nxt.valueText || nxt.text)
-        if (!sameShape) break
-        run.push(nxt)
-        j += 1
-      }
-
-      // If we got 2+ in a row, fold them into a parent with children list
-      if (run.length > 1) {
-        const children = run.map((n) => ({
-          text: n.text,
-          valueText: n.valueText,
-          matched: n.matched,
-        }))
-        out.push({
-          field: it.field,
-          opText: it.opText, // ..."is equal to"
-          logic: 'any',
-          children,
-        })
-        i = j
-      } else {
-        out.push(it)
-        i += 1
-      }
-    }
-    return out
+      return effMatch(k.matched) !== false
+    })
   }
 
-  const displayItems = collapseSiblingLeaves(items)
-
+  // render
   return (
     <ul className="p-4 list-disc pl-6">
-      {displayItems.map((it, i: number) => {
-        // grouping-only node
-        if (!it.text && !it.field && it.children && it.children.length > 0) {
+      {items.map((it, i) => {
+        const kids = getKids(it)
+        const filteredKids = filterKids(kids)
+
+        const hasStructured = !!(it.field || it.opText || it.valueText)
+        const isOneOf =
+          typeof it.opText === 'string' &&
+          it.opText.toLowerCase().includes('one of')
+
+        // Hide a plain leaf when filtering and it's a negative match
+        if (!kids.length && isFilterActive && effMatch(it.matched) === false)
+          return null
+
+        // Group-only container (no field/op/value, just children)
+        if (!hasStructured && kids.length > 0) {
+          if (filteredKids.length === 0) return null
           return (
             <li key={`g-${i}`} className="list-none pl-0">
-              <div className="mt-1">
+              <div className="mt-1 ml-4">
                 <RenderItems
-                  items={it.children as any}
+                  items={filteredKids as any}
                   isHighlightActive={isHighlightActive}
                   isFilterActive={isFilterActive}
                 />
@@ -744,54 +714,70 @@ function RenderItems({
           )
         }
 
-        // parent-once with children options
-        if (
-          it.field &&
-          it.opText &&
-          Array.isArray(it.children) &&
-          it.children.length > 0
-        ) {
-          const visibleKids = it.children.filter(
-            (c: any) => !(isFilterActive && c?.matched === false)
-          )
+        // "Parent once + vertical list of options" style (ANY)
+        if (hasStructured && isOneOf && kids.length > 0) {
+          if (filteredKids.length === 0) return null
           return (
-            <li key={`p-${i}`} className="mb-2">
-              <span className="whitespace-pre-wrap">{it.field}</span>
-              <span className="italic text-gray-500"> {it.opText}</span>
-              <span className="ml-2 text-xs text-gray-500">(ANY)</span>
+            <li key={i} className="mb-2">
+              {/* header row: show parent line once */}
+              <div>
+                {it.field ? (
+                  <span className="whitespace-pre-wrap">{it.field}</span>
+                ) : null}
+                {it.opText ? (
+                  <span className="italic text-gray-500">
+                    {' '}
+                    {it.opText}
+                    {it.logic === 'any' ? '(ANY)' : null}
+                  </span>
+                ) : null}
+              </div>
 
-              {visibleKids.length ? (
-                <ul className="mt-2 list-none pl-0">
-                  {visibleKids.map((c: any, j: number) => {
-                    const label = c.valueText ?? c.text
-                    return (
-                      <li key={`p-${i}-c-${j}`} className="mb-0.5">
-                        <span className={valueClass(c.matched)}>{label}</span>
-                        {iconFor(c.matched)}
-                        {j < visibleKids.length - 1 ? (
-                          <span className="text-gray-500"> or</span>
-                        ) : null}
-                      </li>
-                    )
-                  })}
-                </ul>
-              ) : (
-                <div className="text-sm text-gray-500 mt-1">
-                  No visible items for current filters.
-                </div>
-              )}
+              {/* children as a vertical list */}
+              <ul className="ml-4 mt-2 list-disc pl-5">
+                {filteredKids.map((ch, idx) => {
+                  const m = effMatch(ch.matched)
+                  const label = ch.valueText ?? ch.text ?? ch.field ?? ''
+                  return (
+                    <li key={`opt-${i}-${idx}`}>
+                      <span className={valueClass(m)}>{label}</span>
+                      {iconFor(m)}
+                    </li>
+                  )
+                })}
+              </ul>
             </li>
           )
         }
 
-        // standard leaf / structured line
-        const hasStructured = !!(it.field || it.opText || it.valueText)
-        const effMatched = it.matched ?? false
+        // Simple leaf (structured row with optional value)
+        if (hasStructured && !kids.length) {
+          const m = effMatch(it.matched)
+          return (
+            <li key={i}>
+              {it.field ? (
+                <span className="whitespace-pre-wrap">{it.field}</span>
+              ) : null}
+              {it.opText ? (
+                <span className="italic text-gray-500"> {it.opText}</span>
+              ) : null}
+              {it.valueText ? (
+                <>
+                  {' '}
+                  <span className={valueClass(m)}>{it.valueText}</span>
+                  {iconFor(m)}
+                </>
+              ) : null}
+            </li>
+          )
+        }
 
-        return (
-          <li key={i}>
-            {hasStructured ? (
-              <>
+        // Structured parent with (non-ANY) nested children
+        if (hasStructured && kids.length > 0) {
+          if (filteredKids.length === 0) return null
+          return (
+            <li key={i}>
+              <div>
                 {it.field ? (
                   <span className="whitespace-pre-wrap">{it.field}</span>
                 ) : null}
@@ -801,35 +787,41 @@ function RenderItems({
                 {it.valueText ? (
                   <>
                     {' '}
-                    <span className={valueClass(effMatched)}>
+                    <span className={valueClass(it.matched)}>
                       {it.valueText}
                     </span>
-                    {iconFor(effMatched)}
+                    {iconFor(effMatch(it.matched))}
                   </>
                 ) : null}
-              </>
-            ) : null}
+                {it.logic ? (
+                  <span className="ml-2 text-xs text-gray-500">
+                    ({it.logic.toUpperCase()})
+                  </span>
+                ) : null}
+              </div>
 
-            {!hasStructured && it.text ? (
-              <span className="whitespace-pre-wrap">{it.text}</span>
-            ) : null}
-
-            {it.children && (it.children as any[]).length > 0 && it.logic && (
-              <span className="ml-2 text-xs text-gray-500">
-                ({String(it.logic).toUpperCase()})
-              </span>
-            )}
-            {it.children && (it.children as any[]).length > 0 && (
-              <div className="mt-1">
+              <div className="mt-1 ml-4">
                 <RenderItems
-                  items={it.children as any}
+                  items={filteredKids as any}
                   isHighlightActive={isHighlightActive}
                   isFilterActive={isFilterActive}
                 />
               </div>
-            )}
-          </li>
-        )
+            </li>
+          )
+        }
+
+        // Fallback: plain text
+        if (it.text && !hasStructured) {
+          if (isFilterActive && effMatch(it.matched) === false) return null
+          return (
+            <li key={i}>
+              <span className="whitespace-pre-wrap">{it.text}</span>
+            </li>
+          )
+        }
+
+        return null
       })}
     </ul>
   )

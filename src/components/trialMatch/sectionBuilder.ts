@@ -153,7 +153,7 @@ function opPhrase(op?: string): string {
     case 'eq':
       return 'is equal to'
     case 'in':
-      return 'is one of the following:'
+      return 'is one of the following'
     default:
       return (op || '').trim()
   }
@@ -231,7 +231,6 @@ function normalizeMatched(v: any): boolean | undefined {
 }
 
 /* leaf + collapse */
-
 function leafToItem(
   node: any,
   formMap?: FormMap,
@@ -242,21 +241,17 @@ function leafToItem(
   const lhs = fieldToText(fieldKeyNorm, formMap)
   const op = opPhrase(node.operator)
 
-  const raw =
-    node.fieldValueLabel != null && String(node.fieldValueLabel).trim() !== ''
-      ? node.fieldValueLabel
-      : node.valueLabel != null && String(node.valueLabel).trim() !== ''
-      ? node.valueLabel
-      : node.fieldValue ?? node.value
+  const raw = node.fieldValueLabel?.toString().trim()
+    ? node.fieldValueLabel
+    : node.valueLabel?.toString().trim()
+    ? node.valueLabel
+    : node.fieldValue ?? node.value
 
   const rhs = valueToDisplay(fieldKeyNorm, raw, formMap)
-  const grp = sectionForField(fieldKeyNorm, formMap)
 
-  const matchedRaw = has(node, 'isMatched')
-    ? node.isMatched
-    : has(node, 'matched')
-    ? node.matched
-    : undefined
+  const hasIM = Object.prototype.hasOwnProperty.call(node, 'isMatched')
+  const hasM = Object.prototype.hasOwnProperty.call(node, 'matched')
+  const matchedRaw = hasIM ? node.isMatched : hasM ? node.matched : undefined
 
   const userMatch = computeUserMatch(lhs, op, rhs, selectedByField)
   const matched = userMatch ?? normalizeMatched(matchedRaw)
@@ -265,9 +260,8 @@ function leafToItem(
     field: lhs,
     opText: op,
     valueText: rhs,
-    text: rhs ? `${lhs} ${op} ${rhs}` : `${lhs} ${op}`,
     matched,
-    _group: grp,
+    _group: sectionForField(fieldKeyNorm, formMap),
   }
 }
 
@@ -296,7 +290,7 @@ function tryCollapseSameFieldOR(
   if (!isOR) return null
 
   const children: any[] = node.criteria || []
-  if (children.length < 2) return null // collapse even for pairs
+  if (children.length < 3) return null
 
   const firstLeaf = children.find(isLeaf)
   if (!firstLeaf) return null
@@ -307,29 +301,28 @@ function tryCollapseSameFieldOR(
   const sameField = children.every(
     (ch) =>
       isLeaf(ch) &&
-      canon(String((ch.fieldName ?? ch.field) || '')) === baseField &&
-      ['', 'eq', 'in'].includes(String(ch.operator || '').toLowerCase())
+      canon(String((ch.fieldName ?? ch.field) || '')) === baseField
   )
   if (!sameField) return null
 
   const values: Array<{ label: string; matched?: boolean }> = []
   for (const ch of children) {
-    const raw =
-      ch.fieldValueLabel != null && String(ch.fieldValueLabel).trim() !== ''
-        ? ch.fieldValueLabel
-        : ch.valueLabel != null && String(ch.valueLabel).trim() !== ''
-        ? ch.valueLabel
-        : ch.fieldValue ?? ch.value
+    const opLower = String(ch.operator || '').toLowerCase()
+    if (!['', 'eq', 'in'].includes(opLower)) return null
+
+    const raw = ch.fieldValueLabel?.toString().trim()
+      ? ch.fieldValueLabel
+      : ch.valueLabel?.toString().trim()
+      ? ch.valueLabel
+      : ch.fieldValue ?? ch.value
 
     const display = valueToDisplay(baseField, raw, formMap) ?? String(raw ?? '')
-
     const userMatch = computeUserMatch(
       fieldToText(baseField, formMap),
-      'is equal to', // parent will say "is equal to"
+      'is one of the following',
       display,
       selectedByField
     )
-
     const mRaw = Object.prototype.hasOwnProperty.call(ch, 'isMatched')
       ? ch.isMatched
       : Object.prototype.hasOwnProperty.call(ch, 'matched')
@@ -346,18 +339,16 @@ function tryCollapseSameFieldOR(
   const grp = sectionForField(baseField, formMap)
 
   const kids: Item[] = values.map((v) => ({
-    valueText: v.label, // no field/opText on children => render as simple list
-    text: v.label,
+    valueText: v.label,
     matched: v.matched,
     _group: grp,
   }))
 
   const parent: Item = {
     field: fieldLabel,
-    opText: 'is equal to', // header line: "Question is equal to"
-    children: kids, // then a list of values
-    logic: 'any', // shows (ANY)
-    matched: liftMatchedFromChildren(kids),
+    opText: 'is one of the following',
+    logic: 'any',
+    children: kids,
     _group: grp,
   }
   return [parent]
