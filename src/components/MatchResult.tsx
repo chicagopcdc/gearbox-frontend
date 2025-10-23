@@ -16,14 +16,6 @@ function MatchResult({
   studies,
   userInputValues,
 }: MatchResultProps) {
-  if (process.env.NODE_ENV !== 'production') {
-    const kind = Array.isArray(userInputValues)
-      ? 'array'
-      : userInputValues && Array.isArray((userInputValues as any).data)
-      ? 'wrapped-array'
-      : typeof userInputValues
-    console.debug('[MatchResult] userInputValues kind:', kind)
-  }
   const { matched = [], undetermined = [], unmatched = [] } = matchGroups
   const studyById: { [id: number]: Study } = {}
   for (const study of studies) studyById[study.id] = study
