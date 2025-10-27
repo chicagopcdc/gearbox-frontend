@@ -8,7 +8,7 @@ type LatestUserInputBody =
 type AllUserInputsBody = UserInputApi[] | { detail: string }
 
 export function getLatestUserInput(): Promise<UserInputUi> {
-  return fetchGearbox('/gearbox/user-input/latest')
+  return fetchGearbox('/gearbox-middleware/user-input/latest')
     .then((res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data) {
@@ -32,29 +32,13 @@ export function postUserInput(
       : [...acc, { id: Number(id), value }]
   }, [] as { id: number; value: any }[])
 
-  // Decoupled: build id->value map for UI consumers
-  const map = data.reduce((m, { id, value }) => {
-    m[String(id)] = value
-    return m
-  }, {} as Record<string, any>)
-
-  // Decoupled: stash latest in a well-known place for initial read
-  ;(window as any).__gearboxUserInput = { map, data, id, name, ts: Date.now() }
-
-  // Decoupled: broadcast to any listeners (React components can listen on window)
-  try {
-    const evt = new CustomEvent('gearbox:user-input', {
-      detail: { map, data, id, name, ts: Date.now() },
-    })
-    window.dispatchEvent(evt)
-  } catch {
-    /* no-op */
-  }
-
-  // network call
-  return fetchGearbox('/gearbox/user-input', {
+  return fetchGearbox('/gearbox-middleware/user-input', {
     method: 'POST',
-    body: JSON.stringify({ data, id, name }),
+    body: JSON.stringify({
+      data,
+      id,
+      name,
+    }),
   })
     .then((res) => res.json() as Promise<UserInputApi>)
     .then(userInputApiToUi)
@@ -64,7 +48,7 @@ export function postUserInput(
 }
 
 export function getAllUserInput(): Promise<UserInputUi[]> {
-  return fetchGearbox('/gearbox/user-input/all')
+  return fetchGearbox('/gearbox-middleware/user-input/all')
     .then((res) => res.json())
     .then((data: AllUserInputsBody) => {
       if (Array.isArray(data)) {
