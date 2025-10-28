@@ -39,66 +39,36 @@ function canon(s: string | undefined | null): string {
     .trim()
 }
 
-/**
- * Loads match_form JSON (or a URL that points to it) and returns:
- * - map: normalized label → group title
- * - groupNames: id → group title (preserves match_form order externally)
- */
-async function fetchMatchFormFlexible(url: string): Promise<MatchForm> {
-  const res1 = await fetch(url, { method: 'GET' })
-  if (!res1.ok) throw new Error(`Failed to load ${url}: ${res1.status}`)
+function isMatchForm(v: unknown): v is MatchForm {
+  return !!v && typeof v === 'object' && 'groups' in v && 'fields' in v
+}
 
-  const ct1 = (res1.headers.get('Content-Type') || '').toLowerCase()
+async function fetchJson<T>(url: string): Promise<T> {
+  const res = await fetch(url, { method: 'GET' })
+  if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`)
+  const ct = (res.headers.get('Content-Type') || '').toLowerCase()
+  if (!ct.includes('application/json')) {
+    // eslint-disable-next-line prettier/prettier
+    // prettier-ignore
+    throw new Error(
+      `Expected JSON from ${url}, got ${ct || 'unknown content-type'}`
+    )
+  }
+  return (await res.json()) as T
+}
 
-  // If JSON, try json() first
-  if (ct1.includes('application/json')) {
-    const parsed = await res1.json() // may be object OR a string
-    if (
-      parsed &&
-      typeof parsed === 'object' &&
-      'groups' in parsed &&
-      'fields' in parsed
-    ) {
-      return parsed as MatchForm
-    }
-    if (typeof parsed === 'string') {
-      // Body is a JSON string containing the real URL
-      const res2 = await fetch(parsed, { method: 'GET' })
-      if (!res2.ok) throw new Error(`Failed to follow URL: ${res2.status}`)
-      const parsed2 = await res2.json()
-      return parsed2 as MatchForm
-    }
-    throw new Error('Unexpected JSON payload from match-form endpoint')
+export async function fetchMatchFormFlexible(url: string): Promise<MatchForm> {
+  const parsed = await fetchJson<unknown>(url)
+
+  // JSON string means “follow this URL”
+  if (typeof parsed === 'string') {
+    const next = await fetchJson<unknown>(parsed)
+    if (isMatchForm(next)) return next
+    throw new Error('Followed URL did not return a MatchForm JSON')
   }
 
-  // Not JSON content-type
-  const maybeUrl = (await res1.text()).trim()
-  try {
-    // If it parses as a URL, follow it
-    const u = new URL(maybeUrl)
-    const res2 = await fetch(u.toString(), { method: 'GET' })
-    if (!res2.ok)
-      throw new Error(`Failed to fetch redirected JSON: ${res2.status}`)
-    const ct2 = (res2.headers.get('Content-Type') || '').toLowerCase()
-    if (!ct2.includes('application/json')) {
-      // Not JSON? Try json()
-      const text2 = await res2.text()
-      try {
-        return JSON.parse(text2) as MatchForm
-      } catch {
-        throw new Error('Redirected body is not JSON')
-      }
-    }
-    const data2 = await res2.json()
-    return data2 as MatchForm
-  } catch {
-    // Not a URL
-    try {
-      return JSON.parse(maybeUrl) as MatchForm
-    } catch {
-      throw new Error('match-form endpoint returned non-JSON, non-URL text')
-    }
-  }
+  if (isMatchForm(parsed)) return parsed
+  throw new Error('Unexpected JSON payload from match-form endpoint')
 }
 
 export function useEnsureFormMap(formPath: string): UseFormMapResult {

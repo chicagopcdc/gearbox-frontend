@@ -1,5 +1,4 @@
-// builds outline sections from eligibility + form map
-// colors items using user selections
+// builds "outline"
 
 type Logic = 'all' | 'any'
 
@@ -143,9 +142,9 @@ function sectionStatus(items: Item[]): 'met' | 'not_met' | 'unknown' {
 function opPhrase(op?: string): string {
   switch ((op || '').toLowerCase()) {
     case 'gte':
-      return 'is greater than or equal to'
+      return 'is greater than/equal to'
     case 'lte':
-      return 'is less than or equal to'
+      return 'is less than/equal to'
     case 'gt':
       return 'is greater than'
     case 'lt':

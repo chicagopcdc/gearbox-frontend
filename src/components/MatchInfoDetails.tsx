@@ -183,8 +183,6 @@ type MatchInfoDetailsProps = {
   matchInfoId?: string
   matchDetailsUrl?: string
   viewMode?: 'outline' | 'boolean'
-  // accepts map {id:value}, array [{id,value}], or { data: [...] }
-  userInputValues?: any
 }
 
 /* component */
@@ -195,7 +193,6 @@ function MatchInfoDetails({
   matchInfoId,
   matchDetailsUrl,
   viewMode = 'outline',
-  userInputValues,
 }: MatchInfoDetailsProps) {
   // form map + group names (used for section building and option labels)
   const fm: any = useEnsureFormMap('/gearbox/match-form')
@@ -285,20 +282,14 @@ function MatchInfoDetails({
     }, {} as Record<string, any>)
   }
 
-  const propMap = useMemo(
-    () => normalizeToMap(userInputValues),
-    [userInputValues]
-  )
-  const finalUserMap = Object.keys(propMap).length > 0 ? propMap : liveUserMap
-
   // build canon(field label) -> selected {kind,value}
   const selectedByField = useMemo(() => {
-    if (!finalUserMap || !fieldsById) return {}
+    if (!liveUserMap || !fieldsById) return {}
     const out: Record<
       string,
       { kind: 'label' | 'number'; value: string | number }
     > = {}
-    for (const [idStr, raw] of Object.entries(finalUserMap)) {
+    for (const [idStr, raw] of Object.entries(liveUserMap)) {
       const f = fieldsById[String(idStr)]
       if (!f) continue
       const key = canon(f.label)
@@ -318,7 +309,7 @@ function MatchInfoDetails({
       }
     }
     return out
-  }, [finalUserMap, fieldsById])
+  }, [liveUserMap, fieldsById])
 
   // fetch match details when not passed
   const [fetched, setFetched] = useState<any>(null)
@@ -401,13 +392,7 @@ function MatchInfoDetails({
     algLoading,
     algError,
     userInput: {
-      source:
-        Object.keys(propMap).length > 0
-          ? 'prop'
-          : Object.keys(liveUserMap).length > 0
-          ? 'event'
-          : 'none',
-      rawKeyCount: Object.keys(finalUserMap).length,
+      rawKeyCount: Object.keys(liveUserMap).length,
       selectedCount: Object.keys(selectedByField).length,
       preview: Object.keys(selectedByField)
         .slice(0, 8)
@@ -840,7 +825,6 @@ MatchInfoDetails.propTypes = {
   matchInfoId: PropTypes.string,
   matchDetailsUrl: PropTypes.string,
   viewMode: PropTypes.oneOf(['outline', 'boolean']),
-  userInputValues: PropTypes.any,
 }
 
 export default MatchInfoDetails

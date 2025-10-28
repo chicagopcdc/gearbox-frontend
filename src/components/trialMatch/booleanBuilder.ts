@@ -1,4 +1,4 @@
-// builds "boolean" lines; can color leaves using user selections
+// builds "boolean"
 
 type Logic = 'all' | 'any'
 
@@ -38,9 +38,9 @@ const has = (o: unknown, k: PropertyKey): boolean =>
 function opPhrase(op?: string): string {
   switch ((op || '').toLowerCase()) {
     case 'gte':
-      return 'is greater than or equal to'
+      return 'is greater than/equal to'
     case 'lte':
-      return 'is less than or equal to'
+      return 'is less than/equal to'
     case 'gt':
       return 'is greater than'
     case 'lt':
@@ -87,68 +87,6 @@ function valueToDisplay(
     return byExact ?? byNum ?? rawStr
   }
   return rawStr
-}
-
-/* user-answer comparison */
-
-function evaluateAgainstUserAnswer(
-  fieldLabel: string,
-  opText: string | undefined,
-  leafValueText: string | undefined,
-  selected: UserSelected | undefined
-): boolean | undefined {
-  if (!selected) return undefined
-  const key = canon(fieldLabel)
-  const chosen = selected[key]
-  if (!chosen) return undefined
-
-  const t = (opText ?? '').toLowerCase()
-  const op: 'eq' | 'in' | 'gte' | 'lte' | 'gt' | 'lt' | undefined = t.includes(
-    'one of'
-  )
-    ? 'in'
-    : t.includes('greater than or equal')
-    ? 'gte'
-    : t.includes('less than or equal')
-    ? 'lte'
-    : t.includes('greater than')
-    ? 'gt'
-    : t.includes('less than')
-    ? 'lt'
-    : t.includes('equal')
-    ? 'eq'
-    : undefined
-
-  if (!op) return undefined
-
-  if (chosen.kind === 'label') {
-    if (!leafValueText) return undefined
-    return canon(String(chosen.value)) === canon(leafValueText)
-  }
-
-  if (chosen.kind === 'number') {
-    const n = Number(chosen.value)
-    const leafN = Number(
-      (leafValueText ?? '').toString().replace(/[^0-9.-]/g, '')
-    )
-    if (!Number.isFinite(n) || !Number.isFinite(leafN)) return undefined
-    switch (op) {
-      case 'gte':
-        return n >= leafN
-      case 'lte':
-        return n <= leafN
-      case 'gt':
-        return n > leafN
-      case 'lt':
-        return n < leafN
-      case 'eq':
-        return n === leafN
-      default:
-        return undefined
-    }
-  }
-
-  return undefined
 }
 
 /* shape checks */
@@ -231,19 +169,6 @@ export function buildBooleanRich(
     nodeToLines(root.inclusion, 0, lines, { formMap: opts?.formMap })
   if (root.exclusion)
     nodeToLines(root.exclusion, 0, lines, { formMap: opts?.formMap })
-
-  if (opts?.userSelectedByField) {
-    for (const ln of lines) {
-      if (ln.kind !== 'leaf') continue
-      const m = evaluateAgainstUserAnswer(
-        ln.field,
-        ln.opText,
-        ln.valueText,
-        opts.userSelectedByField
-      )
-      if (typeof m === 'boolean') ln.matched = m
-    }
-  }
 
   return lines
 }

@@ -310,13 +310,7 @@ function MatchingPage({
               toIdValueMap(currentUserInput?.values || {})
             ).slice(0, 5),
           })}
-        <MatchResult
-          {...{ matchDetails, matchGroups, studies }}
-          // ensure downstream gets a stable { [id]: value } map
-          userInputValues={toIdValueMap(
-            currentUserInput?.values ?? currentUserInput
-          )}
-        />
+        <MatchResult {...{ matchDetails, matchGroups, studies }} />
       </section>
     </>
   ) : (
@@ -444,12 +438,7 @@ function MatchingPage({
             isUpdating ? 'bg-gray-100' : 'bg-white'
           }`}
         >
-          <MatchResult
-            {...{ matchDetails, matchGroups, studies }}
-            userInputValues={toIdValueMap(
-              currentUserInput?.values ?? currentUserInput
-            )}
-          />
+          <MatchResult {...{ matchDetails, matchGroups, studies }} />
         </div>
       </section>
     </div>
