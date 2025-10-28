@@ -302,14 +302,6 @@ function MatchingPage({
           isUpdating ? 'bg-gray-100' : 'bg-white'
         } ${view === 'result' ? '' : 'hidden'} `}
       >
-        {process.env.NODE_ENV !== 'production' &&
-          console.debug('[MatchingPage] userInput map:', {
-            count: Object.keys(toIdValueMap(currentUserInput?.values || {}))
-              .length,
-            sample: Object.entries(
-              toIdValueMap(currentUserInput?.values || {})
-            ).slice(0, 5),
-          })}
         <MatchResult {...{ matchDetails, matchGroups, studies }} />
       </section>
     </>

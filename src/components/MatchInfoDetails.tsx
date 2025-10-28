@@ -21,16 +21,16 @@ const canon = (s?: string | null) =>
 function countRenderable(items: any[]): number {
   if (!Array.isArray(items) || items.length === 0) return 0
   let n = 0
-  for (const it of items) {
+  for (const singleItem of items) {
     const isRenderable = !!(
-      it?.field ||
-      it?.opText ||
-      it?.valueText ||
-      it?.text
+      singleItem?.field ||
+      singleItem?.opText ||
+      singleItem?.valueText ||
+      singleItem?.text
     )
     if (isRenderable) n++
-    if (Array.isArray(it?.children) && it.children.length) {
-      n += countRenderable(it.children)
+    if (Array.isArray(singleItem?.children) && singleItem.children.length) {
+      n += countRenderable(singleItem.children)
     }
   }
   return n
@@ -63,13 +63,13 @@ function findEligibilityRoot(input: any): any | null {
   let steps = 0
   while (q.length && steps < 500) {
     steps++
-    const cur: any = q.shift()
+    const currentNode: any = q.shift()
     if (
-      cur?.eligibility &&
-      (cur.eligibility.inclusion || cur.eligibility.exclusion)
+      currentNode?.eligibility &&
+      (currentNode.eligibility.inclusion || currentNode.eligibility.exclusion)
     )
-      return cur
-    for (const v of Object.values(cur || {}))
+      return currentNode
+    for (const v of Object.values(currentNode || {}))
       if (v && typeof v === 'object') q.push(v)
   }
   return null
@@ -101,11 +101,11 @@ function looksLikeNumberedCriteriaMap(obj: any): boolean {
 
 function coerceToEligibility(input: any): {
   eligibility: { inclusion?: any; exclusion?: any }
-  _coerced: boolean
-  _source: 'direct' | 'single' | 'map' | 'unknown'
+  coerced: boolean
+  source: 'direct' | 'single' | 'map' | 'unknown'
 } {
   if (!input || typeof input !== 'object') {
-    return { eligibility: {}, _coerced: false, _source: 'unknown' }
+    return { eligibility: {}, coerced: false, source: 'unknown' }
   }
   // already shaped
   if (
@@ -114,16 +114,16 @@ function coerceToEligibility(input: any): {
   ) {
     return {
       eligibility: input.eligibility,
-      _coerced: false,
-      _source: 'direct',
+      coerced: false,
+      source: 'direct',
     }
   }
   // a single criteria tree
   if (isCriteriaNode(input)) {
     return {
       eligibility: { inclusion: input },
-      _coerced: true,
-      _source: 'single',
+      coerced: true,
+      source: 'single',
     }
   }
   // a numbered map of criteria trees
@@ -134,19 +134,19 @@ function coerceToEligibility(input: any): {
       .filter(isCriteriaNode)
     const inclusion =
       nodes.length === 1 ? nodes[0] : { operator: 'OR', criteria: nodes }
-    return { eligibility: { inclusion }, _coerced: true, _source: 'map' }
+    return { eligibility: { inclusion }, coerced: true, source: 'map' }
   }
   // scan values for the first tree
   for (const v of Object.values(input)) {
     if (isCriteriaNode(v)) {
       return {
         eligibility: { inclusion: v },
-        _coerced: true,
-        _source: 'single',
+        coerced: true,
+        source: 'single',
       }
     }
   }
-  return { eligibility: {}, _coerced: false, _source: 'unknown' }
+  return { eligibility: {}, coerced: false, source: 'unknown' }
 }
 
 /* GET helper that also follows plain-text URL bodies containing another URL */
@@ -263,14 +263,16 @@ function MatchInfoDetails({
       return out
     }
     if (Array.isArray(raw)) {
-      return raw.reduce((acc, it) => {
-        if (it && it.id !== undefined) acc[String(it.id)] = it.value
+      return raw.reduce((acc, singleItem) => {
+        if (singleItem && singleItem.id !== undefined)
+          acc[String(singleItem.id)] = singleItem.value
         return acc
       }, {} as Record<string, any>)
     }
     if (raw && Array.isArray(raw.data)) {
-      return raw.data.reduce((acc: Record<string, any>, it: any) => {
-        if (it && it.id !== undefined) acc[String(it.id)] = it.value
+      return raw.data.reduce((acc: Record<string, any>, singleItem: any) => {
+        if (singleItem && singleItem.id !== undefined)
+          acc[String(singleItem.id)] = singleItem.value
         return acc
       }, {})
     }
@@ -337,14 +339,14 @@ function MatchInfoDetails({
   }, [matchInfoAlgorithm, matchDetailsUrl])
 
   // resolve { eligibility } (prefer nested; else coerce)
-  const { eligibility, _coerced, _source } = useMemo(() => {
+  const { eligibility, coerced, source } = useMemo(() => {
     const chosen = matchInfoAlgorithm ?? fetched
     const nested = chosen ? findEligibilityRoot(chosen) : null
     if (nested && nested.eligibility) {
       return {
         eligibility: nested.eligibility,
-        _coerced: false,
-        _source: 'direct' as const,
+        coerced: false,
+        source: 'direct' as const,
       }
     }
     return coerceToEligibility(chosen)
@@ -381,8 +383,8 @@ function MatchInfoDetails({
   // small debug object
   const debugInfo = {
     hasEligibility,
-    coerced: _coerced,
-    source: _source,
+    coerced: coerced,
+    source: source,
     formMapKeys: Object.keys(formMap).length,
     groupNamesCount: Object.keys(groupNames).length,
     outlineSectionCount: outlineSections.length,
@@ -514,14 +516,15 @@ function MatchInfoDetails({
 
       {outlineSections.map((sec: any, idx: number) => {
         // preserve computed matched (don’t invent false)
-        const itemsWithMatch = (sec.items || []).map((it: any) => ({
-          ...it,
-          _effMatched: it.matched,
+        const itemsWithMatch = (sec.items || []).map((singleItem: any) => ({
+          ...singleItem,
+          efficacyMatched: singleItem.matched,
         }))
 
         // visibility
         const visibleTop = itemsWithMatch.filter(
-          (it: any) => !(isFilterActive && it._effMatched === false)
+          (singleItem: any) =>
+            !(isFilterActive && singleItem.efficacyMatched === false)
         )
 
         // deep count
@@ -535,11 +538,17 @@ function MatchInfoDetails({
 
         // status: blue only if all leaves are true (and at least one)
         const leafMatches = (needsFallback ? fallbackItems : visibleTop)
-          .filter((it: any) => it.field || it.valueText || it.opText || it.text)
-          .map((it: any) =>
-            it.matched === true
+          .filter(
+            (singleItem: any) =>
+              singleItem.field ||
+              singleItem.valueText ||
+              singleItem.opText ||
+              singleItem.text
+          )
+          .map((singleItem: any) =>
+            singleItem.matched === true
               ? true
-              : it.matched === false
+              : singleItem.matched === false
               ? false
               : undefined
           )
@@ -631,16 +640,16 @@ function RenderItems({
   if (!items?.length) return null
 
   // helpers
-  const getKids = (it: any): any[] =>
-    Array.isArray(it?.children)
-      ? it.children
-      : Array.isArray(it?.values)
-      ? it.values
-      : Array.isArray(it?.items)
-      ? it.items
+  const getKids = (singleItem: any): any[] =>
+    Array.isArray(singleItem?.children)
+      ? singleItem.children
+      : Array.isArray(singleItem?.values)
+      ? singleItem.values
+      : Array.isArray(singleItem?.singleItemems)
+      ? singleItem.items
       : []
 
-  const effMatch = (m?: boolean) =>
+  const efficacyMatch = (m?: boolean) =>
     m === true ? true : m === false ? false : false
 
   const valueClass = (m?: boolean) => {
@@ -663,24 +672,32 @@ function RenderItems({
       if (kidsOfKid.length > 0) {
         return filterKids(kidsOfKid).length > 0
       }
-      return effMatch(k.matched) !== false
+      return efficacyMatch(k.matched) !== false
     })
   }
 
   // render
   return (
     <ul className="p-4 list-disc pl-6">
-      {items.map((it, i) => {
-        const kids = getKids(it)
+      {items.map((singleItem, i) => {
+        const kids = getKids(singleItem)
         const filteredKids = filterKids(kids)
 
-        const hasStructured = !!(it.field || it.opText || it.valueText)
+        const hasStructured = !!(
+          singleItem.field ||
+          singleItem.opText ||
+          singleItem.valueText
+        )
         const isOneOf =
-          typeof it.opText === 'string' &&
-          it.opText.toLowerCase().includes('one of')
+          typeof singleItem.opText === 'string' &&
+          singleItem.opText.toLowerCase().includes('one of')
 
         // Hide a plain leaf when filtering and it's a negative match
-        if (!kids.length && isFilterActive && effMatch(it.matched) === false)
+        if (
+          !kids.length &&
+          isFilterActive &&
+          efficacyMatch(singleItem.matched) === false
+        )
           return null
 
         // Group-only container (no field/op/value, just children)
@@ -706,14 +723,16 @@ function RenderItems({
             <li key={i} className="mb-2">
               {/* header row: show parent line once */}
               <div>
-                {it.field ? (
-                  <span className="whitespace-pre-wrap">{it.field}</span>
+                {singleItem.field ? (
+                  <span className="whitespace-pre-wrap">
+                    {singleItem.field}
+                  </span>
                 ) : null}
-                {it.opText ? (
+                {singleItem.opText ? (
                   <span className="italic text-gray-500">
                     {' '}
-                    {it.opText}
-                    {it.logic === 'any' ? '(ANY)' : null}
+                    {singleItem.opText}
+                    {singleItem.logic === 'any' ? '(ANY)' : null}
                   </span>
                 ) : null}
               </div>
@@ -721,7 +740,7 @@ function RenderItems({
               {/* children as a vertical list */}
               <ul className="ml-4 mt-2 list-disc pl-5">
                 {filteredKids.map((ch, idx) => {
-                  const m = effMatch(ch.matched)
+                  const m = efficacyMatch(ch.matched)
                   const label = ch.valueText ?? ch.text ?? ch.field ?? ''
                   return (
                     <li key={`opt-${i}-${idx}`}>
@@ -737,19 +756,22 @@ function RenderItems({
 
         // Simple leaf (structured row with optional value)
         if (hasStructured && !kids.length) {
-          const m = effMatch(it.matched)
+          const m = efficacyMatch(singleItem.matched)
           return (
             <li key={i}>
-              {it.field ? (
-                <span className="whitespace-pre-wrap">{it.field}</span>
+              {singleItem.field ? (
+                <span className="whitespace-pre-wrap">{singleItem.field}</span>
               ) : null}
-              {it.opText ? (
-                <span className="italic text-gray-500"> {it.opText}</span>
+              {singleItem.opText ? (
+                <span className="italic text-gray-500">
+                  {' '}
+                  {singleItem.opText}
+                </span>
               ) : null}
-              {it.valueText ? (
+              {singleItem.valueText ? (
                 <>
                   {' '}
-                  <span className={valueClass(m)}>{it.valueText}</span>
+                  <span className={valueClass(m)}>{singleItem.valueText}</span>
                   {iconFor(m)}
                 </>
               ) : null}
@@ -763,24 +785,29 @@ function RenderItems({
           return (
             <li key={i}>
               <div>
-                {it.field ? (
-                  <span className="whitespace-pre-wrap">{it.field}</span>
+                {singleItem.field ? (
+                  <span className="whitespace-pre-wrap">
+                    {singleItem.field}
+                  </span>
                 ) : null}
-                {it.opText ? (
-                  <span className="italic text-gray-500"> {it.opText}</span>
+                {singleItem.opText ? (
+                  <span className="italic text-gray-500">
+                    {' '}
+                    {singleItem.opText}
+                  </span>
                 ) : null}
-                {it.valueText ? (
+                {singleItem.valueText ? (
                   <>
                     {' '}
-                    <span className={valueClass(it.matched)}>
-                      {it.valueText}
+                    <span className={valueClass(singleItem.matched)}>
+                      {singleItem.valueText}
                     </span>
-                    {iconFor(effMatch(it.matched))}
+                    {iconFor(efficacyMatch(singleItem.matched))}
                   </>
                 ) : null}
-                {it.logic ? (
+                {singleItem.logic ? (
                   <span className="ml-2 text-xs text-gray-500">
-                    ({it.logic.toUpperCase()})
+                    ({singleItem.logic.toUpperCase()})
                   </span>
                 ) : null}
               </div>
@@ -797,11 +824,12 @@ function RenderItems({
         }
 
         // Fallback: plain text
-        if (it.text && !hasStructured) {
-          if (isFilterActive && effMatch(it.matched) === false) return null
+        if (singleItem.text && !hasStructured) {
+          if (isFilterActive && efficacyMatch(singleItem.matched) === false)
+            return null
           return (
             <li key={i}>
-              <span className="whitespace-pre-wrap">{it.text}</span>
+              <span className="whitespace-pre-wrap">{singleItem.text}</span>
             </li>
           )
         }

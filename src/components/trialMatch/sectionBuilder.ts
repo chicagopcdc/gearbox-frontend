@@ -124,13 +124,13 @@ function sectionStatus(items: Item[]): 'met' | 'not_met' | 'unknown' {
   let sawUnknown = false
   const stack: Item[] = [...items]
   while (stack.length) {
-    const it = stack.pop()!
-    if (it.children?.length) {
-      stack.push(...it.children)
+    const singleItem = stack.pop()!
+    if (singleItem.children?.length) {
+      stack.push(...singleItem.children)
       continue
     }
-    if (it.matched === true) sawTrue = true
-    else if (it.matched === false) sawFalse = true
+    if (singleItem.matched === true) sawTrue = true
+    else if (singleItem.matched === false) sawFalse = true
     else sawUnknown = true
   }
   if (sawFalse) return 'not_met'
@@ -405,26 +405,28 @@ function titleFromGroup(
   groupNames?: Record<string, string>
 ): string {
   if (groupId && groupNames?.[groupId]) return groupNames[groupId]
-  const tally = new Map<string, number>()
+  const sectionCounts = new Map<string, number>()
   const stack = [node]
   while (stack.length) {
-    const cur: any = stack.pop()
-    if (!cur || typeof cur !== 'object') continue
-    if (Array.isArray(cur.criteria)) {
-      for (let i = cur.criteria.length - 1; i >= 0; i--)
-        stack.push(cur.criteria[i])
-    } else if ('fieldName' in cur || 'field' in cur) {
-      const fk = canon(String((cur.fieldName ?? cur.field) || ''))
-      const sec = sectionForField(fk, formMap)
-      tally.set(sec, (tally.get(sec) ?? 0) + 1)
-    } else if (Array.isArray(cur)) {
-      cur.forEach((v: any) => stack.push(v))
+    const currentNode: any = stack.pop()
+    if (!currentNode || typeof currentNode !== 'object') continue
+    if (Array.isArray(currentNode.criteria)) {
+      for (let i = currentNode.criteria.length - 1; i >= 0; i--)
+        stack.push(currentNode.criteria[i])
+    } else if ('fieldName' in currentNode || 'field' in currentNode) {
+      const fieldKeyNorm = canon(
+        String((currentNode.fieldName ?? currentNode.field) || '')
+      )
+      const sectionName = sectionForField(fieldKeyNorm, formMap)
+      sectionCounts.set(sectionName, (sectionCounts.get(sectionName) ?? 0) + 1)
+    } else if (Array.isArray(currentNode)) {
+      currentNode.forEach((v: any) => stack.push(v))
     }
   }
-  if (tally.size > 0) {
+  if (sectionCounts.size > 0) {
     let best = 'Eligibility'
     let max = -1
-    for (const [k, v] of tally)
+    for (const [k, v] of sectionCounts)
       if (v > max) {
         best = k
         max = v
@@ -436,14 +438,14 @@ function titleFromGroup(
 
 function bucketItemsByGroup(items: Item[]): Map<string, Item[]> {
   const buckets = new Map<string, Item[]>()
-  function place(it: Item) {
-    const grp = it._group
+  function place(singleItem: Item) {
+    const grp = singleItem._group
     if (grp) {
       if (!buckets.has(grp)) buckets.set(grp, [])
-      buckets.get(grp)!.push(it)
+      buckets.get(grp)!.push(singleItem)
       return
     }
-    if (it.children?.length) it.children.forEach(place)
+    if (singleItem.children?.length) singleItem.children.forEach(place)
   }
   items.forEach(place)
   return buckets
