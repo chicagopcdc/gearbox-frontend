@@ -99,12 +99,13 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
             <h2 className="leading-tight text-4xl md:text-5xl mb-8 lg:mb-16">
               {isLLS ? 'Built and maintained by:' : 'GEARBOx is supported by:'}{' '}
             </h2>
-            <div className="flex md:min-w-1/2 items-center justify-between mb-8 lg:mb-16">
+            <div className="flex flex-wrap items-center justify-between mb-8 lg:mb-16 gap-8">
               <img
                 src={llsSponsor}
                 alt="Blood Cancer United"
-                className="max-w-[432px] h-auto"
+                className="h-20 w-auto object-contain"
               />
+
               {!isLLS && (
                 <>
                   <a
@@ -112,18 +113,27 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img className="" src={iciSponsor} alt="ICI" />
+                    <img
+                      src={iciSponsor}
+                      alt="ICI"
+                      className="h-20 w-auto object-contain"
+                    />
                   </a>
                   <a
                     href="https://www.cancer.gov/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img className="" src={nihSponsor} alt="NIH" />
+                    <img
+                      src={nihSponsor}
+                      alt="NIH"
+                      className="h-20 w-auto object-contain"
+                    />
                   </a>
                 </>
               )}
             </div>
+
             <h3 className="leading-tight text-2xl md:text-3xl font-bold mb-2 lg:mb-4">
               Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer
               United PedAL)
