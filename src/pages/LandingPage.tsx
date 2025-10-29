@@ -99,11 +99,11 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
             <h2 className="leading-tight text-4xl md:text-5xl mb-8 lg:mb-16">
               {isLLS ? 'Built and maintained by:' : 'GEARBOx is supported by:'}{' '}
             </h2>
-            <div className="flex flex-wrap items-center justify-between mb-8 lg:mb-16 gap-8">
+            <div className="flex flex-wrap items-center justify-center gap-10 mb-8 lg:mb-16">
               <img
                 src={llsSponsor}
                 alt="Blood Cancer United"
-                className="h-20 w-auto object-contain"
+                className="h-28 w-auto object-contain"
               />
 
               {!isLLS && (
@@ -116,7 +116,7 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
                     <img
                       src={iciSponsor}
                       alt="ICI"
-                      className="h-20 w-auto object-contain"
+                      className="h-28 w-auto object-contain"
                     />
                   </a>
                   <a
@@ -127,7 +127,7 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
                     <img
                       src={nihSponsor}
                       alt="NIH"
-                      className="h-20 w-auto object-contain"
+                      className="h-28 w-auto object-contain"
                     />
                   </a>
                 </>
