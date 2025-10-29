@@ -11,11 +11,13 @@ export function getCriterionStaging(
   return fetchGearbox(
     '/gearbox/criterion-staging/' + eligibilityCriteriaId
   ).then((res) => {
-    if (res.status === 200) {
-      return res.json() as Promise<CriterionStagingWithValueList[]>
-    } else {
+    if (res.status === 404) {
+      return []
+    }
+    if (!res.ok) {
       throw new Error('Failed to get criterion staging')
     }
+    return res.json() as Promise<CriterionStagingWithValueList[]>
   })
 }
 
