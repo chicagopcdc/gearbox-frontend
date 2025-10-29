@@ -100,7 +100,7 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
               {isLLS ? 'Built and maintained by:' : 'GEARBOx is supported by:'}{' '}
             </h2>
             <div className="flex md:min-w-1/2 items-center justify-between mb-8 lg:mb-16">
-              <img src={llsSponsor} alt="LLS" />
+              <img src={llsSponsor} alt="Blood Cancer United" />
               {!isLLS && (
                 <>
                   <a
@@ -121,7 +121,8 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
               )}
             </div>
             <h3 className="leading-tight text-2xl md:text-3xl font-bold mb-2 lg:mb-4">
-              LLS PedAL Master Clinical Trial
+              Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer
+              United PedAL)
             </h3>
             <p className="md:text-xl mb-8">
               The PedAL initiative, a pillar of The Dare to Dream Project, is
@@ -130,9 +131,10 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
               infrastructure projects of the PedAL initiative.{' '}
               <LinkExternal
                 className="underline text-primary md:text-xl"
-                to="https://www.lls.org/childrens-initiative/pedal"
+                to="https://bloodcancerunited.org/about-us/dare-to-dream-project/pedal"
               >
-                LLS PedAL Master Clinical Trial
+                Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer
+                United PedAL)
               </LinkExternal>
             </p>
           </div>
