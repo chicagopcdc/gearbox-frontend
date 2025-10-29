@@ -130,7 +130,8 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
             </div>
 
             <h3 className="leading-tight text-2xl md:text-3xl font-bold mb-2 lg:mb-4">
-              Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer United PedAL)
+              Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer
+              United PedAL)
             </h3>
             <p className="md:text-xl mb-8">
               The PedAL initiative, a pillar of The Dare to Dream Project, is
@@ -141,7 +142,8 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
                 className="underline text-primary md:text-xl"
                 to="https://bloodcancerunited.org/about-us/dare-to-dream-project/pedal"
               >
-                Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer United PedAL)
+                Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer
+                United PedAL)
               </LinkExternal>
             </p>
           </div>
