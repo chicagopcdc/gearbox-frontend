@@ -100,7 +100,11 @@ function LandingPageSection4({ isLLS }: { isLLS: boolean }) {
               {isLLS ? 'Built and maintained by:' : 'GEARBOx is supported by:'}{' '}
             </h2>
             <div className="flex md:min-w-1/2 items-center justify-between mb-8 lg:mb-16">
-              <img src={llsSponsor} alt="Blood Cancer United" className="max-w-[432px] h-auto"/>
+              <img
+                src={llsSponsor}
+                alt="Blood Cancer United"
+                className="max-w-[432px] h-auto"
+              />
               {!isLLS && (
                 <>
                   <a
