@@ -8,7 +8,7 @@ type LatestUserInputBody =
 type AllUserInputsBody = UserInputApi[] | { detail: string }
 
 export function getLatestUserInput(): Promise<UserInputUi> {
-  return fetchGearbox('/gearbox-middleware/user-input/latest')
+  return fetchGearbox('/gearbox/user-input/latest')
     .then((res) => res.json())
     .then((data: LatestUserInputBody) => {
       if ('results' in data) {
@@ -32,7 +32,7 @@ export function postUserInput(
       : [...acc, { id: Number(id), value }]
   }, [] as { id: number; value: any }[])
 
-  return fetchGearbox('/gearbox-middleware/user-input', {
+  return fetchGearbox('/gearbox/user-input', {
     method: 'POST',
     body: JSON.stringify({
       data,
@@ -48,7 +48,7 @@ export function postUserInput(
 }
 
 export function getAllUserInput(): Promise<UserInputUi[]> {
-  return fetchGearbox('/gearbox-middleware/user-input/all')
+  return fetchGearbox('/gearbox/user-input/all')
     .then((res) => res.json())
     .then((data: AllUserInputsBody) => {
       if (Array.isArray(data)) {
