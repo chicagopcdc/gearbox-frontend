@@ -4,8 +4,6 @@ import '@fontsource/lato'
 import './index.css'
 import App from './App'
 
-// eslint-disable-next-line prettier/prettier
-// prettier-ignore
 ReactDOM.render(
   <React.StrictMode>
     <App />
