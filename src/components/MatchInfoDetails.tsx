@@ -194,50 +194,27 @@ function MatchInfoDetails({
   matchDetailsUrl,
   viewMode = 'outline',
 }: MatchInfoDetailsProps) {
-  // form map + group names (used for section building and option labels)
+  // form map and group names (used for section building and option labels)
   const fm: any = useEnsureFormMap('/gearbox/match-form')
   const formMap = (fm?.map ?? fm?.formMap ?? {}) as Record<
     string,
     | string
-    | {
-        label: string
-        shortLabel?: string
-        options?: Record<string, string>
-        section?: string
-      }
+    | { label: string; shortLabel?: string; options?: Record<string, string> }
   >
   const groupNames = (fm?.groupNames ?? {}) as Record<string, string>
   const formLoading = !!fm?.loading
   const formError = (fm?.error ?? null) as string | null
 
-  // load full match_form for field id -> meta (label/options)
-  const [fieldsById, setFieldsById] = useState<Record<string, any>>({})
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      try {
-        const res = await fetch('/gearbox/match-form', { method: 'GET' })
-        if (!res.ok) return
-        const ct = (res.headers.get('Content-Type') || '').toLowerCase()
-        const body = ct.includes('application/json')
-          ? await res.json()
-          : await res.text()
-        const data =
-          typeof body === 'string'
-            ? await (await fetch(body, { method: 'GET' })).json()
-            : body
-        if (!data || !looksLikeFormSchema(data)) return
-        const byId: Record<string, any> = {}
-        for (const f of data?.fields ?? []) byId[String(f.id)] = f
-        if (!cancelled) setFieldsById(byId)
-      } catch {
-        /* no-op */
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [])
+  const fieldsById = useMemo(() => {
+    const out: Record<string, any> = {}
+    const fields =
+      (Array.isArray(fm?.fields) && fm.fields) ||
+      (Array.isArray(fm?.form?.fields) && fm.form.fields) ||
+      (Array.isArray(fm?.schema?.fields) && fm.schema.fields) ||
+      []
+    for (const f of fields) out[String(f.id)] = f
+    return out
+  }, [fm])
 
   // read latest user selections from window event if props not provided
   const [liveUserMap, setLiveUserMap] = useState<Record<string, any>>({})
