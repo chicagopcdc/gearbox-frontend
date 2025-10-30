@@ -42,9 +42,6 @@ type BuildOpts = {
 
 /* helpers */
 
-const has = (o: unknown, k: PropertyKey): boolean =>
-  Object.prototype.hasOwnProperty.call(o as object, k)
-
 function canon(s: string | undefined | null): string {
   return String(s ?? '')
     .replace(/[’‘]/g, "'")
