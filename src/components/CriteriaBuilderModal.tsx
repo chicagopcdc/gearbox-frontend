@@ -109,7 +109,7 @@ export function CriteriaBuilderModal({
               </span>
               {studyVersion && (
                 <span className="italic block">
-                  {`Clinical Trial Participation Criteria for Study ${studyVersion.study.code}`}
+                  {`Clinical Trial Participation Criteria for Study ${studyVersion.study.code}: ${studyVersion.study.name}`}
                 </span>
               )}
             </h3>

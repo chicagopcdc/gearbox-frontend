@@ -384,7 +384,7 @@ function MatchInfoDetails({
   if (viewMode === 'boolean') {
     if (!ready) {
       return (
-        <div className="rounded-lg border bg-white p-4 text-sm">
+        <div className="rounded-lg border bg-white p-4 ">
           <div className="font-semibold">Preparing boolean view…</div>
           {DEBUG && (
             <pre className="text-xs bg-gray-50 border p-2 rounded mt-3">
@@ -408,19 +408,22 @@ function MatchInfoDetails({
             {JSON.stringify(debugInfo, null, 2)}
           </pre>
         )}
-        <div className="text-sm leading-6">
+        <div className=" leading-6">
           {visible.map((ln: any, i: number) => {
             switch (ln.kind) {
               case 'group-open':
                 return (
                   <div key={i} style={{ paddingLeft: ln.indent }}>
-                    (
+                    {/* This needs attention */}
+                    {/* ( */}
                   </div>
                 )
               case 'group-close':
                 return (
                   <div key={i} style={{ paddingLeft: ln.indent }}>
-                    ){ln.trailingJoiner ? ` ${ln.trailingJoiner}` : ''}
+                    {/* This needs attention */}
+                    {/* )*/}
+                    {ln.trailingJoiner ? ` ${ln.trailingJoiner}` : ''}
                   </div>
                 )
               case 'leaf': {
@@ -429,8 +432,17 @@ function MatchInfoDetails({
                     ? 'text-blue-700'
                     : 'text-red-700'
                   : undefined
+                const bgValueColor = isHighlightActive
+                  ? ln.matched === true
+                    ? 'bg-blue-100'
+                    : 'bg-red-100'
+                  : undefined
                 return (
-                  <div key={i} style={{ paddingLeft: ln.indent }}>
+                  <div
+                    className={bgValueColor}
+                    key={i}
+                    style={{ paddingLeft: ln.indent }}
+                  >
                     <span className="whitespace-pre-wrap">{ln.field} </span>
                     <span className="italic text-gray-500">{ln.opText}</span>
                     {ln.valueText ? (
@@ -441,13 +453,10 @@ function MatchInfoDetails({
                           className={`inline-block align-middle mx-1 ${valueColor}`}
                         >
                           {ln.matched === true ? '✓' : '✕'}
+                          {/* This needs attention */}
+                          {ln.trailingJoiner ? ` ${ln.trailingJoiner}` : ''}
                         </span>
                       </>
-                    ) : null}
-                    {ln.trailingJoiner ? (
-                      <span className="ml-2 text-gray-500">
-                        {ln.trailingJoiner}
-                      </span>
                     ) : null}
                   </div>
                 )
@@ -464,7 +473,7 @@ function MatchInfoDetails({
   /* OUTLINE VIEW */
   if (!ready) {
     return (
-      <div className="rounded-lg border bg-white p-4 text-sm">
+      <div className="rounded-lg border bg-white p-4 ">
         <div className="font-semibold">Preparing eligibility outline…</div>
         {formLoading && (
           <div className="text-gray-500 mt-1">Loading match form…</div>
@@ -577,7 +586,7 @@ function MatchInfoDetails({
                 isFilterActive={isFilterActive}
               />
             ) : deepCount === 0 ? (
-              <div className="px-4 pb-3 text-sm text-gray-500">
+              <div className="px-4 pb-3  text-gray-500">
                 No visible items for current filters.
               </div>
             ) : (
