@@ -111,24 +111,6 @@ function MatchingPage({
     return ErrorRetry({ retry: fetchAll })
   }
 
-  // normalize user input into { [id]: value }
-  function toIdValueMap(raw: any): Record<string, any> {
-    if (!raw) return {}
-    // already a map?
-    if (!Array.isArray(raw) && !(raw && Array.isArray(raw.data))) {
-      return raw as Record<string, any>
-    }
-    const arr: Array<{ id: number | string; value: any }> = Array.isArray(raw)
-      ? raw
-      : Array.isArray(raw?.data)
-      ? raw.data
-      : []
-    return arr.reduce((acc, { id, value }) => {
-      acc[String(id)] = value
-      return acc
-    }, {} as Record<string, any>)
-  }
-
   function updateMatchInput(newMatchedInput: MatchFormValues) {
     if (
       JSON.stringify(newMatchedInput) !==

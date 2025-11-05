@@ -78,7 +78,7 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
               <div className="flex items-baseline justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
                 {/* Left: Title */}
                 <h3 className="font-semibold">
-                  {`Clinical Trial Participation Criteria for Study ${study.code}`}
+                  {`Clinical Trial Participation Criteria for Study ${study.code}: ${study.name}`}
                 </h3>
 
                 {/* Right: Options menu + Close */}

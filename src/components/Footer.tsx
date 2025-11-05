@@ -59,14 +59,14 @@ function Footer({ isLLS }: { isLLS: boolean }) {
           </>
         )}
         <a
-          href="https://www.lls.org/lls-childrens-initiative-pedal"
+          href="https://bloodcancerunited.org/about-us/dare-to-dream-project/pedal"
           className="m-2"
           target="_blank"
           rel="noreferrer"
         >
           <img
             src={llsLogo}
-            alt="LLS PedAL"
+            alt="Pediatric Acute Leukemia Master Clinical Trial (Blood Cancer United PedAL)"
             style={{ height: '60px', maxHeight: '60px' }}
           />
         </a>

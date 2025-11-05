@@ -51,11 +51,6 @@ function booleanLinesToOutlineItems(lines: any[]) {
   return items
 }
 
-/* check basic match_form shape */
-function looksLikeFormSchema(obj: any): boolean {
-  return !!obj && Array.isArray(obj?.groups) && Array.isArray(obj?.fields)
-}
-
 /* find nested node that has { eligibility } */
 function findEligibilityRoot(input: any): any | null {
   if (!input || typeof input !== 'object') return null
@@ -73,6 +68,32 @@ function findEligibilityRoot(input: any): any | null {
       if (v && typeof v === 'object') q.push(v)
   }
   return null
+}
+
+function massageTokensForTopLevel(tokens: any[]) {
+  const out: any[] = []
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i]
+    const indent = Number(t?.indent ?? 0)
+
+    // Drop the very first root "("
+    if (i === 0 && t?.kind === 'group-open' && indent === 0) continue
+
+    // For root ")", append its trailingJoiner to the previous LEAF, then drop it
+    if (t?.kind === 'group-close' && indent === 0) {
+      if (
+        t?.trailingJoiner &&
+        out.length > 0 &&
+        out[out.length - 1]?.kind === 'leaf'
+      ) {
+        out[out.length - 1].trailingJoiner = t.trailingJoiner
+      }
+      continue
+    }
+
+    out.push(t)
+  }
+  return out
 }
 
 type CriteriaNode = {
@@ -194,50 +215,27 @@ function MatchInfoDetails({
   matchDetailsUrl,
   viewMode = 'outline',
 }: MatchInfoDetailsProps) {
-  // form map + group names (used for section building and option labels)
+  // form map and group names (used for section building and option labels)
   const fm: any = useEnsureFormMap('/gearbox/match-form')
   const formMap = (fm?.map ?? fm?.formMap ?? {}) as Record<
     string,
     | string
-    | {
-        label: string
-        shortLabel?: string
-        options?: Record<string, string>
-        section?: string
-      }
+    | { label: string; shortLabel?: string; options?: Record<string, string> }
   >
   const groupNames = (fm?.groupNames ?? {}) as Record<string, string>
   const formLoading = !!fm?.loading
   const formError = (fm?.error ?? null) as string | null
 
-  // load full match_form for field id -> meta (label/options)
-  const [fieldsById, setFieldsById] = useState<Record<string, any>>({})
-  useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      try {
-        const res = await fetch('/gearbox/match-form', { method: 'GET' })
-        if (!res.ok) return
-        const ct = (res.headers.get('Content-Type') || '').toLowerCase()
-        const body = ct.includes('application/json')
-          ? await res.json()
-          : await res.text()
-        const data =
-          typeof body === 'string'
-            ? await (await fetch(body, { method: 'GET' })).json()
-            : body
-        if (!data || !looksLikeFormSchema(data)) return
-        const byId: Record<string, any> = {}
-        for (const f of data?.fields ?? []) byId[String(f.id)] = f
-        if (!cancelled) setFieldsById(byId)
-      } catch {
-        /* no-op */
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [])
+  const fieldsById = useMemo(() => {
+    const out: Record<string, any> = {}
+    const fields =
+      (Array.isArray(fm?.fields) && fm.fields) ||
+      (Array.isArray(fm?.form?.fields) && fm.form.fields) ||
+      (Array.isArray(fm?.schema?.fields) && fm.schema.fields) ||
+      []
+    for (const f of fields) out[String(f.id)] = f
+    return out
+  }, [fm])
 
   // read latest user selections from window event if props not provided
   const [liveUserMap, setLiveUserMap] = useState<Record<string, any>>({})
@@ -407,7 +405,7 @@ function MatchInfoDetails({
   if (viewMode === 'boolean') {
     if (!ready) {
       return (
-        <div className="rounded-lg border bg-white p-4 text-sm">
+        <div className="rounded-lg border bg-white p-4 ">
           <div className="font-semibold">Preparing boolean view…</div>
           {DEBUG && (
             <pre className="text-xs bg-gray-50 border p-2 rounded mt-3">
@@ -424,6 +422,8 @@ function MatchInfoDetails({
         )
       : lines
 
+    const tokens = massageTokensForTopLevel(visible)
+
     return (
       <div className="rounded-lg border bg-white p-3">
         {DEBUG && (
@@ -431,53 +431,100 @@ function MatchInfoDetails({
             {JSON.stringify(debugInfo, null, 2)}
           </pre>
         )}
-        <div className="text-sm leading-6">
-          {visible.map((ln: any, i: number) => {
-            switch (ln.kind) {
-              case 'group-open':
-                return (
-                  <div key={i} style={{ paddingLeft: ln.indent }}>
-                    (
-                  </div>
-                )
-              case 'group-close':
-                return (
-                  <div key={i} style={{ paddingLeft: ln.indent }}>
-                    ){ln.trailingJoiner ? ` ${ln.trailingJoiner}` : ''}
-                  </div>
-                )
-              case 'leaf': {
-                const valueColor = isHighlightActive
-                  ? ln.matched === true
-                    ? 'text-blue-700'
-                    : 'text-red-700'
-                  : undefined
-                return (
-                  <div key={i} style={{ paddingLeft: ln.indent }}>
-                    <span className="whitespace-pre-wrap">{ln.field} </span>
-                    <span className="italic text-gray-500">{ln.opText}</span>
-                    {ln.valueText ? (
-                      <>
-                        {' '}
-                        <span className={valueColor}>{ln.valueText}</span>
-                        <span
-                          className={`inline-block align-middle mx-1 ${valueColor}`}
-                        >
-                          {ln.matched === true ? '✓' : '✕'}
-                        </span>
-                      </>
-                    ) : null}
-                    {ln.trailingJoiner ? (
-                      <span className="ml-2 text-gray-500">
-                        {ln.trailingJoiner}
-                      </span>
-                    ) : null}
-                  </div>
-                )
+        <div className="leading-6">
+          {tokens.map((ln: any, i: number) => {
+            const lineStyle: React.CSSProperties = { paddingLeft: ln.indent }
+
+            let valueColor: string | undefined = undefined
+            let bgValueColor: string | undefined = undefined
+
+            // Colors of text
+            if (ln.kind === 'leaf') {
+              if (ln.matched === true) {
+                valueColor = 'text-blue-700'
+              } else {
+                valueColor = 'text-red-700'
               }
-              default:
-                return null
             }
+
+            // Colors of background
+            if (ln.kind === 'leaf' && isHighlightActive) {
+              if (ln.matched === true) {
+                bgValueColor = 'bg-blue-100'
+              } else {
+                bgValueColor = 'bg-red-100'
+              }
+            }
+
+            let displayValue: any = ln.valueText
+            if (ln.kind === 'leaf' && typeof ln.valueText === 'string') {
+              displayValue = `"${ln.valueText}"`
+            }
+
+            if (ln.kind === 'group-open') {
+              return (
+                <div key={i} style={{ paddingLeft: ln.indent }}>
+                  (
+                </div>
+              )
+            }
+
+            if (ln.kind === 'group-close') {
+              const hasJoiner = !!ln.trailingJoiner
+              return (
+                <div key={i} style={{ paddingLeft: ln.indent }}>
+                  )
+                  {hasJoiner ? (
+                    <span className="italic text-gray-500">
+                      {' '}
+                      {ln.trailingJoiner}
+                    </span>
+                  ) : null}
+                </div>
+              )
+            }
+
+            if (ln.kind === 'leaf') {
+              const hasField = !!ln.field
+              const hasOp = !!ln.opText
+              const hasValue =
+                displayValue !== undefined &&
+                displayValue !== null &&
+                displayValue !== ''
+
+              return (
+                <div key={i} style={lineStyle} className={bgValueColor}>
+                  {hasField ? (
+                    <span className="whitespace-pre-wrap">{ln.field}</span>
+                  ) : null}
+
+                  {hasOp ? (
+                    <span className="italic text-gray-500"> {ln.opText}</span>
+                  ) : null}
+
+                  {hasValue ? (
+                    <>
+                      {' '}
+                      <span className={valueColor}>{displayValue}</span>
+                      <span
+                        className={`inline-block align-middle mx-1 ${valueColor}`}
+                      >
+                        {ln.matched === true ? '✓' : '✕'}
+                      </span>
+                    </>
+                  ) : null}
+
+                  {ln.trailingJoiner ? (
+                    <span className="italic text-gray-500">
+                      {' '}
+                      {ln.trailingJoiner}
+                    </span>
+                  ) : null}
+                </div>
+              )
+            }
+
+            return null
           })}
         </div>
       </div>
@@ -487,7 +534,7 @@ function MatchInfoDetails({
   /* OUTLINE VIEW */
   if (!ready) {
     return (
-      <div className="rounded-lg border bg-white p-4 text-sm">
+      <div className="rounded-lg border bg-white p-4 ">
         <div className="font-semibold">Preparing eligibility outline…</div>
         {formLoading && (
           <div className="text-gray-500 mt-1">Loading match form…</div>
@@ -600,7 +647,7 @@ function MatchInfoDetails({
                 isFilterActive={isFilterActive}
               />
             ) : deepCount === 0 ? (
-              <div className="px-4 pb-3 text-sm text-gray-500">
+              <div className="px-4 pb-3  text-gray-500">
                 No visible items for current filters.
               </div>
             ) : (

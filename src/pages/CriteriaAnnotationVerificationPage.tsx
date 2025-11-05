@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { getStudyVersionsAdjudication } from '../api/studyAdjudication'
 import {
   ApiStatus,
   CriteriaValue,
-  InputType,
-  CriterionStagingWithValueList,
-  StudyVersionAdjudication,
   Criterion,
   CriterionStaging,
+  CriterionStagingWithValueList,
+  InputType,
   RawCriterion,
+  StudyVersionAdjudication,
 } from '../model'
 import Field from '../components/Inputs/Field'
 import { CriteriaAnnotationVerification } from '../components/CriteriaAnnotationVerification'
@@ -21,7 +21,7 @@ import Button from '../components/Inputs/Button'
 import { useManageItemScrollPosition } from '../hooks/useManageItemScrollPosition'
 import DropdownSection from '../components/DropdownSection'
 import { useModal } from '../hooks/useModal'
-import { XCircle, Eye } from 'react-feather'
+import { Eye, XCircle } from 'react-feather'
 import { RawCriterionHighlighter } from '../components/RawCriterionHighlighter'
 import { getRawCriterion } from '../api/rawCriteria'
 
@@ -45,29 +45,24 @@ export function CriteriaAnnotationVerificationPage() {
   const [showModal, openModal, closeModal] = useModal()
   const [rawCriterion, setRawCriterion] = useState<RawCriterion | null>(null)
 
-  const {
-    topRef,
-    createScrollItemRef,
-    scrollToItem,
-    scrollToTop,
-    showBackToTop,
-  } = useManageItemScrollPosition<number>({
-    topOffset: 96, // set to sticky header height; use 0 if relying on CSS scroll-mt
-    behavior: 'smooth',
-    trackBackToTop: true,
-    onAfterScrollToItem: (el) => {
-      // optional flash highlight, replaces old class toggling
-      el.classList.add('ring-2', 'ring-blue-500', 'ring-offset-2', 'rounded')
-      setTimeout(() => {
-        el.classList.remove(
-          'ring-2',
-          'ring-blue-500',
-          'ring-offset-2',
-          'rounded'
-        )
-      }, 1200)
-    },
-  })
+  const { topRef, createScrollItemRef, scrollToTop, showBackToTop } =
+    useManageItemScrollPosition<number>({
+      topOffset: 96, // set to sticky header height; use 0 if relying on CSS scroll-mt
+      behavior: 'smooth',
+      trackBackToTop: true,
+      onAfterScrollToItem: (el) => {
+        // optional flash highlight, replaces old class toggling
+        el.classList.add('ring-2', 'ring-blue-500', 'ring-offset-2', 'rounded')
+        setTimeout(() => {
+          el.classList.remove(
+            'ring-2',
+            'ring-blue-500',
+            'ring-offset-2',
+            'rounded'
+          )
+        }, 1200)
+      },
+    })
   // Collapsible groups
   const [open, setOpen] = useState<Record<Status, boolean>>({
     NEW: true,
@@ -136,9 +131,6 @@ export function CriteriaAnnotationVerificationPage() {
     setStagingCriteria((prev) =>
       prev.map((x) => (x.id === updated.id ? updated : x))
     )
-
-    setOpen((o) => ({ ...o, [updated.criterion_adjudication_status]: true })) // ensure target group is open
-    scrollToItem(updated.id) // hook defers until the item mounts if needed
   }
 
   if (loadingStatus === 'not started' || loadingStatus === 'sending') {
@@ -224,81 +216,78 @@ export function CriteriaAnnotationVerificationPage() {
           </button>
         </div>
       </div>
-
+      {showModal && (
+        <div
+          id="match-info-modal"
+          className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-50"
+          style={{ background: '#cccc' }}
+          role="dialog"
+          aria-labelledby="eligibility-criteria-dialog-title"
+          aria-modal="true"
+        >
+          <div
+            className="bg-white overflow-scroll w-full lg:w-3/4 xl:w-2/3 h-full"
+            style={{ maxHeight: '95%', maxWidth: '95%' }}
+          >
+            <div className="text-sm sm:text-base px-4 pb-4 pt-2 sm:px-8 sm:pb-8">
+              <div className="flex items-baseline justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
+                <h3
+                  id="eligibility-criteria-dialog-title"
+                  className="font-bold mr-4"
+                >
+                  <span className="text-gray-500 text-sm">
+                    Highlighted Annotation for Raw Eligibility Criteria
+                  </span>
+                  <span className="italic block">
+                    {rawCriterion?.nct || ''}
+                  </span>
+                </h3>
+                <button
+                  className="ml-2 hover:text-red-700"
+                  onClick={closeModal}
+                  aria-label="Close Trial Match Info dialog"
+                >
+                  <XCircle className="inline" />
+                </button>
+              </div>
+              <RawCriterionHighlighter rawCriterion={rawCriterion} />
+            </div>
+          </div>
+        </div>
+      )}
       {/* Grouped sections */}
       {statusOrder.map((st) => {
         const list = (grouped[st] ?? []).slice().sort((a, b) => a.id - b.id)
         if (!list.length) return null
 
         return (
-          <>
-            {showModal && (
+          <DropdownSection
+            key={st}
+            id={`section-${st}`} // keeps jump bar working
+            name={`${st.replace('_', ' ')} (${list.length})`}
+            isOpen={open[st]} // controlled by state
+            onToggle={(next) => setOpen((o) => ({ ...o, [st]: next }))}
+            backgroundColor="bg-white"
+            headerClassName="top-0" // matches previous sticky top-0
+          >
+            {list.map((sc) => (
               <div
-                id="match-info-modal"
-                className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-50"
-                style={{ background: '#cccc' }}
-                role="dialog"
-                aria-labelledby="eligibility-criteria-dialog-title"
-                aria-modal="true"
+                key={sc.id}
+                ref={createScrollItemRef(sc.id)}
+                id={`crit-${sc.id}`}
+                className="scroll-mt-24"
               >
-                <div
-                  className="bg-white overflow-scroll w-full lg:w-3/4 xl:w-2/3 h-full"
-                  style={{ maxHeight: '95%', maxWidth: '95%' }}
-                >
-                  <div className="text-sm sm:text-base px-4 pb-4 pt-2 sm:px-8 sm:pb-8">
-                    <div className="flex items-baseline justify-between border-b py-2 sm:py-4 mb-4 sticky top-0 bg-white">
-                      <h3
-                        id="eligibility-criteria-dialog-title"
-                        className="font-bold mr-4"
-                      >
-                        <span className="text-gray-500 text-sm">
-                          Highlighted Annotation for Raw Eligibility Criteria
-                        </span>
-                        <span className="italic block">
-                          {rawCriterion?.nct || ''}
-                        </span>
-                      </h3>
-                      <button
-                        className="ml-2 hover:text-red-700"
-                        onClick={closeModal}
-                        aria-label="Close Trial Match Info dialog"
-                      >
-                        <XCircle className="inline" />
-                      </button>
-                    </div>
-                    <RawCriterionHighlighter rawCriterion={rawCriterion} />
-                  </div>
-                </div>
+                <CriteriaAnnotationVerification
+                  stagingCriterion={sc}
+                  criteria={criteria}
+                  lookupValues={values}
+                  inputTypes={inputTypes}
+                  setLookupValues={setValues}
+                  onStagingUpdated={handleStagingUpdated}
+                />
               </div>
-            )}
-            <DropdownSection
-              key={st}
-              id={`section-${st}`} // keeps jump bar working
-              name={`${st.replace('_', ' ')} (${list.length})`}
-              isOpen={open[st]} // controlled by state
-              onToggle={(next) => setOpen((o) => ({ ...o, [st]: next }))}
-              backgroundColor="bg-white"
-              headerClassName="top-0" // matches previous sticky top-0
-            >
-              {list.map((sc) => (
-                <div
-                  key={sc.id}
-                  ref={createScrollItemRef(sc.id)}
-                  id={`crit-${sc.id}`}
-                  className="scroll-mt-24"
-                >
-                  <CriteriaAnnotationVerification
-                    stagingCriterion={sc}
-                    criteria={criteria}
-                    lookupValues={values}
-                    inputTypes={inputTypes}
-                    setLookupValues={setValues}
-                    onStagingUpdated={handleStagingUpdated}
-                  />
-                </div>
-              ))}
-            </DropdownSection>
-          </>
+            ))}
+          </DropdownSection>
         )
       })}
     </div>

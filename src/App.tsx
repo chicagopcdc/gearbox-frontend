@@ -25,8 +25,8 @@ import { CriteriaValueAssignmentPage } from './pages/CriteriaValueAssignmentPage
 function App() {
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
-  const gearboxGateway = auth.user?.authz['/gearbox_gateway']
-  const isAdmin = !!gearboxGateway && !!gearboxGateway.length
+  const gearboxDataManager = auth.user?.authz['/services/gearbox/data-manager']
+  const isAdmin = !!gearboxDataManager && !!gearboxDataManager.length
   const userId = auth.user?.sub ?? ''
   useGoogleAnalytics(userId)
 

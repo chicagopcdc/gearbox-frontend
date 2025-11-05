@@ -106,49 +106,90 @@ function nodeToLines(
   acc: BoolLine[],
   opts?: { formMap?: FormMap }
 ): void {
+  // group
   if (isGroup(node)) {
-    const isOR = String(node.operator || '')
-      .toUpperCase()
-      .includes('OR')
-    acc.push({ kind: 'group-open', indent })
-    const crit = node.criteria || []
+    const crit = Array.isArray(node.criteria) ? node.criteria : []
+    const needsGrouping = crit.length > 1
+
+    let joiner: 'AND' | 'OR'
+    const opRaw = node && node.operator ? String(node.operator) : ''
+    const opUpper = opRaw.toUpperCase()
+    if (opUpper.includes('OR')) {
+      joiner = 'OR'
+    } else {
+      joiner = 'AND'
+    }
+
+    if (needsGrouping) {
+      acc.push({ kind: 'group-open', indent: indent })
+    }
+
     for (let i = 0; i < crit.length; i++) {
+      const beforeLen = acc.length
       nodeToLines(crit[i], indent + 16, acc, opts)
+
       const hasMore = i < crit.length - 1
-      if (hasMore) {
-        acc.push({
-          kind: 'group-close',
-          indent: indent + 16,
-          trailingJoiner: isOR ? 'OR' : 'AND',
-        })
-        acc.push({ kind: 'group-open', indent: indent + 16 })
+      if (hasMore && acc.length > beforeLen) {
+        const last = acc[acc.length - 1] as any
+        last.trailingJoiner = joiner
       }
     }
-    acc.push({ kind: 'group-close', indent })
+
+    if (needsGrouping) {
+      acc.push({ kind: 'group-close', indent: indent })
+    }
     return
   }
 
+  // leaf
   if (isLeaf(node)) {
-    const fieldKeyNorm = canon(String(node.fieldName || ''))
-    const field = String(node.fieldName || '')
-    const opText = opPhrase(node.operator)
+    const rawFieldName = node && node.fieldName ? String(node.fieldName) : ''
+    const fieldKeyNorm = canon(rawFieldName)
+    const field = rawFieldName
+
+    const opText = opPhrase(node ? node.operator : undefined)
+
+    let rawValue: any
+    if (node && node.fieldValueLabel != null) {
+      rawValue = node.fieldValueLabel
+    } else {
+      rawValue = node ? node.fieldValue : undefined
+    }
+
     const valueText = valueToDisplay(
       fieldKeyNorm,
-      node.fieldValueLabel ?? node.fieldValue,
-      opts?.formMap
+      rawValue,
+      opts && opts.formMap ? opts.formMap : undefined
     )
 
-    const matched =
-      has(node, 'isMatched') || has(node, 'matched')
-        ? (node as any).isMatched ?? (node as any).matched
-        : undefined
+    let matched: boolean | undefined
+    const hasIM = Object.prototype.hasOwnProperty.call(node, 'isMatched')
+    const hasM = Object.prototype.hasOwnProperty.call(node, 'matched')
+    if (hasIM || hasM) {
+      const im = (node as any).isMatched
+      const m = (node as any).matched
+      matched = im !== undefined ? im : m
+    } else {
+      matched = undefined
+    }
 
-    acc.push({ kind: 'leaf', indent, field, opText, valueText, matched })
+    acc.push({
+      kind: 'leaf',
+      indent: indent,
+      field: field,
+      opText: opText,
+      valueText: valueText,
+      matched: matched,
+    })
     return
   }
 
+  // array
   if (Array.isArray(node)) {
-    for (const ch of node) nodeToLines(ch, indent, acc, opts)
+    for (let idx = 0; idx < node.length; idx++) {
+      const ch = node[idx]
+      nodeToLines(ch, indent, acc, opts)
+    }
   }
 }
 
