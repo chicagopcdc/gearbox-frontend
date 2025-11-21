@@ -34,17 +34,17 @@ export function postUserInput(
 
   return fetchGearbox('/gearbox-middleware/user-input', {
     method: 'POST',
-    body: JSON.stringify({
-      data,
-      id,
-      name,
-    }),
+    body: JSON.stringify({ data, id, name }),
+  }).then(async (res) => {
+    const body = await res.json().catch(() => null)
+    if (!res.ok) {
+      const msg =
+        (body && (body.detail || body.message)) ||
+        'Failed to save your answers.'
+      throw new Error(msg)
+    }
+    return userInputApiToUi(body as UserInputApi)
   })
-    .then((res) => res.json() as Promise<UserInputApi>)
-    .then(userInputApiToUi)
-    .catch((err) => {
-      throw new Error('Failed to post the latest saved user input:', err)
-    })
 }
 
 export function getAllUserInput(): Promise<UserInputUi[]> {
