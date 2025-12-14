@@ -24,6 +24,7 @@ export default function useAuth(): {
 
   const fetchAuth = () => {
     setLoadingStatus('sending')
+    setUserData(undefined)
     fetchUser()
       .then((ud) => {
         setUserData(ud)
