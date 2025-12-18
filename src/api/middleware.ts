@@ -1,12 +1,28 @@
-import { MatchDetails, MatchFormValues, MatchGroups } from '../model'
+import {
+  MatchDetails,
+  MatchFormValues,
+  MatchGroupLocationOptions,
+  MatchGroups,
+} from '../model'
 import { fetchGearbox } from './utils'
 
 const baseUrl = '/gearbox-middleware'
 
-export function getMatchGroups(values: MatchFormValues): Promise<MatchGroups> {
+export function getMatchGroups(
+  values: MatchFormValues,
+  location?: MatchGroupLocationOptions
+): Promise<MatchGroups> {
   const queryParams = encodeURIComponent(JSON.stringify(values))
 
-  const url = `${baseUrl}/get_match_groups?values=${queryParams}`
+  let url = `${baseUrl}/get_match_groups?values=${queryParams}`
+
+  if (location) {
+    const { lat, lon, range, unit } = location
+    url += `&lat=${encodeURIComponent(String(lat))}`
+    url += `&lon=${encodeURIComponent(String(lon))}`
+    url += `&range=${encodeURIComponent(String(range))}`
+    url += `&unit=${encodeURIComponent(unit)}`
+  }
 
   return fetchGearbox(url).then((res) => res.json() as Promise<MatchGroups>)
 }

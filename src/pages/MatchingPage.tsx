@@ -29,6 +29,8 @@ import {
 } from '../api/userInput'
 import { useModal } from '../hooks/useModal'
 import { UserInputModal } from '../components/UserInputModal'
+import { useLocationFilter } from '../hooks/useLocationFilter'
+import { LocationFilterSection } from '../components/LocationFilterSection'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
@@ -63,6 +65,16 @@ function MatchingPage({
   const [showModal, openModal, closeModal] = useModal()
   const [errorDetail, setErrorDetail] = useState<string | null>(null)
 
+  const {
+    filter: locationFilter,
+    setFilter: setLocationFilter,
+    params: locationParams,
+    error: locationError,
+    apply: applyLocationFilter,
+    clear: clearLocationFilter,
+    isActive: isLocationActive,
+  } = useLocationFilter()
+
   useEffect(() => {
     fetchAll()
   }, [fetchAll])
@@ -86,11 +98,27 @@ function MatchingPage({
     fetchData()
   }, [])
 
+  // Details – no location filter for now
   useEffect(() => {
     const matchInput = currentUserInput.values
     getMatchDetails(matchInput).then(setMatchDetails)
-    getMatchGroups(matchInput).then(setMatchGroups)
   }, [currentUserInput])
+
+  // Groups – optionally filter by location
+  useEffect(() => {
+    const matchInput = currentUserInput.values
+
+    const locationForApi = locationParams
+      ? {
+          lat: locationParams.lat,
+          lon: locationParams.lon,
+          range: locationParams.range, // numeric distance input
+          unit: locationParams.unit, // 'km' | 'mi'
+        }
+      : undefined
+
+    getMatchGroups(matchInput, locationForApi).then(setMatchGroups)
+  }, [currentUserInput, locationParams])
 
   useEffect(() => {
     setMarkedFields(
@@ -309,6 +337,14 @@ function MatchingPage({
               isUpdating ? 'bg-gray-100' : 'bg-white'
             } ${view === 'result' ? '' : 'hidden'} `}
           >
+            <LocationFilterSection
+              filter={locationFilter}
+              onChange={setLocationFilter}
+              onApply={applyLocationFilter}
+              onClear={clearLocationFilter}
+              isActive={isLocationActive}
+              error={locationError}
+            />
             <MatchResult {...{ matchDetails, matchGroups, studies }} />
           </section>
         </>
@@ -438,6 +474,14 @@ function MatchingPage({
                 isUpdating ? 'bg-gray-100' : 'bg-white'
               }`}
             >
+              <LocationFilterSection
+                filter={locationFilter}
+                onChange={setLocationFilter}
+                onApply={applyLocationFilter}
+                onClear={clearLocationFilter}
+                isActive={isLocationActive}
+                error={locationError}
+              />
               <MatchResult {...{ matchDetails, matchGroups, studies }} />
             </div>
           </section>

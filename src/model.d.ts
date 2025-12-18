@@ -329,6 +329,36 @@ export type HighlightSpan = {
   source: AnnotationSource
 }
 
+export type LocationMode = 'coordinates' | 'address'
+
+export type LocationFilterState = {
+  mode: LocationMode
+  lat: string
+  lon: string
+  distance: string
+  unit: 'km' | 'mi'
+  address: string
+}
+
+export type LocationParams = {
+  lat: number
+  lon: number
+  range: number // numeric value of distance input
+  unit: 'km' | 'mi'
+} | null
+
+//implement this with the UPS API or other APIs
+export type GeocodeFn = (
+  address: string
+) => Promise<{ lat: number; lon: number }>
+
+type MatchGroupLocationOptions = {
+  lat: number
+  lon: number
+  range: number
+  unit: 'km' | 'mi'
+}
+
 export type PublishIssueDetail = {
   code: string
   value?: string | null
