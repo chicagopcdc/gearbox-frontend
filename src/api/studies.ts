@@ -3,10 +3,7 @@ import { fetchGearbox, readCache, writeCache } from './utils'
 
 const SESSION_STORAGE_KEY = 'gearbox:studies'
 
-export function getStudies() {
-  const cache = readCache<Study[]>(SESSION_STORAGE_KEY)
-  if (cache !== null) return Promise.resolve(cache)
-
+export function getStudiesFromApi() {
   return fetchGearbox('/gearbox/studies')
     .then((res) => res.json())
     .then(fetch)
@@ -27,6 +24,13 @@ export function getStudies() {
       writeCache(SESSION_STORAGE_KEY, JSON.stringify(data))
       return data
     })
+}
+
+export function getStudies() {
+  const cache = readCache<Study[]>(SESSION_STORAGE_KEY)
+  if (cache !== null) return Promise.resolve(cache)
+
+  return getStudiesFromApi()
 }
 
 export function buildStudies() {

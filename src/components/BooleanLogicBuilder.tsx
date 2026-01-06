@@ -7,6 +7,7 @@ import { useModal } from '../hooks/useModal'
 import { CriteriaBuilderModal } from './CriteriaBuilderModal'
 import Button from './Inputs/Button'
 import { publishStudyVersion, updateStudyVersion } from '../api/studyVersions'
+import { getStudiesFromApi } from '../api/studies'
 
 export function BooleanLogicBuilder({
   gearboxState,
@@ -31,6 +32,7 @@ export function BooleanLogicBuilder({
   const changeStudyStatus = () => {
     if (status === 'IN_PROCESS') {
       return publishStudyVersion(studyVersion.id)
+        .then(getStudiesFromApi)
         .then(() => {
           setStudyVersions(
             studyVersions.filter((sv) => sv.id !== studyVersion.id)
@@ -46,6 +48,7 @@ export function BooleanLogicBuilder({
         status: 'IN_PROCESS',
       }
       return updateStudyVersion(payload)
+        .then(getStudiesFromApi)
         .then(() => {
           setStudyVersions(
             studyVersions.filter((sv) => sv.id !== studyVersion.id)
