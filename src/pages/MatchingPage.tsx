@@ -29,7 +29,6 @@ import {
 } from '../api/userInput'
 import { useModal } from '../hooks/useModal'
 import { UserInputModal } from '../components/UserInputModal'
-import { waitForElementToBeRemoved } from '@testing-library/react'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
