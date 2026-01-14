@@ -64,6 +64,10 @@ function MatchingPage({
   const [errorDetail, setErrorDetail] = useState<string | null>(null)
 
   useEffect(() => {
+    fetchAll()
+  }, [fetchAll])
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         if (process.env.ENABLE_PHI) {

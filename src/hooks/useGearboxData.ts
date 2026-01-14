@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type {
   ApiStatus,
   EligibilityCriterion,
@@ -26,7 +26,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [importantQuestionsConfig, setImportantQuestionsConfig] =
     useState<ImportantQuestionConfig>({ groups: [] })
 
-  const fetchAll = () => {
+  const fetchAll = useCallback(() => {
     setStatus('sending')
     Promise.all([
       getMatchConditions(),
@@ -49,7 +49,8 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
         console.error(err)
         setStatus('error')
       })
-  }
+  }, [])
+
   const resetAll = () => {
     setConditions([])
     setConfig({ groups: [], fields: [] } as MatchFormConfig)
