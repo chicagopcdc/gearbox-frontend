@@ -76,3 +76,7 @@ After the container starts, open the app in your browser at:
 http://localhost:8080
 
 You can also map to a different host port (for example `-p 80:80`) if preferred.
+
+## .env.production
+
+This repository includes a `.env.production` file that is used when creating production builds (for example during `npm run build` or when building the Docker image). Variable values depend on the deployment environment and are typically provided or adjusted by your deployment/CI process. The file is not required for local development (`npm start` will run without it).
