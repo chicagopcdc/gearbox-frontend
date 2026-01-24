@@ -6,7 +6,7 @@ The primary goal of this prototype is to facilitate the GEARBOx development team
 
 For more information on the GEARBOx project, please refer to materials on [this shared folder by Box](https://uchicago.app.box.com/folder/61411306153) (permission required).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Note that only environment variables prefixed with `REACT_APP_` are exposed to the frontend code.
 
 ## Available Scripts
 
@@ -55,6 +55,14 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 `npx prettier [filepath] -w`
 
+## .env.production
+
+This repository includes a `.env.production` file that is used when creating production builds (for example during `npm run build` or when building the Docker image). Variable values depend on the deployment environment and are typically provided or adjusted by your deployment/CI process.
+
+**Important:** Values from `.env.production` are embedded into the build artifacts at build time. Do not store secrets in this file.
+
+The file is not required for local development (`npm start` will run without it).
+
 ## Running the Application with Docker
 
 This repository includes a Dockerfile and a startup script that build the app and serve the production build with nginx (nginx listens on port 80 inside the container).
@@ -77,6 +85,4 @@ http://localhost:8080
 
 You can also map to a different host port (for example `-p 80:80`) if preferred.
 
-## .env.production
 
-This repository includes a `.env.production` file that is used when creating production builds (for example during `npm run build` or when building the Docker image). Variable values depend on the deployment environment and are typically provided or adjusted by your deployment/CI process. The file is not required for local development (`npm start` will run without it).
