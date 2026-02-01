@@ -8,8 +8,6 @@ export function getEligibilityCriteria() {
   if (cache !== null) return Promise.resolve(cache)
 
   return fetchGearbox('/gearbox/eligibility-criteria')
-    .then((res) => res.json())
-    .then(fetch)
     .then((res) => res.json() as Promise<EligibilityCriterion[]>)
     .then((data) => {
       writeCache(SESSION_STORAGE_KEY, JSON.stringify(data))
