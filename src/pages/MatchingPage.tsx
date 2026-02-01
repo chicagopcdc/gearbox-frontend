@@ -123,14 +123,9 @@ function MatchingPage({
       ).then((res) => {
         setCurrentUserInput(res)
         if (showAllUserInput) {
-          setAllUserInput(
-            allUserInput.map((u) => {
-              if (u.id === res.id) {
-                return res
-              } else {
-                return u
-              }
-            })
+          // Use functional update to get latest state, avoiding stale closure
+          setAllUserInput((prevAllUserInput) =>
+            prevAllUserInput.map((u) => (u.id === res.id ? res : u))
           )
         }
       })
@@ -141,7 +136,8 @@ function MatchingPage({
     postUserInput({}, undefined, name).then((res) => {
       setCurrentUserInput(res)
       if (showAllUserInput) {
-        setAllUserInput([...allUserInput, res])
+        // Use functional update to get latest state, avoiding stale closure
+        setAllUserInput((prevAllUserInput) => [...prevAllUserInput, res])
       }
     })
   }
