@@ -82,9 +82,25 @@ function MatchingPage({
   }, [])
 
   useEffect(() => {
+    let isCancelled = false
     const matchInput = currentUserInput.values
-    getMatchDetails(matchInput).then(setMatchDetails)
-    getMatchGroups(matchInput).then(setMatchGroups)
+
+    Promise.all([getMatchDetails(matchInput), getMatchGroups(matchInput)])
+      .then(([details, groups]) => {
+        if (!isCancelled) {
+          setMatchDetails(details)
+          setMatchGroups(groups)
+        }
+      })
+      .catch((err) => {
+        if (!isCancelled) {
+          console.error('Error fetching match data:', err)
+        }
+      })
+
+    return () => {
+      isCancelled = true
+    }
   }, [currentUserInput])
 
   useEffect(() => {
