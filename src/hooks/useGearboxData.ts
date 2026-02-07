@@ -13,6 +13,7 @@ import { getMatchFormConfig } from '../api/matchFormConfig'
 import { getStudies } from '../api/studies'
 import type useAuth from './useAuth'
 import { getImportantQuestionsConfig } from '../api/importantQuestionsConfig'
+import { clearGearboxCache } from '../api/utils'
 
 export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [conditions, setConditions] = useState([] as MatchCondition[])
@@ -27,6 +28,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     useState<ImportantQuestionConfig>({ groups: [] })
 
   const fetchAll = () => {
+    clearGearboxCache()
     setStatus('sending')
     Promise.all([
       getMatchConditions(),
