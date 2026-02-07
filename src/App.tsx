@@ -15,7 +15,6 @@ import { BooleanLogicBuilderPage } from './pages/BooleanLogicBuilderPage'
 import DocumentReviewPage from './pages/DocumentReviewPage'
 import useAuth from './hooks/useAuth'
 import useGearboxData from './hooks/useGearboxData'
-import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 import { ErrorRetry } from './components/ErrorRetry'
 import { AdminPage } from './pages/AdminPage'
 import { InputFormBuilderPage } from './pages/InputFormBuilderPage'
@@ -28,7 +27,6 @@ function App() {
   const gearboxDataManager = auth.user?.authz['/services/gearbox/data-manager']
   const isAdmin = !!gearboxDataManager && !!gearboxDataManager.length
   const userId = auth.user?.sub ?? ''
-  useGoogleAnalytics(userId)
 
   if (
     auth.loadingStatus === 'not started' ||
