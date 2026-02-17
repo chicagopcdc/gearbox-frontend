@@ -25,7 +25,8 @@
   },
   "scripts": {
     "watch:tailwind": "postcss src/tailwind.css -o src/index.css --watch",
-    "start": "react-scripts start",
+    "start": "BROWSER=none react-scripts start",
+    "start:dev": "HTTPS=true SSL_CRT_FILE=.cert/cert.pem SSL_KEY_FILE=.cert/key.pem BROWSER=none PORT=3000 react-scripts start",
     "dev": "REACT_APP_VERSION=$npm_package_version concurrently \"npm:start\" \"npm:watch:tailwind\"",
     "prebuild": "postcss src/tailwind.css -o src/index.css --env production",
     "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
