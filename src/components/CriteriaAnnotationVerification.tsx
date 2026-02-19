@@ -6,6 +6,7 @@ import {
   CriterionStaging,
   CriterionStagingWithValueList,
   Criterion,
+  Study,
 } from '../model'
 import Field from './Inputs/Field'
 import Button from './Inputs/Button'
@@ -17,7 +18,10 @@ import {
   publishCriterionStaging,
   saveCriterionStaging,
 } from '../api/criterionStaging'
-
+import DropdownSection from './DropdownSection'
+import TrialCard from './TrialCard'
+import { Info } from 'react-feather'
+import { useModal } from '../hooks/useModal'
 type Status = CriterionStaging['criterion_adjudication_status']
 
 export function CriteriaAnnotationVerification({
@@ -301,6 +305,13 @@ export function CriteriaAnnotationVerification({
     value: c.code,
     label: c.code,
   }))
+
+  const associatedStudies: Study[] =
+    criteria.find((c) => c.id === stagingCriterion.criterion_id)?.studies || []
+
+  const [showModal, openModal, closeModal] = useModal()
+  const matchInfoId = `match-info-${stagingCriterion.id}`
+
   return (
     <div className="my-4 p-4 border border-gray-400">
       <form
@@ -310,6 +321,7 @@ export function CriteriaAnnotationVerification({
       >
         <div className="flex justify-between items-center mb-2">
           <h1>Status: {status}</h1>
+
           <div className="flex items-center">
             <RequestStatusBar apiStatus={apiStatus} errorMsg={errorMsg} />
             <ActionButtons
@@ -320,6 +332,49 @@ export function CriteriaAnnotationVerification({
               publish={publish}
               accept={accept}
             />
+            {status === 'ACTIVE' && (
+              <div className="relative ml-2">
+                <button
+                  type="button"
+                  className={`${
+                    showModal ? 'text-red-700' : 'hover:text-red-700'
+                  }`}
+                  title="Contact to edit dialog"
+                  aria-label="Contact to edit dialog"
+                  aria-expanded={showModal}
+                  aria-controls={matchInfoId}
+                  onClick={() => (showModal ? closeModal() : openModal())}
+                >
+                  <Info />
+                </button>
+                {showModal && (
+                  <div
+                    id={matchInfoId}
+                    role="dialog"
+                    aria-label="Contact note"
+                    className="absolute right-0 top-full mt-1 z-50 w-72 rounded-md border border-gray-300 bg-white shadow-lg p-3"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-semibold text-gray-700">
+                        Contact note
+                      </span>
+                      <button
+                        type="button"
+                        className="text-gray-400 hover:text-gray-600 text-xs"
+                        onClick={closeModal}
+                        aria-label="Close contact note"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                      Gearbox Super admin required to change Contact:
+                      help@gearbox.lists.edu
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <Field
@@ -509,6 +564,18 @@ export function CriteriaAnnotationVerification({
             setCanPublish(false)
           }}
         />
+      )}
+      {associatedStudies.length > 0 && (
+        <DropdownSection
+          name={`Associated Studies (${associatedStudies.length})`}
+          isCollapsedAtStart={true}
+        >
+          <div className="mx-2">
+            {associatedStudies.map((study) => (
+              <TrialCard study={study} key={study.id} />
+            ))}
+          </div>
+        </DropdownSection>
       )}
     </div>
   )

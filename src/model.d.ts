@@ -236,6 +236,7 @@ export type Criterion = {
   display_name: string
   input_type_id: number
   values: CriteriaValue[]
+  studies?: Study[]
 }
 
 export type CriterionStaging = {

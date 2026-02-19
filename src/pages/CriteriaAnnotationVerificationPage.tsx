@@ -76,7 +76,7 @@ export function CriteriaAnnotationVerificationPage() {
       getStudyVersionsAdjudication(),
       getValues(),
       getInputTypes(),
-      getCriteria(),
+      getCriteria(true),
     ])
       .then(([studyVersions, values, inputTypes, criteria]) => {
         setStudyVersionsAdjudication(studyVersions)
