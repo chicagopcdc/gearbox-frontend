@@ -2,14 +2,11 @@ FROM quay.io/pcdc/node-lts-alpine:18-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
+
+COPY tailwind.config.js tsconfig.json postcss.config.js .eslintrc .prettierrc ./
+COPY .env.production ./
 COPY public ./public
 COPY src ./src
-COPY .env.production ./
-COPY tailwind.config.js ./
-COPY tsconfig.json ./
-COPY postcss.config.js ./
-COPY .eslintrc ./
-COPY .prettierrc ./
 
 RUN npm run build
 
@@ -20,6 +17,8 @@ COPY ./nginx /etc/nginx/conf.d
 COPY ./dockerStart.sh /dockerStart.sh
 
 RUN apk add libcap
+
+COPY --chown=nginx:nginx ./dockerStart.sh /dockerStart.sh
 
 RUN chmod +x /dockerStart.sh \
     && setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx \

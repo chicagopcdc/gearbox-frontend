@@ -45,6 +45,27 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Docker Setup
+
+The project includes a production-ready Docker configuration using Nginx to serve the React application with proper SPA routing.
+
+### 1. Build the Image
+To build the frontend application image, run:
+		```bash
+		docker build -t gearbox-frontend .
+		```
+
+### 2. Run the Container
+The container listens on port 80. To access it on http://localhost:3000, run:
+		```bash
+		docker run -p 3000:80 gearbox-frontend
+		```
+
+### Key Features
+* **Multi-stage build**: Uses Node 18 for building and Nginx 1.22 for serving, keeping the final image size minimal.
+* **Security**: The container is configured to run as a non-root `nginx` user for enhanced security.
+* **SPA Support**: Nginx is configured to handle client-side routing by redirecting unknown paths to `index.html`.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
