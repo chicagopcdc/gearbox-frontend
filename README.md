@@ -1,10 +1,12 @@
-# GEARBOx front end application prototype
+<!-- !!!!!!!!!!!! -->
+# GEARBOx Frontend Application Prototype
 
 A simple prototype for the GEARBOx's client-side application, powered by [React](https://reactjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
-The primary goal of this prototype is to facilitate the GEARBOx development team's efforts to iterate on different ideas for designing and implementing user interface to the GEARBOx service. The GEARBOx project is still at its early stage, and the scope of this prototype UI application is currently limited to modeling the client-side interactions without sending requests to GEARBOx back end services.
+The primary goal of this prototype is to facilitate the GEARBOx development team's efforts to iterate on different ideas for designing and implementing the user interface for the GEARBOx service. The GEARBOx project is still at its early stage, and the scope of this prototype UI application is currently limited to modeling the client-side interactions without sending requests to GEARBOx backend services.
 
 For more information on the GEARBOx project, please refer to materials on [this shared folder by Box](https://uchicago.app.box.com/folder/61411306153) (permission required).
+<!-- !!!!!!!!!!!! -->
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -53,4 +55,13 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Contribute
 
-`npx prettier [filepath] -w`
+We welcome contributions to GEARBOx! To keep the codebase clean and consistent, please follow these steps:
+
+1. **Format your code**: Before committing, run Prettier to ensure your changes match our style guide:
+   ```bash
+   npm run prettier
+	 ```
+
+2. **Open a Pull Request**: Provide a clear description of your changes and link the relevant issues.
+
+3. **Review**: Wait for feedback from the maintainers. We might suggest some improvements before merging.
