@@ -27,28 +27,18 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     useState<ImportantQuestionConfig>({ groups: [] })
 
   const fetchAll = () => {
+		sessionStorage.removeItem('gearbox:studies')
+    sessionStorage.removeItem('gearbox:eligiblity-criteria') // Оставляем опечатку!
+    sessionStorage.removeItem('gearbox:match-conditions')
+
     setStatus('sending')
     Promise.all([
-      getMatchConditions(),
-      getMatchFormConfig(),
+			getMatchConditions(),
+			getMatchFormConfig(),
       getEligibilityCriteria(),
       getStudies(),
       getImportantQuestionsConfig(),
     ])
-      .then(
-        ([conditions, config, criteria, studies, importantQuestionsConfig]) => {
-          setConditions(conditions)
-          setConfig(config)
-          setCriteria(criteria)
-          setStudies(studies)
-          setStatus('not started')
-          setImportantQuestionsConfig(importantQuestionsConfig)
-        }
-      )
-      .catch((err) => {
-        console.error(err)
-        setStatus('error')
-      })
   }
   const resetAll = () => {
     setConditions([])
