@@ -1,4 +1,7 @@
+node_modules
+build
 .storybook
 .vscode
-build
-node_modules
+.git
+.DS_Store
+npm-debug.log
