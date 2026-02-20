@@ -1,8 +1,8 @@
-# GEARBOx front end application prototype
+# GEARBOx Frontend Application Prototype
 
 A simple prototype for the GEARBOx's client-side application, powered by [React](https://reactjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
-The primary goal of this prototype is to facilitate the GEARBOx development team's efforts to iterate on different ideas for designing and implementing user interface to the GEARBOx service. The GEARBOx project is still at its early stage, and the scope of this prototype UI application is currently limited to modeling the client-side interactions without sending requests to GEARBOx back end services.
+The primary goal of this prototype is to facilitate the GEARBOx development team's efforts to iterate on different ideas for designing and implementing the user interface for the GEARBOx service. The GEARBOx project is still at its early stage, and the scope of this prototype UI application is currently limited to modeling the client-side interactions without sending requests to GEARBOx backend services.
 
 For more information on the GEARBOx project, please refer to materials on [this shared folder by Box](https://uchicago.app.box.com/folder/61411306153) (permission required).
 
@@ -45,6 +45,27 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Docker Setup
+
+The project includes a production-ready Docker configuration using Nginx to serve the React application with proper SPA routing.
+
+### 1. Build the Image
+To build the frontend application image, run:
+		```bash
+		docker build -t gearbox-frontend .
+		```
+
+### 2. Run the Container
+The container listens on port 80. To access it on http://localhost:3000, run:
+		```bash
+		docker run -p 3000:80 gearbox-frontend
+		```
+
+### Key Features
+* **Multi-stage build**: Uses Node 18 for building and Nginx 1.22 for serving, keeping the final image size minimal.
+* **Security**: The container is configured to run as a non-root `nginx` user for enhanced security.
+* **SPA Support**: Nginx is configured to handle client-side routing by redirecting unknown paths to `index.html`.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -53,4 +74,13 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## Contribute
 
-`npx prettier [filepath] -w`
+We welcome contributions to GEARBOx! To keep the codebase clean and consistent, please follow these steps:
+
+1. **Format your code**: Before committing, run Prettier to ensure your changes match our style guide:
+   ```bash
+   npm run prettier
+	 ```
+
+2. **Open a Pull Request**: Provide a clear description of your changes and link the relevant issues.
+
+3. **Review**: Wait for feedback from the maintainers. We might suggest some improvements before merging.
