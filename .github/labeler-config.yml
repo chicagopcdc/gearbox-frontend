@@ -1,0 +1,133 @@
+# API and Backend Integration
+api:
+  - src/api/**/*
+  - src/services/**/*
+
+# React Components
+components:
+  - src/components/**/*
+  - src/ui/**/*
+
+# Pages and Routes
+pages:
+  - src/pages/**/*
+  - src/routes/**/*
+
+# Custom Hooks
+hooks:
+  - src/hooks/**/*
+  - src/hooks/*.ts
+
+# Utilities and Helpers
+utils:
+  - src/utils/**/*
+  - src/helpers/**/*
+  - src/lib/**/*
+
+# Types and Models
+types:
+  - src/types/**/*
+  - src/models/**/*
+  - src/**/*.d.ts
+  - src/**/*.types.ts
+
+# Styles and Theming
+styles:
+  - src/**/*.css
+  - src/**/*.scss
+  - src/styles/**/*
+  - tailwind.config.js
+  - postcss.config.js
+
+# Tests
+tests:
+  - src/**/*.test.ts
+  - src/**/*.test.tsx
+  - src/**/*.spec.ts
+  - src/**/*.stories.tsx
+  - src/test/**/*
+
+# Documentation
+documentation:
+  - README.md
+  - CONTRIBUTING.md
+  - CODE_OF_CONDUCT.md
+  - docs/**/*
+  - .github/**/*.md
+  - **/*.md
+
+# Dependencies
+dependencies:
+  - package.json
+  - package-lock.json
+  - yarn.lock
+  - npm-shrinkwrap.json
+
+# GitHub Configuration
+github:
+  - .github/**/*
+  - .gitignore
+  - .gitattributes
+
+# CI/CD
+ci-cd:
+  - .github/workflows/**/*
+  - .gitlab-ci.yml
+  - Jenkinsfile
+  - .circleci/**/*
+
+# Security
+security:
+  - SECURITY.md
+  - .snyk
+  - codeql-config.yml
+
+# Build and Configuration
+build:
+  - webpack.config.js
+  - vite.config.ts
+  - next.config.js
+  - .babelrc
+  - .eslintrc*
+  - .prettierrc*
+  - .env*
+  - Dockerfile
+  - docker-compose.yml
+  - nginx/**/*
+
+# Assets
+assets:
+  - public/**/*
+  - src/assets/**/*
+  - src/**/*.svg
+  - src/**/*.png
+  - src/**/*.jpg
+  - src/**/*.ico
+
+# Performance
+performance:
+  - src/**/*.performance.ts
+  - src/**/*.bench.ts
+  - perf-tests/**/*
+
+# Accessibility
+a11y:
+  - src/**/*.a11y.ts
+  - a11y-reports/**/*
+
+# Bug Fix
+bug:
+  - src/**/*.fix.*
+  - patches/**/*
+
+# Feature
+feature:
+  - src/features/**/*
+  - new-feature/**/*
+
+# Breaking Change
+breaking-change:
+  - any: ['src/**/*']
+    all: ['!src/**/*.test.*']
+    all: ['!src/**/*.stories.*']
+    all: ['!**/*.md']

@@ -1,0 +1,122 @@
+# Set to true to add reviewers to PRs
+addReviewers: true
+
+# Set to true to add assignees to PRs
+addAssignees: author
+
+# A list of reviewers to be added to PRs (GitHub usernames)
+reviewers:
+  # Core Team
+  - grugna
+  - lead-developer
+  - tech-lead
+  
+  # Frontend Team
+  - ui-lead
+  - frontend-dev-1
+  - frontend-dev-2
+  
+  # Backend Team
+  - api-lead
+  - backend-dev-1
+  - database-expert
+  
+  # QA Team
+  - qa-lead
+  - tester-1
+  
+  # Documentation
+  - tech-writer
+  
+  # Security
+  - security-expert
+
+# Number of reviewers to add (0 = all)
+numberOfReviewers: 2
+
+# A list of keywords that should trigger the action
+reviewersByKeywords:
+  documentation:
+    - tech-writer
+    - documentation-reviewer
+  
+  security:
+    - security-expert
+    - security-lead
+  
+  api:
+    - api-lead
+    - backend-dev-1
+  
+  components:
+    - ui-lead
+    - frontend-dev-1
+  
+  tests:
+    - qa-lead
+    - tester-1
+  
+  dependencies:
+    - lead-developer
+    - security-expert
+
+# A list of assignees to be added to PRs (GitHub usernames)
+assignees:
+  - project-maintainer
+
+# Number of assignees to add (0 = all)
+numberOfAssignees: 1
+
+# Filter based on labels
+filterLabels:
+  exclude:
+    - "do-not-merge"
+    - "work-in-progress"
+    - "draft"
+  include:
+    - "ready-for-review"
+    - "needs-review"
+
+# Ignore certain files patterns
+ignoreFiles:
+  - "*.md"
+  - "LICENSE*"
+  - ".gitignore"
+  - "*.lock"
+
+# Ignore draft PRs
+ignoreDraft: true
+
+# Ignore PRs from certain users
+ignoreUsers:
+  - dependabot[bot]
+  - dependabot-preview[bot]
+  - github-actions[bot]
+
+# Use team reviewers (if using GitHub teams)
+useTeamAssignees: false
+teams:
+  - team/frontend
+  - team/backend
+  - team/qa
+
+# Custom messages
+messages:
+  welcome: |
+    ## 👋 Thanks for your contribution!
+    
+    We've automatically assigned some reviewers to look at your PR.
+    
+    ### Next Steps:
+    1. Wait for automated checks to complete
+    2. Address any reviewer feedback
+    3. Once approved, your PR will be merged
+    
+    Need help? Check our [contributing guide](CONTRIBUTING.md)
+  
+  assigned: |
+    ### 📋 Reviewers Assigned
+    The following reviewers have been automatically assigned:
+    {reviewers}
+    
+    They will review your changes shortly.

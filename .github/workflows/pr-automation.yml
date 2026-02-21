@@ -1,0 +1,152 @@
+name: PR Automation - Labeling, Assignment & Sizing
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+  pull_request_target:
+    types: [opened, edited, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  # Job 1: Add labels based on file changes
+  labeler:
+    name: 🏷️ Auto-label PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          
+      - name: Apply labels based on changed files
+        uses: actions/labeler@v4
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: .github/labeler-config.yml
+          sync-labels: true
+
+  # Job 2: Add size labels based on lines changed
+  size-label:
+    name: 📏 Add size label
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add size labels
+        uses: pascalgn/size-label-action@v1.0.0
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          sizes: >
+            {
+              "0": "XS",
+              "10": "S",
+              "30": "M",
+              "100": "L",
+              "500": "XL",
+              "1000": "XXL"
+            }
+          # Ignore lock files and generated files in size calculation
+          ignored: |
+            package-lock.json
+            yarn.lock
+            *.lock
+            dist/
+            build/
+
+  # Job 3: Auto-assign reviewers
+  auto-assign:
+    name: 👥 Auto-assign reviewers
+    runs-on: ubuntu-latest
+    needs: [labeler, size-label]
+    steps:
+      - name: Auto-assign reviewers
+        uses: kentaro-m/auto-assign-action@v1.2.5
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          configuration-path: .github/auto-assign.yml
+
+  # Job 4: Welcome first-time contributors
+  welcome:
+    name: 👋 Welcome first-time contributor
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    steps:
+      - name: Check if first-time contributor
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-message: |
+            👋 Thanks for opening your first pull request @${{ github.actor }}!
+
+            We're excited to review your contribution. Here's what to expect:
+            
+            1. **Automated Checks** - Our CI workflows will run automatically
+            2. **Code Review** - Maintainers will review your changes
+            3. **Feedback** - You may get suggestions for improvements
+            
+            Need help? Check out our [Contributing Guide](CONTRIBUTING.md)
+            
+            Welcome to the team! 🎉
+
+  # Job 5: Add to project board (optional)
+  project-board:
+    name: 📋 Add to project board
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    steps:
+      - name: Add PR to project board
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/orgs/chicagopcdc/projects/1
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          
+  # Job 6: Request specific reviewers based on labels
+  request-reviewers:
+    name: 🔍 Request specific reviewers
+    runs-on: ubuntu-latest
+    needs: labeler
+    steps:
+      - name: Get PR labels
+        id: pr-labels
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            
+            const labels = pr.labels.map(l => l.name);
+            console.log('PR Labels:', labels);
+            
+            let reviewers = [];
+            
+            if (labels.includes('api')) {
+              reviewers.push('backend-lead', 'api-reviewer');
+            }
+            if (labels.includes('components')) {
+              reviewers.push('ui-lead', 'component-reviewer');
+            }
+            if (labels.includes('documentation')) {
+              reviewers.push('tech-writer');
+            }
+            if (labels.includes('security')) {
+              reviewers.push('security-lead');
+            }
+            
+            if (reviewers.length > 0) {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                reviewers: reviewers
+              });
+            }
+            
+            return reviewers;
