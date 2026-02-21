@@ -1,0 +1,36 @@
+version: 2
+updates:
+  # npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "npm"
+      - "automerge"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    groups:
+      react:
+        patterns: ["react", "react-dom", "@types/react"]
+      typescript:
+        patterns: ["typescript", "@typescript-eslint/*"]
+    ignore:
+      - dependency-name: "react-scripts"
+        versions: ["6.x"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+    labels:
+      - "dependencies"
+      - "github-actions"

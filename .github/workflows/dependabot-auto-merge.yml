@@ -1,0 +1,81 @@
+name: Dependabot Auto-merge
+
+on:
+  pull_request:
+    branches: [master, dev]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  # Check if PR is from Dependabot
+  check:
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    outputs:
+      update-type: ${{ steps.metadata.outputs.update-type }}
+    steps:
+      - name: Fetch Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+  # Auto-merge based on update type
+  auto-merge:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Approve PR
+        run: gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # Patch updates: merge immediately
+      - name: Auto-merge patch update
+        if: contains(needs.check.outputs.update-type, 'semver-patch')
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # Minor updates: wait 24 hours then merge
+      - name: Wait 24 hours for minor update
+        if: contains(needs.check.outputs.update-type, 'semver-minor')
+        run: sleep 86400  # 24 hours
+
+      - name: Auto-merge minor update
+        if: contains(needs.check.outputs.update-type, 'semver-minor')
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  # Weekly report
+  weekly-report:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    steps:
+      - name: Create weekly report issue
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              per_page: 100
+            });
+            
+            const dependabotPRs = prs.filter(pr => pr.user.login === 'dependabot[bot]');
+            const merged = dependabotPRs.filter(pr => pr.merged_at);
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📊 Weekly Dependabot Report`,
+              body: `## Summary\n- Total PRs: ${dependabotPRs.length}\n- Merged: ${merged.length}`,
+              labels: ['report', 'dependencies']
+            });
