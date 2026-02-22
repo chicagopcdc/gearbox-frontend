@@ -35,6 +35,12 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### Environment Variables
+
+The project uses `.env` files for configuration:
+* `.env`: Default environment variables for development.
+* `.env.production`: Variables used specifically for production builds (`npm run build`). Use this file to configure production API endpoints and other environment-specific settings.
+
 ### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
