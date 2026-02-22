@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
 import type { MatchDetails, MatchGroups, Study } from '../model'
@@ -11,52 +12,45 @@ export type MatchResultProps = {
 
 function MatchResult({ matchDetails, matchGroups, studies }: MatchResultProps) {
   const { matched = [], undetermined = [], unmatched = [] } = matchGroups
-  const studyById: { [id: number]: Study } = {}
-  for (const study of studies) studyById[study.id] = study
+
+  const studyById = useMemo(() => {
+    const dict: Record<number, Study> = {}
+    studies.forEach((s) => { dict[s.id] = s })
+    return dict
+  }, [studies])
+
+  const renderList = (ids: number[]) => (
+    <div className="mx-2">
+      {ids.map((id) => {
+        const study = studyById[id]
+        if (!study) return null
+
+        return (
+          <TrialCard study={study} key={id}>
+            {matchDetails[id] && (
+              <TrialMatchInfo
+                study={study}
+                studyMatchInfo={matchDetails[id]}
+              />
+            )}
+          </TrialCard>
+        )
+      })}
+    </div>
+  )
 
   return (
     <>
       <DropdownSection name={`Matched (${matched.length})`}>
-        <div className="mx-2">
-          {matched.map((id) => (
-            <TrialCard study={studyById[id]} key={id}>
-              {matchDetails[id] && (
-                <TrialMatchInfo
-                  study={studyById[id]}
-                  studyMatchInfo={matchDetails[id]}
-                />
-              )}
-            </TrialCard>
-          ))}
-        </div>
+        {renderList(matched)}
       </DropdownSection>
+
       <DropdownSection name={`Undetermined (${undetermined.length})`}>
-        <div className="mx-2">
-          {undetermined.map((id) => (
-            <TrialCard study={studyById[id]} key={id}>
-              {matchDetails[id] && (
-                <TrialMatchInfo
-                  study={studyById[id]}
-                  studyMatchInfo={matchDetails[id]}
-                />
-              )}
-            </TrialCard>
-          ))}
-        </div>
+        {renderList(undetermined)}
       </DropdownSection>
+
       <DropdownSection name={`Unmatched (${unmatched.length})`}>
-        <div className="mx-2">
-          {unmatched.map((id) => (
-            <TrialCard study={studyById[id]} key={id}>
-              {matchDetails[id] && (
-                <TrialMatchInfo
-                  study={studyById[id]}
-                  studyMatchInfo={matchDetails[id]}
-                />
-              )}
-            </TrialCard>
-          ))}
-        </div>
+        {renderList(unmatched)}
       </DropdownSection>
     </>
   )
