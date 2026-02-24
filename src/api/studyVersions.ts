@@ -18,9 +18,12 @@ export function getStudyVersions(
 }
 
 export function getStudyVersionById(id: number) {
-  return fetchGearbox(`/gearbox/study-version/${id}`).then(
-    (res) => res.json() as Promise<StudyVersion>
-  )
+  return fetchGearbox(`/gearbox/study-version/${id}`).then((res) => {
+    if (!res.ok) {
+      throw new Error(`Failed to get study version ${id} (HTTP ${res.status})`)
+    }
+    return res.json() as Promise<StudyVersion>
+  })
 }
 
 export function updateStudyVersion(studyVersion: StudyVersion) {

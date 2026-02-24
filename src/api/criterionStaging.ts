@@ -60,7 +60,14 @@ export function acceptCriterionStaging(
 ): Promise<CriterionStagingWithValues> {
   return fetchGearbox('/gearbox/accept-criterion-staging/' + id, {
     method: 'POST',
-  }).then((res) => res.json() as Promise<CriterionStagingWithValues>)
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(
+        `Failed to accept criterion staging ${id} (HTTP ${res.status}). The acceptance was not recorded.`
+      )
+    }
+    return res.json() as Promise<CriterionStagingWithValues>
+  })
 }
 
 export function updateCriterionStaging(

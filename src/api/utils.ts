@@ -22,6 +22,15 @@ export function fetchGearbox(input: RequestInfo, init: RequestInit = {}) {
         logout()
       }
     }
+
+    if (status >= 500) {
+      throw new Error(
+        `API error: ${
+          typeof input === 'string' ? input : 'request'
+        } returned HTTP ${status}`
+      )
+    }
+
     return res
   })
 }

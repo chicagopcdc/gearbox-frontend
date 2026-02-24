@@ -3,7 +3,14 @@ import { StudyAlgorithmEngine } from '../model'
 
 export function getStudyAlgorithm(id: number) {
   return fetchGearbox('/gearbox/study-algorithm-engine/' + id)
-    .then((res) => res.json() as Promise<StudyAlgorithmEngine>)
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(
+          `Failed to load algorithm for study ${id} (HTTP ${res.status})`
+        )
+      }
+      return res.json() as Promise<StudyAlgorithmEngine>
+    })
     .then((algorithmEngine) => algorithmEngine.algorithm_logic)
 }
 
@@ -17,7 +24,14 @@ export function updateStudyAlgorithm(
       ...studyAlgorithmEngine,
       eligibility_criteria_info_id: eligibilityCriteriaId,
     }),
-  }).then((res) => res.json() as Promise<StudyAlgorithmEngine>)
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(
+        `Failed to update study algorithm (HTTP ${res.status}). Your changes were not saved.`
+      )
+    }
+    return res.json() as Promise<StudyAlgorithmEngine>
+  })
 }
 
 export function createStudyAlgorithm(
@@ -33,5 +47,12 @@ export function createStudyAlgorithm(
       study_version_id: studyVersionId,
       eligibility_criteria_info_id: eligibilityCriteriaId,
     }),
-  }).then((res) => res.json() as Promise<StudyAlgorithmEngine>)
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error(
+        `Failed to create study algorithm (HTTP ${res.status}). The record was not saved.`
+      )
+    }
+    return res.json() as Promise<StudyAlgorithmEngine>
+  })
 }
