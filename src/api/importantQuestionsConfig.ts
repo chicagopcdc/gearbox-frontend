@@ -16,8 +16,4 @@ export function getImportantQuestionsConfig() {
       }
       return res.json() as Promise<ImportantQuestionConfig>
     })
-    .catch((error) => {
-      console.error('Error fetching important questions config:', error)
-      return { groups: [] } as ImportantQuestionConfig
-    })
 }
