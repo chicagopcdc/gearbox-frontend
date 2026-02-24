@@ -36,6 +36,7 @@ function MatchingPage({
   action,
   state,
   status,
+  errors,
   importantQuestionsConfig,
 }: MatchingPageProps) {
   const { fetchAll } = action
@@ -111,6 +112,27 @@ function MatchingPage({
     return ErrorRetry({ retry: fetchAll })
   }
 
+  const partialWarningBanner = errors.length > 0 && (
+    <div
+      role="alert"
+      className="rounded bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 mb-4"
+    >
+      <p className="font-semibold">Some data could not be loaded:</p>
+      <ul className="list-disc list-inside mt-1">
+        {errors.map((msg) => (
+          <li key={msg}>{msg}</li>
+        ))}
+      </ul>
+      <button
+        type="button"
+        className="mt-2 text-sm underline text-yellow-700 hover:text-yellow-900"
+        onClick={fetchAll}
+      >
+        Try again
+      </button>
+    </div>
+  )
+
   function updateMatchInput(newMatchedInput: MatchFormValues) {
     if (
       JSON.stringify(newMatchedInput) !==
@@ -174,6 +196,7 @@ function MatchingPage({
 
   return screenSize.smAndDown ? (
     <>
+      {partialWarningBanner}
       <div
         className="flex justify-center sticky top-0 bg-white z-10"
         style={{
@@ -288,134 +311,138 @@ function MatchingPage({
       </section>
     </>
   ) : (
-    <div className="flex h-screen pb-8">
-      <section className="h-full overflow-scroll w-1/2">
-        <h1 className="sticky top-0 bg-white uppercase text-primary font-bold px-4 lg:px-8 py-2 z-10 flex items-end justify-between">
-          <span>Patient Information</span>
-          <div
-            className="inline relative font-normal normal-case text-base"
-            onBlur={handleFormOptionsBlur}
-            tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
-          >
-            <button
-              className={`px-2 py-1 ${
-                showFormOptions ? 'bg-red-100' : 'hover:bg-red-100'
-              }`}
-              data-for="match-form-menu"
-              data-tip
-              onClick={toggleFormOptions}
+    <>
+      {partialWarningBanner}
+      <div className="flex h-screen pb-8">
+        <section className="h-full overflow-scroll w-1/2">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold px-4 lg:px-8 py-2 z-10 flex items-end justify-between">
+            <span>Patient Information</span>
+            <div
+              className="inline relative font-normal normal-case text-base"
+              onBlur={handleFormOptionsBlur}
+              tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
             >
-              <MoreHorizontal className="inline" size="1rem" />
-              <ReactTooltip
-                border
-                borderColor="black"
-                id="match-form-menu"
-                effect="solid"
-                place="left"
-                type="light"
+              <button
+                className={`px-2 py-1 ${
+                  showFormOptions ? 'bg-red-100' : 'hover:bg-red-100'
+                }`}
+                data-for="match-form-menu"
+                data-tip
+                onClick={toggleFormOptions}
               >
-                <span>Options</span>
-              </ReactTooltip>
-            </button>
-            {showFormOptions && (
-              <div className="absolute right-0 origin-top-right w-44 bg-white border border-gray-300 shadow-md mt-2 p-1">
-                <ul className="w-full text-sm text-center">
-                  <li className="hover:bg-red-100">
-                    <button
-                      className="w-full p-2"
-                      data-for="match-form-filter"
-                      data-tip
-                      onClick={toggleFilter}
-                    >
-                      {isFilterActive ? (
-                        <ToggleRight className="inline text" />
-                      ) : (
-                        <ToggleLeft className="inline text-gray-500" />
-                      )}
-                      <span className="mx-2">Filter questions</span>
-                    </button>
-                    <ReactTooltip
-                      border
-                      borderColor="black"
-                      id="match-form-filter"
-                      effect="solid"
-                      place="left"
-                      type="light"
-                    >
-                      <div style={{ maxWidth: '200px' }}>
-                        Filter to display the relevant questions only or see all
-                      </div>
-                    </ReactTooltip>
-                  </li>
-                  <li className="hover:bg-red-100">
-                    <button className="w-full p-2" onClick={handleReset}>
-                      <RotateCcw className="inline mr-2" size="1rem" />
-                      Reset
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
+                <MoreHorizontal className="inline" size="1rem" />
+                <ReactTooltip
+                  border
+                  borderColor="black"
+                  id="match-form-menu"
+                  effect="solid"
+                  place="left"
+                  type="light"
+                >
+                  <span>Options</span>
+                </ReactTooltip>
+              </button>
+              {showFormOptions && (
+                <div className="absolute right-0 origin-top-right w-44 bg-white border border-gray-300 shadow-md mt-2 p-1">
+                  <ul className="w-full text-sm text-center">
+                    <li className="hover:bg-red-100">
+                      <button
+                        className="w-full p-2"
+                        data-for="match-form-filter"
+                        data-tip
+                        onClick={toggleFilter}
+                      >
+                        {isFilterActive ? (
+                          <ToggleRight className="inline text" />
+                        ) : (
+                          <ToggleLeft className="inline text-gray-500" />
+                        )}
+                        <span className="mx-2">Filter questions</span>
+                      </button>
+                      <ReactTooltip
+                        border
+                        borderColor="black"
+                        id="match-form-filter"
+                        effect="solid"
+                        place="left"
+                        type="light"
+                      >
+                        <div style={{ maxWidth: '200px' }}>
+                          Filter to display the relevant questions only or see
+                          all
+                        </div>
+                      </ReactTooltip>
+                    </li>
+                    <li className="hover:bg-red-100">
+                      <button className="w-full p-2" onClick={handleReset}>
+                        <RotateCcw className="inline mr-2" size="1rem" />
+                        Reset
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </h1>
+          {showAllUserInput && (
+            <div className="flex flex-col px-4 lg:px-8 pt-4">
+              <label htmlFor="userInputSelect" className="mb-1">
+                User Input
+              </label>
+              <select
+                id="userInputSelect"
+                onChange={loadUserInput}
+                value={currentUserInput.id || ''}
+              >
+                <option disabled value="">
+                  Select One
+                </option>
+                {allUserInput
+                  .filter((userInput) => !!userInput.name)
+                  .map((userInput) => (
+                    <option key={userInput.id} value={userInput.id}>
+                      {userInput.name}
+                    </option>
+                  ))}
+              </select>
+              <Button otherClassName="mt-4 w-1/2" onClick={openModal}>
+                Add New User Input
+              </Button>
+            </div>
+          )}
+          {showModal && (
+            <UserInputModal
+              closeModal={closeModal}
+              createMatchInput={createMatchInput}
+            />
+          )}
+          <div className="px-4 lg:px-8 pb-4">
+            <MatchForm
+              {...{
+                config: { groups: config.groups, fields: markedFields },
+                matchInput: currentUserInput.values,
+                isFilterActive,
+                updateMatchInput,
+                setIsUpdating,
+                importantQuestionsConfig,
+              }}
+            />
           </div>
-        </h1>
-        {showAllUserInput && (
-          <div className="flex flex-col px-4 lg:px-8 pt-4">
-            <label htmlFor="userInputSelect" className="mb-1">
-              User Input
-            </label>
-            <select
-              id="userInputSelect"
-              onChange={loadUserInput}
-              value={currentUserInput.id || ''}
-            >
-              <option disabled value="">
-                Select One
-              </option>
-              {allUserInput
-                .filter((userInput) => !!userInput.name)
-                .map((userInput) => (
-                  <option key={userInput.id} value={userInput.id}>
-                    {userInput.name}
-                  </option>
-                ))}
-            </select>
-            <Button otherClassName="mt-4 w-1/2" onClick={openModal}>
-              Add New User Input
-            </Button>
+        </section>
+        <section className="h-full overflow-scroll w-1/2">
+          <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2 z-10">
+            Open Trials
+          </h1>
+          <div
+            className={`px-4 lg:px-8 pb-4 transition-colors duration-300 ${
+              isUpdating ? 'bg-gray-100' : 'bg-white'
+            }`}
+          >
+            <MatchResult {...{ matchDetails, matchGroups, studies }} />
           </div>
-        )}
-        {showModal && (
-          <UserInputModal
-            closeModal={closeModal}
-            createMatchInput={createMatchInput}
-          />
-        )}
-        <div className="px-4 lg:px-8 pb-4">
-          <MatchForm
-            {...{
-              config: { groups: config.groups, fields: markedFields },
-              matchInput: currentUserInput.values,
-              isFilterActive,
-              updateMatchInput,
-              setIsUpdating,
-              importantQuestionsConfig,
-            }}
-          />
-        </div>
-      </section>
-      <section className="h-full overflow-scroll w-1/2">
-        <h1 className="sticky top-0 bg-white uppercase text-primary font-bold pl-4 lg:pl-8 py-2 z-10">
-          Open Trials
-        </h1>
-        <div
-          className={`px-4 lg:px-8 pb-4 transition-colors duration-300 ${
-            isUpdating ? 'bg-gray-100' : 'bg-white'
-          }`}
-        >
-          <MatchResult {...{ matchDetails, matchGroups, studies }} />
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   )
 }
 
