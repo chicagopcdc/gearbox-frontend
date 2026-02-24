@@ -1,8 +1,14 @@
-export type ApiStatus = 'not started' | 'sending' | 'success' | 'error'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type ApiStatus =
+  | 'not started'
+  | 'sending'
+  | 'success'
+  | 'partial'
+  | 'error'
 type Site = {
   name: string
   country: string | null
-  city: strin | null
+  city: string | null
   state: string | null
   zip: string | null
   create_date: string | null
