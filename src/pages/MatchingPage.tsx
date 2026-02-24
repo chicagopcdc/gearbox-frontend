@@ -107,12 +107,14 @@ function MatchingPage({
     currentUserInput,
     studies,
   ])
+  // 'sending' and 'error' return early; 'partial', 'success', and
+  // 'not started' all render the main UI below.
   if (status === 'sending') return <div>Loading...</div>
   if (status === 'error') {
     return ErrorRetry({ retry: fetchAll })
   }
 
-  const partialWarningBanner = errors.length > 0 && (
+  const partialWarningBanner = status === 'partial' && (
     <div
       role="alert"
       className="rounded bg-yellow-50 border border-yellow-200 text-yellow-800 p-4 mb-4"
@@ -311,9 +313,9 @@ function MatchingPage({
       </section>
     </>
   ) : (
-    <>
+    <div className="flex flex-col h-screen">
       {partialWarningBanner}
-      <div className="flex h-screen pb-8">
+      <div className="flex flex-1 min-h-0 pb-8">
         <section className="h-full overflow-scroll w-1/2">
           <h1 className="sticky top-0 bg-white uppercase text-primary font-bold px-4 lg:px-8 py-2 z-10 flex items-end justify-between">
             <span>Patient Information</span>
@@ -442,7 +444,7 @@ function MatchingPage({
           </div>
         </section>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -28,6 +28,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
     useState<ImportantQuestionConfig>({ groups: [] })
 
   const fetchAll = () => {
+    if (status === 'sending') return // prevent concurrent fetches
     setStatus('sending')
     setErrors([])
     Promise.allSettled([
@@ -36,50 +37,55 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
       getEligibilityCriteria(),
       getStudies(),
       getImportantQuestionsConfig(),
-    ]).then((results) => {
-      const [condResult, configResult, critResult, studyResult, iqResult] =
-        results
+    ])
+      .then((results) => {
+        const [condResult, configResult, critResult, studyResult, iqResult] =
+          results
 
-      if (condResult.status === 'fulfilled') setConditions(condResult.value)
-      if (configResult.status === 'fulfilled') setConfig(configResult.value)
-      if (critResult.status === 'fulfilled') setCriteria(critResult.value)
-      if (studyResult.status === 'fulfilled') setStudies(studyResult.value)
-      if (iqResult.status === 'fulfilled')
-        setImportantQuestionsConfig(iqResult.value)
+        if (condResult.status === 'fulfilled') setConditions(condResult.value)
+        if (configResult.status === 'fulfilled') setConfig(configResult.value)
+        if (critResult.status === 'fulfilled') setCriteria(critResult.value)
+        if (studyResult.status === 'fulfilled') setStudies(studyResult.value)
+        if (iqResult.status === 'fulfilled')
+          setImportantQuestionsConfig(iqResult.value)
 
-      // Labels paired inline with results — no separate array that can drift
-      const labeled: [string, PromiseSettledResult<unknown>][] = [
-        ['match conditions', condResult],
-        ['match form config', configResult],
-        ['eligibility criteria', critResult],
-        ['studies', studyResult],
-        ['important questions config', iqResult],
-      ]
-      const failures = labeled.filter(([, r]) => r.status === 'rejected') as [
-        string,
-        PromiseRejectedResult
-      ][]
+        // Labels paired inline with results — no separate array that can drift
+        const labeled: [string, PromiseSettledResult<unknown>][] = [
+          ['match conditions', condResult],
+          ['match form config', configResult],
+          ['eligibility criteria', critResult],
+          ['studies', studyResult],
+          ['important questions config', iqResult],
+        ]
+        const failures = labeled.filter(([, r]) => r.status === 'rejected') as [
+          string,
+          PromiseRejectedResult
+        ][]
 
-      // Log each failure individually to preserve debugging context
-      failures.forEach(([label, { reason }]) =>
-        console.error(`Failed to load ${label}:`, reason)
-      )
+        // Log each failure individually to preserve debugging context
+        failures.forEach(([label, { reason }]) =>
+          console.error(`Failed to load ${label}:`, reason)
+        )
 
-      const failedLabels = failures.map(([label]) => label)
+        const failedLabels = failures.map(([label]) => label)
 
-      if (failedLabels.length === labeled.length) {
-        // Every endpoint failed — treat as full error
-        setErrors(failedLabels.map((l) => `Failed to load ${l}`))
+        if (failedLabels.length === labeled.length) {
+          // Every endpoint failed — treat as full error
+          setErrors(failedLabels.map((l) => `Failed to load ${l}`))
+          setStatus('error')
+        } else if (failedLabels.length > 0) {
+          // Some endpoints failed — partial success
+          setErrors(failedLabels.map((l) => `Failed to load ${l}`))
+          setStatus('partial')
+        } else {
+          // All succeeded
+          setStatus('success')
+        }
+      })
+      .catch((err) => {
+        console.error('Unexpected error processing results:', err)
         setStatus('error')
-      } else if (failedLabels.length > 0) {
-        // Some endpoints failed — partial success
-        setErrors(failedLabels.map((l) => `Could not load ${l}`))
-        setStatus('partial')
-      } else {
-        // All succeeded
-        setStatus('success')
-      }
-    })
+      })
   }
 
   const resetAll = () => {
@@ -94,6 +100,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   useEffect(() => {
     if (auth.isRegistered) fetchAll() // load data on login
     else resetAll() // clear data on logout
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [auth.isRegistered])
 
   return {
