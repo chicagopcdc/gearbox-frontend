@@ -14,15 +14,6 @@ import { getStudies } from '../api/studies'
 import type useAuth from './useAuth'
 import { getImportantQuestionsConfig } from '../api/importantQuestionsConfig'
 
-/** Labels for each endpoint, used in partial-failure error messages. */
-const ENDPOINT_LABELS = [
-  'match conditions',
-  'match form config',
-  'eligibility criteria',
-  'studies',
-  'important questions config',
-] as const
-
 export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   const [conditions, setConditions] = useState([] as MatchCondition[])
   const [config, setConfig] = useState({
@@ -56,13 +47,27 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
       if (iqResult.status === 'fulfilled')
         setImportantQuestionsConfig(iqResult.value)
 
-      const failedLabels = results
-        .map((r, i) => (r.status === 'rejected' ? ENDPOINT_LABELS[i] : null))
-        .filter(
-          (label): label is typeof ENDPOINT_LABELS[number] => label !== null
-        )
+      // Labels paired inline with results — no separate array that can drift
+      const labeled: [string, PromiseSettledResult<unknown>][] = [
+        ['match conditions', condResult],
+        ['match form config', configResult],
+        ['eligibility criteria', critResult],
+        ['studies', studyResult],
+        ['important questions config', iqResult],
+      ]
+      const failures = labeled.filter(([, r]) => r.status === 'rejected') as [
+        string,
+        PromiseRejectedResult
+      ][]
 
-      if (failedLabels.length === results.length) {
+      // Log each failure individually to preserve debugging context
+      failures.forEach(([label, { reason }]) =>
+        console.error(`Failed to load ${label}:`, reason)
+      )
+
+      const failedLabels = failures.map(([label]) => label)
+
+      if (failedLabels.length === labeled.length) {
         // Every endpoint failed — treat as full error
         setErrors(failedLabels.map((l) => `Failed to load ${l}`))
         setStatus('error')
