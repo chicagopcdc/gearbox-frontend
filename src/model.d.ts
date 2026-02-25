@@ -322,3 +322,20 @@ export type HighlightSpan = {
   label?: string
   source: AnnotationSource
 }
+
+export type PublishIssueDetail = {
+  code: string
+  value?: string | null
+}
+
+export type PublishIssue = {
+  message: string
+  details?: PublishIssueDetail[] | null
+}
+
+export type PublishFailureResponse = {
+  detail: {
+    publish_errors?: PublishIssue[]
+    publish_warnings?: PublishIssue[]
+  }
+}
