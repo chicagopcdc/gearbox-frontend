@@ -26,7 +26,13 @@ import { RawCriterionHighlighter } from '../components/RawCriterionHighlighter'
 import { getRawCriterion } from '../api/rawCriteria'
 
 type Status = CriterionStaging['criterion_adjudication_status']
-const statusOrder: Status[] = ['NEW', 'IN_PROCESS', 'EXISTING', 'ACTIVE']
+const statusOrder: Status[] = [
+  'NEW',
+  'IN_PROCESS',
+  'EXISTING',
+  'ACTIVE',
+  'INACTIVE',
+]
 
 export function CriteriaAnnotationVerificationPage() {
   const [studyVersionsAdjudication, setStudyVersionsAdjudication] = useState<
@@ -69,6 +75,7 @@ export function CriteriaAnnotationVerificationPage() {
     IN_PROCESS: true,
     EXISTING: true,
     ACTIVE: true,
+    INACTIVE: false,
   })
 
   const loadPage = () => {
@@ -124,6 +131,7 @@ export function CriteriaAnnotationVerificationPage() {
     IN_PROCESS: grouped.IN_PROCESS?.length ?? 0,
     EXISTING: grouped.EXISTING?.length ?? 0,
     ACTIVE: grouped.ACTIVE?.length ?? 0,
+    INACTIVE: grouped.INACTIVE?.length ?? 0,
   }
 
   // When a child updates, regroup and plan a scroll-to-row

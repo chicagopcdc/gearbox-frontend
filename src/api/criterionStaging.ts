@@ -81,3 +81,36 @@ export function updateCriterionStaging(
     return response.json() as Promise<CriterionStagingWithValues>
   })
 }
+
+export function ignoreCriterionStaging(id: number): Promise<string> {
+  return fetchGearbox('/gearbox/ignore-criterion-staging/' + id, {
+    method: 'POST',
+  }).then(async (res) => {
+    // try to read the body (FastAPI errors are usually JSON)
+    const contentType = res.headers.get('content-type') ?? ''
+    const body: any = contentType.includes('application/json')
+      ? await res.json().catch(() => null)
+      : await res.text().catch(() => '')
+
+    if (!res.ok) {
+      // build a useful message from FastAPI-style errors
+      const msg = Array.isArray(body?.detail)
+        ? body.detail.join(' ')
+        : body?.detail
+        ? String(body.detail)
+        : body?.message
+        ? String(body.message)
+        : typeof body === 'string' && body
+        ? body
+        : `Request failed (${res.status})`
+
+      const err: any = new Error(msg)
+      err.status = res.status
+      err.body = body
+      throw err
+    }
+
+    // success case: return whatever your endpoint returns (string or JSON)
+    return typeof body === 'string' ? body : JSON.stringify(body)
+  })
+}

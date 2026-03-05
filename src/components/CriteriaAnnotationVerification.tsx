@@ -14,6 +14,7 @@ import { RequestStatusBar } from './RequestStatusBar'
 import { createValue } from '../api/value'
 import {
   acceptCriterionStaging,
+  ignoreCriterionStaging,
   publishCriterionStaging,
   saveCriterionStaging,
 } from '../api/criterionStaging'
@@ -50,14 +51,16 @@ export function CriteriaAnnotationVerification({
       : undefined
   )
   const status: Status =
-    stagingCriterion.criterion_adjudication_status === 'ACTIVE'
+    stagingCriterion.criterion_adjudication_status === 'INACTIVE'
+      ? 'INACTIVE'
+      : stagingCriterion.criterion_adjudication_status === 'ACTIVE'
       ? 'ACTIVE'
       : existingCriterion
       ? 'EXISTING'
       : stagingCriterion.criterion_adjudication_status
 
   const isEditable = status === 'NEW' || status === 'IN_PROCESS'
-  const isCodeEditable = status !== 'ACTIVE'
+  const isCodeEditable = status !== 'ACTIVE' && status !== 'INACTIVE'
 
   const [isList, setIsList] = useState<boolean>(
     checkIsList(
@@ -81,6 +84,43 @@ export function CriteriaAnnotationVerification({
       }
     }
   }, [])
+
+  const ignore = () => {
+    if (status === 'INACTIVE') return
+
+    if (
+      confirm(
+        'Ignoring this criterion will move it to Inactive and can not be reverted. Are you sure to ignore?'
+      )
+    ) {
+      setApiStatus('sending')
+      setErrorMsg('')
+
+      ignoreCriterionStaging(stagingCriterion.id)
+        .then(() => {
+          setApiStatus('success')
+          setStagingCriterion((prev) => {
+            const updated: CriterionStagingWithValueList = {
+              ...prev,
+              criterion_adjudication_status: 'INACTIVE',
+            }
+            onStagingUpdated(updated)
+            return updated
+          })
+        })
+        .catch((err) => {
+          setErrorMsg(err?.message ?? 'Failed to ignore criterion')
+          setApiStatus('error')
+        })
+        .finally(() => {
+          timerIdRef.current = setTimeout(
+            () => setApiStatus('not started'),
+            3000
+          )
+        })
+    }
+  }
+
   const save = () => {
     if (!formRef.current) {
       return
@@ -319,6 +359,7 @@ export function CriteriaAnnotationVerification({
               save={save}
               publish={publish}
               accept={accept}
+              ignore={ignore}
             />
           </div>
         </div>
@@ -521,6 +562,7 @@ function ActionButtons({
   save,
   publish,
   accept,
+  ignore,
 }: {
   status: Status
   isSendingReq: boolean
@@ -528,6 +570,7 @@ function ActionButtons({
   save: () => void
   publish: () => void
   accept: () => void
+  ignore: () => void
 }) {
   if (status === 'NEW' || status === 'IN_PROCESS') {
     return (
@@ -542,19 +585,44 @@ function ActionButtons({
         </Button>
         <Button
           size="small"
+          otherClassName="mr-4"
           onClick={publish}
           disabled={isSendingReq || !canPublish}
         >
           Publish
         </Button>
+        <Button size="small" onClick={ignore} disabled={isSendingReq}>
+          Ignore
+        </Button>
       </>
     )
-  } else if (status === 'EXISTING') {
+  }
+  if (status === 'EXISTING') {
     return (
-      <Button size="small" onClick={accept} disabled={isSendingReq}>
-        Accept
+      <>
+        <Button
+          size="small"
+          otherClassName="mr-4"
+          onClick={accept}
+          disabled={isSendingReq}
+        >
+          Accept
+        </Button>
+        <Button size="small" onClick={ignore} disabled={isSendingReq}>
+          Ignore
+        </Button>
+      </>
+    )
+  }
+
+  if (status === 'ACTIVE') {
+    return (
+      <Button size="small" onClick={ignore} disabled={isSendingReq}>
+        Ignore
       </Button>
     )
   }
+
+  // INACTIVE: no actions (unless you later add "Unignore")
   return null
 }
