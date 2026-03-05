@@ -240,7 +240,12 @@ export type Criterion = {
 
 export type CriterionStaging = {
   code: string
-  criterion_adjudication_status: 'NEW' | 'EXISTING' | 'ACTIVE' | 'IN_PROCESS'
+  criterion_adjudication_status:
+    | 'NEW'
+    | 'EXISTING'
+    | 'ACTIVE'
+    | 'IN_PROCESS'
+    | 'INACTIVE'
   criterion_id: number | null
   description: string
   display_name: string
