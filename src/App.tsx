@@ -22,6 +22,17 @@ import { InputFormBuilderPage } from './pages/InputFormBuilderPage'
 import { CriteriaAnnotationVerificationPage } from './pages/CriteriaAnnotationVerificationPage'
 import { CriteriaValueAssignmentPage } from './pages/CriteriaValueAssignmentPage'
 
+function getBasename(): string {
+  let basename = process.env?.PUBLIC_URL || ''
+
+  // If loading via dev.html, adjust basename
+  if (window?.location.pathname.startsWith(`${basename}/dev.html`)) {
+    basename += '/dev.html'
+  }
+
+  return basename
+}
+
 function App() {
   const auth = useAuth()
   const gearboxData = useGearboxData(auth)
@@ -40,7 +51,7 @@ function App() {
   }
 
   return (
-    <Router basename={process.env?.PUBLIC_URL}>
+    <Router basename={getBasename()}>
       <Layout
         isAuthenticated={auth.isAuthenticated}
         isAdmin={isAdmin}

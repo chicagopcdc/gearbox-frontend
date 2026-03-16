@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- 
+      Relaxed CSP for development mode.
+      Allows:
+      - Loading resources from localhost dev server (localhost:3000)
+      - Fetching data from S3 buckets
+      - Google Analytics
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' blob:; connect-src 'self' blob: localhost https://localhost:3000 http://localhost:3000 wss://localhost:3000 https://*.s3.amazonaws.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; img-src 'self' data: https: https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com; script-src 'self' 'unsafe-eval' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com localhost https://localhost:3000 http://localhost:3000; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' localhost https://localhost:3000; object-src 'none'; font-src 'self' data: https://localhost:3000; frame-src 'self';"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Use simple paths, not %PUBLIC_URL% -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>GEARBOx by Data for the Common Good (Dev Mode)</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <!-- Load bundle from local dev server -->
+    <script
+      type="text/javascript"
+      src="https://localhost:3000/static/js/bundle.js"
+    ></script>
+  </body>
+</html>
