@@ -6,7 +6,6 @@ import {
   CriterionStaging,
   CriterionStagingWithValueList,
   Criterion,
-  Study,
 } from '../model'
 import Field from './Inputs/Field'
 import Button from './Inputs/Button'
@@ -15,13 +14,11 @@ import { RequestStatusBar } from './RequestStatusBar'
 import { createValue } from '../api/value'
 import {
   acceptCriterionStaging,
+  ignoreCriterionStaging,
   publishCriterionStaging,
   saveCriterionStaging,
 } from '../api/criterionStaging'
-import DropdownSection from './DropdownSection'
-import TrialCard from './TrialCard'
-import { Info } from 'react-feather'
-import { useModal } from '../hooks/useModal'
+
 type Status = CriterionStaging['criterion_adjudication_status']
 
 export function CriteriaAnnotationVerification({
@@ -54,14 +51,16 @@ export function CriteriaAnnotationVerification({
       : undefined
   )
   const status: Status =
-    stagingCriterion.criterion_adjudication_status === 'ACTIVE'
+    stagingCriterion.criterion_adjudication_status === 'INACTIVE'
+      ? 'INACTIVE'
+      : stagingCriterion.criterion_adjudication_status === 'ACTIVE'
       ? 'ACTIVE'
       : existingCriterion
       ? 'EXISTING'
       : stagingCriterion.criterion_adjudication_status
 
   const isEditable = status === 'NEW' || status === 'IN_PROCESS'
-  const isCodeEditable = status !== 'ACTIVE'
+  const isCodeEditable = status !== 'ACTIVE' && status !== 'INACTIVE'
 
   const [isList, setIsList] = useState<boolean>(
     checkIsList(
@@ -85,6 +84,43 @@ export function CriteriaAnnotationVerification({
       }
     }
   }, [])
+
+  const ignore = () => {
+    if (status === 'INACTIVE') return
+
+    if (
+      confirm(
+        'Ignoring this criterion will move it to Inactive and can not be reverted. Are you sure to ignore?'
+      )
+    ) {
+      setApiStatus('sending')
+      setErrorMsg('')
+
+      ignoreCriterionStaging(stagingCriterion.id)
+        .then(() => {
+          setApiStatus('success')
+          setStagingCriterion((prev) => {
+            const updated: CriterionStagingWithValueList = {
+              ...prev,
+              criterion_adjudication_status: 'INACTIVE',
+            }
+            onStagingUpdated(updated)
+            return updated
+          })
+        })
+        .catch((err) => {
+          setErrorMsg(err?.message ?? 'Failed to ignore criterion')
+          setApiStatus('error')
+        })
+        .finally(() => {
+          timerIdRef.current = setTimeout(
+            () => setApiStatus('not started'),
+            3000
+          )
+        })
+    }
+  }
+
   const save = () => {
     if (!formRef.current) {
       return
@@ -305,13 +341,6 @@ export function CriteriaAnnotationVerification({
     value: c.code,
     label: c.code,
   }))
-
-  const associatedStudies: Study[] =
-    criteria.find((c) => c.id === stagingCriterion.criterion_id)?.studies || []
-
-  const [showModal, openModal, closeModal] = useModal()
-  const matchInfoId = `match-info-${stagingCriterion.id}`
-
   return (
     <div className="my-4 p-4 border border-gray-400">
       <form
@@ -321,7 +350,6 @@ export function CriteriaAnnotationVerification({
       >
         <div className="flex justify-between items-center mb-2">
           <h1>Status: {status}</h1>
-
           <div className="flex items-center">
             <RequestStatusBar apiStatus={apiStatus} errorMsg={errorMsg} />
             <ActionButtons
@@ -331,50 +359,8 @@ export function CriteriaAnnotationVerification({
               save={save}
               publish={publish}
               accept={accept}
+              ignore={ignore}
             />
-            {status === 'ACTIVE' && (
-              <div className="relative ml-2">
-                <button
-                  type="button"
-                  className={`${
-                    showModal ? 'text-red-700' : 'hover:text-red-700'
-                  }`}
-                  title="Contact to edit dialog"
-                  aria-label="Contact to edit dialog"
-                  aria-expanded={showModal}
-                  aria-controls={matchInfoId}
-                  onClick={() => (showModal ? closeModal() : openModal())}
-                >
-                  <Info />
-                </button>
-                {showModal && (
-                  <div
-                    id={matchInfoId}
-                    role="dialog"
-                    aria-label="Contact note"
-                    className="absolute right-0 top-full mt-1 z-50 w-72 rounded-md border border-gray-300 bg-white shadow-lg p-3"
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-semibold text-gray-700">
-                        Contact note
-                      </span>
-                      <button
-                        type="button"
-                        className="text-gray-400 hover:text-gray-600 text-xs"
-                        onClick={closeModal}
-                        aria-label="Close contact note"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                      Gearbox Super admin required to change Contact:
-                      help@gearbox.lists.edu
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
         <Field
@@ -565,18 +551,6 @@ export function CriteriaAnnotationVerification({
           }}
         />
       )}
-      {associatedStudies.length > 0 && (
-        <DropdownSection
-          name={`Associated Studies (${associatedStudies.length})`}
-          isCollapsedAtStart={true}
-        >
-          <div className="mx-2">
-            {associatedStudies.map((study) => (
-              <TrialCard study={study} key={study.id} />
-            ))}
-          </div>
-        </DropdownSection>
-      )}
     </div>
   )
 }
@@ -588,6 +562,7 @@ function ActionButtons({
   save,
   publish,
   accept,
+  ignore,
 }: {
   status: Status
   isSendingReq: boolean
@@ -595,6 +570,7 @@ function ActionButtons({
   save: () => void
   publish: () => void
   accept: () => void
+  ignore: () => void
 }) {
   if (status === 'NEW' || status === 'IN_PROCESS') {
     return (
@@ -609,19 +585,44 @@ function ActionButtons({
         </Button>
         <Button
           size="small"
+          otherClassName="mr-4"
           onClick={publish}
           disabled={isSendingReq || !canPublish}
         >
           Publish
         </Button>
+        <Button size="small" onClick={ignore} disabled={isSendingReq}>
+          Ignore
+        </Button>
       </>
     )
-  } else if (status === 'EXISTING') {
+  }
+  if (status === 'EXISTING') {
     return (
-      <Button size="small" onClick={accept} disabled={isSendingReq}>
-        Accept
+      <>
+        <Button
+          size="small"
+          otherClassName="mr-4"
+          onClick={accept}
+          disabled={isSendingReq}
+        >
+          Accept
+        </Button>
+        <Button size="small" onClick={ignore} disabled={isSendingReq}>
+          Ignore
+        </Button>
+      </>
+    )
+  }
+
+  if (status === 'ACTIVE') {
+    return (
+      <Button size="small" onClick={ignore} disabled={isSendingReq}>
+        Ignore
       </Button>
     )
   }
+
+  // INACTIVE: no actions (unless you later add "Unignore")
   return null
 }

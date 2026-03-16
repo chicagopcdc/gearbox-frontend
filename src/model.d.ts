@@ -236,12 +236,16 @@ export type Criterion = {
   display_name: string
   input_type_id: number
   values: CriteriaValue[]
-  studies?: Study[]
 }
 
 export type CriterionStaging = {
   code: string
-  criterion_adjudication_status: 'NEW' | 'EXISTING' | 'ACTIVE' | 'IN_PROCESS'
+  criterion_adjudication_status:
+    | 'NEW'
+    | 'EXISTING'
+    | 'ACTIVE'
+    | 'IN_PROCESS'
+    | 'INACTIVE'
   criterion_id: number | null
   description: string
   display_name: string
@@ -322,4 +326,21 @@ export type HighlightSpan = {
   end: number
   label?: string
   source: AnnotationSource
+}
+
+export type PublishIssueDetail = {
+  code: string
+  value?: string | null
+}
+
+export type PublishIssue = {
+  message: string
+  details?: PublishIssueDetail[] | null
+}
+
+export type PublishFailureResponse = {
+  detail: {
+    publish_errors?: PublishIssue[]
+    publish_warnings?: PublishIssue[]
+  }
 }
