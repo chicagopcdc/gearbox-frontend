@@ -13,8 +13,12 @@ export function getCriterion(id: number): Promise<Criterion> {
   )
 }
 
-export function getCriteria(): Promise<Criterion[]> {
-  return fetchGearbox('/gearbox/criteria')
+export function getCriteria(include_studies?: boolean): Promise<Criterion[]> {
+  const url =
+    include_studies !== undefined
+      ? `/gearbox/criteria?include_studies=${include_studies}`
+      : '/gearbox/criteria'
+  return fetchGearbox(url)
     .then((res) => res.json() as Promise<{ results: Criterion[] }>)
     .then((res) => res.results)
 }
