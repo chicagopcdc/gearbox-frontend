@@ -31,6 +31,7 @@ import { useModal } from '../hooks/useModal'
 import { UserInputModal } from '../components/UserInputModal'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
+const PREFILL_USER_INPUT_KEY = 'gearbox:prefill-user-input'
 
 function MatchingPage({
   action,
@@ -65,6 +66,15 @@ function MatchingPage({
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const prefillData = sessionStorage.getItem(PREFILL_USER_INPUT_KEY)
+        if (prefillData) {
+          const prefillValues = JSON.parse(prefillData) as MatchFormValues
+          setCurrentUserInput({ values: prefillValues })
+          setShowAllUserInput(false)
+          sessionStorage.removeItem(PREFILL_USER_INPUT_KEY)
+          return
+        }
+
         if (process.env.ENABLE_PHI) {
           const allUserInput = await getAllUserInput()
           setAllUserInput(allUserInput)

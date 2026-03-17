@@ -9,6 +9,7 @@ import Layout from './Layout'
 import AboutPage from './pages/AboutPage'
 import MatchingPage from './pages/MatchingPage'
 import LandingPage from './pages/LandingPage'
+import FormPage from './pages/FormPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import { BooleanLogicBuilderPage } from './pages/BooleanLogicBuilderPage'
@@ -64,6 +65,7 @@ function App() {
             }
           />
           <Route path="/LLS" element={<LandingPage isLLS={true} />} />
+          <Route path="/form" element={<FormPage />} />
           <Route path="/admin" element={<AdminPage isAdmin={isAdmin} />}>
             <Route
               path="boolean-logic-builder"

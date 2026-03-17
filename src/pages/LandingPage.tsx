@@ -36,7 +36,7 @@ function LandingPageSection1() {
             helps you rapidly match patients with relapsed or refractory disease
             to appropriate clinical trials.
           </p>
-          <LinkButton to="/login" size="large">
+          <LinkButton to="/form" size="large">
             Get started
           </LinkButton>
         </div>
@@ -163,7 +163,7 @@ function LandingPageSection5() {
       <p className="text-xl sm:text-2xl md:text-3xl mb-8">
         Find matching clinical trials with GEARBOx
       </p>
-      <LinkButton to="/login" size="large">
+      <LinkButton to="/form" size="large">
         Get started
       </LinkButton>
     </section>

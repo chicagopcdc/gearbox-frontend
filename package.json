@@ -19,6 +19,7 @@
     "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^6.11.1",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.10.2",
     "react-tabs": "^4.3.0",
     "react-tooltip": "^4.4.3",
     "tailwindcss": "^3.2.1"
@@ -26,9 +27,9 @@
   "scripts": {
     "watch:tailwind": "postcss src/tailwind.css -o src/index.css --watch",
     "start": "react-scripts start",
-    "dev": "REACT_APP_VERSION=$npm_package_version concurrently \"npm:start\" \"npm:watch:tailwind\"",
+    "dev": "cross-env REACT_APP_VERSION=$npm_package_version concurrently \"npm:start\" \"npm:watch:tailwind\"",
     "prebuild": "postcss src/tailwind.css -o src/index.css --env production",
-    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
+    "build": "cross-env REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier src --write",
@@ -70,6 +71,7 @@
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "concurrently": "^7.5.0",
+    "cross-env": "^10.1.0",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
