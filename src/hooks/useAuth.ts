@@ -31,7 +31,17 @@ export default function useAuth(): {
       })
       .catch((err) => {
         console.error(err)
-        setLoadingStatus('error')
+        // In local frontend-only development, backend routes can be unavailable.
+        // Fall back to unauthenticated mode instead of blocking the app with retry UI.
+        const isLocalDev =
+          window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1'
+        if (isLocalDev) {
+          setUserData(undefined)
+          setLoadingStatus('success')
+        } else {
+          setLoadingStatus('error')
+        }
       })
   }
 
