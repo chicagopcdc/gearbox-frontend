@@ -71,8 +71,9 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
             value="address"
             checked={filter.mode === 'address'}
             onChange={() => changeMode('address')}
+            disabled={true}
           />
-          <span>Use address</span>
+          <span>Use address (TBD)</span>
         </label>
       </div>
 
@@ -86,7 +87,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
                 step="any"
                 value={filter.lat}
                 onChange={(e) => updateField('lat', e.target.value)}
-                placeholder="e.g. 42.2808"
+                placeholder="e.g. 41.8781"
                 className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
               />
             </label>
@@ -97,7 +98,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
                 step="any"
                 value={filter.lon}
                 onChange={(e) => updateField('lon', e.target.value)}
-                placeholder="e.g. -83.7430"
+                placeholder="e.g. -87.6298"
                 className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
               />
             </label>
@@ -131,8 +132,8 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
           </div>
 
           <p className="mb-2 text-[0.7rem] text-gray-500">
-            Example: <span className="font-mono">42.2808, -83.7430</span> ≈ Ann
-            Arbor, MI.
+            Example: <span className="font-mono">41.8781, -87.6298</span> ≈
+            Chicago, IL
           </p>
         </>
       ) : (

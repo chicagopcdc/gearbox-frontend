@@ -118,6 +118,7 @@ function MatchingPage({
       : undefined
 
     getMatchGroups(matchInput, locationForApi).then(setMatchGroups)
+    getMatchDetails(matchInput, locationForApi).then(setMatchDetails)
   }, [currentUserInput, locationParams])
 
   useEffect(() => {
