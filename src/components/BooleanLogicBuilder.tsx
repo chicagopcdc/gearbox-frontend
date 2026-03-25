@@ -49,7 +49,10 @@ export function BooleanLogicBuilder({
     setActionError(null)
     setPublishing(true)
     setPublishErrors([])
-    setPublishWarnings([])
+
+    if (!ignoreWarnings) {
+      setPublishWarnings([])
+    }
 
     return publishStudyVersion(studyVersion.id, {
       ignore_warnings: ignoreWarnings,
