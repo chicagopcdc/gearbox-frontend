@@ -87,9 +87,6 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
   return (
     <div className="mb-4 border border-gray-200 rounded-md bg-gray-50 p-3">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-xs font-semibold tracking-wide text-gray-700 uppercase">
-          Location filter (optional)
-        </h2>
         {isActive && (
           <span className="text-[0.65rem] px-2 py-0.5 rounded-full bg-green-100 text-green-800">
             Active

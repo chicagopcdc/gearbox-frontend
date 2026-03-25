@@ -206,6 +206,17 @@ function MatchingPage({
     }
   }
 
+  const locationFilterSection = (
+    <LocationFilterSection
+      filter={locationFilter}
+      onChange={setLocationFilter}
+      onApply={applyLocationFilter}
+      onClear={clearLocationFilter}
+      isActive={isLocationActive}
+      error={locationError}
+    />
+  )
+
   return (
     <>
       {/* Global validation banner (shown once for both layouts) */}
@@ -330,6 +341,7 @@ function MatchingPage({
                 updateMatchInput,
                 setIsUpdating,
                 importantQuestionsConfig,
+                locationFilterSection,
               }}
             />
           </section>
@@ -338,14 +350,6 @@ function MatchingPage({
               isUpdating ? 'bg-gray-100' : 'bg-white'
             } ${view === 'result' ? '' : 'hidden'} `}
           >
-            <LocationFilterSection
-              filter={locationFilter}
-              onChange={setLocationFilter}
-              onApply={applyLocationFilter}
-              onClear={clearLocationFilter}
-              isActive={isLocationActive}
-              error={locationError}
-            />
             <MatchResult {...{ matchDetails, matchGroups, studies }} />
           </section>
         </>
@@ -462,6 +466,7 @@ function MatchingPage({
                   updateMatchInput,
                   setIsUpdating,
                   importantQuestionsConfig,
+                  locationFilterSection,
                 }}
               />
             </div>
@@ -475,14 +480,6 @@ function MatchingPage({
                 isUpdating ? 'bg-gray-100' : 'bg-white'
               }`}
             >
-              <LocationFilterSection
-                filter={locationFilter}
-                onChange={setLocationFilter}
-                onApply={applyLocationFilter}
-                onClear={clearLocationFilter}
-                isActive={isLocationActive}
-                error={locationError}
-              />
               <MatchResult {...{ matchDetails, matchGroups, studies }} />
             </div>
           </section>

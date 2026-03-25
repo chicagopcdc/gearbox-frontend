@@ -18,6 +18,7 @@ export type MatchFormProps = {
   updateMatchInput(values: MatchFormValues): void
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>
   importantQuestionsConfig: ImportantQuestionConfig
+  locationFilterSection?: React.ReactNode
 }
 
 function MatchForm({
@@ -27,6 +28,7 @@ function MatchForm({
   updateMatchInput,
   setIsUpdating,
   importantQuestionsConfig,
+  locationFilterSection,
 }: MatchFormProps) {
   const [values, setValues] = useState(getDefaultValues(config))
   useEffect(() => setValues({ ...matchInput }), [matchInput])
@@ -101,6 +103,15 @@ function MatchForm({
         }
       )}
 
+      {locationFilterSection && (
+        <DropdownSection
+          backgroundColor="bg-white"
+          name="Location Filter (Optional)"
+          isCollapsedAtStart={true}
+        >
+          {locationFilterSection}
+        </DropdownSection>
+      )}
       {config.groups.map((group, i) => (
         <DropdownSection
           key={group.id}
