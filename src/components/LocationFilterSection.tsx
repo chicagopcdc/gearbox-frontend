@@ -135,7 +135,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
         <>
           <div className="mb-3 rounded border border-blue-100 bg-blue-50 p-3 text-xs text-gray-700">
             <p className="mb-2 font-medium">
-              If you don't know your lat lon please follow this steps:
+              {"If you don't know your lat lon please follow this steps:"}
             </p>
             <ol className="list-decimal pl-4 space-y-1">
               <li>
