@@ -3,6 +3,7 @@ import { AlertCircle, Check, Loader } from 'react-feather'
 import React, { useEffect, useRef, useState } from 'react'
 import { ApiStatus } from '../model'
 import { publishMatchForm } from '../utils'
+import { getEligibilityCriteriaFromApi } from '../api/eligibilityCriteria'
 
 export function PublishMatchForm() {
   const [publishDisabled, setPublishDisabled] = useState(false)
@@ -11,7 +12,9 @@ export function PublishMatchForm() {
   const publish = () => {
     setPublishDisabled(true)
     setPublishStatus('sending')
+
     publishMatchForm()
+      .then(getEligibilityCriteriaFromApi)
       .then(() => {
         setPublishStatus('success')
       })
