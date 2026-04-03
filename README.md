@@ -54,3 +54,25 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Contribute
 
 `npx prettier [filepath] -w`
+
+## Running the Application with Docker
+
+This repository includes a Dockerfile and a startup script that build the app and serve the production build with nginx (nginx listens on port 80 inside the container).
+
+Build the Docker image:
+
+```bash
+docker build -t gearbox-frontend .
+```
+
+Run the container (example maps container port 80 to host port 8080):
+
+```bash
+docker run --rm -p 8080:80 gearbox-frontend
+```
+
+After the container starts, open the app in your browser at:
+
+http://localhost:8080
+
+You can also map to a different host port (for example `-p 80:80`) if preferred.
