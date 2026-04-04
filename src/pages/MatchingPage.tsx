@@ -64,6 +64,8 @@ function MatchingPage({
   const [showAllUserInput, setShowAllUserInput] = useState<boolean>(true)
   const [showModal, openModal, closeModal] = useModal()
   const [errorDetail, setErrorDetail] = useState<string | null>(null)
+  const [triedBrowserLocation, setTriedBrowserLocation] =
+    useState<boolean>(false)
 
   const {
     filter: locationFilter,
@@ -140,6 +142,35 @@ function MatchingPage({
     currentUserInput,
     studies,
   ])
+
+  useEffect(() => {
+    if (triedBrowserLocation) return
+    if (!navigator.geolocation) return
+    if (locationFilter.lat || locationFilter.lon) return
+
+    setTriedBrowserLocation(true)
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setLocationFilter({
+          ...locationFilter,
+          mode: 'coordinates',
+          lat: String(position.coords.latitude),
+          lon: String(position.coords.longitude),
+        })
+      },
+      (error) => {
+        console.error('Unable to get browser location', error)
+      }
+    )
+  }, [
+    triedBrowserLocation,
+    locationFilter.lat,
+    locationFilter.lon,
+    locationFilter,
+    setLocationFilter,
+  ])
+
   if (status === 'sending') return <div>Loading...</div>
   if (status === 'error') {
     return ErrorRetry({ retry: fetchAll })
