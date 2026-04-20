@@ -33,12 +33,18 @@ export function getStudies() {
   return getStudiesFromApi()
 }
 
-export function buildStudies() {
-  return fetchGearbox('/gearbox/build-studies', {
+export async function buildStudies(): Promise<void> {
+  const res = await fetchGearbox('/gearbox/build-studies', {
     method: 'POST',
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error('build studies failed')
-    }
   })
+
+  if (!res.ok) {
+    throw new Error(`build studies failed: ${res.status}`)
+  }
+
+  const { studies } = (await res.json()) as {
+    version: string
+    studies: Study[]
+  }
+  writeCache(SESSION_STORAGE_KEY, JSON.stringify(studies))
 }
