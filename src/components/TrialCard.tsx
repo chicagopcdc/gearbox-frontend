@@ -19,11 +19,27 @@ type TrialCardProps = {
   children?: ReactNode
 }
 
+function isLocationLink(link: { name?: string; href?: string }) {
+  const normalizedName = link.name?.trim().toLowerCase()
+  return (
+    normalizedName === 'contacts and locations' ||
+    normalizedName === 'locations' ||
+    normalizedName === 'location' ||
+    link.href?.includes('#contacts-and-locations')
+  )
+}
+
 function TrialCard({ study, children }: TrialCardProps) {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const handleOpen = () => setIsDropDownOpen(true)
   const handleClose = () => setIsDropDownOpen(false)
-  return study === undefined ? null : (
+
+  if (study === undefined) return null
+
+  const locationLinks = (study.links ?? []).filter(isLocationLink)
+  const otherLinks = (study.links ?? []).filter((link) => !isLocationLink(link))
+
+  return (
     <div className={styles.container}>
       <div>
         <div className="flex justify-between pb-4">
@@ -49,6 +65,7 @@ function TrialCard({ study, children }: TrialCardProps) {
             )}
           </div>
         </div>
+
         <div className={styles.field.container}>
           <h3 className={styles.field.title}>Title</h3>
           <p className={isDropDownOpen ? '' : 'truncate'}>{study.name}</p>
@@ -62,6 +79,7 @@ function TrialCard({ study, children }: TrialCardProps) {
             <p>{study.description}</p>
           </div>
         ) : null}
+
         {study.sites?.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
@@ -72,27 +90,54 @@ function TrialCard({ study, children }: TrialCardProps) {
                 </span>
               )}
             </h3>
+
             <ul className="list-disc ml-8">
               {study.sites.slice(0, 5).map((site) => (
                 <li key={site.id}>{site.name}</li>
               ))}
             </ul>
+
             {study.sites.length > 5 && (
               <p className="mt-2 text-sm text-gray-600">
-                To see the full list of active sites, please click on the link
-                below.
+                To see the full list of active sites, use the link below.
+              </p>
+            )}
+
+            {locationLinks.length > 0 && (
+              <p className="mt-2 text-sm text-gray-600">
+                {study.sites.length > 5 ? (
+                  <>
+                    Showing 5 of {study.sites.length} locations.{' '}
+                    <LinkExternal
+                      className="text-blue-700"
+                      to={locationLinks[0].href}
+                    >
+                      See all contacts and locations
+                    </LinkExternal>
+                  </>
+                ) : (
+                  <>
+                    <LinkExternal
+                      className="text-blue-700"
+                      to={locationLinks[0].href}
+                    >
+                      See full location details
+                    </LinkExternal>
+                  </>
+                )}
               </p>
             )}
           </div>
         ) : null}
-        {study.links?.length > 0 ? (
+
+        {otherLinks.length > 0 ? (
           <div className={styles.field.container}>
             <h3 className={styles.field.title}>
-              {study.links.length > 1 ? 'Links' : 'Link'}
+              {otherLinks.length > 1 ? 'Links' : 'Link'}
             </h3>
             <ul className="list-disc ml-8">
-              {study.links.map(({ name, href }) => (
-                <li key={name}>
+              {otherLinks.map(({ name, href }) => (
+                <li key={`${name}-${href}`}>
                   <LinkExternal className="block text-blue-700" to={href}>
                     {name}
                   </LinkExternal>
@@ -101,6 +146,7 @@ function TrialCard({ study, children }: TrialCardProps) {
             </ul>
           </div>
         ) : null}
+
         {!!study.follow_up_info && parse(study.follow_up_info, { replace })}
       </div>
     </div>
