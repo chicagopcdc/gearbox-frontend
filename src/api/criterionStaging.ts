@@ -82,35 +82,56 @@ export function updateCriterionStaging(
   })
 }
 
+async function parseGearboxResponse(
+  res: Response
+): Promise<string | Record<string, unknown> | null> {
+  const contentType = res.headers.get('content-type') ?? ''
+
+  if (contentType.includes('application/json')) {
+    return res.json().catch(() => null)
+  }
+
+  return res.text().catch(() => '')
+}
+
+async function handleSimplePostResponse(
+  res: Response
+): Promise<string | Record<string, unknown> | null> {
+  const body = await parseGearboxResponse(res)
+
+  if (!res.ok) {
+    const msg = Array.isArray((body as any)?.detail)
+      ? (body as any).detail.join(' ')
+      : (body as any)?.detail
+      ? String((body as any).detail)
+      : (body as any)?.message
+      ? String((body as any).message)
+      : typeof body === 'string' && body
+      ? body
+      : `Request failed (${res.status})`
+
+    const err: any = new Error(msg)
+    err.status = res.status
+    err.body = body
+    throw err
+  }
+
+  return body
+}
+
 export function ignoreCriterionStaging(id: number): Promise<string> {
   return fetchGearbox('/gearbox/ignore-criterion-staging/' + id, {
     method: 'POST',
   }).then(async (res) => {
-    // try to read the body (FastAPI errors are usually JSON)
-    const contentType = res.headers.get('content-type') ?? ''
-    const body: any = contentType.includes('application/json')
-      ? await res.json().catch(() => null)
-      : await res.text().catch(() => '')
-
-    if (!res.ok) {
-      // build a useful message from FastAPI-style errors
-      const msg = Array.isArray(body?.detail)
-        ? body.detail.join(' ')
-        : body?.detail
-        ? String(body.detail)
-        : body?.message
-        ? String(body.message)
-        : typeof body === 'string' && body
-        ? body
-        : `Request failed (${res.status})`
-
-      const err: any = new Error(msg)
-      err.status = res.status
-      err.body = body
-      throw err
-    }
-
-    // success case: return whatever your endpoint returns (string or JSON)
+    const body = await handleSimplePostResponse(res)
     return typeof body === 'string' ? body : JSON.stringify(body)
   })
+}
+
+export function resetCriterionStaging(
+  id: number
+): Promise<string | Record<string, unknown> | null> {
+  return fetchGearbox('/gearbox/reset-criterion-staging/' + id, {
+    method: 'POST',
+  }).then((res) => handleSimplePostResponse(res))
 }
