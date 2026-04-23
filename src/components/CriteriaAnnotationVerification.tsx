@@ -18,6 +18,7 @@ import {
   ignoreCriterionStaging,
   publishCriterionStaging,
   saveCriterionStaging,
+  resetCriterionStaging,
 } from '../api/criterionStaging'
 import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
@@ -92,37 +93,57 @@ export function CriteriaAnnotationVerification({
   const ignore = () => {
     if (status === 'INACTIVE') return
 
-    if (
-      confirm(
-        'Ignoring this criterion will move it to Inactive and can not be reverted. Are you sure to ignore?'
-      )
-    ) {
-      setApiStatus('sending')
-      setErrorMsg('')
+    setApiStatus('sending')
+    setErrorMsg('')
 
-      ignoreCriterionStaging(stagingCriterion.id)
-        .then(() => {
-          setApiStatus('success')
-          setStagingCriterion((prev) => {
-            const updated: CriterionStagingWithValueList = {
-              ...prev,
-              criterion_adjudication_status: 'INACTIVE',
-            }
-            onStagingUpdated(updated)
-            return updated
-          })
-        })
-        .catch((err) => {
-          setErrorMsg(err?.message ?? 'Failed to ignore criterion')
-          setApiStatus('error')
-        })
-        .finally(() => {
-          timerIdRef.current = setTimeout(
-            () => setApiStatus('not started'),
-            3000
-          )
-        })
-    }
+    ignoreCriterionStaging(stagingCriterion.id)
+      .then(() => {
+        setApiStatus('success')
+
+        const updated: CriterionStagingWithValueList = {
+          ...stagingCriterion,
+          criterion_adjudication_status: 'INACTIVE',
+        }
+
+        setStagingCriterion(updated)
+        onStagingUpdated(updated)
+      })
+      .catch((err) => {
+        setErrorMsg(err?.message ?? 'Failed to ignore criterion')
+        setApiStatus('error')
+      })
+      .finally(() => {
+        timerIdRef.current = setTimeout(() => setApiStatus('not started'), 3000)
+      })
+  }
+
+  const resetIgnore = () => {
+    if (status !== 'INACTIVE') return
+
+    setApiStatus('sending')
+    setErrorMsg('')
+
+    resetCriterionStaging(stagingCriterion.id)
+      .then(() => {
+        setApiStatus('success')
+
+        const updated: CriterionStagingWithValueList = {
+          ...stagingCriterion,
+          criterion_adjudication_status: stagingCriterion.criterion_id
+            ? 'EXISTING'
+            : 'NEW',
+        }
+
+        setStagingCriterion(updated)
+        onStagingUpdated(updated)
+      })
+      .catch((err) => {
+        setErrorMsg(err?.message ?? 'Failed to reset ignored criterion')
+        setApiStatus('error')
+      })
+      .finally(() => {
+        timerIdRef.current = setTimeout(() => setApiStatus('not started'), 3000)
+      })
   }
 
   const save = () => {
@@ -194,15 +215,14 @@ export function CriteriaAnnotationVerification({
       })
         .then(() => {
           setApiStatus('success')
-          // Use functional set to build the exact object we store + send up
-          setStagingCriterion((prev) => {
-            const updated: CriterionStagingWithValueList = {
-              ...prev,
-              criterion_adjudication_status: 'ACTIVE',
-            }
-            onStagingUpdated?.(updated)
-            return updated
-          })
+
+          const updated: CriterionStagingWithValueList = {
+            ...stagingCriterion,
+            criterion_adjudication_status: 'ACTIVE',
+          }
+
+          setStagingCriterion(updated)
+          onStagingUpdated(updated)
         })
         .catch((err) => {
           setErrorMsg(err.message)
@@ -265,21 +285,20 @@ export function CriteriaAnnotationVerification({
         .then(() => acceptCriterionStaging(id))
         .then(() => {
           setApiStatus('success')
-          setStagingCriterion((prev) => {
-            const updated: CriterionStagingWithValueList = {
-              ...prev,
-              // reflect accepted -> ACTIVE and sync fields from the chosen existing criterion
-              criterion_adjudication_status: 'ACTIVE',
-              code,
-              display_name,
-              description,
-              input_type_id,
-              // keep values in sync with what we just saved
-              criterion_value_list: values ?? prev.criterion_value_list ?? [],
-            }
-            onStagingUpdated?.(updated)
-            return updated
-          })
+
+          const updated: CriterionStagingWithValueList = {
+            ...stagingCriterion,
+            criterion_adjudication_status: 'ACTIVE',
+            code,
+            display_name,
+            description,
+            input_type_id,
+            criterion_value_list:
+              values ?? stagingCriterion.criterion_value_list ?? [],
+          }
+
+          setStagingCriterion(updated)
+          onStagingUpdated(updated)
         })
         .catch((err) => {
           console.error(err)
@@ -372,6 +391,7 @@ export function CriteriaAnnotationVerification({
               publish={publish}
               accept={accept}
               ignore={ignore}
+              resetIgnore={resetIgnore}
             />
             {status === 'ACTIVE' && (
               <div className="relative ml-2">
@@ -630,6 +650,7 @@ function ActionButtons({
   publish,
   accept,
   ignore,
+  resetIgnore,
 }: {
   status: Status
   isSendingReq: boolean
@@ -638,6 +659,7 @@ function ActionButtons({
   publish: () => void
   accept: () => void
   ignore: () => void
+  resetIgnore: () => void
 }) {
   if (status === 'NEW' || status === 'IN_PROCESS') {
     return (
@@ -690,6 +712,13 @@ function ActionButtons({
     )
   }
 
-  // INACTIVE: no actions (unless you later add "Unignore")
+  if (status === 'INACTIVE') {
+    return (
+      <Button size="small" onClick={resetIgnore} disabled={isSendingReq}>
+        Reset
+      </Button>
+    )
+  }
+
   return null
 }
