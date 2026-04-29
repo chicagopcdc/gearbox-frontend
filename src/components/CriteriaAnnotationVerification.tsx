@@ -24,6 +24,7 @@ import DropdownSection from './DropdownSection'
 import TrialCard from './TrialCard'
 import { Info } from 'react-feather'
 import { useModal } from '../hooks/useModal'
+import { getCriterionStudies } from '../api/criterion'
 type Status = CriterionStaging['criterion_adjudication_status']
 
 export function CriteriaAnnotationVerification({
@@ -365,11 +366,26 @@ export function CriteriaAnnotationVerification({
     label: c.code,
   }))
 
-  const associatedStudies: Study[] =
-    criteria.find((c) => c.id === stagingCriterion.criterion_id)?.studies || []
-
   const [showModal, openModal, closeModal] = useModal()
   const matchInfoId = `match-info-${stagingCriterion.id}`
+
+  const criterionId = stagingCriterion.criterion_id
+  const [lazyStudies, setLazyStudies] = useState<Study[] | null>(null)
+  const [studiesLoading, setStudiesLoading] = useState(false)
+  const [studiesSectionOpen, setStudiesSectionOpen] = useState(false)
+
+  const handleStudiesExpand = (next: boolean) => {
+    setStudiesSectionOpen(next)
+    if (next && criterionId && lazyStudies === null && !studiesLoading) {
+      setStudiesLoading(true)
+      getCriterionStudies(criterionId)
+        .then((studies) => setLazyStudies(studies))
+        .catch(() => setLazyStudies([]))
+        .finally(() => setStudiesLoading(false))
+    }
+  }
+
+  const studyList = lazyStudies ?? []
 
   return (
     <div className="my-4 p-4 border border-gray-400">
@@ -626,13 +642,20 @@ export function CriteriaAnnotationVerification({
           }}
         />
       )}
-      {associatedStudies.length > 0 && (
+      {criterionId && (
         <DropdownSection
-          name={`Associated Studies (${associatedStudies.length})`}
-          isCollapsedAtStart={true}
+          name={
+            studiesLoading
+              ? 'Associated Studies (loading…)'
+              : lazyStudies !== null
+              ? `Associated Studies (${studyList.length})`
+              : 'Associated Studies'
+          }
+          isOpen={studiesSectionOpen}
+          onToggle={handleStudiesExpand}
         >
           <div className="mx-2">
-            {associatedStudies.map((study) => (
+            {studyList.map((study) => (
               <TrialCard study={study} key={study.id} />
             ))}
           </div>
