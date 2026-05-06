@@ -2,7 +2,7 @@ export type ApiStatus = 'not started' | 'sending' | 'success' | 'error'
 type Site = {
   name: string
   country: string | null
-  city: strin | null
+  city: string | null
   state: string | null
   zip: string | null
   create_date: string | null
@@ -144,6 +144,18 @@ export type MatchDetails = {
 export type MatchGroups = {
   [group in 'matched' | 'undetermined' | 'unmatched']: number[]
 }
+export type MatchGroupCounts = {
+  matched: number
+  undetermined: number
+  unmatched: number
+}
+
+export type MatchInfoResponse = {
+  groups: MatchGroups
+  match_details: MatchDetails
+  total_counts: MatchGroupCounts
+}
+
 export type RegisterDocument = {
   formatted: string
   id: number
@@ -352,7 +364,7 @@ export type GeocodeFn = (
   address: string
 ) => Promise<{ lat: number; lon: number }>
 
-type MatchGroupLocationOptions = {
+export type MatchGroupLocationOptions = {
   lat: number
   lon: number
   range: number

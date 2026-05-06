@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   MoreHorizontal,
   RotateCcw,
@@ -14,11 +13,12 @@ import type useGearboxData from '../hooks/useGearboxData'
 import useScreenSize from '../hooks/useScreenSize'
 import { getDefaultValues, markRelevantMatchFields } from '../utils'
 import { ErrorRetry } from '../components/ErrorRetry'
-import { getMatchDetails, getMatchGroups } from '../api/middleware'
+import { getMatchInfo } from '../api/middleware'
 import {
   MatchDetails,
   MatchFormFieldConfig,
   MatchFormValues,
+  MatchGroupCounts,
   MatchGroups,
   UserInputUi,
 } from '../model'
@@ -33,6 +33,22 @@ import { useLocationFilter } from '../hooks/useLocationFilter'
 import { LocationFilterSection } from '../components/LocationFilterSection'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
+
+const MATCH_PAGE_SIZE = 4
+
+type MatchGroupKey = keyof MatchGroups
+
+const INITIAL_MATCH_PAGES: Record<MatchGroupKey, number> = {
+  matched: 1,
+  unmatched: 1,
+  undetermined: 1,
+}
+
+const INITIAL_MATCH_COUNTS: MatchGroupCounts = {
+  matched: 0,
+  unmatched: 0,
+  undetermined: 0,
+}
 
 function MatchingPage({
   action,
@@ -56,6 +72,13 @@ function MatchingPage({
     unmatched: [],
     undetermined: [],
   })
+
+  const [matchCounts, setMatchCounts] =
+    useState<MatchGroupCounts>(INITIAL_MATCH_COUNTS)
+
+  const [matchPages, setMatchPages] =
+    useState<Record<MatchGroupKey, number>>(INITIAL_MATCH_PAGES)
+
   const [allUserInput, setAllUserInput] = useState<UserInputUi[]>([])
   const [currentUserInput, setCurrentUserInput] = useState<UserInputUi>({
     values: {},
@@ -100,28 +123,53 @@ function MatchingPage({
     fetchData()
   }, [])
 
-  // Details – no location filter for now
   useEffect(() => {
-    const matchInput = currentUserInput.values
-    getMatchDetails(matchInput).then(setMatchDetails)
-  }, [currentUserInput])
+    setMatchPages(INITIAL_MATCH_PAGES)
+  }, [currentUserInput.values, locationParams])
 
-  // Groups – optionally filter by location
   useEffect(() => {
+    let ignore = false
+
     const matchInput = currentUserInput.values
 
     const locationForApi = locationParams
       ? {
           lat: locationParams.lat,
           lon: locationParams.lon,
-          range: locationParams.range, // numeric distance input
-          unit: locationParams.unit, // 'km' | 'mi'
+          range: locationParams.range,
+          unit: locationParams.unit,
         }
       : undefined
 
-    getMatchGroups(matchInput, locationForApi).then(setMatchGroups)
-    getMatchDetails(matchInput, locationForApi).then(setMatchDetails)
-  }, [currentUserInput, locationParams])
+    getMatchInfo(matchInput, locationForApi, {
+      offsetMatched: (matchPages.matched - 1) * MATCH_PAGE_SIZE,
+      limitMatched: MATCH_PAGE_SIZE,
+
+      offsetUnmatched: (matchPages.unmatched - 1) * MATCH_PAGE_SIZE,
+      limitUnmatched: MATCH_PAGE_SIZE,
+
+      offsetUndetermined: (matchPages.undetermined - 1) * MATCH_PAGE_SIZE,
+      limitUndetermined: MATCH_PAGE_SIZE,
+    })
+      .then(({ groups, match_details, total_counts }) => {
+        if (ignore) return
+
+        setMatchGroups(groups)
+        setMatchDetails(match_details)
+        setMatchCounts(total_counts)
+        setErrorDetail(null)
+      })
+      .catch((e: Error) => {
+        if (ignore) return
+
+        console.error(e)
+        setErrorDetail(e.message)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [currentUserInput.values, locationParams, matchPages])
 
   useEffect(() => {
     setMarkedFields(
@@ -235,6 +283,34 @@ function MatchingPage({
     if (currentUserInput) {
       setCurrentUserInput(currentUserInput)
     }
+  }
+
+  function changeMatchPage(group: MatchGroupKey, direction: -1 | 1) {
+    setMatchPages((pages) => {
+      const pageCount = Math.max(
+        1,
+        Math.ceil(matchCounts[group] / MATCH_PAGE_SIZE)
+      )
+
+      return {
+        ...pages,
+        [group]: Math.min(pageCount, Math.max(1, pages[group] + direction)),
+      }
+    })
+  }
+
+  function setMatchPage(group: MatchGroupKey, page: number) {
+    setMatchPages((pages) => {
+      const pageCount = Math.max(
+        1,
+        Math.ceil(matchCounts[group] / MATCH_PAGE_SIZE)
+      )
+
+      return {
+        ...pages,
+        [group]: Math.min(pageCount, Math.max(1, page)),
+      }
+    })
   }
 
   const locationFilterSection = (
@@ -381,7 +457,16 @@ function MatchingPage({
               isUpdating ? 'bg-gray-100' : 'bg-white'
             } ${view === 'result' ? '' : 'hidden'} `}
           >
-            <MatchResult {...{ matchDetails, matchGroups, studies }} />
+            <MatchResult
+              matchDetails={matchDetails}
+              matchGroups={matchGroups}
+              studies={studies}
+              matchCounts={matchCounts}
+              pageSize={MATCH_PAGE_SIZE}
+              matchPages={matchPages}
+              onChangeMatchPage={changeMatchPage}
+              onSetMatchPage={setMatchPage}
+            />
           </section>
         </>
       ) : (
@@ -511,7 +596,16 @@ function MatchingPage({
                 isUpdating ? 'bg-gray-100' : 'bg-white'
               }`}
             >
-              <MatchResult {...{ matchDetails, matchGroups, studies }} />
+              <MatchResult
+                matchDetails={matchDetails}
+                matchGroups={matchGroups}
+                studies={studies}
+                matchCounts={matchCounts}
+                pageSize={MATCH_PAGE_SIZE}
+                matchPages={matchPages}
+                onChangeMatchPage={changeMatchPage}
+                onSetMatchPage={setMatchPage}
+              />
             </div>
           </section>
         </div>
