@@ -154,6 +154,7 @@ export type MatchInfoResponse = {
   groups: MatchGroups
   match_details: MatchDetails
   total_counts: MatchGroupCounts
+  all_unmatched: number[]
 }
 
 export type RegisterDocument = {
