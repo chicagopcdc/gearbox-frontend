@@ -7,7 +7,7 @@ export function getMatchConditions() {
   const cache = readCache<MatchCondition[]>(SESSION_STORAGE_KEY)
   if (cache !== null) return Promise.resolve(cache)
 
-  return fetchGearbox('/gearbox/match-conditions')
+  return fetchGearbox('/gearbox-middleware/match-conditions')
     .then((res) => res.json())
     .then(fetch)
     .then((res) => res.json() as Promise<MatchCondition[]>)
