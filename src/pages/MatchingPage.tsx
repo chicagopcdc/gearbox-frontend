@@ -73,6 +73,7 @@ function MatchingPage({
     undetermined: [],
   })
 
+  const [allUnmatchedStudyIds, setAllUnmatchedStudyIds] = useState<number[]>([])
   const [matchCounts, setMatchCounts] =
     useState<MatchGroupCounts>(INITIAL_MATCH_COUNTS)
 
@@ -151,12 +152,13 @@ function MatchingPage({
       offsetUndetermined: (matchPages.undetermined - 1) * MATCH_PAGE_SIZE,
       limitUndetermined: MATCH_PAGE_SIZE,
     })
-      .then(({ groups, match_details, total_counts }) => {
+      .then(({ groups, match_details, total_counts, all_unmatched }) => {
         if (ignore) return
 
         setMatchGroups(groups)
         setMatchDetails(match_details)
         setMatchCounts(total_counts)
+        setAllUnmatchedStudyIds(all_unmatched)
         setErrorDetail(null)
       })
       .catch((e: Error) => {
@@ -177,7 +179,7 @@ function MatchingPage({
         conditions,
         criteria,
         fields: config.fields,
-        unmatched: matchGroups.unmatched,
+        unmatched: allUnmatchedStudyIds,
         values: currentUserInput.values,
         studies: studies,
       })
@@ -189,6 +191,7 @@ function MatchingPage({
     matchGroups.unmatched,
     currentUserInput,
     studies,
+    allUnmatchedStudyIds,
   ])
 
   useEffect(() => {
