@@ -17,7 +17,7 @@ function sortDiagnosisOptions(matchForm: MatchFormConfig): MatchFormConfig {
 }
 
 export function getMatchFormConfig() {
-  return fetchGearbox('/gearbox/match-form')
+  return fetchGearbox('/gearbox-middleware/match-form')
     .then((res) => res.json())
     .then(fetch)
     .then((res) => res.json() as Promise<MatchFormConfig>)

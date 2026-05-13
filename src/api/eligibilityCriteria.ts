@@ -4,7 +4,7 @@ import { fetchGearbox, readCache, writeCache } from './utils'
 const SESSION_STORAGE_KEY = 'gearbox:eligibility-criteria'
 
 export function getEligibilityCriteriaFromApi() {
-  return fetchGearbox('/gearbox/eligibility-criteria')
+  return fetchGearbox('/gearbox-middleware/eligibility-criteria')
     .then((res) => res.json())
     .then(fetch)
     .then((res) => res.json() as Promise<EligibilityCriterion[]>)
