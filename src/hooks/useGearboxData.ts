@@ -62,7 +62,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
   useEffect(() => {
     if (auth.isRegistered) fetchAll() // load data on login
     else resetAll() // clear data on logout
-  }, [auth.isRegistered])
+  }, [auth.isRegistered, fetchAll])
 
   return {
     action: {

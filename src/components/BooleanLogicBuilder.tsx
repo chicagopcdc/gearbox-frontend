@@ -7,7 +7,7 @@ import { useModal } from '../hooks/useModal'
 import { CriteriaBuilderModal } from './CriteriaBuilderModal'
 import Button from './Inputs/Button'
 import { publishStudyVersion, updateStudyVersion } from '../api/studyVersions'
-import { getStudiesFromApi } from '../api/studies'
+import { getStudies } from '../api/studies'
 import { PublishIssuesModal } from './PublishIssuesModal'
 
 export function BooleanLogicBuilder({
@@ -59,7 +59,7 @@ export function BooleanLogicBuilder({
     })
       .then((failure) => {
         if (!failure) {
-          return getStudiesFromApi().then(() => {
+          return getStudies().then(() => {
             setStudyVersions(
               studyVersions.filter((sv) => sv.id !== studyVersion.id)
             )
@@ -102,7 +102,7 @@ export function BooleanLogicBuilder({
       setActionError(null)
 
       return updateStudyVersion(payload)
-        .then(getStudiesFromApi)
+        .then(getStudies)
         .then(() => {
           setStudyVersions(
             studyVersions.filter((sv) => sv.id !== studyVersion.id)

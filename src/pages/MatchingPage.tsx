@@ -102,10 +102,6 @@ function MatchingPage({
   } = useLocationFilter()
 
   useEffect(() => {
-    fetchAll()
-  }, [fetchAll])
-
-  useEffect(() => {
     const fetchData = async () => {
       try {
         if (process.env.ENABLE_PHI) {
@@ -188,7 +184,6 @@ function MatchingPage({
     conditions,
     criteria,
     config.fields,
-    matchGroups.unmatched,
     currentUserInput,
     studies,
     allUnmatchedStudyIds,
