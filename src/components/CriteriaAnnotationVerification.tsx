@@ -163,6 +163,7 @@ export function CriteriaAnnotationVerification({
       display_name: displayName,
       description,
       criterion_id: null,
+      echc_value_ids: updatedCriterionStaging.echc_value_ids ?? [],
       criterion_value_ids:
         stagingCriterion.criterion_value_list?.map((v) => v.id) || [],
     })
@@ -474,13 +475,20 @@ export function CriteriaAnnotationVerification({
                 label: stagingCriterion.code,
               },
               ...existingCodeOptions,
-            ].filter(
-              (option, idx, arr) =>
-                arr.findIndex(
-                  (item) =>
-                    item.value === option.value && item.label === option.label
-                ) === idx
-            ),
+            ]
+              .filter(
+                (option, idx, arr) =>
+                  arr.findIndex(
+                    (item) =>
+                      item.value === option.value && item.label === option.label
+                  ) === idx
+              )
+              .sort((a, b) =>
+                a.label.localeCompare(b.label, undefined, {
+                  sensitivity: 'base',
+                  numeric: true,
+                })
+              ),
             disabled: !isCodeEditable,
             closeOnChangedValue: true,
             hasSelectAll: false,
@@ -518,6 +526,7 @@ export function CriteriaAnnotationVerification({
                 (c) => c.code === newCode
               )
               setExistingCriterion(() => newExistingCriterion)
+
               if (newExistingCriterion) {
                 setIsList(checkIsList(newExistingCriterion.input_type_id))
               } else {
