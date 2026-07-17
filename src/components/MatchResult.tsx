@@ -7,6 +7,9 @@ import type {
   Study,
 } from '../model'
 import TrialMatchInfo from './TrialMatchInfo'
+import { MapPin } from 'react-feather'
+import { useModal } from '../hooks/useModal'
+import TrialMapModal from './TrialMapModal'
 
 type MatchGroupKey = keyof MatchGroups
 
@@ -31,6 +34,7 @@ function MatchResult({
   onChangeMatchPage,
   onSetMatchPage,
 }: MatchResultProps) {
+  const [showMap, openMap, closeMap] = useModal()
   const { matched = [], undetermined = [], unmatched = [] } = matchGroups
 
   const studyById: { [id: number]: Study } = {}
@@ -157,6 +161,25 @@ function MatchResult({
 
   return (
     <>
+      <div className="mb-3 flex justify-end">
+        <button
+          className="flex items-center gap-2 rounded border border-primary px-3 py-2 font-bold text-primary hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-primary"
+          onClick={openMap}
+          type="button"
+        >
+          <MapPin size="1rem" />
+          Map View
+        </button>
+      </div>
+
+      {showMap && (
+        <TrialMapModal
+          closeModal={closeMap}
+          matchGroups={matchGroups}
+          studies={studies}
+        />
+      )}
+
       <DropdownSection name={`Matched (${matchCounts.matched})`}>
         <div className="mx-2">
           {renderTrialCards(matched)}
