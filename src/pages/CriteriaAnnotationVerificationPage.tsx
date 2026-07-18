@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { getStudyVersionsAdjudication } from '../api/studyAdjudication'
+import {
+  AdminStudyVersionGroups,
+  getAdminStudyVersionGroups,
+} from '../api/studyAdjudication'
 import {
   ApiStatus,
   CriteriaValue,
@@ -8,9 +11,7 @@ import {
   CriterionStagingWithValueList,
   InputType,
   RawCriterion,
-  StudyVersionAdjudication,
 } from '../model'
-import Field from '../components/Inputs/Field'
 import { CriteriaAnnotationVerification } from '../components/CriteriaAnnotationVerification'
 import { getInputTypes } from '../api/inputTypes'
 import { ErrorRetry } from '../components/ErrorRetry'
@@ -24,6 +25,7 @@ import { useModal } from '../hooks/useModal'
 import { Eye, XCircle } from 'react-feather'
 import { RawCriterionHighlighter } from '../components/RawCriterionHighlighter'
 import { getRawCriterion } from '../api/rawCriteria'
+import { AdminStudySelector } from '../components/AdminStudySelector'
 
 type Status = CriterionStaging['criterion_adjudication_status']
 const statusOrder: Status[] = [
@@ -35,9 +37,8 @@ const statusOrder: Status[] = [
 ]
 
 export function CriteriaAnnotationVerificationPage() {
-  const [studyVersionsAdjudication, setStudyVersionsAdjudication] = useState<
-    StudyVersionAdjudication[]
-  >([])
+  const [studyVersionGroups, setStudyVersionGroups] =
+    useState<AdminStudyVersionGroups>({ needsInput: [], published: [] })
   const [eligibilityCriteriaId, setEligibilityCriteriaId] = useState<
     number | ''
   >('')
@@ -80,13 +81,13 @@ export function CriteriaAnnotationVerificationPage() {
 
   const loadPage = () => {
     Promise.all([
-      getStudyVersionsAdjudication(),
+      getAdminStudyVersionGroups(),
       getValues(),
       getInputTypes(),
       getCriteria(),
     ])
       .then(([studyVersions, values, inputTypes, criteria]) => {
-        setStudyVersionsAdjudication(studyVersions)
+        setStudyVersionGroups(studyVersions)
         setValues(values.filter((v) => !v.is_numeric && v.unit_id === 1))
         setInputTypes(inputTypes)
         setCriteria(criteria)
@@ -164,17 +165,10 @@ export function CriteriaAnnotationVerificationPage() {
       )}
 
       {/* Study selector */}
-      <Field
-        config={{
-          type: 'select',
-          label: 'Select a Study to Adjudicate',
-          placeholder: 'Select One',
-          name: 'studyVersion',
-          options: studyVersionsAdjudication.map((sva) => ({
-            value: sva.eligibility_criteria_id,
-            label: `${sva.study.code} - ${sva.study.name}`,
-          })),
-        }}
+      <AdminStudySelector
+        groups={studyVersionGroups}
+        label="Select a Study to Adjudicate"
+        name="studyVersion"
         value={eligibilityCriteriaId}
         onChange={onStudyChanged}
       />
