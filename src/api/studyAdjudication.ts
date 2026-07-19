@@ -7,6 +7,8 @@ export type AdminStudyVersionGroups = {
   published: StudyVersionAdjudication[]
 }
 
+const STUDY_ADJUDICATION_PATH = '/gearbox/study-versions-adjudication'
+
 function sortByStudyCode(
   studyVersions: StudyVersionAdjudication[]
 ): StudyVersionAdjudication[] {
@@ -18,14 +20,33 @@ function sortByStudyCode(
   )
 }
 
-export function getStudyVersionsAdjudication(): Promise<
+export async function getStudyVersionsAdjudication(): Promise<
   StudyVersionAdjudication[]
 > {
-  return fetchGearbox('/gearbox/study-versions-adjudication').then((res) => {
-    if (res.status === 404) return []
-    if (!res.ok) throw new Error('Failed to get studies requiring input')
-    return res.json() as Promise<StudyVersionAdjudication[]>
-  })
+  try {
+    const res = await fetchGearbox(STUDY_ADJUDICATION_PATH)
+
+    if (res.status === 404) {
+      console.info('No studies requiring adjudication were found', {
+        endpoint: STUDY_ADJUDICATION_PATH,
+        status: res.status,
+        statusText: res.statusText,
+      })
+      return []
+    }
+    if (!res.ok) {
+      throw new Error(
+        `Failed to get studies requiring input (${res.status} ${res.statusText})`
+      )
+    }
+    return (await res.json()) as StudyVersionAdjudication[]
+  } catch (error) {
+    console.error('Failed to load studies requiring adjudication', {
+      endpoint: STUDY_ADJUDICATION_PATH,
+      error,
+    })
+    throw error
+  }
 }
 
 export async function getAdminStudyVersionGroups(): Promise<AdminStudyVersionGroups> {

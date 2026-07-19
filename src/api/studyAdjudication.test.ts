@@ -50,6 +50,10 @@ beforeEach(() => {
   jest.resetAllMocks()
 })
 
+afterEach(() => {
+  jest.restoreAllMocks()
+})
+
 test('lists studies needing input first and excludes their published version', async () => {
   const needsInput = [
     studyVersion(2, 2, 'TRIAL-10', 'NEW'),
@@ -73,7 +77,39 @@ test('lists studies needing input first and excludes their published version', a
 })
 
 test('treats a missing adjudication list as an empty list', async () => {
-  mockedFetchGearbox.mockResolvedValue({ status: 404 } as Response)
+  const logInfo = jest.spyOn(console, 'info').mockImplementation(() => {})
+  mockedFetchGearbox.mockResolvedValue({
+    status: 404,
+    statusText: 'Not Found',
+  } as Response)
 
   await expect(getStudyVersionsAdjudication()).resolves.toEqual([])
+  expect(logInfo).toHaveBeenCalledWith(
+    'No studies requiring adjudication were found',
+    {
+      endpoint: '/gearbox/study-versions-adjudication',
+      status: 404,
+      statusText: 'Not Found',
+    }
+  )
+})
+
+test('logs endpoint and HTTP details when adjudication loading fails', async () => {
+  const logError = jest.spyOn(console, 'error').mockImplementation(() => {})
+  mockedFetchGearbox.mockResolvedValue({
+    ok: false,
+    status: 503,
+    statusText: 'Service Unavailable',
+  } as Response)
+
+  await expect(getStudyVersionsAdjudication()).rejects.toThrow(
+    'Failed to get studies requiring input (503 Service Unavailable)'
+  )
+  expect(logError).toHaveBeenCalledWith(
+    'Failed to load studies requiring adjudication',
+    expect.objectContaining({
+      endpoint: '/gearbox/study-versions-adjudication',
+      error: expect.any(Error),
+    })
+  )
 })
