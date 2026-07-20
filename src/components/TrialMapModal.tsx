@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import L from 'leaflet'
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
 import { X } from 'react-feather'
@@ -23,13 +23,13 @@ type TrialMapModalProps = {
 const markerIcons = {
   matched: L.divIcon({
     className: '',
-    html: '<span style="background:#c00" class="block h-4 w-4 rounded-full border-2 border-white shadow-md"></span>',
+    html: '<span class="block h-4 w-4 rounded-full border-2 border-white bg-primary shadow-md"></span>',
     iconAnchor: [8, 8],
     popupAnchor: [0, -10],
   }),
   undetermined: L.divIcon({
     className: '',
-    html: '<span style="background:#d97706" class="block h-4 w-4 rounded-full border-2 border-white shadow-md"></span>',
+    html: '<span class="block h-4 w-4 rounded-full border-2 border-white bg-amber-600 shadow-md"></span>',
     iconAnchor: [8, 8],
     popupAnchor: [0, -10],
   }),
@@ -108,7 +108,10 @@ function TrialMapModal({
   matchGroups,
   studies,
 }: TrialMapModalProps) {
-  const markers = getTrialMapMarkers(studies, matchGroups)
+  const markers = useMemo(
+    () => getTrialMapMarkers(studies, matchGroups),
+    [studies, matchGroups]
+  )
 
   return (
     <div
