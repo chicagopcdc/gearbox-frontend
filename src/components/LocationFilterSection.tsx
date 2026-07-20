@@ -35,10 +35,11 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
     null
   )
 
+  const isAddressSearchEnabled = Boolean(process.env.REACT_APP_GEOAPIFY_API_KEY)
   useEffect(() => {
     let cancelled = false
 
-    if (filter.mode !== 'address') {
+    if (!isAddressSearchEnabled || filter.mode !== 'address') {
       setAddressSuggestions([])
       setAddressSearchError(null)
       setIsSearchingAddress(false)
@@ -97,7 +98,24 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       window.clearTimeout(timeout)
       controller.abort()
     }
-  }, [filter.mode, filter.address, filter.lat, filter.lon])
+  }, [
+    isAddressSearchEnabled,
+    filter.mode,
+    filter.address,
+    filter.lat,
+    filter.lon,
+  ])
+
+  useEffect(() => {
+    if (!isAddressSearchEnabled && filter.mode === 'address') {
+      onChange({
+        ...filter,
+        mode: 'coordinates',
+        address: '',
+      })
+    }
+  }, [isAddressSearchEnabled, filter, onChange])
+
   function parseGoogleMapsLatLon(value: string) {
     const trimmed = value.trim()
 
@@ -193,28 +211,42 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       </div>
 
       {/* Mode toggle */}
-      <div className="flex gap-4 mb-2 text-xs text-gray-700">
-        <label className="flex items-center gap-1 cursor-pointer">
-          <input
-            type="radio"
-            name="locationMode"
-            value="coordinates"
-            checked={filter.mode === 'coordinates'}
-            onChange={() => changeMode('coordinates')}
-          />
-          <span>Use coordinates</span>
-        </label>
+      <div className="mb-2">
+        <div className="flex gap-4 text-xs text-gray-700">
+          <label className="flex items-center gap-1 cursor-pointer">
+            <input
+              type="radio"
+              name="locationMode"
+              value="coordinates"
+              checked={filter.mode === 'coordinates'}
+              onChange={() => changeMode('coordinates')}
+            />
+            <span>Use coordinates</span>
+          </label>
 
-        <label className="flex items-center gap-1 cursor-pointer">
-          <input
-            type="radio"
-            name="locationMode"
-            value="address"
-            checked={filter.mode === 'address'}
-            onChange={() => changeMode('address')}
-          />
-          <span>Use address</span>
-        </label>
+          <label
+            className={`flex items-center gap-1 ${
+              isAddressSearchEnabled
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed text-gray-400'
+            }`}
+          >
+            <input
+              type="radio"
+              name="locationMode"
+              value="address"
+              checked={filter.mode === 'address'}
+              onChange={() => changeMode('address')}
+              disabled={!isAddressSearchEnabled}
+            />
+            <span>Use address</span>
+          </label>
+        </div>
+        {!isAddressSearchEnabled && (
+          <p className="mt-1 text-[0.7rem] text-gray-500">
+            Address search is unavailable because Geoapify is not configured.
+          </p>
+        )}
       </div>
 
       {filter.mode === 'coordinates' ? (
