@@ -99,6 +99,7 @@ function MatchingPage({
     apply: applyLocationFilter,
     clear: clearLocationFilter,
     isActive: isLocationActive,
+    isResolving: isLocationResolving,
   } = useLocationFilter()
 
   useEffect(() => {
@@ -319,6 +320,7 @@ function MatchingPage({
       onClear={clearLocationFilter}
       isActive={isLocationActive}
       error={locationError}
+      isResolving={isLocationResolving}
     />
   )
 

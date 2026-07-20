@@ -388,3 +388,25 @@ export type PublishFailureResponse = {
     publish_warnings?: PublishIssue[]
   }
 }
+
+export type AddressSuggestion = {
+  id: string
+  formatted: string
+  addressLine1?: string
+  addressLine2?: string
+  lat: number
+  lon: number
+}
+
+type GeoapifyResult = {
+  place_id?: string
+  formatted?: string
+  address_line1?: string
+  address_line2?: string
+  lat?: number
+  lon?: number
+}
+
+export type GeoapifyAutocompleteResponse = {
+  results?: GeoapifyResult[]
+}
