@@ -25,14 +25,14 @@ export type Study = {
 
 export type StudyVersion = {
   id: number
-  study_version: number
+  study_version_num: number
   status: StudyVersionStatus
   eligibility_criteria_id: number
   study_algorithm_engine_id: number | null
   study: Study
 }
 
-export type StudyVersionStatus = 'ACTIVE' | 'IN_PROCESS' | 'INACTIVE'
+export type StudyVersionStatus = 'NEW' | 'ACTIVE' | 'IN_PROCESS' | 'INACTIVE'
 
 type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne' | 'in'
 
@@ -232,15 +232,7 @@ export type InputType = {
   render_type: 'number' | 'radio' | 'select' | 'age'
 }
 
-export type StudyVersionAdjudication = {
-  study_id: number
-  study_version_num: number
-  id: number
-  active: boolean
-  eligibility_criteria_id: number
-  study_algorithm_engine_id: number
-  study: Study
-}
+export type StudyVersionAdjudication = StudyVersion
 
 export type Criterion = {
   id: number

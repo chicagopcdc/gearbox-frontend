@@ -1,14 +1,15 @@
-import Field from '../components/Inputs/Field'
 import React, { useEffect, useState } from 'react'
 import {
   ApiStatus,
   CriteriaValue,
   CriterionStagingWithValueList,
   InputType,
-  StudyVersionAdjudication,
   Unit,
 } from '../model'
-import { getStudyVersionsAdjudication } from '../api/studyAdjudication'
+import {
+  AdminStudyVersionGroups,
+  getAdminStudyVersionGroups,
+} from '../api/studyAdjudication'
 import { ErrorRetry } from '../components/ErrorRetry'
 import { CriteriaValueAssignment } from '../components/CriteriaValueAssignment'
 import { getInputTypes } from '../api/inputTypes'
@@ -16,12 +17,14 @@ import { getUnits } from '../api/units'
 import { getElCriteriaHasCriterionsByElId } from '../api/elCriteriaHasCriterion'
 import { getValues } from '../api/value'
 import { getCriterionStaging } from '../api/criterionStaging'
+import { AdminStudySelector } from '../components/AdminStudySelector'
 
 export function CriteriaValueAssignmentPage() {
-  const [studyVersionsAdjudication, setStudyVersionsAdjudication] = useState<
-    StudyVersionAdjudication[]
-  >([])
-  const [svaIndex, setSvaIndex] = useState<number>(-1)
+  const [studyVersionGroups, setStudyVersionGroups] =
+    useState<AdminStudyVersionGroups>({ needsInput: [], published: [] })
+  const [eligibilityCriteriaId, setEligibilityCriteriaId] = useState<
+    number | ''
+  >('')
   const [activeStagingCriteria, setActiveStagingCriteria] = useState<
     CriterionStagingWithValueList[]
   >([])
@@ -32,13 +35,13 @@ export function CriteriaValueAssignmentPage() {
 
   const loadPage = () => {
     Promise.all([
-      getStudyVersionsAdjudication(),
+      getAdminStudyVersionGroups(),
       getValues(),
       getInputTypes(),
       getUnits(),
     ])
       .then(([studyVersions, values, inputTypes, units]) => {
-        setStudyVersionsAdjudication(studyVersions)
+        setStudyVersionGroups(studyVersions)
         setNumericValues(values.filter((v) => v.is_numeric))
         setInputTypes(inputTypes)
         setUnits(units)
@@ -51,10 +54,8 @@ export function CriteriaValueAssignmentPage() {
   }
 
   const onStudyChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const index = +event.target.value
-    setSvaIndex(index)
-    const eligibilityCriteriaId =
-      studyVersionsAdjudication[index].eligibility_criteria_id
+    const eligibilityCriteriaId = +event.target.value
+    setEligibilityCriteriaId(eligibilityCriteriaId)
     Promise.all([
       getCriterionStaging(eligibilityCriteriaId),
       getElCriteriaHasCriterionsByElId(eligibilityCriteriaId),
@@ -81,18 +82,11 @@ export function CriteriaValueAssignmentPage() {
 
   return (
     <div>
-      <Field
-        config={{
-          type: 'select',
-          label: 'Select a Study',
-          placeholder: 'Select One',
-          name: 'studyVersion',
-          options: studyVersionsAdjudication.map((sva, index) => ({
-            value: index,
-            label: `${sva.study.code} - ${sva.study.name}`,
-          })),
-        }}
-        value={svaIndex}
+      <AdminStudySelector
+        groups={studyVersionGroups}
+        label="Select a Study"
+        name="studyVersion"
+        value={eligibilityCriteriaId}
         onChange={onStudyChanged}
       />
       {activeStagingCriteria.length ? (
