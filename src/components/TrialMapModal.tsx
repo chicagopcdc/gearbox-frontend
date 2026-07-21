@@ -14,6 +14,14 @@ type TrialMapMarker = {
   study: Study
 }
 
+type GroupedTrialMapMarker = {
+  group: TrialMapMarker['group']
+  id: string
+  items: TrialMapMarker[]
+  latitude: number
+  longitude: number
+}
+
 type TrialMapModalProps = {
   closeModal: () => void
   matchGroups: MatchGroups
@@ -88,7 +96,7 @@ export function getTrialMapMarkers(
   })
 }
 
-function FitMapToMarkers({ markers }: { markers: TrialMapMarker[] }) {
+function FitMapToMarkers({ markers }: { markers: GroupedTrialMapMarker[] }) {
   const map = useMap()
 
   useEffect(() => {
@@ -112,6 +120,24 @@ function TrialMapModal({
     () => getTrialMapMarkers(studies, matchGroups),
     [studies, matchGroups]
   )
+  const groupedMarkers = useMemo(() => {
+    const groups = new Map<string, TrialMapMarker[]>()
+
+    for (const marker of markers) {
+      const key = `${marker.latitude.toFixed(6)},${marker.longitude.toFixed(6)}`
+      groups.set(key, [...(groups.get(key) ?? []), marker])
+    }
+
+    return Array.from(groups.values()).map((items) => ({
+      id: items.map((item) => item.id).join('|'),
+      latitude: items[0].latitude,
+      longitude: items[0].longitude,
+      group: items.some((item) => item.group === 'matched')
+        ? ('matched' as const)
+        : ('undetermined' as const),
+      items,
+    }))
+  }, [markers])
 
   return (
     <div
@@ -166,30 +192,54 @@ function TrialMapModal({
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <FitMapToMarkers markers={markers} />
-            {markers.map(({ group, id, latitude, longitude, site, study }) => (
+            <FitMapToMarkers markers={groupedMarkers} />
+            {groupedMarkers.map(({ group, id, items, latitude, longitude }) => (
               <Marker
                 icon={markerIcons[group]}
                 key={id}
                 position={[latitude, longitude]}
               >
                 <Popup>
-                  <div className="max-w-xs">
-                    <p
-                      className={`mb-1 font-bold ${
-                        group === 'matched' ? 'text-primary' : 'text-amber-700'
-                      }`}
-                    >
-                      {group === 'matched' ? 'Matched' : 'Undetermined'}
-                    </p>
-                    <p className="font-bold">{study.code}</p>
-                    <p>{study.name}</p>
-                    <p className="mt-2 font-bold">{site.name}</p>
-                    <p>
-                      {[site.city, site.state, site.country]
-                        .filter(Boolean)
-                        .join(', ')}
-                    </p>
+                  <div
+                    className="max-w-xs pr-2"
+                    onWheel={(event) => event.stopPropagation()}
+                    style={{
+                      maxHeight: '20rem',
+                      overflowY: 'auto',
+                      overscrollBehavior: 'contain',
+                    }}
+                  >
+                    {items.map(
+                      (
+                        { group: itemGroup, id: itemId, site, study },
+                        index
+                      ) => (
+                        <div
+                          className={index === 0 ? '' : 'mt-3 border-t pt-3'}
+                          key={itemId}
+                        >
+                          <p
+                            className={`mb-1 font-bold ${
+                              itemGroup === 'matched'
+                                ? 'text-primary'
+                                : 'text-amber-700'
+                            }`}
+                          >
+                            {itemGroup === 'matched'
+                              ? 'Matched'
+                              : 'Undetermined'}
+                          </p>
+                          <p className="font-bold">{study.code}</p>
+                          <p>{study.name}</p>
+                          <p className="mt-2 font-bold">{site.name}</p>
+                          <p>
+                            {[site.city, site.state, site.country]
+                              .filter(Boolean)
+                              .join(', ')}
+                          </p>
+                        </div>
+                      )
+                    )}
                   </div>
                 </Popup>
               </Marker>
