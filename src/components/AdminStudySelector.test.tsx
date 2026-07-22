@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useState } from 'react'
 import type { StudyVersionAdjudication } from '../model'
 import { AdminStudySelector } from './AdminStudySelector'
 
@@ -57,7 +58,7 @@ test('groups studies by workflow status and keeps published studies read-only', 
     getByLabelText('Select a Study'),
     String(needsInput.eligibility_criteria_id)
   )
-  expect(onChange).toHaveBeenCalledTimes(1)
+  expect(onChange).toHaveBeenCalledWith(needsInput.eligibility_criteria_id)
 })
 
 test('searches trials by code or title and clears the filter', async () => {
@@ -129,4 +130,47 @@ test('shows an empty state and supports keyboard handoff to the trial list', asy
   await user.clear(search)
   await user.type(search, '{ArrowDown}')
   expect(getByLabelText('Select a Study')).toHaveFocus()
+})
+
+test('clears the selected study when the search filters it out', async () => {
+  const user = userEvent.setup()
+  const needsInput = studyVersion(1, 'TRIAL-1', 'IN_PROCESS')
+  const otherStudy = studyVersion(2, 'TRIAL-2', 'IN_PROCESS')
+
+  function ControlledSelector() {
+    const [value, setValue] = useState<number | ''>('')
+    return (
+      <>
+        <AdminStudySelector
+          groups={{
+            needsInput: [needsInput, otherStudy],
+            published: [],
+          }}
+          label="Select a Study"
+          name="studyVersion"
+          value={value}
+          onChange={setValue}
+        />
+        <output aria-label="Selected study">{value || 'None'}</output>
+      </>
+    )
+  }
+
+  const { getByLabelText, getByRole } = render(<ControlledSelector />)
+  await user.selectOptions(
+    getByLabelText('Select a Study'),
+    String(needsInput.eligibility_criteria_id)
+  )
+  expect(getByRole('status', { name: 'Selected study' })).toHaveTextContent(
+    String(needsInput.eligibility_criteria_id)
+  )
+
+  await user.type(getByRole('searchbox', { name: 'Search trials' }), 'TRIAL-2')
+
+  await waitFor(() =>
+    expect(getByRole('status', { name: 'Selected study' })).toHaveTextContent(
+      'None'
+    )
+  )
+  expect(getByLabelText('Select a Study')).toHaveValue('')
 })
