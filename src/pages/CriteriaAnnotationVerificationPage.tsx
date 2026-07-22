@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
   AdminStudyVersionGroups,
   getAdminStudyVersionGroups,
@@ -51,6 +51,7 @@ export function CriteriaAnnotationVerificationPage() {
   const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
   const [showModal, openModal, closeModal] = useModal()
   const [rawCriterion, setRawCriterion] = useState<RawCriterion | null>(null)
+  const requestedEligibilityCriteriaId = useRef<number | ''>('')
 
   const { topRef, createScrollItemRef, scrollToTop, showBackToTop } =
     useManageItemScrollPosition<number>({
@@ -104,15 +105,23 @@ export function CriteriaAnnotationVerificationPage() {
     loadPage()
   }, [])
 
-  const onStudyChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const ebcId = +event.target.value
+  const onStudyChanged = (ebcId: number | '') => {
+    requestedEligibilityCriteriaId.current = ebcId
+    setEligibilityCriteriaId(ebcId)
+    if (ebcId === '') {
+      setStagingCriteria([])
+      setRawCriterion(null)
+      return
+    }
+
     Promise.all([getCriterionStaging(ebcId), getRawCriterion(ebcId)])
       .then(([sc, rc]) => {
+        if (requestedEligibilityCriteriaId.current !== ebcId) return
         setStagingCriteria(sc)
         setRawCriterion(rc)
-        setEligibilityCriteriaId(ebcId)
       })
       .catch(() => {
+        if (requestedEligibilityCriteriaId.current !== ebcId) return
         setStagingCriteria([])
         setRawCriterion(null)
       })

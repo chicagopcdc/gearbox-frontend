@@ -164,10 +164,10 @@ function MatchResult({
         </div>
       </DropdownSection>
 
-      <DropdownSection name={`Undetermined (${matchCounts.undetermined})`}>
+      <DropdownSection name={`Potential Match (${matchCounts.undetermined})`}>
         <div className="mx-2">
           {renderTrialCards(undetermined)}
-          {renderPagination('undetermined', 'Undetermined')}
+          {renderPagination('undetermined', 'Potential Match')}
         </div>
       </DropdownSection>
 

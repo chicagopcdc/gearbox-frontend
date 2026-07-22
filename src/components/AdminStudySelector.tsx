@@ -7,7 +7,7 @@ type AdminStudySelectorProps = {
   label: string
   name: string
   value: number | ''
-  onChange: React.ChangeEventHandler<HTMLSelectElement>
+  onChange: (value: number | '') => void
 }
 
 function studyLabel(code: string, name: string): string {
@@ -50,6 +50,24 @@ export function AdminStudySelector({
   )
   const resultCount =
     filteredGroups.needsInput.length + filteredGroups.published.length
+  const updateSearchQuery = (nextSearchQuery: string) => {
+    setSearchQuery(nextSearchQuery)
+    if (value === '') return
+
+    const selectedStudy = [...groups.needsInput, ...groups.published].find(
+      (studyVersion) => studyVersion.eligibility_criteria_id === value
+    )
+    if (
+      !selectedStudy ||
+      !matchesSearch(
+        selectedStudy.study.code,
+        selectedStudy.study.name,
+        nextSearchQuery
+      )
+    ) {
+      onChange('')
+    }
+  }
 
   return (
     <section aria-label="Study status" className="space-y-2">
@@ -75,7 +93,7 @@ export function AdminStudySelector({
           <input
             aria-label="Search trials"
             className="w-full rounded-none border border-b-0 border-solid border-black py-2 pl-9 pr-9"
-            onChange={(event) => setSearchQuery(event.target.value)}
+            onChange={(event) => updateSearchQuery(event.target.value)}
             onKeyDown={(event) => {
               if (event.key === 'ArrowDown') {
                 event.preventDefault()
@@ -90,7 +108,7 @@ export function AdminStudySelector({
             <button
               aria-label="Clear trial search"
               className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-600 hover:text-black"
-              onClick={() => setSearchQuery('')}
+              onClick={() => updateSearchQuery('')}
               title="Clear trial search"
               type="button"
             >
@@ -105,7 +123,7 @@ export function AdminStudySelector({
           ref={selectRef}
           value={value}
           onChange={(event) => {
-            onChange(event)
+            onChange(event.target.value ? +event.target.value : '')
             setSearchQuery('')
           }}
         >

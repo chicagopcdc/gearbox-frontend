@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   ApiStatus,
   CriteriaValue,
@@ -32,6 +32,7 @@ export function CriteriaValueAssignmentPage() {
   const [numericValues, setNumericValues] = useState<CriteriaValue[]>([])
   const [units, setUnits] = useState<Unit[]>([])
   const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
+  const requestedEligibilityCriteriaId = useRef<number | ''>('')
 
   const loadPage = () => {
     Promise.all([
@@ -53,20 +54,31 @@ export function CriteriaValueAssignmentPage() {
       })
   }
 
-  const onStudyChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const eligibilityCriteriaId = +event.target.value
+  const onStudyChanged = (eligibilityCriteriaId: number | '') => {
+    requestedEligibilityCriteriaId.current = eligibilityCriteriaId
     setEligibilityCriteriaId(eligibilityCriteriaId)
+    if (eligibilityCriteriaId === '') {
+      setActiveStagingCriteria([])
+      return
+    }
+
     Promise.all([
       getCriterionStaging(eligibilityCriteriaId),
       getElCriteriaHasCriterionsByElId(eligibilityCriteriaId),
     ])
       .then(([stagingCriteria]) => {
+        if (requestedEligibilityCriteriaId.current !== eligibilityCriteriaId)
+          return
         const activeStagingCriteria = stagingCriteria.filter(
           (sc) => sc.criterion_adjudication_status === 'ACTIVE'
         )
         setActiveStagingCriteria(activeStagingCriteria)
       })
-      .catch(() => setActiveStagingCriteria([]))
+      .catch(() => {
+        if (requestedEligibilityCriteriaId.current !== eligibilityCriteriaId)
+          return
+        setActiveStagingCriteria([])
+      })
   }
 
   useEffect(() => {
