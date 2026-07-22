@@ -22,6 +22,8 @@ type GroupedTrialMapMarker = {
   longitude: number
 }
 
+const coordinateGroupingPrecision = 3
+
 type TrialMapModalProps = {
   closeModal: () => void
   matchGroups: MatchGroups
@@ -96,6 +98,35 @@ export function getTrialMapMarkers(
   })
 }
 
+export function groupTrialMapMarkers(
+  markers: TrialMapMarker[]
+): GroupedTrialMapMarker[] {
+  const groups = new Map<string, TrialMapMarker[]>()
+
+  for (const marker of markers) {
+    const key = `${marker.latitude.toFixed(
+      coordinateGroupingPrecision
+    )},${marker.longitude.toFixed(coordinateGroupingPrecision)}`
+    const items = groups.get(key)
+
+    if (items) {
+      items.push(marker)
+    } else {
+      groups.set(key, [marker])
+    }
+  }
+
+  return Array.from(groups.values()).map((items) => ({
+    id: items.map((item) => item.id).join('|'),
+    latitude: items[0].latitude,
+    longitude: items[0].longitude,
+    group: items.some((item) => item.group === 'matched')
+      ? 'matched'
+      : 'undetermined',
+    items,
+  }))
+}
+
 function FitMapToMarkers({ markers }: { markers: GroupedTrialMapMarker[] }) {
   const map = useMap()
 
@@ -120,24 +151,7 @@ function TrialMapModal({
     () => getTrialMapMarkers(studies, matchGroups),
     [studies, matchGroups]
   )
-  const groupedMarkers = useMemo(() => {
-    const groups = new Map<string, TrialMapMarker[]>()
-
-    for (const marker of markers) {
-      const key = `${marker.latitude.toFixed(6)},${marker.longitude.toFixed(6)}`
-      groups.set(key, [...(groups.get(key) ?? []), marker])
-    }
-
-    return Array.from(groups.values()).map((items) => ({
-      id: items.map((item) => item.id).join('|'),
-      latitude: items[0].latitude,
-      longitude: items[0].longitude,
-      group: items.some((item) => item.group === 'matched')
-        ? ('matched' as const)
-        : ('undetermined' as const),
-      items,
-    }))
-  }, [markers])
+  const groupedMarkers = useMemo(() => groupTrialMapMarkers(markers), [markers])
 
   return (
     <div
