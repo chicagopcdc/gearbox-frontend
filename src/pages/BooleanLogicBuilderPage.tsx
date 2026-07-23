@@ -17,12 +17,12 @@ type TabType = {
 
 const tabs: TabType[] = [
   {
-    id: 'ACTIVE',
-    display: 'Active',
+    id: 'IN_PROCESS',
+    display: 'Needs Input',
   },
   {
-    id: 'IN_PROCESS',
-    display: 'In Process',
+    id: 'ACTIVE',
+    display: 'Published',
   },
 ]
 

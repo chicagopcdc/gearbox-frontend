@@ -19,7 +19,7 @@ type MatchResultProps = {
   matchPages: Record<MatchGroupKey, number>
   onChangeMatchPage: (group: MatchGroupKey, direction: -1 | 1) => void
   onSetMatchPage: (group: MatchGroupKey, page: number) => void
-  patientValuesByFieldName: Record<string, unknown>
+  patientValuesByFieldName?: Record<string, unknown>
 }
 
 function MatchResult({
@@ -31,7 +31,7 @@ function MatchResult({
   matchPages,
   onChangeMatchPage,
   onSetMatchPage,
-  patientValuesByFieldName,
+  patientValuesByFieldName = {},
 }: MatchResultProps) {
   const { matched = [], undetermined = [], unmatched = [] } = matchGroups
 
@@ -171,10 +171,10 @@ function MatchResult({
         </div>
       </DropdownSection>
 
-      <DropdownSection name={`Undetermined (${matchCounts.undetermined})`}>
+      <DropdownSection name={`Potential Match (${matchCounts.undetermined})`}>
         <div className="mx-2">
           {renderTrialCards(undetermined, undefined)}
-          {renderPagination('undetermined', 'Undetermined')}
+          {renderPagination('undetermined', 'Potential Match')}
         </div>
       </DropdownSection>
 

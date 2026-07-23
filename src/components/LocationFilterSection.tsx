@@ -1,8 +1,8 @@
 // components/LocationFilterSection.tsx
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from './Inputs/Button'
-import { LocationFilterState, LocationMode } from '../model'
-import ReactTooltip from 'react-tooltip'
+import { AddressSuggestion, LocationFilterState, LocationMode } from '../model'
+import { autocompleteAddress } from '../api/addressAutocomplete'
 
 type LocationFilterSectionProps = {
   filter: LocationFilterState
@@ -26,6 +26,95 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
   const [showPasteModal, setShowPasteModal] = useState(false)
   const [pasteValue, setPasteValue] = useState('')
   const [pasteError, setPasteError] = useState<string | null>(null)
+
+  const [addressSuggestions, setAddressSuggestions] = useState<
+    AddressSuggestion[]
+  >([])
+  const [isSearchingAddress, setIsSearchingAddress] = useState(false)
+  const [addressSearchError, setAddressSearchError] = useState<string | null>(
+    null
+  )
+
+  const isAddressSearchEnabled = Boolean(process.env.REACT_APP_GEOAPIFY_API_KEY)
+  useEffect(() => {
+    let cancelled = false
+
+    if (!isAddressSearchEnabled || filter.mode !== 'address') {
+      setAddressSuggestions([])
+      setAddressSearchError(null)
+      setIsSearchingAddress(false)
+      return
+    }
+
+    const input = filter.address.trim()
+
+    if (input.length < 3) {
+      setAddressSuggestions([])
+      setAddressSearchError(null)
+      setIsSearchingAddress(false)
+      return
+    }
+
+    // If user already selected a suggestion, lat/lon are filled.
+    // Do not search again for the selected formatted address.
+    if (filter.lat && filter.lon) {
+      setAddressSuggestions([])
+      setAddressSearchError(null)
+      setIsSearchingAddress(false)
+      return
+    }
+
+    const controller = new AbortController()
+
+    const timeout = window.setTimeout(() => {
+      setIsSearchingAddress(true)
+      setAddressSearchError(null)
+      setAddressSuggestions([])
+
+      autocompleteAddress(input, controller.signal)
+        .then((suggestions) => {
+          if (cancelled) return
+          setAddressSuggestions(suggestions)
+        })
+        .catch((e) => {
+          if (cancelled) return
+
+          if (e instanceof Error && e.name === 'AbortError') {
+            return
+          }
+
+          console.error(e)
+          setAddressSuggestions([])
+          setAddressSearchError('Unable to search addresses.')
+        })
+        .finally(() => {
+          if (cancelled) return
+          setIsSearchingAddress(false)
+        })
+    }, 500)
+
+    return () => {
+      cancelled = true
+      window.clearTimeout(timeout)
+      controller.abort()
+    }
+  }, [
+    isAddressSearchEnabled,
+    filter.mode,
+    filter.address,
+    filter.lat,
+    filter.lon,
+  ])
+
+  useEffect(() => {
+    if (!isAddressSearchEnabled && filter.mode === 'address') {
+      onChange({
+        ...filter,
+        mode: 'coordinates',
+        address: '',
+      })
+    }
+  }, [isAddressSearchEnabled, filter, onChange])
 
   function parseGoogleMapsLatLon(value: string) {
     const trimmed = value.trim()
@@ -82,6 +171,33 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       ...filter,
       mode,
     })
+
+    setAddressSuggestions([])
+    setAddressSearchError(null)
+  }
+
+  function handleAddressChange(value: string) {
+    onChange({
+      ...filter,
+      address: value,
+      // Clear stale coordinates when user manually edits the address.
+      lat: '',
+      lon: '',
+    })
+
+    setAddressSearchError(null)
+  }
+
+  function selectAddressSuggestion(suggestion: AddressSuggestion) {
+    onChange({
+      ...filter,
+      address: suggestion.formatted,
+      lat: String(suggestion.lat),
+      lon: String(suggestion.lon),
+    })
+
+    setAddressSuggestions([])
+    setAddressSearchError(null)
   }
 
   return (
@@ -95,47 +211,49 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       </div>
 
       {/* Mode toggle */}
-      <div className="flex gap-4 mb-2 text-xs text-gray-700">
-        <label className="flex items-center gap-1 cursor-pointer">
-          <input
-            type="radio"
-            name="locationMode"
-            value="coordinates"
-            checked={filter.mode === 'coordinates'}
-            onChange={() => changeMode('coordinates')}
-          />
-          <span>Use coordinates</span>
-        </label>
-        <label
-          className="flex items-center gap-1 cursor-pointer"
-          data-tip
-          data-for="location-address-tbd"
-        >
-          <input
-            type="radio"
-            name="locationMode"
-            value="address"
-            checked={filter.mode === 'address'}
-            onChange={() => changeMode('address')}
-            disabled={true}
-          />
-          <ReactTooltip
-            id="location-address-tbd"
-            effect="solid"
-            place="top"
-            type="dark"
+      <div className="mb-2">
+        <div className="flex gap-4 text-xs text-gray-700">
+          <label className="flex items-center gap-1 cursor-pointer">
+            <input
+              type="radio"
+              name="locationMode"
+              value="coordinates"
+              checked={filter.mode === 'coordinates'}
+              onChange={() => changeMode('coordinates')}
+            />
+            <span>Use coordinates</span>
+          </label>
+
+          <label
+            className={`flex items-center gap-1 ${
+              isAddressSearchEnabled
+                ? 'cursor-pointer'
+                : 'cursor-not-allowed text-gray-400'
+            }`}
           >
-            <span>This feature is under development</span>
-          </ReactTooltip>
-          <span>Use address (TBD)</span>
-        </label>
+            <input
+              type="radio"
+              name="locationMode"
+              value="address"
+              checked={filter.mode === 'address'}
+              onChange={() => changeMode('address')}
+              disabled={!isAddressSearchEnabled}
+            />
+            <span>Use address</span>
+          </label>
+        </div>
+        {!isAddressSearchEnabled && (
+          <p className="mt-1 text-[0.7rem] text-gray-500">
+            Address search is unavailable because Geoapify is not configured.
+          </p>
+        )}
       </div>
 
       {filter.mode === 'coordinates' ? (
         <>
           <div className="mb-3 rounded border border-blue-100 bg-blue-50 p-3 text-xs text-gray-700">
             <p className="mb-2 font-medium">
-              {"If you don't know your lat lon please follow this steps:"}
+              {"If you don't know your lat lon please follow these steps:"}
             </p>
             <ol className="list-decimal pl-4 space-y-1">
               <li>
@@ -179,6 +297,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
               </a>
             </div>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2">
             <label className="text-xs text-gray-700">
               <span className="block mb-1">Latitude</span>
@@ -191,6 +310,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
                 className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
               />
             </label>
+
             <label className="text-xs text-gray-700">
               <span className="block mb-1">Longitude</span>
               <input
@@ -202,8 +322,9 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
                 className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
               />
             </label>
+
             <label className="text-xs text-gray-700 md:col-span-2">
-              <span className="block mb-1">Max distance</span>
+              <span className="block mb-1">Max distance (Default 25)</span>
               <div className="flex items-stretch">
                 <input
                   type="number"
@@ -239,18 +360,58 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       ) : (
         <>
           <div className="space-y-2 mb-2">
-            <label className="text-xs text-gray-700">
+            <label className="text-xs text-gray-700 relative block">
               <span className="block mb-1">Address</span>
               <input
                 type="text"
                 value={filter.address}
-                onChange={(e) => updateField('address', e.target.value)}
-                placeholder="Street, city, state, ZIP"
+                onChange={(e) => handleAddressChange(e.target.value)}
+                placeholder="Street, city, state/province, country, postal code"
                 className="w-full rounded border border-gray-300 px-2 py-1 text-sm"
+                autoComplete="off"
               />
+
+              {addressSearchError && (
+                <p className="mt-1 text-[0.7rem] text-red-600" role="alert">
+                  {addressSearchError}
+                </p>
+              )}
+
+              {(isSearchingAddress || addressSuggestions.length > 0) && (
+                <ul className="absolute z-20 mt-1 w-full rounded border border-gray-300 bg-white shadow-lg text-sm">
+                  {isSearchingAddress ? (
+                    <li className="px-2 py-2 text-xs text-gray-500">
+                      Searching addresses…
+                    </li>
+                  ) : (
+                    addressSuggestions.map((suggestion) => (
+                      <li key={suggestion.id}>
+                        <button
+                          type="button"
+                          className="w-full px-2 py-2 text-left hover:bg-gray-100"
+                          onMouseDown={(e) => {
+                            e.preventDefault()
+                            selectAddressSuggestion(suggestion)
+                          }}
+                        >
+                          <span className="block text-gray-900">
+                            {suggestion.addressLine1 || suggestion.formatted}
+                          </span>
+                          {suggestion.addressLine2 && (
+                            <span className="block text-xs text-gray-500">
+                              {suggestion.addressLine2}
+                            </span>
+                          )}
+                        </button>
+                      </li>
+                    ))
+                  )}
+                </ul>
+              )}
             </label>
+
             <label className="text-xs text-gray-700">
-              <span className="block mb-1">Max distance</span>
+              <span className="block mb-1">Max distance (Default 25)</span>
               <div className="flex items-stretch">
                 <input
                   type="number"
@@ -279,8 +440,8 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
           </div>
 
           <p className="mb-2 text-[0.7rem] text-gray-500">
-            Example:{' '}
-            <span className="font-mono">300 N Ingalls St, Ann Arbor, MI</span>
+            Select an address from the suggestions before applying the location
+            filter.
           </p>
         </>
       )}
@@ -294,9 +455,10 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="text-[0.7rem] text-gray-500">
           {filter.mode === 'address'
-            ? 'Your address will be converted to latitude/longitude before filtering trials.'
+            ? 'Selected address coordinates are sent to filter trials by location.'
             : 'Coordinates and distance are sent to filter trials by location.'}
         </div>
+
         <div className="flex gap-2 justify-end">
           <button
             type="button"
@@ -306,11 +468,13 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
           >
             Clear
           </button>
+
           <Button size="small" onClick={onApply} disabled={!!isResolving}>
             {isResolving ? 'Applying…' : 'Apply'}
           </Button>
         </div>
       </div>
+
       {showPasteModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
@@ -371,6 +535,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
               >
                 Cancel
               </button>
+
               <Button size="small" onClick={handlePasteSubmit}>
                 Use coordinates
               </Button>

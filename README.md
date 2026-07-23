@@ -8,6 +8,25 @@ For more information on the GEARBOx project, please refer to materials on [this 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Environment Variables
+
+The application uses [Geoapify](https://www.geoapify.com/) for address autocomplete and geocoding.
+
+To obtain a Geoapify API key:
+
+1. Create an account at [Geoapify My Projects](https://myprojects.geoapify.com/).
+2. Create a new project.
+3. Copy the generated API key from the project's **API Keys** section.
+
+For local development, create a `.env.development.local` file in the project root and add:
+
+```env
+REACT_APP_GEOAPIFY_API_KEY=your_api_key_here
+```
+
+Do not commit your actual API key to the repository.
+
+For production, the key should be provided through CI/CD pipeline. 
 ## Available Scripts
 
 In the project directory, you can run:

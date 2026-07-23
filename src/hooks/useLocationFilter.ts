@@ -14,21 +14,27 @@ export function useLocationFilter(geocodeAddress?: GeocodeFn) {
   const [error, setError] = useState<string | null>(null)
   const [isResolving, setIsResolving] = useState(false)
 
+  const DEFAULT_LOCATION_DISTANCE = 25
+
   const clear = useCallback(() => {
-    setFilter({
-      mode: filter.mode, // keep current mode
+    setFilter((prev) => ({
+      mode: prev.mode,
       lat: '',
       lon: '',
       distance: '',
-      unit: 'km', // or filter.unit if you want to preserve the last unit
-      address: filter.mode === 'address' ? '' : filter.address,
-    })
+      unit: 'km',
+      address: '',
+    }))
+
     setParams(null)
     setError(null)
-  }, [filter.mode, filter.address])
+  }, [])
 
   const apply = useCallback(async () => {
-    const distance = parseFloat(filter.distance)
+    const distanceText = filter.distance.trim()
+    const distance =
+      distanceText === '' ? DEFAULT_LOCATION_DISTANCE : parseFloat(distanceText)
+
     if (Number.isNaN(distance) || distance <= 0) {
       setError('Please enter a positive max distance.')
       return
@@ -43,6 +49,7 @@ export function useLocationFilter(geocodeAddress?: GeocodeFn) {
         setError('Please enter valid latitude and longitude.')
         return
       }
+
       if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
         setError(
           'Latitude must be between -90 and 90, longitude between -180 and 180.'
@@ -54,44 +61,76 @@ export function useLocationFilter(geocodeAddress?: GeocodeFn) {
         lat,
         lon,
         range: distance,
-        unit: filter.unit, // 'km' or 'mi'
+        unit: filter.unit,
       })
+
       setError(null)
       return
     }
 
     // ADDRESS MODE
-    if (!geocodeAddress) {
-      setError('Address lookup is not configured yet.')
+    const address = filter.address.trim()
+
+    if (!address) {
+      setError('Please enter an address.')
       return
     }
 
-    if (!filter.address.trim()) {
-      setError('Please enter an address.')
+    const existingLat = parseFloat(filter.lat)
+    const existingLon = parseFloat(filter.lon)
+
+    if (
+      !Number.isNaN(existingLat) &&
+      !Number.isNaN(existingLon) &&
+      existingLat >= -90 &&
+      existingLat <= 90 &&
+      existingLon >= -180 &&
+      existingLon <= 180
+    ) {
+      setParams({
+        lat: existingLat,
+        lon: existingLon,
+        range: distance,
+        unit: filter.unit,
+      })
+
+      setError(null)
+      return
+    }
+
+    // Optional fallback if you still want manual address geocoding later.
+    // For the Geoapify autocomplete-only flow, this usually will not run.
+    if (!geocodeAddress) {
+      setError('Please select an address from the suggestions.')
       return
     }
 
     try {
       setIsResolving(true)
       setError(null)
-      const { lat, lon } = await geocodeAddress(filter.address)
+
+      const { lat, lon } = await geocodeAddress(address)
 
       setParams({
         lat,
         lon,
         range: distance,
-        unit: filter.unit, // 'km' or 'mi'
+        unit: filter.unit,
       })
 
-      // Optionally show resolved lat/lon in the fields
       setFilter((prev) => ({
         ...prev,
+        address,
         lat: String(lat),
         lon: String(lon),
       }))
     } catch (e) {
       console.error(e)
-      setError('Could not resolve address. Please check it and try again.')
+      setError(
+        e instanceof Error
+          ? e.message
+          : 'Could not resolve address. Please check it and try again.'
+      )
     } finally {
       setIsResolving(false)
     }
