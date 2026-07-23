@@ -247,6 +247,17 @@ function MatchingPage({
     }
   }
 
+  const patientValuesByFieldName = Object.fromEntries(
+    config.fields.flatMap((field) => {
+      const value = currentUserInput.values[field.id]
+      const names = [field.name, field.label].filter(
+        (name): name is string => typeof name === 'string' && name !== ''
+      )
+
+      return names.map((name) => [name, value])
+    })
+  )
+
   function createMatchInput(name?: string) {
     postUserInput({}, undefined, name).then((res) => {
       setCurrentUserInput(res)
@@ -461,6 +472,7 @@ function MatchingPage({
               studies={studies}
               matchCounts={matchCounts}
               pageSize={MATCH_PAGE_SIZE}
+              patientValuesByFieldName={patientValuesByFieldName}
               matchPages={matchPages}
               onChangeMatchPage={changeMatchPage}
               onSetMatchPage={setMatchPage}
@@ -600,6 +612,7 @@ function MatchingPage({
                 studies={studies}
                 matchCounts={matchCounts}
                 pageSize={MATCH_PAGE_SIZE}
+                patientValuesByFieldName={patientValuesByFieldName}
                 matchPages={matchPages}
                 onChangeMatchPage={changeMatchPage}
                 onSetMatchPage={setMatchPage}

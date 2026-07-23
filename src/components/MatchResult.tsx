@@ -19,6 +19,7 @@ type MatchResultProps = {
   matchPages: Record<MatchGroupKey, number>
   onChangeMatchPage: (group: MatchGroupKey, direction: -1 | 1) => void
   onSetMatchPage: (group: MatchGroupKey, page: number) => void
+  patientValuesByFieldName: Record<string, unknown>
 }
 
 function MatchResult({
@@ -30,6 +31,7 @@ function MatchResult({
   matchPages,
   onChangeMatchPage,
   onSetMatchPage,
+  patientValuesByFieldName,
 }: MatchResultProps) {
   const { matched = [], undetermined = [], unmatched = [] } = matchGroups
 
@@ -139,7 +141,7 @@ function MatchResult({
     )
   }
 
-  function renderTrialCards(ids: number[]) {
+  function renderTrialCards(ids: number[], overallStatus: boolean | undefined) {
     return ids.map((id) => {
       const study = studyById[id]
 
@@ -148,7 +150,12 @@ function MatchResult({
       return (
         <TrialCard study={study} key={id}>
           {matchDetails[id] && (
-            <TrialMatchInfo study={study} studyMatchInfo={matchDetails[id]} />
+            <TrialMatchInfo
+              overallStatus={overallStatus}
+              patientValues={patientValuesByFieldName}
+              study={study}
+              studyMatchInfo={matchDetails[id]}
+            />
           )}
         </TrialCard>
       )
@@ -159,21 +166,21 @@ function MatchResult({
     <>
       <DropdownSection name={`Matched (${matchCounts.matched})`}>
         <div className="mx-2">
-          {renderTrialCards(matched)}
+          {renderTrialCards(matched, true)}
           {renderPagination('matched', 'Matched')}
         </div>
       </DropdownSection>
 
       <DropdownSection name={`Undetermined (${matchCounts.undetermined})`}>
         <div className="mx-2">
-          {renderTrialCards(undetermined)}
+          {renderTrialCards(undetermined, undefined)}
           {renderPagination('undetermined', 'Undetermined')}
         </div>
       </DropdownSection>
 
       <DropdownSection name={`Unmatched (${matchCounts.unmatched})`}>
         <div className="mx-2">
-          {renderTrialCards(unmatched)}
+          {renderTrialCards(unmatched, false)}
           {renderPagination('unmatched', 'Unmatched')}
         </div>
       </DropdownSection>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   Info,
   MoreHorizontal,
@@ -12,23 +12,43 @@ import ReactTooltip from 'react-tooltip'
 import type { MatchInfoAlgorithm, Study } from '../model'
 import MatchInfoDetails from './MatchInfoDetails'
 import { useModal } from '../hooks/useModal'
+import EligibilityMatrix from './EligibilityMatrix'
 
 type TrialMatchInfoProps = {
+  overallStatus: boolean | undefined
   study: Study
   studyMatchInfo: MatchInfoAlgorithm
+  patientValues?: Record<string, unknown>
 }
 
-function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
+function TrialMatchInfo({
+  overallStatus,
+  patientValues,
+  study,
+  studyMatchInfo,
+}: TrialMatchInfoProps) {
   const matchInfoId = `match-info-${study.id}`
 
   const [showModal, openModal, closeModal] = useModal()
   const [showModalOptions, setShowModalOptions] = useState(false)
   const [isFilterActive, setIsFilterActive] = useState(false)
   const [isHighlightActive, setIsHighlightActive] = useState(false)
+  const [view, setView] = useState<'matrix' | 'logic'>('matrix')
 
   const toggleModalOptions = () => setShowModalOptions((show) => !show)
   const toggleFilter = () => setIsFilterActive((isActive) => !isActive)
   const toggleHighlight = () => setIsHighlightActive((isActive) => !isActive)
+
+  useEffect(() => {
+    if (!showModal) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [showModal])
 
   function handleModalOptionsBlur(e: React.FocusEvent) {
     if (showModalOptions && !e.currentTarget.contains(e.relatedTarget))
@@ -51,7 +71,9 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
         <div
           id="match-info-modal"
           className="fixed w-screen h-screen left-0 top-0 flex items-center justify-center z-50"
-          style={{ background: '#cccc' }}
+          onTouchMove={(event) => event.stopPropagation()}
+          onWheel={(event) => event.stopPropagation()}
+          style={{ background: '#cccc', overscrollBehavior: 'contain' }}
           role="dialog"
           aria-labelledby="eligibility-criteria-dialog-title"
           aria-modal="true"
@@ -79,27 +101,31 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                     onBlur={handleModalOptionsBlur}
                     tabIndex={0} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
                   >
-                    <button
-                      className={`p-1 ${
-                        showModalOptions ? 'text-primary' : 'hover:text-primary'
-                      }`}
-                      data-for="match-form-menu"
-                      data-tip
-                      onClick={toggleModalOptions}
-                    >
-                      <MoreHorizontal className="inline" />
-                      <ReactTooltip
-                        border
-                        borderColor="black"
-                        id="match-form-menu"
-                        effect="solid"
-                        place="left"
-                        type="light"
+                    {view === 'logic' && (
+                      <button
+                        className={`p-1 ${
+                          showModalOptions
+                            ? 'text-primary'
+                            : 'hover:text-primary'
+                        }`}
+                        data-for="match-form-menu"
+                        data-tip
+                        onClick={toggleModalOptions}
                       >
-                        <span>Options</span>
-                      </ReactTooltip>
-                    </button>
-                    {showModalOptions && (
+                        <MoreHorizontal className="inline" />
+                        <ReactTooltip
+                          border
+                          borderColor="black"
+                          id="match-form-menu"
+                          effect="solid"
+                          place="left"
+                          type="light"
+                        >
+                          <span>Options</span>
+                        </ReactTooltip>
+                      </button>
+                    )}
+                    {view === 'logic' && showModalOptions && (
                       <div className="absolute right-0 origin-top-right w-44 bg-white border border-gray-300 shadow-md mt-2 p-1">
                         <ul className="w-full text-sm text-center text-primary">
                           <li className="hover:bg-red-100">
@@ -176,12 +202,46 @@ function TrialMatchInfo({ study, studyMatchInfo }: TrialMatchInfoProps) {
                   </button>
                 </div>
               </div>
-              <MatchInfoDetails
-                isFilterActive={isFilterActive}
-                isHighlightActive={isHighlightActive}
-                matchInfoId={matchInfoId}
-                matchInfoAlgorithm={studyMatchInfo}
-              />
+              <div className="mb-4 flex border-b">
+                <button
+                  aria-pressed={view === 'matrix'}
+                  className={`border-b-2 px-4 py-2 font-medium ${
+                    view === 'matrix'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-gray-600 hover:text-primary'
+                  }`}
+                  onClick={() => setView('matrix')}
+                  type="button"
+                >
+                  Path matrix
+                </button>
+                <button
+                  aria-pressed={view === 'logic'}
+                  className={`border-b-2 px-4 py-2 font-medium ${
+                    view === 'logic'
+                      ? 'border-primary text-primary'
+                      : 'border-transparent text-gray-600 hover:text-primary'
+                  }`}
+                  onClick={() => setView('logic')}
+                  type="button"
+                >
+                  Logic tree
+                </button>
+              </div>
+              {view === 'matrix' ? (
+                <EligibilityMatrix
+                  matchInfoAlgorithm={studyMatchInfo}
+                  overallStatus={overallStatus}
+                  patientValues={patientValues}
+                />
+              ) : (
+                <MatchInfoDetails
+                  isFilterActive={isFilterActive}
+                  isHighlightActive={isHighlightActive}
+                  matchInfoId={matchInfoId}
+                  matchInfoAlgorithm={studyMatchInfo}
+                />
+              )}
             </div>
           </div>
         </div>
