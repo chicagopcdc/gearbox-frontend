@@ -1,9 +1,13 @@
 import { useEffect, useMemo } from 'react'
 import L from 'leaflet'
-import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { MapContainer, TileLayer, useMap } from 'react-leaflet'
 import { X } from 'react-feather'
 import type { MatchGroups, Study } from '../model'
+import 'leaflet.markercluster'
 import 'leaflet/dist/leaflet.css'
+import 'leaflet.markercluster/dist/MarkerCluster.css'
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css'
 
 type TrialMapMarker = {
   group: 'matched' | 'undetermined'
@@ -142,6 +146,81 @@ function FitMapToMarkers({ markers }: { markers: GroupedTrialMapMarker[] }) {
   return null
 }
 
+function TrialMarkerPopup({ items }: { items: TrialMapMarker[] }) {
+  return (
+    <div
+      className="max-w-xs overflow-y-auto pr-2"
+      data-trial-map-popup
+      style={{ maxHeight: '20rem', overscrollBehavior: 'contain' }}
+    >
+      {items.map(({ group, id, site, study }, index) => (
+        <div className={index === 0 ? '' : 'mt-3 border-t pt-3'} key={id}>
+          <p
+            className={`mb-1 font-bold ${
+              group === 'matched' ? 'text-primary' : 'text-amber-700'
+            }`}
+          >
+            {group === 'matched' ? 'Matched' : 'Undetermined'}
+          </p>
+          <p className="font-bold">{study.code}</p>
+          <p>{study.name}</p>
+          <p className="mt-2 font-bold">{site.name}</p>
+          <p>
+            {[site.city, site.state, site.country].filter(Boolean).join(', ')}
+          </p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function ClusteredTrialMarkers({
+  markers,
+}: {
+  markers: GroupedTrialMapMarker[]
+}) {
+  const map = useMap()
+
+  useEffect(() => {
+    const clusterGroup = L.markerClusterGroup({
+      chunkedLoading: true,
+      removeOutsideVisibleBounds: true,
+      showCoverageOnHover: false,
+    })
+    const leafletMarkers = markers.map(
+      ({ group, items, latitude, longitude }) => {
+        const marker = L.marker([latitude, longitude], {
+          icon: markerIcons[group],
+        })
+
+        marker.bindPopup(
+          renderToStaticMarkup(<TrialMarkerPopup items={items} />)
+        )
+        marker.on('click', () => marker.openPopup())
+        marker.on('popupopen', () => {
+          const popupContent = marker
+            .getPopup()
+            ?.getElement()
+            ?.querySelector<HTMLElement>('[data-trial-map-popup]')
+
+          if (popupContent) L.DomEvent.disableScrollPropagation(popupContent)
+        })
+
+        return marker
+      }
+    )
+
+    clusterGroup.addLayers(leafletMarkers)
+    map.addLayer(clusterGroup)
+
+    return () => {
+      map.removeLayer(clusterGroup)
+    }
+  }, [map, markers])
+
+  return null
+}
+
 function TrialMapModal({
   closeModal,
   matchGroups,
@@ -207,57 +286,7 @@ function TrialMapModal({
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <FitMapToMarkers markers={groupedMarkers} />
-            {groupedMarkers.map(({ group, id, items, latitude, longitude }) => (
-              <Marker
-                icon={markerIcons[group]}
-                key={id}
-                position={[latitude, longitude]}
-              >
-                <Popup>
-                  <div
-                    className="max-w-xs pr-2"
-                    onWheel={(event) => event.stopPropagation()}
-                    style={{
-                      maxHeight: '20rem',
-                      overflowY: 'auto',
-                      overscrollBehavior: 'contain',
-                    }}
-                  >
-                    {items.map(
-                      (
-                        { group: itemGroup, id: itemId, site, study },
-                        index
-                      ) => (
-                        <div
-                          className={index === 0 ? '' : 'mt-3 border-t pt-3'}
-                          key={itemId}
-                        >
-                          <p
-                            className={`mb-1 font-bold ${
-                              itemGroup === 'matched'
-                                ? 'text-primary'
-                                : 'text-amber-700'
-                            }`}
-                          >
-                            {itemGroup === 'matched'
-                              ? 'Matched'
-                              : 'Undetermined'}
-                          </p>
-                          <p className="font-bold">{study.code}</p>
-                          <p>{study.name}</p>
-                          <p className="mt-2 font-bold">{site.name}</p>
-                          <p>
-                            {[site.city, site.state, site.country]
-                              .filter(Boolean)
-                              .join(', ')}
-                          </p>
-                        </div>
-                      )
-                    )}
-                  </div>
-                </Popup>
-              </Marker>
-            ))}
+            <ClusteredTrialMarkers markers={groupedMarkers} />
           </MapContainer>
         ) : (
           <div className="flex min-h-[24rem] items-center justify-center p-8 text-center text-gray-600">
