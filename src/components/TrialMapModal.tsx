@@ -187,33 +187,51 @@ function ClusteredTrialMarkers({
       removeOutsideVisibleBounds: true,
       showCoverageOnHover: false,
     })
-    const leafletMarkers = markers.map(
-      ({ group, items, latitude, longitude }) => {
-        const marker = L.marker([latitude, longitude], {
-          icon: markerIcons[group],
+    let nextMarkerIndex = 0
+    let markerCreationTimer: number | undefined
+
+    const addNextMarkerBatch = () => {
+      const batch = markers
+        .slice(nextMarkerIndex, nextMarkerIndex + 250)
+        .map(({ group, items, latitude, longitude }) => {
+          const marker = L.marker([latitude, longitude], {
+            icon: markerIcons[group],
+          })
+
+          marker.on('click', () => {
+            if (!marker.getPopup()) {
+              marker.bindPopup(
+                renderToStaticMarkup(<TrialMarkerPopup items={items} />)
+              )
+            }
+            marker.openPopup()
+          })
+          marker.on('popupopen', () => {
+            const popupContent = marker
+              .getPopup()
+              ?.getElement()
+              ?.querySelector<HTMLElement>('[data-trial-map-popup]')
+
+            if (popupContent) L.DomEvent.disableScrollPropagation(popupContent)
+          })
+
+          return marker
         })
 
-        marker.bindPopup(
-          renderToStaticMarkup(<TrialMarkerPopup items={items} />)
-        )
-        marker.on('click', () => marker.openPopup())
-        marker.on('popupopen', () => {
-          const popupContent = marker
-            .getPopup()
-            ?.getElement()
-            ?.querySelector<HTMLElement>('[data-trial-map-popup]')
+      clusterGroup.addLayers(batch)
+      nextMarkerIndex += batch.length
 
-          if (popupContent) L.DomEvent.disableScrollPropagation(popupContent)
-        })
-
-        return marker
+      if (nextMarkerIndex < markers.length) {
+        markerCreationTimer = window.setTimeout(addNextMarkerBatch, 0)
       }
-    )
+    }
 
-    clusterGroup.addLayers(leafletMarkers)
     map.addLayer(clusterGroup)
+    addNextMarkerBatch()
 
     return () => {
+      if (markerCreationTimer !== undefined)
+        window.clearTimeout(markerCreationTimer)
       map.removeLayer(clusterGroup)
     }
   }, [map, markers])
