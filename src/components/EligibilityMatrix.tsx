@@ -1,0 +1,356 @@
+import { useState } from 'react'
+import { ZoomIn, ZoomOut } from 'react-feather'
+import type { MatchInfo, MatchInfoAlgorithm } from '../model'
+
+export type EligibilityPath = MatchInfo[]
+
+function isAlgorithm(
+  criterion: MatchInfo | MatchInfoAlgorithm
+): criterion is MatchInfoAlgorithm {
+  return Object.prototype.hasOwnProperty.call(criterion, 'criteria')
+}
+
+export function getEligibilityPaths(
+  algorithm: MatchInfoAlgorithm
+): EligibilityPath[] {
+  const childPaths = algorithm.criteria.map((criterion) =>
+    isAlgorithm(criterion) ? getEligibilityPaths(criterion) : [[criterion]]
+  )
+
+  if (algorithm.operator === 'OR') return childPaths.flat()
+
+  return childPaths.reduce<EligibilityPath[]>(
+    (paths, nextPaths) =>
+      paths.flatMap((path) =>
+        nextPaths.map((nextPath) => [...path, ...nextPath])
+      ),
+    [[]]
+  )
+}
+
+function getStatus(criteria: MatchInfo[]): boolean | undefined {
+  if (criteria.some(({ isMatched }) => isMatched === false)) return false
+  if (criteria.some(({ isMatched }) => isMatched === undefined))
+    return undefined
+  return true
+}
+
+export function getPathStatus(
+  criteria: MatchInfo[],
+  overallStatus: boolean | undefined
+): boolean | undefined {
+  const criteriaStatus = getStatus(criteria)
+
+  return criteriaStatus === true ? overallStatus : criteriaStatus
+}
+
+function getDistanceToMatch(criteria: MatchInfo[]): number {
+  const criteriaByField = new Map<string, MatchInfo[]>()
+
+  criteria.forEach((criterion) => {
+    const fieldCriteria = criteriaByField.get(criterion.fieldName) ?? []
+    fieldCriteria.push(criterion)
+    criteriaByField.set(criterion.fieldName, fieldCriteria)
+  })
+
+  return Array.from(criteriaByField.values()).filter(
+    (fieldCriteria) => getStatus(fieldCriteria) !== true
+  ).length
+}
+
+export function orderEligibilityPaths(
+  paths: EligibilityPath[],
+  overallStatus: boolean | undefined
+): EligibilityPath[] {
+  const statusOrder = (status: boolean | undefined) =>
+    status === true ? 0 : status === undefined ? 1 : 2
+
+  return paths
+    .map((path, originalIndex) => ({ path, originalIndex }))
+    .sort((left, right) => {
+      const statusDifference =
+        statusOrder(getPathStatus(left.path, overallStatus)) -
+        statusOrder(getPathStatus(right.path, overallStatus))
+
+      if (statusDifference !== 0) return statusDifference
+
+      const distanceDifference =
+        getDistanceToMatch(left.path) - getDistanceToMatch(right.path)
+
+      return distanceDifference || left.originalIndex - right.originalIndex
+    })
+    .map(({ path }) => path)
+}
+
+function getOperatorLabel(operator: MatchInfo['operator']) {
+  switch (operator) {
+    case 'eq':
+      return '='
+    case 'gt':
+      return '>'
+    case 'gte':
+      return '≥'
+    case 'lt':
+      return '<'
+    case 'lte':
+      return '≤'
+    case 'ne':
+      return '≠'
+    case 'in':
+      return 'is one of'
+  }
+}
+
+function formatValue(value: unknown): string {
+  if (value === undefined || value === null || value === '')
+    return 'Not entered'
+  if (Array.isArray(value)) return value.map(formatValue).join(', ')
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No'
+  return String(value)
+}
+
+function getStatusLabel(status: boolean | undefined) {
+  return status === true
+    ? 'Matched'
+    : status === false
+    ? 'Did not match'
+    : 'To be determined'
+}
+
+function getStatusClasses(status: boolean | undefined) {
+  return status === true
+    ? 'border-blue-300 bg-blue-100 text-blue-900'
+    : status === false
+    ? 'border-red-300 bg-red-100 text-red-900'
+    : 'border-gray-300 bg-gray-200 text-gray-800'
+}
+
+type EligibilityMatrixProps = {
+  matchInfoAlgorithm: MatchInfoAlgorithm
+  overallStatus: boolean | undefined
+  patientValues?: Record<string, unknown>
+}
+
+function EligibilityMatrix({
+  matchInfoAlgorithm,
+  overallStatus,
+  patientValues = {},
+}: EligibilityMatrixProps) {
+  const [isDetailedView, setIsDetailedView] = useState(false)
+  const paths = orderEligibilityPaths(
+    getEligibilityPaths(matchInfoAlgorithm),
+    overallStatus
+  )
+  const columns = Array.from(
+    new Set(paths.flatMap((path) => path.map(({ fieldName }) => fieldName)))
+  )
+  const getCellDetails = (criteria: MatchInfo[], column: string) => {
+    const status = getStatus(criteria)
+    const requirements = criteria
+      .map(
+        ({ fieldValue, fieldValueLabel, operator }) =>
+          `${getOperatorLabel(operator)} ${formatValue(
+            fieldValueLabel ?? fieldValue
+          )}`
+      )
+      .join('; ')
+
+    return `${getStatusLabel(status)}. Patient value: ${formatValue(
+      patientValues[column]
+    )}. Required: ${requirements}`
+  }
+
+  return (
+    <div>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-4 text-sm">
+          {[
+            ['bg-blue-100 border-blue-300', 'Matched'],
+            ['bg-red-100 border-red-300', 'Did not match'],
+            ['bg-gray-200 border-gray-300', 'To be determined'],
+          ].map(([className, label]) => (
+            <span className="flex items-center gap-2" key={label}>
+              <span className={`h-4 w-4 border ${className}`} />
+              {label}
+            </span>
+          ))}
+        </div>
+        <button
+          className="flex items-center gap-2 rounded border border-gray-300 px-3 py-2 text-sm font-medium hover:border-primary hover:text-primary"
+          onClick={() => setIsDetailedView((isDetailed) => !isDetailed)}
+          type="button"
+        >
+          {isDetailedView ? <ZoomOut size="1.1em" /> : <ZoomIn size="1.1em" />}
+          {isDetailedView ? 'Heatmap overview' : 'Magnify details'}
+        </button>
+      </div>
+
+      <p className="mb-3 text-sm text-gray-600">
+        {isDetailedView
+          ? 'Each row is one possible path to eligibility. Hover over a colored cell to compare the patient value with all requirements for that variable.'
+          : 'All eligibility paths are shown together. Hover over a numbered column or colored cell for details, or use the magnifier for the readable view.'}
+      </p>
+
+      {!isDetailedView ? (
+        <div className="max-h-[65vh] overflow-auto border border-gray-300">
+          <table className="w-full table-fixed border-collapse text-center text-xs">
+            <thead className="sticky top-0 z-20 bg-white shadow-sm">
+              <tr>
+                <th className="sticky left-0 z-30 w-16 border-b border-r bg-white p-1">
+                  Path
+                </th>
+                {columns.map((column, columnIndex) => (
+                  <th
+                    aria-label={column}
+                    className="h-7 truncate border-b border-r bg-white p-0.5 font-medium"
+                    key={column}
+                    title={column}
+                  >
+                    {columnIndex + 1}
+                  </th>
+                ))}
+                <th className="sticky right-0 z-30 w-12 border-b bg-white p-1">
+                  Result
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {paths.map((path, pathIndex) => {
+                const pathStatus = getPathStatus(path, overallStatus)
+
+                return (
+                  <tr key={`overview-path-${pathIndex}`}>
+                    <th className="sticky left-0 z-10 h-6 border-b border-r bg-white p-1 font-medium">
+                      {pathIndex + 1}
+                    </th>
+                    {columns.map((column) => {
+                      const criteria = path.filter(
+                        ({ fieldName }) => fieldName === column
+                      )
+
+                      return criteria.length === 0 ? (
+                        <td
+                          className="h-6 border-b border-r bg-white p-0"
+                          key={column}
+                          title={`${column} is not required for path ${
+                            pathIndex + 1
+                          }`}
+                        />
+                      ) : (
+                        <td
+                          aria-label={getCellDetails(criteria, column)}
+                          className={`h-6 border p-0 ${getStatusClasses(
+                            getStatus(criteria)
+                          )}`}
+                          key={column}
+                          title={getCellDetails(criteria, column)}
+                        />
+                      )
+                    })}
+                    <td
+                      aria-label={getStatusLabel(pathStatus)}
+                      className={`sticky right-0 h-6 border p-0 ${getStatusClasses(
+                        pathStatus
+                      )}`}
+                      title={getStatusLabel(pathStatus)}
+                    />
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="max-h-[65vh] overflow-auto border border-gray-300">
+          <table className="min-w-full border-collapse text-left text-sm">
+            <thead className="sticky top-0 z-20 bg-white shadow-sm">
+              <tr>
+                <th className="sticky left-0 z-30 min-w-[7rem] border-b border-r bg-white p-2">
+                  Eligibility path
+                </th>
+                {columns.map((column) => (
+                  <th
+                    className="min-w-[10rem] max-w-[14rem] border-b border-r bg-white p-2 align-bottom"
+                    key={column}
+                  >
+                    {column}
+                  </th>
+                ))}
+                <th className="sticky right-0 z-30 min-w-[9rem] border-b bg-white p-2">
+                  Path result
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {paths.map((path, pathIndex) => {
+                const pathStatus = getPathStatus(path, overallStatus)
+
+                return (
+                  <tr key={`path-${pathIndex}`}>
+                    <th className="sticky left-0 z-10 border-b border-r bg-white p-2 font-medium">
+                      Path {pathIndex + 1}
+                    </th>
+                    {columns.map((column) => {
+                      const criteria = path.filter(
+                        ({ fieldName }) => fieldName === column
+                      )
+
+                      if (criteria.length === 0) {
+                        return (
+                          <td
+                            aria-label={`${column} is not required for path ${
+                              pathIndex + 1
+                            }`}
+                            className="border-b border-r p-2 text-center text-gray-400"
+                            key={column}
+                          >
+                            —
+                          </td>
+                        )
+                      }
+
+                      const status = getStatus(criteria)
+                      const details = getCellDetails(criteria, column)
+
+                      return (
+                        <td className="border-b border-r p-1" key={column}>
+                          <div
+                            aria-label={details}
+                            className={`min-h-[3rem] cursor-help rounded border p-2 ${getStatusClasses(
+                              status
+                            )}`}
+                            title={details}
+                          >
+                            <span className="font-medium">
+                              {getStatusLabel(status)}
+                            </span>
+                            {criteria.length > 1 && (
+                              <span className="mt-1 block text-xs">
+                                {criteria.length} requirements
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                      )
+                    })}
+                    <td className="sticky right-0 border-b bg-white p-1">
+                      <div
+                        className={`rounded border p-2 font-medium ${getStatusClasses(
+                          pathStatus
+                        )}`}
+                      >
+                        {getStatusLabel(pathStatus)}
+                      </div>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default EligibilityMatrix
