@@ -58,7 +58,7 @@ test('renders with only first section expanded', async () => {
     expect(sectionName).toHaveTextContent(CONFIG.groups[i].name)
 
     const dropDownButton = section.querySelector('button')
-    const initialAriaLabel = i === 0 ? 'Collapse dropdown' : 'Expand dropdown'
+    const initialAriaLabel = i === 0 ? 'Collapse' : 'Expand'
     expect(dropDownButton).toHaveAttribute('aria-label', initialAriaLabel)
   }
 })

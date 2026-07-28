@@ -32,7 +32,7 @@ function MultiSelect({
   className = '',
   ...attrs
 }: MultiSelectProps) {
-  const baseClassName = 'flex flex-col'
+  const baseClassName = 'flex flex-col relative z-50'
   const multiSelectAttrs: SelectProps = {
     ...attrs,
     disabled,

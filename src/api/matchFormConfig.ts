@@ -1,11 +1,27 @@
 import type { MatchFormConfig } from '../model'
 import { fetchGearbox } from './utils'
 
+function sortDiagnosisOptions(matchForm: MatchFormConfig): MatchFormConfig {
+  return {
+    ...matchForm,
+    fields: matchForm.fields.map((f) => {
+      if (f.name !== 'diagnosis' || !f.options) return f
+      return {
+        ...f,
+        options: [...f.options].sort((a, b) =>
+          a.label.localeCompare(b.label, undefined, { sensitivity: 'base' })
+        ),
+      }
+    }),
+  }
+}
+
 export function getMatchFormConfig() {
-  return fetchGearbox('/gearbox/match-form')
+  return fetchGearbox('/gearbox-middleware/match-form')
     .then((res) => res.json())
     .then(fetch)
     .then((res) => res.json() as Promise<MatchFormConfig>)
+    .then(sortDiagnosisOptions)
 }
 
 export function updateMatchFormConfig(matchFormConfig: MatchFormConfig) {

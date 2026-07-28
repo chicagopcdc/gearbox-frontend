@@ -6,6 +6,7 @@ import {
   CriterionStaging,
   CriterionStagingWithValueList,
   Criterion,
+  Study,
 } from '../model'
 import Field from './Inputs/Field'
 import Button from './Inputs/Button'
@@ -14,10 +15,16 @@ import { RequestStatusBar } from './RequestStatusBar'
 import { createValue } from '../api/value'
 import {
   acceptCriterionStaging,
+  ignoreCriterionStaging,
   publishCriterionStaging,
   saveCriterionStaging,
+  resetCriterionStaging,
 } from '../api/criterionStaging'
-
+import DropdownSection from './DropdownSection'
+import TrialCard from './TrialCard'
+import { Info } from 'react-feather'
+import { useModal } from '../hooks/useModal'
+import { getCriterionStudies } from '../api/criterion'
 type Status = CriterionStaging['criterion_adjudication_status']
 
 export function CriteriaAnnotationVerification({
@@ -50,14 +57,16 @@ export function CriteriaAnnotationVerification({
       : undefined
   )
   const status: Status =
-    stagingCriterion.criterion_adjudication_status === 'ACTIVE'
+    stagingCriterion.criterion_adjudication_status === 'INACTIVE'
+      ? 'INACTIVE'
+      : stagingCriterion.criterion_adjudication_status === 'ACTIVE'
       ? 'ACTIVE'
       : existingCriterion
       ? 'EXISTING'
       : stagingCriterion.criterion_adjudication_status
 
   const isEditable = status === 'NEW' || status === 'IN_PROCESS'
-  const isCodeEditable = status !== 'ACTIVE'
+  const isCodeEditable = status !== 'ACTIVE' && status !== 'INACTIVE'
 
   const [isList, setIsList] = useState<boolean>(
     checkIsList(
@@ -81,6 +90,63 @@ export function CriteriaAnnotationVerification({
       }
     }
   }, [])
+
+  const ignore = () => {
+    if (status === 'INACTIVE') return
+
+    setApiStatus('sending')
+    setErrorMsg('')
+
+    ignoreCriterionStaging(stagingCriterion.id)
+      .then(() => {
+        setApiStatus('success')
+
+        const updated: CriterionStagingWithValueList = {
+          ...stagingCriterion,
+          criterion_adjudication_status: 'INACTIVE',
+        }
+
+        setStagingCriterion(updated)
+        onStagingUpdated(updated)
+      })
+      .catch((err) => {
+        setErrorMsg(err?.message ?? 'Failed to ignore criterion')
+        setApiStatus('error')
+      })
+      .finally(() => {
+        timerIdRef.current = setTimeout(() => setApiStatus('not started'), 3000)
+      })
+  }
+
+  const resetIgnore = () => {
+    if (status !== 'INACTIVE') return
+
+    setApiStatus('sending')
+    setErrorMsg('')
+
+    resetCriterionStaging(stagingCriterion.id)
+      .then(() => {
+        setApiStatus('success')
+
+        const updated: CriterionStagingWithValueList = {
+          ...stagingCriterion,
+          criterion_adjudication_status: stagingCriterion.criterion_id
+            ? 'EXISTING'
+            : 'NEW',
+        }
+
+        setStagingCriterion(updated)
+        onStagingUpdated(updated)
+      })
+      .catch((err) => {
+        setErrorMsg(err?.message ?? 'Failed to reset ignored criterion')
+        setApiStatus('error')
+      })
+      .finally(() => {
+        timerIdRef.current = setTimeout(() => setApiStatus('not started'), 3000)
+      })
+  }
+
   const save = () => {
     if (!formRef.current) {
       return
@@ -97,6 +163,7 @@ export function CriteriaAnnotationVerification({
       display_name: displayName,
       description,
       criterion_id: null,
+      echc_value_ids: updatedCriterionStaging.echc_value_ids ?? [],
       criterion_value_ids:
         stagingCriterion.criterion_value_list?.map((v) => v.id) || [],
     })
@@ -150,15 +217,14 @@ export function CriteriaAnnotationVerification({
       })
         .then(() => {
           setApiStatus('success')
-          // Use functional set to build the exact object we store + send up
-          setStagingCriterion((prev) => {
-            const updated: CriterionStagingWithValueList = {
-              ...prev,
-              criterion_adjudication_status: 'ACTIVE',
-            }
-            onStagingUpdated?.(updated)
-            return updated
-          })
+
+          const updated: CriterionStagingWithValueList = {
+            ...stagingCriterion,
+            criterion_adjudication_status: 'ACTIVE',
+          }
+
+          setStagingCriterion(updated)
+          onStagingUpdated(updated)
         })
         .catch((err) => {
           setErrorMsg(err.message)
@@ -221,21 +287,20 @@ export function CriteriaAnnotationVerification({
         .then(() => acceptCriterionStaging(id))
         .then(() => {
           setApiStatus('success')
-          setStagingCriterion((prev) => {
-            const updated: CriterionStagingWithValueList = {
-              ...prev,
-              // reflect accepted -> ACTIVE and sync fields from the chosen existing criterion
-              criterion_adjudication_status: 'ACTIVE',
-              code,
-              display_name,
-              description,
-              input_type_id,
-              // keep values in sync with what we just saved
-              criterion_value_list: values ?? prev.criterion_value_list ?? [],
-            }
-            onStagingUpdated?.(updated)
-            return updated
-          })
+
+          const updated: CriterionStagingWithValueList = {
+            ...stagingCriterion,
+            criterion_adjudication_status: 'ACTIVE',
+            code,
+            display_name,
+            description,
+            input_type_id,
+            criterion_value_list:
+              values ?? stagingCriterion.criterion_value_list ?? [],
+          }
+
+          setStagingCriterion(updated)
+          onStagingUpdated(updated)
         })
         .catch((err) => {
           console.error(err)
@@ -301,6 +366,28 @@ export function CriteriaAnnotationVerification({
     value: c.code,
     label: c.code,
   }))
+
+  const [showModal, openModal, closeModal] = useModal()
+  const matchInfoId = `match-info-${stagingCriterion.id}`
+
+  const criterionId = stagingCriterion.criterion_id
+  const [lazyStudies, setLazyStudies] = useState<Study[] | null>(null)
+  const [studiesLoading, setStudiesLoading] = useState(false)
+  const [studiesSectionOpen, setStudiesSectionOpen] = useState(false)
+
+  const handleStudiesExpand = (next: boolean) => {
+    setStudiesSectionOpen(next)
+    if (next && criterionId && lazyStudies === null && !studiesLoading) {
+      setStudiesLoading(true)
+      getCriterionStudies(criterionId)
+        .then((studies) => setLazyStudies(studies))
+        .catch(() => setLazyStudies([]))
+        .finally(() => setStudiesLoading(false))
+    }
+  }
+
+  const studyList = lazyStudies ?? []
+
   return (
     <div className="my-4 p-4 border border-gray-400">
       <form
@@ -310,6 +397,7 @@ export function CriteriaAnnotationVerification({
       >
         <div className="flex justify-between items-center mb-2">
           <h1>Status: {status}</h1>
+
           <div className="flex items-center">
             <RequestStatusBar apiStatus={apiStatus} errorMsg={errorMsg} />
             <ActionButtons
@@ -319,7 +407,52 @@ export function CriteriaAnnotationVerification({
               save={save}
               publish={publish}
               accept={accept}
+              ignore={ignore}
+              resetIgnore={resetIgnore}
             />
+            {status === 'ACTIVE' && (
+              <div className="relative ml-2">
+                <button
+                  type="button"
+                  className={`${
+                    showModal ? 'text-red-700' : 'hover:text-red-700'
+                  }`}
+                  title="Contact to edit dialog"
+                  aria-label="Contact to edit dialog"
+                  aria-expanded={showModal}
+                  aria-controls={matchInfoId}
+                  onClick={() => (showModal ? closeModal() : openModal())}
+                >
+                  <Info />
+                </button>
+                {showModal && (
+                  <div
+                    id={matchInfoId}
+                    role="dialog"
+                    aria-label="Contact note"
+                    className="absolute right-0 top-full mt-1 z-50 w-72 rounded-md border border-gray-300 bg-white shadow-lg p-3"
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-semibold text-gray-700">
+                        Contact note
+                      </span>
+                      <button
+                        type="button"
+                        className="text-gray-400 hover:text-gray-600 text-xs"
+                        onClick={closeModal}
+                        aria-label="Close contact note"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                    <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                      Gearbox Super admin required to change Contact:
+                      help@gearbox.lists.edu
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <Field
@@ -342,13 +475,20 @@ export function CriteriaAnnotationVerification({
                 label: stagingCriterion.code,
               },
               ...existingCodeOptions,
-            ].filter(
-              (option, idx, arr) =>
-                arr.findIndex(
-                  (item) =>
-                    item.value === option.value && item.label === option.label
-                ) === idx
-            ),
+            ]
+              .filter(
+                (option, idx, arr) =>
+                  arr.findIndex(
+                    (item) =>
+                      item.value === option.value && item.label === option.label
+                  ) === idx
+              )
+              .sort((a, b) =>
+                a.label.localeCompare(b.label, undefined, {
+                  sensitivity: 'base',
+                  numeric: true,
+                })
+              ),
             disabled: !isCodeEditable,
             closeOnChangedValue: true,
             hasSelectAll: false,
@@ -386,6 +526,7 @@ export function CriteriaAnnotationVerification({
                 (c) => c.code === newCode
               )
               setExistingCriterion(() => newExistingCriterion)
+
               if (newExistingCriterion) {
                 setIsList(checkIsList(newExistingCriterion.input_type_id))
               } else {
@@ -510,6 +651,25 @@ export function CriteriaAnnotationVerification({
           }}
         />
       )}
+      {criterionId && (
+        <DropdownSection
+          name={
+            studiesLoading
+              ? 'Associated Studies (loading…)'
+              : lazyStudies !== null
+              ? `Associated Studies (${studyList.length})`
+              : 'Associated Studies'
+          }
+          isOpen={studiesSectionOpen}
+          onToggle={handleStudiesExpand}
+        >
+          <div className="mx-2">
+            {studyList.map((study) => (
+              <TrialCard study={study} key={study.id} />
+            ))}
+          </div>
+        </DropdownSection>
+      )}
     </div>
   )
 }
@@ -521,6 +681,8 @@ function ActionButtons({
   save,
   publish,
   accept,
+  ignore,
+  resetIgnore,
 }: {
   status: Status
   isSendingReq: boolean
@@ -528,6 +690,8 @@ function ActionButtons({
   save: () => void
   publish: () => void
   accept: () => void
+  ignore: () => void
+  resetIgnore: () => void
 }) {
   if (status === 'NEW' || status === 'IN_PROCESS') {
     return (
@@ -542,19 +706,51 @@ function ActionButtons({
         </Button>
         <Button
           size="small"
+          otherClassName="mr-4"
           onClick={publish}
           disabled={isSendingReq || !canPublish}
         >
           Publish
         </Button>
+        <Button size="small" onClick={ignore} disabled={isSendingReq}>
+          Ignore
+        </Button>
       </>
     )
-  } else if (status === 'EXISTING') {
+  }
+  if (status === 'EXISTING') {
     return (
-      <Button size="small" onClick={accept} disabled={isSendingReq}>
-        Accept
+      <>
+        <Button
+          size="small"
+          otherClassName="mr-4"
+          onClick={accept}
+          disabled={isSendingReq}
+        >
+          Accept
+        </Button>
+        <Button size="small" onClick={ignore} disabled={isSendingReq}>
+          Ignore
+        </Button>
+      </>
+    )
+  }
+
+  if (status === 'ACTIVE') {
+    return (
+      <Button size="small" onClick={ignore} disabled={isSendingReq}>
+        Ignore
       </Button>
     )
   }
+
+  if (status === 'INACTIVE') {
+    return (
+      <Button size="small" onClick={resetIgnore} disabled={isSendingReq}>
+        Reset
+      </Button>
+    )
+  }
+
   return null
 }

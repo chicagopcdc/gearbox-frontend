@@ -1,5 +1,5 @@
 import { fetchGearbox } from './utils'
-import { Criterion } from '../model'
+import { Criterion, Study } from '../model'
 
 export function getCriteriaNotExistInMatchForm(): Promise<Criterion[]> {
   return fetchGearbox('/gearbox/criteria-not-exist-in-match-form')
@@ -13,8 +13,18 @@ export function getCriterion(id: number): Promise<Criterion> {
   )
 }
 
-export function getCriteria(): Promise<Criterion[]> {
-  return fetchGearbox('/gearbox/criteria')
+export function getCriteria(include_studies?: boolean): Promise<Criterion[]> {
+  const url =
+    include_studies !== undefined
+      ? `/gearbox/criteria?include_studies=${include_studies}`
+      : '/gearbox/criteria'
+  return fetchGearbox(url)
     .then((res) => res.json() as Promise<{ results: Criterion[] }>)
     .then((res) => res.results)
+}
+
+export function getCriterionStudies(criterionId: number): Promise<Study[]> {
+  return fetchGearbox(`/gearbox/criterion/${criterionId}/studies`).then(
+    (res) => res.json() as Promise<Study[]>
+  )
 }

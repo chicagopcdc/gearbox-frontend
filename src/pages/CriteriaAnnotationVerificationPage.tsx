@@ -1,5 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { getStudyVersionsAdjudication } from '../api/studyAdjudication'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  AdminStudyVersionGroups,
+  getAdminStudyVersionGroups,
+} from '../api/studyAdjudication'
 import {
   ApiStatus,
   CriteriaValue,
@@ -8,9 +11,7 @@ import {
   CriterionStagingWithValueList,
   InputType,
   RawCriterion,
-  StudyVersionAdjudication,
 } from '../model'
-import Field from '../components/Inputs/Field'
 import { CriteriaAnnotationVerification } from '../components/CriteriaAnnotationVerification'
 import { getInputTypes } from '../api/inputTypes'
 import { ErrorRetry } from '../components/ErrorRetry'
@@ -24,14 +25,20 @@ import { useModal } from '../hooks/useModal'
 import { Eye, XCircle } from 'react-feather'
 import { RawCriterionHighlighter } from '../components/RawCriterionHighlighter'
 import { getRawCriterion } from '../api/rawCriteria'
+import { AdminStudySelector } from '../components/AdminStudySelector'
 
 type Status = CriterionStaging['criterion_adjudication_status']
-const statusOrder: Status[] = ['NEW', 'IN_PROCESS', 'EXISTING', 'ACTIVE']
+const statusOrder: Status[] = [
+  'NEW',
+  'IN_PROCESS',
+  'EXISTING',
+  'ACTIVE',
+  'INACTIVE',
+]
 
 export function CriteriaAnnotationVerificationPage() {
-  const [studyVersionsAdjudication, setStudyVersionsAdjudication] = useState<
-    StudyVersionAdjudication[]
-  >([])
+  const [studyVersionGroups, setStudyVersionGroups] =
+    useState<AdminStudyVersionGroups>({ needsInput: [], published: [] })
   const [eligibilityCriteriaId, setEligibilityCriteriaId] = useState<
     number | ''
   >('')
@@ -44,6 +51,7 @@ export function CriteriaAnnotationVerificationPage() {
   const [loadingStatus, setLoadingStatus] = useState<ApiStatus>('not started')
   const [showModal, openModal, closeModal] = useModal()
   const [rawCriterion, setRawCriterion] = useState<RawCriterion | null>(null)
+  const requestedEligibilityCriteriaId = useRef<number | ''>('')
 
   const { topRef, createScrollItemRef, scrollToTop, showBackToTop } =
     useManageItemScrollPosition<number>({
@@ -69,17 +77,18 @@ export function CriteriaAnnotationVerificationPage() {
     IN_PROCESS: true,
     EXISTING: true,
     ACTIVE: true,
+    INACTIVE: false,
   })
 
   const loadPage = () => {
     Promise.all([
-      getStudyVersionsAdjudication(),
+      getAdminStudyVersionGroups(),
       getValues(),
       getInputTypes(),
       getCriteria(),
     ])
       .then(([studyVersions, values, inputTypes, criteria]) => {
-        setStudyVersionsAdjudication(studyVersions)
+        setStudyVersionGroups(studyVersions)
         setValues(values.filter((v) => !v.is_numeric && v.unit_id === 1))
         setInputTypes(inputTypes)
         setCriteria(criteria)
@@ -96,15 +105,23 @@ export function CriteriaAnnotationVerificationPage() {
     loadPage()
   }, [])
 
-  const onStudyChanged = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const ebcId = +event.target.value
+  const onStudyChanged = (ebcId: number | '') => {
+    requestedEligibilityCriteriaId.current = ebcId
+    setEligibilityCriteriaId(ebcId)
+    if (ebcId === '') {
+      setStagingCriteria([])
+      setRawCriterion(null)
+      return
+    }
+
     Promise.all([getCriterionStaging(ebcId), getRawCriterion(ebcId)])
       .then(([sc, rc]) => {
+        if (requestedEligibilityCriteriaId.current !== ebcId) return
         setStagingCriteria(sc)
         setRawCriterion(rc)
-        setEligibilityCriteriaId(ebcId)
       })
       .catch(() => {
+        if (requestedEligibilityCriteriaId.current !== ebcId) return
         setStagingCriteria([])
         setRawCriterion(null)
       })
@@ -124,6 +141,7 @@ export function CriteriaAnnotationVerificationPage() {
     IN_PROCESS: grouped.IN_PROCESS?.length ?? 0,
     EXISTING: grouped.EXISTING?.length ?? 0,
     ACTIVE: grouped.ACTIVE?.length ?? 0,
+    INACTIVE: grouped.INACTIVE?.length ?? 0,
   }
 
   // When a child updates, regroup and plan a scroll-to-row
@@ -156,17 +174,10 @@ export function CriteriaAnnotationVerificationPage() {
       )}
 
       {/* Study selector */}
-      <Field
-        config={{
-          type: 'select',
-          label: 'Select a Study to Adjudicate',
-          placeholder: 'Select One',
-          name: 'studyVersion',
-          options: studyVersionsAdjudication.map((sva) => ({
-            value: sva.eligibility_criteria_id,
-            label: `${sva.study.code} - ${sva.study.name}`,
-          })),
-        }}
+      <AdminStudySelector
+        groups={studyVersionGroups}
+        label="Select a Study to Adjudicate"
+        name="studyVersion"
         value={eligibilityCriteriaId}
         onChange={onStudyChanged}
       />

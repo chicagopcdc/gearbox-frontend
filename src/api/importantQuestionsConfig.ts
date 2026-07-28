@@ -2,7 +2,7 @@ import { ImportantQuestionConfig } from '../model'
 import { fetchGearbox } from './utils'
 
 export function getImportantQuestionsConfig() {
-  return fetchGearbox('/gearbox/important-questions')
+  return fetchGearbox('/gearbox-middleware/important-questions')
     .then((res) => {
       if (!res.ok) {
         throw new Error('Failed to get important questions config s3 url.')

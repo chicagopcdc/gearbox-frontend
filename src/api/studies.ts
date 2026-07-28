@@ -1,40 +1,45 @@
 import type { Study } from '../model'
-import { fetchGearbox, readCache, writeCache } from './utils'
+import { fetchGearbox } from './utils'
 
-const SESSION_STORAGE_KEY = 'gearbox:studies'
-
-export function getStudies() {
-  const cache = readCache<Study[]>(SESSION_STORAGE_KEY)
-  if (cache !== null) return Promise.resolve(cache)
-
-  return fetchGearbox('/gearbox/studies')
-    .then((res) => res.json())
-    .then(fetch)
-    .then((res) => res.json() as Promise<{ version: string; studies: Study[] }>)
-    .then((res) =>
-      res.studies.map((s) => ({
-        ...s,
-        sites: [...s.sites].sort((a, b) => {
-          const nameA = a.name?.toLowerCase() ?? ''
-          const nameB = b.name?.toLowerCase() ?? ''
-          if (nameA < nameB) return -1
-          if (nameA > nameB) return 1
-          return 0
-        }),
-      }))
-    )
-    .then((data) => {
-      writeCache(SESSION_STORAGE_KEY, JSON.stringify(data))
-      return data
-    })
+function sortStudySites(studies: Study[]): Study[] {
+  return studies.map((s) => ({
+    ...s,
+    sites: [...s.sites].sort((a, b) => {
+      const nameA = a.name?.toLowerCase() ?? ''
+      const nameB = b.name?.toLowerCase() ?? ''
+      if (nameA < nameB) return -1
+      if (nameA > nameB) return 1
+      return 0
+    }),
+  }))
 }
 
-export function buildStudies() {
-  return fetchGearbox('/gearbox/build-studies', {
+export function getStudies(): Promise<Study[]> {
+  return fetchGearbox('/gearbox-middleware/studies')
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`failed to get studies URL: ${res.status}`)
+      }
+
+      return res.json() as Promise<string>
+    })
+    .then((url) => fetch(url))
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`failed to fetch studies JSON: ${res.status}`)
+      }
+
+      return res.json() as Promise<{ version: string; studies: Study[] }>
+    })
+    .then((res) => sortStudySites(res.studies))
+}
+
+export async function buildStudies(): Promise<void> {
+  const res = await fetchGearbox('/gearbox/build-studies', {
     method: 'POST',
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error('build studies failed')
-    }
   })
+
+  if (!res.ok) {
+    throw new Error(`build studies failed: ${res.status}`)
+  }
 }

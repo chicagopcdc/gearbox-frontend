@@ -27,3 +27,4 @@ yarn-error.log*
 
 /src/index.css
 .idea
+.cert/

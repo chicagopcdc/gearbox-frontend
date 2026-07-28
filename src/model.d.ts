@@ -2,7 +2,7 @@ export type ApiStatus = 'not started' | 'sending' | 'success' | 'error'
 type Site = {
   name: string
   country: string | null
-  city: strin | null
+  city: string | null
   state: string | null
   zip: string | null
   create_date: string | null
@@ -25,14 +25,14 @@ export type Study = {
 
 export type StudyVersion = {
   id: number
-  study_version: number
+  study_version_num: number
   status: StudyVersionStatus
   eligibility_criteria_id: number
   study_algorithm_engine_id: number | null
   study: Study
 }
 
-export type StudyVersionStatus = 'ACTIVE' | 'IN_PROCESS' | 'INACTIVE'
+export type StudyVersionStatus = 'NEW' | 'ACTIVE' | 'IN_PROCESS' | 'INACTIVE'
 
 type ComparisonOperator = 'eq' | 'gt' | 'gte' | 'lt' | 'lte' | 'ne' | 'in'
 
@@ -144,6 +144,19 @@ export type MatchDetails = {
 export type MatchGroups = {
   [group in 'matched' | 'undetermined' | 'unmatched']: number[]
 }
+export type MatchGroupCounts = {
+  matched: number
+  undetermined: number
+  unmatched: number
+}
+
+export type MatchInfoResponse = {
+  groups: MatchGroups
+  match_details: MatchDetails
+  total_counts: MatchGroupCounts
+  all_unmatched: number[]
+}
+
 export type RegisterDocument = {
   formatted: string
   id: number
@@ -219,15 +232,7 @@ export type InputType = {
   render_type: 'number' | 'radio' | 'select' | 'age'
 }
 
-export type StudyVersionAdjudication = {
-  study_id: number
-  study_version_num: number
-  id: number
-  active: boolean
-  eligibility_criteria_id: number
-  study_algorithm_engine_id: number
-  study: Study
-}
+export type StudyVersionAdjudication = StudyVersion
 
 export type Criterion = {
   id: number
@@ -236,11 +241,17 @@ export type Criterion = {
   display_name: string
   input_type_id: number
   values: CriteriaValue[]
+  studies?: Study[]
 }
 
 export type CriterionStaging = {
   code: string
-  criterion_adjudication_status: 'NEW' | 'EXISTING' | 'ACTIVE' | 'IN_PROCESS'
+  criterion_adjudication_status:
+    | 'NEW'
+    | 'EXISTING'
+    | 'ACTIVE'
+    | 'IN_PROCESS'
+    | 'INACTIVE'
   criterion_id: number | null
   description: string
   display_name: string
@@ -321,4 +332,73 @@ export type HighlightSpan = {
   end: number
   label?: string
   source: AnnotationSource
+}
+
+export type LocationMode = 'coordinates' | 'address'
+
+export type LocationFilterState = {
+  mode: LocationMode
+  lat: string
+  lon: string
+  distance: string
+  unit: 'km' | 'mi'
+  address: string
+}
+
+export type LocationParams = {
+  lat: number
+  lon: number
+  range: number // numeric value of distance input
+  unit: 'km' | 'mi'
+} | null
+
+//implement this with the UPS API or other APIs
+export type GeocodeFn = (
+  address: string
+) => Promise<{ lat: number; lon: number }>
+
+export type MatchGroupLocationOptions = {
+  lat: number
+  lon: number
+  range: number
+  unit: 'km' | 'mi'
+}
+
+export type PublishIssueDetail = {
+  code: string
+  value?: string | null
+}
+
+export type PublishIssue = {
+  message: string
+  details?: PublishIssueDetail[] | null
+}
+
+export type PublishFailureResponse = {
+  detail: {
+    publish_errors?: PublishIssue[]
+    publish_warnings?: PublishIssue[]
+  }
+}
+
+export type AddressSuggestion = {
+  id: string
+  formatted: string
+  addressLine1?: string
+  addressLine2?: string
+  lat: number
+  lon: number
+}
+
+type GeoapifyResult = {
+  place_id?: string
+  formatted?: string
+  address_line1?: string
+  address_line2?: string
+  lat?: number
+  lon?: number
+}
+
+export type GeoapifyAutocompleteResponse = {
+  results?: GeoapifyResult[]
 }
