@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ZoomIn, ZoomOut } from 'react-feather'
 import type { MatchInfo, MatchInfoAlgorithm } from '../model'
 
 export type EligibilityPath = MatchInfo[]
+
+const PATHS_PER_PAGE = 50
 
 function isAlgorithm(
   criterion: MatchInfo | MatchInfoAlgorithm
@@ -66,16 +68,19 @@ export function orderEligibilityPaths(
     status === true ? 0 : status === undefined ? 1 : 2
 
   return paths
-    .map((path, originalIndex) => ({ path, originalIndex }))
+    .map((path, originalIndex) => ({
+      path,
+      originalIndex,
+      status: getPathStatus(path, overallStatus),
+      distanceToMatch: getDistanceToMatch(path),
+    }))
     .sort((left, right) => {
       const statusDifference =
-        statusOrder(getPathStatus(left.path, overallStatus)) -
-        statusOrder(getPathStatus(right.path, overallStatus))
+        statusOrder(left.status) - statusOrder(right.status)
 
       if (statusDifference !== 0) return statusDifference
 
-      const distanceDifference =
-        getDistanceToMatch(left.path) - getDistanceToMatch(right.path)
+      const distanceDifference = left.distanceToMatch - right.distanceToMatch
 
       return distanceDifference || left.originalIndex - right.originalIndex
     })
@@ -137,12 +142,60 @@ function EligibilityMatrix({
   patientValues = {},
 }: EligibilityMatrixProps) {
   const [isDetailedView, setIsDetailedView] = useState(false)
-  const paths = orderEligibilityPaths(
-    getEligibilityPaths(matchInfoAlgorithm),
-    overallStatus
+  const [page, setPage] = useState(0)
+  const paths = useMemo(
+    () =>
+      orderEligibilityPaths(
+        getEligibilityPaths(matchInfoAlgorithm),
+        overallStatus
+      ),
+    [matchInfoAlgorithm, overallStatus]
   )
-  const columns = Array.from(
-    new Set(paths.flatMap((path) => path.map(({ fieldName }) => fieldName)))
+  const columns = useMemo(
+    () =>
+      Array.from(
+        new Set(paths.flatMap((path) => path.map(({ fieldName }) => fieldName)))
+      ),
+    [paths]
+  )
+  const preparedPaths = useMemo(
+    () =>
+      paths.map((path, pathIndex) => {
+        const criteriaByColumn = new Map<string, MatchInfo[]>()
+
+        path.forEach((criterion) => {
+          const criteria = criteriaByColumn.get(criterion.fieldName) ?? []
+          criteria.push(criterion)
+          criteriaByColumn.set(criterion.fieldName, criteria)
+        })
+
+        return {
+          criteriaByColumn,
+          pathIndex,
+          pathStatus: getPathStatus(path, overallStatus),
+        }
+      }),
+    [overallStatus, paths]
+  )
+  const pageCount = Math.max(
+    1,
+    Math.ceil(preparedPaths.length / PATHS_PER_PAGE)
+  )
+  const visiblePaths = preparedPaths.slice(
+    page * PATHS_PER_PAGE,
+    (page + 1) * PATHS_PER_PAGE
+  )
+
+  useEffect(() => {
+    setPage((currentPage) => Math.min(currentPage, pageCount - 1))
+  }, [pageCount])
+
+  useEffect(() => setPage(0), [matchInfoAlgorithm])
+
+  const firstVisiblePath = preparedPaths.length ? page * PATHS_PER_PAGE + 1 : 0
+  const lastVisiblePath = Math.min(
+    (page + 1) * PATHS_PER_PAGE,
+    preparedPaths.length
   )
   const getCellDetails = (criteria: MatchInfo[], column: string) => {
     const status = getStatus(criteria)
@@ -191,6 +244,33 @@ function EligibilityMatrix({
           : 'All eligibility paths are shown together. Hover over a numbered column or colored cell for details, or use the magnifier for the readable view.'}
       </p>
 
+      {preparedPaths.length > PATHS_PER_PAGE && (
+        <div className="mb-3 flex items-center justify-between gap-3 text-sm">
+          <span>
+            Showing paths {firstVisiblePath}–{lastVisiblePath} of{' '}
+            {preparedPaths.length}
+          </span>
+          <div className="flex gap-2">
+            <button
+              className="rounded border border-gray-300 px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={page === 0}
+              onClick={() => setPage((currentPage) => currentPage - 1)}
+              type="button"
+            >
+              Previous
+            </button>
+            <button
+              className="rounded border border-gray-300 px-3 py-1 disabled:cursor-not-allowed disabled:opacity-50"
+              disabled={page === pageCount - 1}
+              onClick={() => setPage((currentPage) => currentPage + 1)}
+              type="button"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
+
       {!isDetailedView ? (
         <div className="max-h-[65vh] overflow-auto border border-gray-300">
           <table className="w-full table-fixed border-collapse text-center text-xs">
@@ -215,48 +295,46 @@ function EligibilityMatrix({
               </tr>
             </thead>
             <tbody>
-              {paths.map((path, pathIndex) => {
-                const pathStatus = getPathStatus(path, overallStatus)
+              {visiblePaths.map(
+                ({ criteriaByColumn, pathIndex, pathStatus }) => {
+                  return (
+                    <tr key={`overview-path-${pathIndex}`}>
+                      <th className="sticky left-0 z-10 h-6 border-b border-r bg-white p-1 font-medium">
+                        {pathIndex + 1}
+                      </th>
+                      {columns.map((column) => {
+                        const criteria = criteriaByColumn.get(column) ?? []
 
-                return (
-                  <tr key={`overview-path-${pathIndex}`}>
-                    <th className="sticky left-0 z-10 h-6 border-b border-r bg-white p-1 font-medium">
-                      {pathIndex + 1}
-                    </th>
-                    {columns.map((column) => {
-                      const criteria = path.filter(
-                        ({ fieldName }) => fieldName === column
-                      )
-
-                      return criteria.length === 0 ? (
-                        <td
-                          className="h-6 border-b border-r bg-white p-0"
-                          key={column}
-                          title={`${column} is not required for path ${
-                            pathIndex + 1
-                          }`}
-                        />
-                      ) : (
-                        <td
-                          aria-label={getCellDetails(criteria, column)}
-                          className={`h-6 border p-0 ${getStatusClasses(
-                            getStatus(criteria)
-                          )}`}
-                          key={column}
-                          title={getCellDetails(criteria, column)}
-                        />
-                      )
-                    })}
-                    <td
-                      aria-label={getStatusLabel(pathStatus)}
-                      className={`sticky right-0 h-6 border p-0 ${getStatusClasses(
-                        pathStatus
-                      )}`}
-                      title={getStatusLabel(pathStatus)}
-                    />
-                  </tr>
-                )
-              })}
+                        return criteria.length === 0 ? (
+                          <td
+                            className="h-6 border-b border-r bg-white p-0"
+                            key={column}
+                            title={`${column} is not required for path ${
+                              pathIndex + 1
+                            }`}
+                          />
+                        ) : (
+                          <td
+                            aria-label={getCellDetails(criteria, column)}
+                            className={`h-6 border p-0 ${getStatusClasses(
+                              getStatus(criteria)
+                            )}`}
+                            key={column}
+                            title={getCellDetails(criteria, column)}
+                          />
+                        )
+                      })}
+                      <td
+                        aria-label={getStatusLabel(pathStatus)}
+                        className={`sticky right-0 h-6 border p-0 ${getStatusClasses(
+                          pathStatus
+                        )}`}
+                        title={getStatusLabel(pathStatus)}
+                      />
+                    </tr>
+                  )
+                }
+              )}
             </tbody>
           </table>
         </div>
@@ -282,69 +360,67 @@ function EligibilityMatrix({
               </tr>
             </thead>
             <tbody>
-              {paths.map((path, pathIndex) => {
-                const pathStatus = getPathStatus(path, overallStatus)
+              {visiblePaths.map(
+                ({ criteriaByColumn, pathIndex, pathStatus }) => {
+                  return (
+                    <tr key={`path-${pathIndex}`}>
+                      <th className="sticky left-0 z-10 border-b border-r bg-white p-2 font-medium">
+                        Path {pathIndex + 1}
+                      </th>
+                      {columns.map((column) => {
+                        const criteria = criteriaByColumn.get(column) ?? []
 
-                return (
-                  <tr key={`path-${pathIndex}`}>
-                    <th className="sticky left-0 z-10 border-b border-r bg-white p-2 font-medium">
-                      Path {pathIndex + 1}
-                    </th>
-                    {columns.map((column) => {
-                      const criteria = path.filter(
-                        ({ fieldName }) => fieldName === column
-                      )
+                        if (criteria.length === 0) {
+                          return (
+                            <td
+                              aria-label={`${column} is not required for path ${
+                                pathIndex + 1
+                              }`}
+                              className="border-b border-r p-2 text-center text-gray-400"
+                              key={column}
+                            >
+                              —
+                            </td>
+                          )
+                        }
 
-                      if (criteria.length === 0) {
+                        const status = getStatus(criteria)
+                        const details = getCellDetails(criteria, column)
+
                         return (
-                          <td
-                            aria-label={`${column} is not required for path ${
-                              pathIndex + 1
-                            }`}
-                            className="border-b border-r p-2 text-center text-gray-400"
-                            key={column}
-                          >
-                            —
+                          <td className="border-b border-r p-1" key={column}>
+                            <div
+                              aria-label={details}
+                              className={`min-h-[3rem] cursor-help rounded border p-2 ${getStatusClasses(
+                                status
+                              )}`}
+                              title={details}
+                            >
+                              <span className="font-medium">
+                                {getStatusLabel(status)}
+                              </span>
+                              {criteria.length > 1 && (
+                                <span className="mt-1 block text-xs">
+                                  {criteria.length} requirements
+                                </span>
+                              )}
+                            </div>
                           </td>
                         )
-                      }
-
-                      const status = getStatus(criteria)
-                      const details = getCellDetails(criteria, column)
-
-                      return (
-                        <td className="border-b border-r p-1" key={column}>
-                          <div
-                            aria-label={details}
-                            className={`min-h-[3rem] cursor-help rounded border p-2 ${getStatusClasses(
-                              status
-                            )}`}
-                            title={details}
-                          >
-                            <span className="font-medium">
-                              {getStatusLabel(status)}
-                            </span>
-                            {criteria.length > 1 && (
-                              <span className="mt-1 block text-xs">
-                                {criteria.length} requirements
-                              </span>
-                            )}
-                          </div>
-                        </td>
-                      )
-                    })}
-                    <td className="sticky right-0 border-b bg-white p-1">
-                      <div
-                        className={`rounded border p-2 font-medium ${getStatusClasses(
-                          pathStatus
-                        )}`}
-                      >
-                        {getStatusLabel(pathStatus)}
-                      </div>
-                    </td>
-                  </tr>
-                )
-              })}
+                      })}
+                      <td className="sticky right-0 border-b bg-white p-1">
+                        <div
+                          className={`rounded border p-2 font-medium ${getStatusClasses(
+                            pathStatus
+                          )}`}
+                        >
+                          {getStatusLabel(pathStatus)}
+                        </div>
+                      </td>
+                    </tr>
+                  )
+                }
+              )}
             </tbody>
           </table>
         </div>

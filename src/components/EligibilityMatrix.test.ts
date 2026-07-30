@@ -1,5 +1,8 @@
+import { fireEvent, render, screen } from '@testing-library/react'
+import React from 'react'
 import type { MatchInfoAlgorithm } from '../model'
 import {
+  default as EligibilityMatrix,
   getEligibilityPaths,
   getPathStatus,
   orderEligibilityPaths,
@@ -86,7 +89,13 @@ test('orders paths by status and then distance to a match', () => {
 
   expect(
     orderEligibilityPaths(
-      [unmatchedFar, undeterminedFar, matched, unmatchedClose, undeterminedClose],
+      [
+        unmatchedFar,
+        undeterminedFar,
+        matched,
+        unmatchedClose,
+        undeterminedClose,
+      ],
       true
     )
   ).toEqual([
@@ -108,8 +117,31 @@ test('counts a repeated variable only once when ordering paths', () => {
     undeterminedCriterion('Diagnosis'),
   ]
 
-  expect(orderEligibilityPaths([twoVariables, repeatedVariable], true)).toEqual([
-    repeatedVariable,
-    twoVariables,
-  ])
+  expect(orderEligibilityPaths([twoVariables, repeatedVariable], true)).toEqual(
+    [repeatedVariable, twoVariables]
+  )
+})
+
+test('renders large matrices one page at a time', () => {
+  const algorithm: MatchInfoAlgorithm = {
+    operator: 'OR',
+    criteria: Array.from({ length: 51 }, (_, index) =>
+      criterion(`Criterion ${index + 1}`)
+    ),
+  }
+
+  const { container } = render(
+    React.createElement(EligibilityMatrix, {
+      matchInfoAlgorithm: algorithm,
+      overallStatus: true,
+    })
+  )
+
+  expect(screen.getByText('Showing paths 1–50 of 51')).toBeInTheDocument()
+  expect(container.querySelectorAll('tbody tr')).toHaveLength(50)
+
+  fireEvent.click(screen.getByRole('button', { name: 'Next' }))
+
+  expect(screen.getByText('Showing paths 51–51 of 51')).toBeInTheDocument()
+  expect(container.querySelectorAll('tbody tr')).toHaveLength(1)
 })
