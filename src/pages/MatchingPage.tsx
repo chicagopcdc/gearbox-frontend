@@ -31,6 +31,7 @@ import { useModal } from '../hooks/useModal'
 import { UserInputModal } from '../components/UserInputModal'
 import { useLocationFilter } from '../hooks/useLocationFilter'
 import { LocationFilterSection } from '../components/LocationFilterSection'
+import { getPatientDisplayValuesByFieldName } from '../patientDisplayValues'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
@@ -248,15 +249,9 @@ function MatchingPage({
     }
   }
 
-  const patientValuesByFieldName = Object.fromEntries(
-    config.fields.flatMap((field) => {
-      const value = currentUserInput.values[field.id]
-      const names = [field.name, field.label].filter(
-        (name): name is string => typeof name === 'string' && name !== ''
-      )
-
-      return names.map((name) => [name, value])
-    })
+  const patientValuesByFieldName = getPatientDisplayValuesByFieldName(
+    config.fields,
+    currentUserInput.values
   )
 
   function createMatchInput(name?: string) {
