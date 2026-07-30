@@ -6,7 +6,7 @@ export type EligibilityPath = MatchInfo[]
 
 const PATHS_PER_PAGE = 50
 const MAX_HEATMAP_PATHS = 50000
-const MAX_SORTED_PATHS = 1000
+const PATH_PREPARATION_BATCH_SIZE = 200
 
 function isAlgorithm(
   criterion: MatchInfo | MatchInfoAlgorithm
@@ -145,27 +145,94 @@ export function orderEligibilityPaths(
   paths: EligibilityPath[],
   overallStatus: boolean | undefined
 ): EligibilityPath[] {
+  return paths
+    .map((path, originalIndex) => ({ path, originalIndex }))
+    .sort((left, right) =>
+      compareEligibilityPaths(
+        left.path,
+        right.path,
+        overallStatus,
+        left.originalIndex,
+        right.originalIndex
+      )
+    )
+    .map(({ path }) => path)
+}
+
+export function compareEligibilityPaths(
+  leftPath: EligibilityPath,
+  rightPath: EligibilityPath,
+  overallStatus: boolean | undefined,
+  leftOriginalIndex = 0,
+  rightOriginalIndex = 0
+): number {
   const statusOrder = (status: boolean | undefined) =>
     status === true ? 0 : status === undefined ? 1 : 2
+  const statusDifference =
+    statusOrder(getPathStatus(leftPath, overallStatus)) -
+    statusOrder(getPathStatus(rightPath, overallStatus))
 
-  return paths
-    .map((path, originalIndex) => ({
-      path,
-      originalIndex,
-      status: getPathStatus(path, overallStatus),
-      distanceToMatch: getDistanceToMatch(path),
-    }))
-    .sort((left, right) => {
-      const statusDifference =
-        statusOrder(left.status) - statusOrder(right.status)
+  if (statusDifference !== 0) return statusDifference
 
-      if (statusDifference !== 0) return statusDifference
+  const distanceDifference =
+    getDistanceToMatch(leftPath) - getDistanceToMatch(rightPath)
 
-      const distanceDifference = left.distanceToMatch - right.distanceToMatch
+  return distanceDifference || leftOriginalIndex - rightOriginalIndex
+}
 
-      return distanceDifference || left.originalIndex - right.originalIndex
-    })
-    .map(({ path }) => path)
+type IndexedEligibilityPath = {
+  originalIndex: number
+  path: EligibilityPath
+}
+
+function mergeOrderedPaths(
+  leftPaths: IndexedEligibilityPath[],
+  rightPaths: IndexedEligibilityPath[],
+  overallStatus: boolean | undefined
+): IndexedEligibilityPath[] {
+  const mergedPaths: IndexedEligibilityPath[] = []
+  let leftIndex = 0
+  let rightIndex = 0
+
+  while (leftIndex < leftPaths.length && rightIndex < rightPaths.length) {
+    const leftPath = leftPaths[leftIndex]
+    const rightPath = rightPaths[rightIndex]
+    const comparison = compareEligibilityPaths(
+      leftPath.path,
+      rightPath.path,
+      overallStatus,
+      leftPath.originalIndex,
+      rightPath.originalIndex
+    )
+
+    if (comparison <= 0) {
+      mergedPaths.push(leftPath)
+      leftIndex += 1
+    } else {
+      mergedPaths.push(rightPath)
+      rightIndex += 1
+    }
+  }
+
+  return mergedPaths.concat(
+    leftPaths.slice(leftIndex),
+    rightPaths.slice(rightIndex)
+  )
+}
+
+function scheduleIdleWork(callback: () => void): () => void {
+  const idleWindow = window as Window & {
+    cancelIdleCallback?: (handle: number) => void
+    requestIdleCallback?: (callback: () => void) => number
+  }
+
+  if (idleWindow.requestIdleCallback) {
+    const handle = idleWindow.requestIdleCallback(callback)
+    return () => idleWindow.cancelIdleCallback?.(handle)
+  }
+
+  const handle = window.setTimeout(callback, 0)
+  return () => window.clearTimeout(handle)
 }
 
 function getOperatorLabel(operator: MatchInfo['operator']) {
@@ -224,21 +291,15 @@ function EligibilityMatrix({
 }: EligibilityMatrixProps) {
   const [isDetailedView, setIsDetailedView] = useState(false)
   const [page, setPage] = useState(0)
+  const [paths, setPaths] = useState<EligibilityPath[]>([])
+  const [processedPathCount, setProcessedPathCount] = useState(0)
   const pathCount = useMemo(
     () => countEligibilityPaths(matchInfoAlgorithm),
     [matchInfoAlgorithm]
   )
   const isPathLimitExceeded = pathCount > MAX_HEATMAP_PATHS
-  const sortedPaths = useMemo(
-    () =>
-      isPathLimitExceeded || pathCount > MAX_SORTED_PATHS
-        ? []
-        : orderEligibilityPaths(
-            getEligibilityPaths(matchInfoAlgorithm),
-            overallStatus
-          ),
-    [isPathLimitExceeded, matchInfoAlgorithm, overallStatus, pathCount]
-  )
+  const isPreparingPaths =
+    !isPathLimitExceeded && processedPathCount < pathCount
   const columns = useMemo(
     () => getEligibilityColumns(matchInfoAlgorithm),
     [matchInfoAlgorithm]
@@ -246,16 +307,10 @@ function EligibilityMatrix({
   const pageCount = Math.max(1, Math.ceil(pathCount / PATHS_PER_PAGE))
   const visiblePaths = useMemo(() => {
     const firstPathIndex = page * PATHS_PER_PAGE
-    const pagePaths =
-      sortedPaths.length > 0
-        ? sortedPaths.slice(firstPathIndex, firstPathIndex + PATHS_PER_PAGE)
-        : isPathLimitExceeded
-        ? []
-        : getEligibilityPathRange(
-            matchInfoAlgorithm,
-            firstPathIndex,
-            PATHS_PER_PAGE
-          )
+    const pagePaths = paths.slice(
+      firstPathIndex,
+      firstPathIndex + PATHS_PER_PAGE
+    )
 
     return pagePaths.map((path, visiblePathIndex) => {
       const criteriaByColumn = new Map<string, MatchInfo[]>()
@@ -272,13 +327,58 @@ function EligibilityMatrix({
         pathStatus: getPathStatus(path, overallStatus),
       }
     })
-  }, [
-    isPathLimitExceeded,
-    matchInfoAlgorithm,
-    overallStatus,
-    page,
-    sortedPaths,
-  ])
+  }, [overallStatus, page, paths])
+
+  useEffect(() => {
+    setPaths([])
+    setProcessedPathCount(0)
+
+    if (isPathLimitExceeded || pathCount === 0) return
+
+    let isCancelled = false
+    let cancelScheduledWork: (() => void) | undefined
+    let nextPathIndex = 0
+    let orderedPaths: IndexedEligibilityPath[] = []
+
+    const prepareNextBatch = () => {
+      if (isCancelled) return
+
+      const batchPaths = getEligibilityPathRange(
+        matchInfoAlgorithm,
+        nextPathIndex,
+        PATH_PREPARATION_BATCH_SIZE
+      ).map((path, batchIndex) => ({
+        originalIndex: nextPathIndex + batchIndex,
+        path,
+      }))
+
+      batchPaths.sort((left, right) =>
+        compareEligibilityPaths(
+          left.path,
+          right.path,
+          overallStatus,
+          left.originalIndex,
+          right.originalIndex
+        )
+      )
+      orderedPaths = mergeOrderedPaths(orderedPaths, batchPaths, overallStatus)
+      nextPathIndex += batchPaths.length
+      setProcessedPathCount(nextPathIndex)
+
+      if (nextPathIndex >= pathCount) {
+        setPaths(orderedPaths.map(({ path }) => path))
+      } else {
+        cancelScheduledWork = scheduleIdleWork(prepareNextBatch)
+      }
+    }
+
+    cancelScheduledWork = scheduleIdleWork(prepareNextBatch)
+
+    return () => {
+      isCancelled = true
+      cancelScheduledWork?.()
+    }
+  }, [isPathLimitExceeded, matchInfoAlgorithm, overallStatus, pathCount])
 
   useEffect(() => {
     setPage((currentPage) => Math.min(currentPage, pageCount - 1))
@@ -322,7 +422,7 @@ function EligibilityMatrix({
         <button
           className="flex items-center gap-2 rounded border border-gray-300 px-3 py-2 text-sm font-medium hover:border-primary hover:text-primary"
           onClick={() => setIsDetailedView((isDetailed) => !isDetailed)}
-          disabled={isPathLimitExceeded}
+          disabled={isPathLimitExceeded || isPreparingPaths}
           type="button"
         >
           {isDetailedView ? <ZoomOut size="1.1em" /> : <ZoomIn size="1.1em" />}
@@ -336,7 +436,7 @@ function EligibilityMatrix({
           : 'All eligibility paths are shown together. Hover over a numbered column or colored cell for details, or use the magnifier for the readable view.'}
       </p>
 
-      {pathCount > PATHS_PER_PAGE && !isPathLimitExceeded && (
+      {pathCount > PATHS_PER_PAGE && !isPathLimitExceeded && !isPreparingPaths && (
         <div className="mb-3 flex items-center justify-between gap-3 text-sm">
           <span>
             Showing paths {firstVisiblePath}–{lastVisiblePath} of {pathCount}
@@ -368,6 +468,11 @@ function EligibilityMatrix({
           paths. The heatmap is not rendered because that many combinations
           could make the browser unresponsive. Use the Logic tree view to
           inspect this trial.
+        </div>
+      ) : isPreparingPaths ? (
+        <div className="border border-gray-300 bg-gray-50 p-4" role="status">
+          Preparing eligibility paths… {processedPathCount.toLocaleString()} of{' '}
+          {pathCount.toLocaleString()}
         </div>
       ) : !isDetailedView ? (
         <div className="max-h-[65vh] overflow-auto border border-gray-300">
