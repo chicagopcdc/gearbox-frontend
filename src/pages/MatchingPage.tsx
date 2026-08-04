@@ -13,7 +13,7 @@ import type useGearboxData from '../hooks/useGearboxData'
 import useScreenSize from '../hooks/useScreenSize'
 import { getDefaultValues, markRelevantMatchFields } from '../utils'
 import { ErrorRetry } from '../components/ErrorRetry'
-import { getMatchInfo } from '../api/middleware'
+import { getMatchGroups, getMatchInfo } from '../api/middleware'
 import {
   MatchDetails,
   MatchFormFieldConfig,
@@ -68,6 +68,15 @@ function MatchingPage({
     {} as MatchDetails
   )
   const [matchGroups, setMatchGroups] = useState<MatchGroups>({
+    matched: [],
+    unmatched: [],
+    undetermined: [],
+  })
+
+  // Unlike matchGroups (paginated, drives the results list), this always holds every
+  // matched/undetermined/unmatched study id, so Map View can show all trials regardless
+  // of which list page is currently selected.
+  const [allMatchGroups, setAllMatchGroups] = useState<MatchGroups>({
     matched: [],
     unmatched: [],
     undetermined: [],
@@ -169,6 +178,39 @@ function MatchingPage({
       ignore = true
     }
   }, [currentUserInput.values, locationParams, matchPages])
+
+  // Separate from the paginated getMatchInfo effect above (and deliberately not keyed on
+  // matchPages) so that changing the list's page never triggers a refetch of the full groups.
+  useEffect(() => {
+    let ignore = false
+
+    const matchInput = currentUserInput.values
+
+    const locationForApi = locationParams
+      ? {
+          lat: locationParams.lat,
+          lon: locationParams.lon,
+          range: locationParams.range,
+          unit: locationParams.unit,
+        }
+      : undefined
+
+    getMatchGroups(matchInput, locationForApi)
+      .then((groups) => {
+        if (ignore) return
+
+        setAllMatchGroups(groups)
+      })
+      .catch((e: Error) => {
+        if (ignore) return
+
+        console.error(e)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [currentUserInput.values, locationParams])
 
   useEffect(() => {
     setMarkedFields(
@@ -471,6 +513,7 @@ function MatchingPage({
             <MatchResult
               matchDetails={matchDetails}
               matchGroups={matchGroups}
+              allMatchGroups={allMatchGroups}
               studies={studies}
               matchCounts={matchCounts}
               pageSize={MATCH_PAGE_SIZE}
@@ -611,6 +654,7 @@ function MatchingPage({
               <MatchResult
                 matchDetails={matchDetails}
                 matchGroups={matchGroups}
+                allMatchGroups={allMatchGroups}
                 studies={studies}
                 matchCounts={matchCounts}
                 pageSize={MATCH_PAGE_SIZE}

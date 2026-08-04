@@ -16,6 +16,7 @@ type MatchGroupKey = keyof MatchGroups
 type MatchResultProps = {
   matchDetails: MatchDetails
   matchGroups: MatchGroups
+  allMatchGroups: MatchGroups
   studies: Study[]
   matchCounts: MatchGroupCounts
   pageSize: number
@@ -28,6 +29,7 @@ type MatchResultProps = {
 function MatchResult({
   matchDetails,
   matchGroups,
+  allMatchGroups,
   studies,
   matchCounts,
   pageSize,
@@ -182,7 +184,7 @@ function MatchResult({
       {showMap && (
         <TrialMapModal
           closeModal={closeMap}
-          matchGroups={matchGroups}
+          matchGroups={allMatchGroups}
           studies={studies}
         />
       )}
