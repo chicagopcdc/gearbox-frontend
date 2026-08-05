@@ -38,6 +38,8 @@ function App() {
   const gearboxData = useGearboxData(auth)
   const gearboxDataManager = auth.user?.authz['/services/gearbox/data-manager']
   const isAdmin = !!gearboxDataManager && !!gearboxDataManager.length
+  const gearboxDataAdmin = auth.user?.authz['/services/gearbox/data-admin']
+  const isSuperAdmin = !!gearboxDataAdmin && !!gearboxDataAdmin.length
   const userId = auth.user?.sub ?? ''
   useGoogleAnalytics(userId)
 
@@ -79,7 +81,10 @@ function App() {
             <Route
               path="boolean-logic-builder"
               element={
-                <BooleanLogicBuilderPage gearboxState={gearboxData.state} />
+                <BooleanLogicBuilderPage
+                  gearboxState={gearboxData.state}
+                  isSuperAdmin={isSuperAdmin}
+                />
               }
             />
             <Route

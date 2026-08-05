@@ -9,6 +9,7 @@ import { Criterion, StudyVersionStatus } from '../model'
 import { useStudyVersions } from '../hooks/useStudyVersions'
 import { ErrorRetry } from '../components/ErrorRetry'
 import { getCriteriaNotExistInMatchForm } from '../api/criterion'
+import { DeployPublishedTrialsButton } from '../components/DeployPublishedTrialsButton'
 
 type TabType = {
   id: StudyVersionStatus
@@ -28,8 +29,10 @@ const tabs: TabType[] = [
 
 export function BooleanLogicBuilderPage({
   gearboxState,
+  isSuperAdmin,
 }: {
   gearboxState: MatchingPageProps['state']
+  isSuperAdmin: boolean
 }) {
   const [currentTab, setCurrentTab] = useState(0)
   const handleTabSelect = (index: number) => setCurrentTab(index)
@@ -54,6 +57,9 @@ export function BooleanLogicBuilderPage({
       </TabList>
       {tabs.map((tab) => (
         <TabPanel key={tab.id}>
+          {tab.id === 'ACTIVE' && (
+            <DeployPublishedTrialsButton isSuperAdmin={isSuperAdmin} />
+          )}
           {loadingStatus === 'not started' || loadingStatus === 'sending' ? (
             <div>Loading...</div>
           ) : loadingStatus === 'error' ? (
