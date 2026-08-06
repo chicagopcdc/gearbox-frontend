@@ -35,7 +35,9 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
     null
   )
 
-  const isAddressSearchEnabled = Boolean(window.RUNTIME_CONFIG?.GEOAPIFY_API_KEY)
+  const isAddressSearchEnabled = Boolean(
+    window.RUNTIME_CONFIG?.GEOAPIFY_API_KEY
+  )
   useEffect(() => {
     let cancelled = false
 
