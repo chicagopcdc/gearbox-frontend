@@ -1,0 +1,3 @@
+window.RUNTIME_CONFIG = {
+  GEOAPIFY_API_KEY: ""
+};

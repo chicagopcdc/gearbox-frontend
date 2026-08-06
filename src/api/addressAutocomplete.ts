@@ -4,7 +4,7 @@ export async function autocompleteAddress(
   text: string,
   signal?: AbortSignal
 ): Promise<AddressSuggestion[]> {
-  const apiKey = process.env.REACT_APP_GEOAPIFY_API_KEY
+  const apiKey = window.RUNTIME_CONFIG?.GEOAPIFY_API_KEY
 
   if (!apiKey) {
     throw new Error('Geoapify API key is not configured.')
