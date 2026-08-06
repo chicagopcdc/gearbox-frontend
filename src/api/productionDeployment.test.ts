@@ -1,11 +1,14 @@
-import {
-  DEPLOY_PRODUCTION_DATA_URL,
-  REFRESH_PRODUCTION_DATA_URL,
-  deployPublishedTrialsToProduction,
-} from './productionDeployment'
+import { deployPublishedTrialsToProduction } from './productionDeployment'
+
+const deployProductionDataUrl = 'https://dev.example/deploy'
+const refreshProductionDataUrl = 'https://prod.example/refresh'
 
 beforeEach(() => {
   global.fetch = jest.fn()
+  window.RUNTIME_CONFIG = {
+    DEPLOY_PRODUCTION_DATA_URL: deployProductionDataUrl,
+    REFRESH_PRODUCTION_DATA_URL: refreshProductionDataUrl,
+  }
   Object.defineProperty(document, 'cookie', {
     configurable: true,
     value: 'csrftoken=test-token',
@@ -21,12 +24,12 @@ test('deploys staged trials and then refreshes production data', async () => {
 
   expect(fetchMock).toHaveBeenNthCalledWith(
     1,
-    DEPLOY_PRODUCTION_DATA_URL,
+    deployProductionDataUrl,
     expect.objectContaining({ method: 'POST', credentials: 'include' })
   )
   expect(fetchMock).toHaveBeenNthCalledWith(
     2,
-    REFRESH_PRODUCTION_DATA_URL,
+    refreshProductionDataUrl,
     expect.objectContaining({ method: 'POST', credentials: 'include' })
   )
 })
@@ -49,4 +52,13 @@ test('reports when deployment succeeds but the production refresh fails', async 
   await expect(deployPublishedTrialsToProduction()).rejects.toThrow(
     'The trials were deployed, but the production data could not be refreshed.'
   )
+})
+
+test('does not deploy when runtime endpoint configuration is missing', async () => {
+  window.RUNTIME_CONFIG = {}
+
+  await expect(deployPublishedTrialsToProduction()).rejects.toThrow(
+    'Production deployment endpoints are not configured.'
+  )
+  expect(global.fetch).not.toHaveBeenCalled()
 })

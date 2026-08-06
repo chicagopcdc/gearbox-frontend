@@ -1,10 +1,5 @@
 import { fetchGearbox } from './utils'
 
-export const DEPLOY_PRODUCTION_DATA_URL =
-  'https://gearbox-dev.pedscommons.org/gearbox/deploy-prod-data'
-export const REFRESH_PRODUCTION_DATA_URL =
-  'https://gearbox.pedscommons.org/gearbox-middleware/admin/update_json_data'
-
 async function postDeploymentEndpoint(url: string, errorMessage: string) {
   const response = await fetchGearbox(url, {
     method: 'POST',
@@ -15,12 +10,21 @@ async function postDeploymentEndpoint(url: string, errorMessage: string) {
 }
 
 export async function deployPublishedTrialsToProduction() {
+  const deployProductionDataUrl =
+    window.RUNTIME_CONFIG?.DEPLOY_PRODUCTION_DATA_URL
+  const refreshProductionDataUrl =
+    window.RUNTIME_CONFIG?.REFRESH_PRODUCTION_DATA_URL
+
+  if (!deployProductionDataUrl || !refreshProductionDataUrl) {
+    throw new Error('Production deployment endpoints are not configured.')
+  }
+
   await postDeploymentEndpoint(
-    DEPLOY_PRODUCTION_DATA_URL,
+    deployProductionDataUrl,
     'Unable to deploy staged trials to production.'
   )
   await postDeploymentEndpoint(
-    REFRESH_PRODUCTION_DATA_URL,
+    refreshProductionDataUrl,
     'The trials were deployed, but the production data could not be refreshed.'
   )
 }
