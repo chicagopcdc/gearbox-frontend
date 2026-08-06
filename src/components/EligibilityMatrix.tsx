@@ -5,6 +5,8 @@ import type { MatchInfo, MatchInfoAlgorithm } from '../model'
 export type EligibilityPath = MatchInfo[]
 
 const PATHS_PER_PAGE = 50
+const MAX_HEATMAP_PATHS = 50000
+const PATH_PREPARATION_BATCH_SIZE = 200
 
 function isAlgorithm(
   criterion: MatchInfo | MatchInfoAlgorithm
@@ -28,6 +30,85 @@ export function getEligibilityPaths(
       ),
     [[]]
   )
+}
+
+export function countEligibilityPaths(algorithm: MatchInfoAlgorithm): number {
+  const childCounts = algorithm.criteria.map((criterion) =>
+    isAlgorithm(criterion) ? countEligibilityPaths(criterion) : 1
+  )
+
+  if (algorithm.operator === 'OR')
+    return childCounts.reduce((total, count) => total + count, 0)
+
+  return childCounts.reduce((total, count) => total * count, 1)
+}
+
+function getEligibilityPathAtIndex(
+  algorithm: MatchInfoAlgorithm,
+  pathIndex: number
+): EligibilityPath {
+  if (algorithm.operator === 'OR') {
+    let remainingIndex = pathIndex
+
+    for (const criterion of algorithm.criteria) {
+      const criterionPathCount = isAlgorithm(criterion)
+        ? countEligibilityPaths(criterion)
+        : 1
+
+      if (remainingIndex < criterionPathCount)
+        return isAlgorithm(criterion)
+          ? getEligibilityPathAtIndex(criterion, remainingIndex)
+          : [criterion]
+
+      remainingIndex -= criterionPathCount
+    }
+
+    return []
+  }
+
+  const childCounts = algorithm.criteria.map((criterion) =>
+    isAlgorithm(criterion) ? countEligibilityPaths(criterion) : 1
+  )
+
+  return algorithm.criteria.flatMap((criterion, criterionIndex) => {
+    if (!isAlgorithm(criterion)) return [criterion]
+
+    const pathsAfterCriterion = childCounts
+      .slice(criterionIndex + 1)
+      .reduce((total, count) => total * count, 1)
+    const criterionPathIndex =
+      Math.floor(pathIndex / pathsAfterCriterion) % childCounts[criterionIndex]
+
+    return getEligibilityPathAtIndex(criterion, criterionPathIndex)
+  })
+}
+
+export function getEligibilityPathRange(
+  algorithm: MatchInfoAlgorithm,
+  firstPathIndex: number,
+  pathCount: number
+): EligibilityPath[] {
+  const totalPathCount = countEligibilityPaths(algorithm)
+  const lastPathIndex = Math.min(firstPathIndex + pathCount, totalPathCount)
+
+  return Array.from(
+    { length: Math.max(0, lastPathIndex - firstPathIndex) },
+    (_, index) => getEligibilityPathAtIndex(algorithm, firstPathIndex + index)
+  )
+}
+
+function getEligibilityColumns(algorithm: MatchInfoAlgorithm): string[] {
+  const columns = new Set<string>()
+
+  const addColumns = (currentAlgorithm: MatchInfoAlgorithm) => {
+    currentAlgorithm.criteria.forEach((criterion) => {
+      if (isAlgorithm(criterion)) addColumns(criterion)
+      else columns.add(criterion.fieldName)
+    })
+  }
+
+  addColumns(algorithm)
+  return Array.from(columns)
 }
 
 function getStatus(criteria: MatchInfo[]): boolean | undefined {
@@ -64,27 +145,94 @@ export function orderEligibilityPaths(
   paths: EligibilityPath[],
   overallStatus: boolean | undefined
 ): EligibilityPath[] {
+  return paths
+    .map((path, originalIndex) => ({ path, originalIndex }))
+    .sort((left, right) =>
+      compareEligibilityPaths(
+        left.path,
+        right.path,
+        overallStatus,
+        left.originalIndex,
+        right.originalIndex
+      )
+    )
+    .map(({ path }) => path)
+}
+
+export function compareEligibilityPaths(
+  leftPath: EligibilityPath,
+  rightPath: EligibilityPath,
+  overallStatus: boolean | undefined,
+  leftOriginalIndex = 0,
+  rightOriginalIndex = 0
+): number {
   const statusOrder = (status: boolean | undefined) =>
     status === true ? 0 : status === undefined ? 1 : 2
+  const statusDifference =
+    statusOrder(getPathStatus(leftPath, overallStatus)) -
+    statusOrder(getPathStatus(rightPath, overallStatus))
 
-  return paths
-    .map((path, originalIndex) => ({
-      path,
-      originalIndex,
-      status: getPathStatus(path, overallStatus),
-      distanceToMatch: getDistanceToMatch(path),
-    }))
-    .sort((left, right) => {
-      const statusDifference =
-        statusOrder(left.status) - statusOrder(right.status)
+  if (statusDifference !== 0) return statusDifference
 
-      if (statusDifference !== 0) return statusDifference
+  const distanceDifference =
+    getDistanceToMatch(leftPath) - getDistanceToMatch(rightPath)
 
-      const distanceDifference = left.distanceToMatch - right.distanceToMatch
+  return distanceDifference || leftOriginalIndex - rightOriginalIndex
+}
 
-      return distanceDifference || left.originalIndex - right.originalIndex
-    })
-    .map(({ path }) => path)
+type IndexedEligibilityPath = {
+  originalIndex: number
+  path: EligibilityPath
+}
+
+function mergeOrderedPaths(
+  leftPaths: IndexedEligibilityPath[],
+  rightPaths: IndexedEligibilityPath[],
+  overallStatus: boolean | undefined
+): IndexedEligibilityPath[] {
+  const mergedPaths: IndexedEligibilityPath[] = []
+  let leftIndex = 0
+  let rightIndex = 0
+
+  while (leftIndex < leftPaths.length && rightIndex < rightPaths.length) {
+    const leftPath = leftPaths[leftIndex]
+    const rightPath = rightPaths[rightIndex]
+    const comparison = compareEligibilityPaths(
+      leftPath.path,
+      rightPath.path,
+      overallStatus,
+      leftPath.originalIndex,
+      rightPath.originalIndex
+    )
+
+    if (comparison <= 0) {
+      mergedPaths.push(leftPath)
+      leftIndex += 1
+    } else {
+      mergedPaths.push(rightPath)
+      rightIndex += 1
+    }
+  }
+
+  return mergedPaths.concat(
+    leftPaths.slice(leftIndex),
+    rightPaths.slice(rightIndex)
+  )
+}
+
+function scheduleIdleWork(callback: () => void): () => void {
+  const idleWindow = window as Window & {
+    cancelIdleCallback?: (handle: number) => void
+    requestIdleCallback?: (callback: () => void) => number
+  }
+
+  if (idleWindow.requestIdleCallback) {
+    const handle = idleWindow.requestIdleCallback(callback)
+    return () => idleWindow.cancelIdleCallback?.(handle)
+  }
+
+  const handle = window.setTimeout(callback, 0)
+  return () => window.clearTimeout(handle)
 }
 
 function getOperatorLabel(operator: MatchInfo['operator']) {
@@ -143,48 +291,94 @@ function EligibilityMatrix({
 }: EligibilityMatrixProps) {
   const [isDetailedView, setIsDetailedView] = useState(false)
   const [page, setPage] = useState(0)
-  const paths = useMemo(
-    () =>
-      orderEligibilityPaths(
-        getEligibilityPaths(matchInfoAlgorithm),
-        overallStatus
-      ),
-    [matchInfoAlgorithm, overallStatus]
+  const [paths, setPaths] = useState<EligibilityPath[]>([])
+  const [processedPathCount, setProcessedPathCount] = useState(0)
+  const pathCount = useMemo(
+    () => countEligibilityPaths(matchInfoAlgorithm),
+    [matchInfoAlgorithm]
   )
+  const isPathLimitExceeded = pathCount > MAX_HEATMAP_PATHS
+  const isPreparingPaths =
+    !isPathLimitExceeded && processedPathCount < pathCount
   const columns = useMemo(
-    () =>
-      Array.from(
-        new Set(paths.flatMap((path) => path.map(({ fieldName }) => fieldName)))
-      ),
-    [paths]
+    () => getEligibilityColumns(matchInfoAlgorithm),
+    [matchInfoAlgorithm]
   )
-  const preparedPaths = useMemo(
-    () =>
-      paths.map((path, pathIndex) => {
-        const criteriaByColumn = new Map<string, MatchInfo[]>()
+  const pageCount = Math.max(1, Math.ceil(pathCount / PATHS_PER_PAGE))
+  const visiblePaths = useMemo(() => {
+    const firstPathIndex = page * PATHS_PER_PAGE
+    const pagePaths = paths.slice(
+      firstPathIndex,
+      firstPathIndex + PATHS_PER_PAGE
+    )
 
-        path.forEach((criterion) => {
-          const criteria = criteriaByColumn.get(criterion.fieldName) ?? []
-          criteria.push(criterion)
-          criteriaByColumn.set(criterion.fieldName, criteria)
-        })
+    return pagePaths.map((path, visiblePathIndex) => {
+      const criteriaByColumn = new Map<string, MatchInfo[]>()
 
-        return {
-          criteriaByColumn,
-          pathIndex,
-          pathStatus: getPathStatus(path, overallStatus),
-        }
-      }),
-    [overallStatus, paths]
-  )
-  const pageCount = Math.max(
-    1,
-    Math.ceil(preparedPaths.length / PATHS_PER_PAGE)
-  )
-  const visiblePaths = preparedPaths.slice(
-    page * PATHS_PER_PAGE,
-    (page + 1) * PATHS_PER_PAGE
-  )
+      path.forEach((criterion) => {
+        const criteria = criteriaByColumn.get(criterion.fieldName) ?? []
+        criteria.push(criterion)
+        criteriaByColumn.set(criterion.fieldName, criteria)
+      })
+
+      return {
+        criteriaByColumn,
+        pathIndex: firstPathIndex + visiblePathIndex,
+        pathStatus: getPathStatus(path, overallStatus),
+      }
+    })
+  }, [overallStatus, page, paths])
+
+  useEffect(() => {
+    setPaths([])
+    setProcessedPathCount(0)
+
+    if (isPathLimitExceeded || pathCount === 0) return
+
+    let isCancelled = false
+    let cancelScheduledWork: (() => void) | undefined
+    let nextPathIndex = 0
+    let orderedPaths: IndexedEligibilityPath[] = []
+
+    const prepareNextBatch = () => {
+      if (isCancelled) return
+
+      const batchPaths = getEligibilityPathRange(
+        matchInfoAlgorithm,
+        nextPathIndex,
+        PATH_PREPARATION_BATCH_SIZE
+      ).map((path, batchIndex) => ({
+        originalIndex: nextPathIndex + batchIndex,
+        path,
+      }))
+
+      batchPaths.sort((left, right) =>
+        compareEligibilityPaths(
+          left.path,
+          right.path,
+          overallStatus,
+          left.originalIndex,
+          right.originalIndex
+        )
+      )
+      orderedPaths = mergeOrderedPaths(orderedPaths, batchPaths, overallStatus)
+      nextPathIndex += batchPaths.length
+      setProcessedPathCount(nextPathIndex)
+
+      if (nextPathIndex >= pathCount) {
+        setPaths(orderedPaths.map(({ path }) => path))
+      } else {
+        cancelScheduledWork = scheduleIdleWork(prepareNextBatch)
+      }
+    }
+
+    cancelScheduledWork = scheduleIdleWork(prepareNextBatch)
+
+    return () => {
+      isCancelled = true
+      cancelScheduledWork?.()
+    }
+  }, [isPathLimitExceeded, matchInfoAlgorithm, overallStatus, pathCount])
 
   useEffect(() => {
     setPage((currentPage) => Math.min(currentPage, pageCount - 1))
@@ -192,11 +386,8 @@ function EligibilityMatrix({
 
   useEffect(() => setPage(0), [matchInfoAlgorithm])
 
-  const firstVisiblePath = preparedPaths.length ? page * PATHS_PER_PAGE + 1 : 0
-  const lastVisiblePath = Math.min(
-    (page + 1) * PATHS_PER_PAGE,
-    preparedPaths.length
-  )
+  const firstVisiblePath = pathCount ? page * PATHS_PER_PAGE + 1 : 0
+  const lastVisiblePath = Math.min((page + 1) * PATHS_PER_PAGE, pathCount)
   const getCellDetails = (criteria: MatchInfo[], column: string) => {
     const status = getStatus(criteria)
     const requirements = criteria
@@ -231,6 +422,7 @@ function EligibilityMatrix({
         <button
           className="flex items-center gap-2 rounded border border-gray-300 px-3 py-2 text-sm font-medium hover:border-primary hover:text-primary"
           onClick={() => setIsDetailedView((isDetailed) => !isDetailed)}
+          disabled={isPathLimitExceeded || isPreparingPaths}
           type="button"
         >
           {isDetailedView ? <ZoomOut size="1.1em" /> : <ZoomIn size="1.1em" />}
@@ -244,11 +436,10 @@ function EligibilityMatrix({
           : 'All eligibility paths are shown together. Hover over a numbered column or colored cell for details, or use the magnifier for the readable view.'}
       </p>
 
-      {preparedPaths.length > PATHS_PER_PAGE && (
+      {pathCount > PATHS_PER_PAGE && !isPathLimitExceeded && !isPreparingPaths && (
         <div className="mb-3 flex items-center justify-between gap-3 text-sm">
           <span>
-            Showing paths {firstVisiblePath}–{lastVisiblePath} of{' '}
-            {preparedPaths.length}
+            Showing paths {firstVisiblePath}–{lastVisiblePath} of {pathCount}
           </span>
           <div className="flex gap-2">
             <button
@@ -271,7 +462,19 @@ function EligibilityMatrix({
         </div>
       )}
 
-      {!isDetailedView ? (
+      {isPathLimitExceeded ? (
+        <div className="border border-yellow-500 bg-yellow-50 p-4" role="alert">
+          This Boolean tree expands to {pathCount.toLocaleString()} eligibility
+          paths. The heatmap is not rendered because that many combinations
+          could make the browser unresponsive. Use the Logic tree view to
+          inspect this trial.
+        </div>
+      ) : isPreparingPaths ? (
+        <div className="border border-gray-300 bg-gray-50 p-4" role="status">
+          Preparing eligibility paths… {processedPathCount.toLocaleString()} of{' '}
+          {pathCount.toLocaleString()}
+        </div>
+      ) : !isDetailedView ? (
         <div className="max-h-[65vh] overflow-auto border border-gray-300">
           <table className="w-full table-fixed border-collapse text-center text-xs">
             <thead className="sticky top-0 z-20 bg-white shadow-sm">
