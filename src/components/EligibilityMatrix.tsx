@@ -363,11 +363,10 @@ function EligibilityMatrix({
       )
       orderedPaths = mergeOrderedPaths(orderedPaths, batchPaths, overallStatus)
       nextPathIndex += batchPaths.length
+      setPaths(orderedPaths.map(({ path }) => path))
       setProcessedPathCount(nextPathIndex)
 
-      if (nextPathIndex >= pathCount) {
-        setPaths(orderedPaths.map(({ path }) => path))
-      } else {
+      if (nextPathIndex < pathCount) {
         cancelScheduledWork = scheduleIdleWork(prepareNextBatch)
       }
     }
@@ -436,6 +435,16 @@ function EligibilityMatrix({
           : 'All eligibility paths are shown together. Hover over a numbered column or colored cell for details, or use the magnifier for the readable view.'}
       </p>
 
+      {isPreparingPaths && paths.length > 0 && (
+        <div
+          className="mb-3 border border-gray-300 bg-gray-50 p-3"
+          role="status"
+        >
+          Preparing eligibility paths… {processedPathCount.toLocaleString()} of{' '}
+          {pathCount.toLocaleString()}
+        </div>
+      )}
+
       {pathCount > PATHS_PER_PAGE && !isPathLimitExceeded && !isPreparingPaths && (
         <div className="mb-3 flex items-center justify-between gap-3 text-sm">
           <span>
@@ -469,7 +478,7 @@ function EligibilityMatrix({
           could make the browser unresponsive. Use the Logic tree view to
           inspect this trial.
         </div>
-      ) : isPreparingPaths ? (
+      ) : isPreparingPaths && paths.length === 0 ? (
         <div className="border border-gray-300 bg-gray-50 p-4" role="status">
           Preparing eligibility paths… {processedPathCount.toLocaleString()} of{' '}
           {pathCount.toLocaleString()}
