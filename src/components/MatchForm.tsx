@@ -36,6 +36,16 @@ function MatchForm({
   const formEl = useRef<HTMLFormElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | undefined>()
 
+  // Cleanup timeout on unmount to prevent memory leak and state updates
+  // on unmounted component
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current !== undefined) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
   const handleChange =
     (fieldType: MatchFormFieldConfig['type']) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
