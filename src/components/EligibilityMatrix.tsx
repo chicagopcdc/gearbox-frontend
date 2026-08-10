@@ -127,6 +127,29 @@ export function getPathStatus(
   return criteriaStatus === true ? overallStatus : criteriaStatus
 }
 
+function getDisplayedStatus(
+  criteria: MatchInfo[],
+  patientValue: unknown
+): boolean | undefined {
+  if (!isPatientValueEntered(patientValue)) return undefined
+
+  return getStatus(criteria)
+}
+
+function getDisplayedPathStatus(
+  criteria: MatchInfo[],
+  overallStatus: boolean | undefined,
+  patientValues: Record<string, unknown>
+): boolean | undefined {
+  const displayedCriteria = criteria.map((criterion) =>
+    isPatientValueEntered(patientValues[criterion.fieldName])
+      ? criterion
+      : { ...criterion, isMatched: undefined }
+  )
+
+  return getPathStatus(displayedCriteria, overallStatus)
+}
+
 function getDistanceToMatch(criteria: MatchInfo[]): number {
   const criteriaByField = new Map<string, MatchInfo[]>()
 
@@ -254,6 +277,10 @@ function getOperatorLabel(operator: MatchInfo['operator']) {
   }
 }
 
+function isPatientValueEntered(value: unknown): boolean {
+  return value !== undefined && value !== null && value !== ''
+}
+
 function formatValue(value: unknown): string {
   if (value === undefined || value === null || value === '')
     return 'Not entered'
@@ -324,10 +351,10 @@ function EligibilityMatrix({
       return {
         criteriaByColumn,
         pathIndex: firstPathIndex + visiblePathIndex,
-        pathStatus: getPathStatus(path, overallStatus),
+        pathStatus: getDisplayedPathStatus(path, overallStatus, patientValues),
       }
     })
-  }, [overallStatus, page, paths])
+  }, [overallStatus, page, paths, patientValues])
 
   useEffect(() => {
     setPaths([])
@@ -389,7 +416,7 @@ function EligibilityMatrix({
   const lastVisiblePath = Math.min((page + 1) * PATHS_PER_PAGE, pathCount)
   const preparingPathsMessage = `Preparing eligibility paths… ${processedPathCount.toLocaleString()} of ${pathCount.toLocaleString()}`
   const getCellDetails = (criteria: MatchInfo[], column: string) => {
-    const status = getStatus(criteria)
+    const status = getDisplayedStatus(criteria, patientValues[column])
     const requirements = criteria
       .map(
         ({ fieldValue, fieldValueLabel, operator }) =>
@@ -528,7 +555,10 @@ function EligibilityMatrix({
                           <td
                             aria-label={getCellDetails(criteria, column)}
                             className={`h-6 border p-0 ${getStatusClasses(
-                              getStatus(criteria)
+                              getDisplayedStatus(
+                                criteria,
+                                patientValues[column]
+                              )
                             )}`}
                             key={column}
                             title={getCellDetails(criteria, column)}
@@ -595,7 +625,11 @@ function EligibilityMatrix({
                           )
                         }
 
-                        const status = getStatus(criteria)
+                        const status = getDisplayedStatus(
+                          criteria,
+                          patientValues[column]
+                        )
+
                         const details = getCellDetails(criteria, column)
 
                         return (
