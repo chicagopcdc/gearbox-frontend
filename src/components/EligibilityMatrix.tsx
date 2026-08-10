@@ -387,6 +387,7 @@ function EligibilityMatrix({
 
   const firstVisiblePath = pathCount ? page * PATHS_PER_PAGE + 1 : 0
   const lastVisiblePath = Math.min((page + 1) * PATHS_PER_PAGE, pathCount)
+  const preparingPathsMessage = `Preparing eligibility paths… ${processedPathCount.toLocaleString()} of ${pathCount.toLocaleString()}`
   const getCellDetails = (criteria: MatchInfo[], column: string) => {
     const status = getStatus(criteria)
     const requirements = criteria
@@ -440,8 +441,7 @@ function EligibilityMatrix({
           className="mb-3 border border-gray-300 bg-gray-50 p-3"
           role="status"
         >
-          Preparing eligibility paths… {processedPathCount.toLocaleString()} of{' '}
-          {pathCount.toLocaleString()}
+          {preparingPathsMessage}
         </div>
       )}
 
@@ -480,8 +480,7 @@ function EligibilityMatrix({
         </div>
       ) : isPreparingPaths && paths.length === 0 ? (
         <div className="border border-gray-300 bg-gray-50 p-4" role="status">
-          Preparing eligibility paths… {processedPathCount.toLocaleString()} of{' '}
-          {pathCount.toLocaleString()}
+          {preparingPathsMessage}
         </div>
       ) : !isDetailedView ? (
         <div className="max-h-[65vh] overflow-auto border border-gray-300">
