@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import type { MatchInfoAlgorithm } from '../model'
 import {
@@ -118,6 +118,51 @@ test('renders only the first page of a matrix with thousands of paths', async ()
   )
   await screen.findByText('Showing paths 1–50 of 19683', {}, { timeout: 5000 })
   expect(container.querySelectorAll('tbody tr')).toHaveLength(50)
+})
+
+test('renders the first page while the remaining paths are still preparing', () => {
+  const idleCallbacks: IdleRequestCallback[] = []
+  const idleWindow = window as Window & {
+    requestIdleCallback?: (callback: () => void) => number
+  }
+  const originalRequestIdleCallback = idleWindow.requestIdleCallback
+  idleWindow.requestIdleCallback = (callback) => {
+    idleCallbacks.push(callback)
+    return idleCallbacks.length
+  }
+
+  try {
+    const algorithm: MatchInfoAlgorithm = {
+      operator: 'OR',
+      criteria: Array.from({ length: 401 }, (_, index) =>
+        criterion(`Criterion ${index + 1}`)
+      ),
+    }
+
+    const { container } = render(
+      React.createElement(EligibilityMatrix, {
+        matchInfoAlgorithm: algorithm,
+        overallStatus: true,
+      })
+    )
+
+    expect(container.querySelector('table')).not.toBeInTheDocument()
+
+    act(() =>
+      idleCallbacks.shift()?.({
+        didTimeout: false,
+        timeRemaining: () => 50,
+      })
+    )
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Preparing eligibility paths… 200 of 401'
+    )
+    expect(container.querySelectorAll('tbody tr')).toHaveLength(50)
+    expect(idleCallbacks).toHaveLength(1)
+  } finally {
+    idleWindow.requestIdleCallback = originalRequestIdleCallback
+  }
 })
 
 test('uses the overall trial status for an otherwise matched path', () => {
