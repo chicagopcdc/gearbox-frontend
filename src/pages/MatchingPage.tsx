@@ -200,11 +200,13 @@ function MatchingPage({
         if (ignore) return
 
         setAllMatchGroups(groups)
+        setErrorDetail(null)
       })
       .catch((e: Error) => {
         if (ignore) return
 
         console.error(e)
+        setErrorDetail(e.message)
       })
 
     return () => {
