@@ -113,7 +113,7 @@ function getEligibilityColumns(algorithm: MatchInfoAlgorithm): string[] {
 
 function getStatus(criteria: MatchInfo[]): boolean | undefined {
   if (criteria.some(({ isMatched }) => isMatched === false)) return false
-  if (criteria.some(({ isMatched }) => isMatched === undefined))
+  if (criteria.some(({ isMatched }) => isMatched == null))
     return undefined
   return true
 }
@@ -125,29 +125,6 @@ export function getPathStatus(
   const criteriaStatus = getStatus(criteria)
 
   return criteriaStatus === true ? overallStatus : criteriaStatus
-}
-
-function getDisplayedStatus(
-  criteria: MatchInfo[],
-  patientValue: unknown
-): boolean | undefined {
-  if (!isPatientValueEntered(patientValue)) return undefined
-
-  return getStatus(criteria)
-}
-
-function getDisplayedPathStatus(
-  criteria: MatchInfo[],
-  overallStatus: boolean | undefined,
-  patientValues: Record<string, unknown>
-): boolean | undefined {
-  const displayedCriteria = criteria.map((criterion) =>
-    isPatientValueEntered(patientValues[criterion.fieldName])
-      ? criterion
-      : { ...criterion, isMatched: undefined }
-  )
-
-  return getPathStatus(displayedCriteria, overallStatus)
 }
 
 function getDistanceToMatch(criteria: MatchInfo[]): number {
@@ -277,10 +254,6 @@ function getOperatorLabel(operator: MatchInfo['operator']) {
   }
 }
 
-function isPatientValueEntered(value: unknown): boolean {
-  return value !== undefined && value !== null && value !== ''
-}
-
 function formatValue(value: unknown): string {
   if (value === undefined || value === null || value === '')
     return 'Not entered'
@@ -351,10 +324,10 @@ function EligibilityMatrix({
       return {
         criteriaByColumn,
         pathIndex: firstPathIndex + visiblePathIndex,
-        pathStatus: getDisplayedPathStatus(path, overallStatus, patientValues),
+        pathStatus: getPathStatus(path, overallStatus),
       }
     })
-  }, [overallStatus, page, paths, patientValues])
+  }, [overallStatus, page, paths])
 
   useEffect(() => {
     setPaths([])
@@ -416,7 +389,7 @@ function EligibilityMatrix({
   const lastVisiblePath = Math.min((page + 1) * PATHS_PER_PAGE, pathCount)
   const preparingPathsMessage = `Preparing eligibility paths… ${processedPathCount.toLocaleString()} of ${pathCount.toLocaleString()}`
   const getCellDetails = (criteria: MatchInfo[], column: string) => {
-    const status = getDisplayedStatus(criteria, patientValues[column])
+    const status = getStatus(criteria)
     const requirements = criteria
       .map(
         ({ fieldValue, fieldValueLabel, operator }) =>
@@ -555,10 +528,7 @@ function EligibilityMatrix({
                           <td
                             aria-label={getCellDetails(criteria, column)}
                             className={`h-6 border p-0 ${getStatusClasses(
-                              getDisplayedStatus(
-                                criteria,
-                                patientValues[column]
-                              )
+                              getStatus(criteria)
                             )}`}
                             key={column}
                             title={getCellDetails(criteria, column)}
@@ -625,10 +595,7 @@ function EligibilityMatrix({
                           )
                         }
 
-                        const status = getDisplayedStatus(
-                          criteria,
-                          patientValues[column]
-                        )
+                        const status = getStatus(criteria)
 
                         const details = getCellDetails(criteria, column)
 
