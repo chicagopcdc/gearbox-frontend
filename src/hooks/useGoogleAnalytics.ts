@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
 import ReactGA from 'react-ga4'
 
 const gaTrackingId = process.env.REACT_APP_GA_TRACKING_ID ?? ''
 const isUsingGoogleAnalytics =
   gaTrackingId.startsWith('G-') || gaTrackingId.startsWith('UA-')
+
+let isInitialized = false
 
 const clickLLSLinkEvent: () => void = () => {
   if (isUsingGoogleAnalytics) {
@@ -19,8 +22,16 @@ export const gaEvents = {
 }
 
 export function useGoogleAnalytics(userId: string) {
-  if (isUsingGoogleAnalytics) {
-    ReactGA.initialize(gaTrackingId)
-    ReactGA.set({ userId })
-  }
+  useEffect(() => {
+    if (isUsingGoogleAnalytics && !isInitialized) {
+      ReactGA.initialize(gaTrackingId)
+      isInitialized = true
+    }
+  }, [])
+
+  useEffect(() => {
+    if (isUsingGoogleAnalytics && userId) {
+      ReactGA.set({ userId })
+    }
+  }, [userId])
 }
