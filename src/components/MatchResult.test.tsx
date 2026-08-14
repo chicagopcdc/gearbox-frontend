@@ -17,6 +17,7 @@ test('labels undetermined trial results as potential matches', () => {
       matchDetails={{}}
       matchGroups={{ matched: [], undetermined: [], unmatched: [] }}
       allMatchGroups={{ matched: [], undetermined: [], unmatched: [] }}
+      mapErrorDetail={null}
       studies={[]}
       matchCounts={{ matched: 0, undetermined: 12, unmatched: 0 }}
       pageSize={10}
@@ -42,6 +43,7 @@ test('passes the full match groups, not the paginated page, to the map modal', (
       matchDetails={{}}
       matchGroups={paginatedMatchGroups}
       allMatchGroups={allMatchGroups}
+      mapErrorDetail={null}
       studies={[]}
       matchCounts={{ matched: 5, undetermined: 1, unmatched: 0 }}
       pageSize={4}
@@ -56,4 +58,23 @@ test('passes the full match groups, not the paginated page, to the map modal', (
   expect(mockTrialMapModalSpy).toHaveBeenCalledWith(
     expect.objectContaining({ matchGroups: allMatchGroups })
   )
+})
+
+test('shows mapErrorDetail near the Map View button when set', () => {
+  const { getByText } = render(
+    <MatchResult
+      matchDetails={{}}
+      matchGroups={{ matched: [], undetermined: [], unmatched: [] }}
+      allMatchGroups={{ matched: [], undetermined: [], unmatched: [] }}
+      mapErrorDetail="Failed to get match groups"
+      studies={[]}
+      matchCounts={{ matched: 0, undetermined: 0, unmatched: 0 }}
+      pageSize={4}
+      matchPages={{ matched: 1, undetermined: 1, unmatched: 1 }}
+      onChangeMatchPage={jest.fn()}
+      onSetMatchPage={jest.fn()}
+    />
+  )
+
+  expect(getByText('Failed to get match groups')).toBeInTheDocument()
 })

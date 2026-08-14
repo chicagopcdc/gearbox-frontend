@@ -97,6 +97,9 @@ function MatchingPage({
   const [showAllUserInput, setShowAllUserInput] = useState<boolean>(true)
   const [showModal, openModal, closeModal] = useModal()
   const [errorDetail, setErrorDetail] = useState<string | null>(null)
+  // Separate from errorDetail so a getMatchGroups success/failure can never clobber (or be
+  // clobbered by) the unrelated getMatchInfo effect's own error state.
+  const [mapErrorDetail, setMapErrorDetail] = useState<string | null>(null)
   const [triedBrowserLocation, setTriedBrowserLocation] =
     useState<boolean>(false)
 
@@ -200,13 +203,13 @@ function MatchingPage({
         if (ignore) return
 
         setAllMatchGroups(groups)
-        setErrorDetail(null)
+        setMapErrorDetail(null)
       })
       .catch((e: Error) => {
         if (ignore) return
 
         console.error(e)
-        setErrorDetail(e.message)
+        setMapErrorDetail(e.message)
       })
 
     return () => {
@@ -516,6 +519,7 @@ function MatchingPage({
               matchDetails={matchDetails}
               matchGroups={matchGroups}
               allMatchGroups={allMatchGroups}
+              mapErrorDetail={mapErrorDetail}
               studies={studies}
               matchCounts={matchCounts}
               pageSize={MATCH_PAGE_SIZE}
@@ -657,6 +661,7 @@ function MatchingPage({
                 matchDetails={matchDetails}
                 matchGroups={matchGroups}
                 allMatchGroups={allMatchGroups}
+                mapErrorDetail={mapErrorDetail}
                 studies={studies}
                 matchCounts={matchCounts}
                 pageSize={MATCH_PAGE_SIZE}
