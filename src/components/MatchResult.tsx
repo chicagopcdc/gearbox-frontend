@@ -16,6 +16,8 @@ type MatchGroupKey = keyof MatchGroups
 type MatchResultProps = {
   matchDetails: MatchDetails
   matchGroups: MatchGroups
+  allMatchGroups: MatchGroups
+  mapErrorDetail: string | null
   studies: Study[]
   matchCounts: MatchGroupCounts
   pageSize: number
@@ -28,6 +30,8 @@ type MatchResultProps = {
 function MatchResult({
   matchDetails,
   matchGroups,
+  allMatchGroups,
+  mapErrorDetail,
   studies,
   matchCounts,
   pageSize,
@@ -168,9 +172,14 @@ function MatchResult({
 
   return (
     <>
-      <div className="mb-3 flex justify-end">
+      <div className="mb-3 flex items-center justify-between gap-3">
+        {mapErrorDetail && (
+          <p role="alert" aria-live="polite" className="text-sm text-red-800">
+            {mapErrorDetail}
+          </p>
+        )}
         <button
-          className="flex items-center gap-2 rounded border border-primary px-3 py-2 font-bold text-primary hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-primary"
+          className="ml-auto flex items-center gap-2 rounded border border-primary px-3 py-2 font-bold text-primary hover:bg-red-50 focus:outline-none focus:ring-2 focus:ring-primary"
           onClick={openMap}
           type="button"
         >
@@ -182,7 +191,7 @@ function MatchResult({
       {showMap && (
         <TrialMapModal
           closeModal={closeMap}
-          matchGroups={matchGroups}
+          matchGroups={allMatchGroups}
           studies={studies}
         />
       )}
