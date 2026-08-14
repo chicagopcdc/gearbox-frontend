@@ -113,8 +113,7 @@ function getEligibilityColumns(algorithm: MatchInfoAlgorithm): string[] {
 
 function getStatus(criteria: MatchInfo[]): boolean | undefined {
   if (criteria.some(({ isMatched }) => isMatched === false)) return false
-  if (criteria.some(({ isMatched }) => isMatched == null))
-    return undefined
+  if (criteria.some(({ isMatched }) => isMatched == null)) return undefined
   return true
 }
 
