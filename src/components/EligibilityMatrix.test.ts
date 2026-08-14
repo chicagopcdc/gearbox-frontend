@@ -179,6 +179,55 @@ test('keeps a path failed when one of its criteria failed', () => {
   expect(getPathStatus(failedPath, undefined)).toBe(false)
 })
 
+test('shows the backend status when a patient value is missing', async () => {
+  const algorithm: MatchInfoAlgorithm = {
+    operator: 'AND',
+    criteria: [undeterminedCriterion('Eligible')],
+  }
+
+  render(
+    React.createElement(EligibilityMatrix, {
+      matchInfoAlgorithm: algorithm,
+      overallStatus: true,
+      patientValues: {},
+    })
+  )
+
+  expect(
+    await screen.findByLabelText(
+      'To be determined. Patient value: Not entered. Required: = 1'
+    )
+  ).toBeInTheDocument()
+
+  expect(screen.getByTitle('To be determined')).toBeInTheDocument()
+})
+
+test('shows a null backend status as to be determined', async () => {
+  const algorithm: MatchInfoAlgorithm = {
+    operator: 'AND',
+    criteria: [
+      {
+        ...criterion('Eligible'),
+        isMatched: null as unknown as undefined,
+      },
+    ],
+  }
+
+  render(
+    React.createElement(EligibilityMatrix, {
+      matchInfoAlgorithm: algorithm,
+      overallStatus: undefined,
+      patientValues: {},
+    })
+  )
+
+  expect(
+    await screen.findByLabelText(
+      'To be determined. Patient value: Not entered. Required: = 1'
+    )
+  ).toBeInTheDocument()
+})
+
 test('orders paths by status and then distance to a match', () => {
   const matched = [criterion('Matched')]
   const undeterminedClose = [undeterminedCriterion('Missing')]
