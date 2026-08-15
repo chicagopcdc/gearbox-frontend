@@ -1,0 +1,7 @@
+# Normalize line endings to LF in the repo and on checkout, so prettier
+# (endOfLine "lf") does not fail on Windows clones. Detected binaries such as
+# the images under src/assets are left untouched by text=auto.
+* text=auto eol=lf
+
+# Executed inside the Linux container, so it must keep LF.
+*.sh text eol=lf
