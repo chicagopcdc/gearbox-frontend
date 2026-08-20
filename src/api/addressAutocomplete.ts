@@ -1,15 +1,10 @@
 import { AddressSuggestion, GeoapifyAutocompleteResponse } from '../model'
+import { fetchGearbox } from './utils'
 
 export async function autocompleteAddress(
   text: string,
   signal?: AbortSignal
 ): Promise<AddressSuggestion[]> {
-  const apiKey = window.RUNTIME_CONFIG?.GEOAPIFY_API_KEY
-
-  if (!apiKey) {
-    throw new Error('Geoapify API key is not configured.')
-  }
-
   const trimmed = text.trim()
 
   if (trimmed.length < 3) {
@@ -18,9 +13,6 @@ export async function autocompleteAddress(
 
   const params = new URLSearchParams({
     text: trimmed,
-    format: 'json',
-    limit: '5',
-    apiKey,
   })
 
   const lang = navigator.language?.slice(0, 2)
@@ -28,8 +20,10 @@ export async function autocompleteAddress(
     params.set('lang', lang)
   }
 
-  const res = await fetch(
-    `https://api.geoapify.com/v1/geocode/autocomplete?${params.toString()}`,
+  // gearbox-middleware proxies this to Geoapify so the API key stays server
+  // side and is never sent to the browser.
+  const res = await fetchGearbox(
+    `/gearbox-middleware/address-autocomplete?${params.toString()}`,
     { signal }
   )
 
