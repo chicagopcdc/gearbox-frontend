@@ -32,8 +32,9 @@ function Layout({
   const isLoginPage = location.pathname.toLowerCase() === '/login'
   const isLLSLandingPage = location.pathname.toLowerCase() === '/lls'
   const isHomeLandingPage = isHomePage && !isAuthenticated
+  const isEnhancedUI = process.env.REACT_APP_ENHANCED_UI === 'true'
   const mainClassName =
-    isHomeLandingPage || isLLSLandingPage
+    isHomeLandingPage || isLLSLandingPage || (isHomePage && isEnhancedUI)
       ? ''
       : 'flex-1 lg:w-screen-lg mx-4 lg:mx-auto my-12'
   const isHomeMatchingPage = isHomePage && isAuthenticated
