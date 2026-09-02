@@ -4,6 +4,14 @@
 #
 set -eu
 
+cat > /usr/share/nginx/html/runtime-config.js <<EOF
+window.RUNTIME_CONFIG = {
+  GEOAPIFY_API_KEY: "${GEOAPIFY_API_KEY:-}",
+  DEPLOY_PRODUCTION_DATA_URL: "${DEPLOY_PRODUCTION_DATA_URL:-}",
+  REFRESH_PRODUCTION_DATA_URL: "${REFRESH_PRODUCTION_DATA_URL:-}"
+};
+EOF
+
 # add https://gearbox-dev-data-bucket-with-versioning.s3.amazonaws.com after connect-src in content security policy
 echo "$GEARBOX_S3_BUCKET"
 sed -i -e "s|connect-src|& $GEARBOX_S3_BUCKET|" /usr/share/nginx/html/index.html

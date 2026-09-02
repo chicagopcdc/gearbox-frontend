@@ -50,7 +50,13 @@ export function getMatchGroups(
     url += buildLocationUrl(location)
   }
 
-  return fetchGearbox(url).then((res) => res.json() as Promise<MatchGroups>)
+  return fetchGearbox(url).then((res) => {
+    if (!res.ok) {
+      throw new Error('Failed to get match groups')
+    }
+
+    return res.json() as Promise<MatchGroups>
+  })
 }
 
 export function getMatchDetails(

@@ -13,7 +13,7 @@ import type useGearboxData from '../hooks/useGearboxData'
 import useScreenSize from '../hooks/useScreenSize'
 import { getDefaultValues, markRelevantMatchFields } from '../utils'
 import { ErrorRetry } from '../components/ErrorRetry'
-import { getMatchInfo } from '../api/middleware'
+import { getMatchGroups, getMatchInfo } from '../api/middleware'
 import {
   MatchDetails,
   MatchFormFieldConfig,
@@ -31,6 +31,7 @@ import { useModal } from '../hooks/useModal'
 import { UserInputModal } from '../components/UserInputModal'
 import { useLocationFilter } from '../hooks/useLocationFilter'
 import { LocationFilterSection } from '../components/LocationFilterSection'
+import { getPatientDisplayValuesByFieldName } from '../patientDisplayValues'
 
 export type MatchingPageProps = ReturnType<typeof useGearboxData>
 
@@ -73,6 +74,15 @@ function MatchingPage({
     undetermined: [],
   })
 
+  // Unlike matchGroups (paginated, drives the results list), this always holds every
+  // matched/undetermined/unmatched study id, so Map View can show all trials regardless
+  // of which list page is currently selected.
+  const [allMatchGroups, setAllMatchGroups] = useState<MatchGroups>({
+    matched: [],
+    unmatched: [],
+    undetermined: [],
+  })
+
   const [allUnmatchedStudyIds, setAllUnmatchedStudyIds] = useState<number[]>([])
   const [matchCounts, setMatchCounts] =
     useState<MatchGroupCounts>(INITIAL_MATCH_COUNTS)
@@ -88,6 +98,9 @@ function MatchingPage({
   const [showAllUserInput, setShowAllUserInput] = useState<boolean>(true)
   const [showModal, openModal, closeModal] = useModal()
   const [errorDetail, setErrorDetail] = useState<string | null>(null)
+  // Separate from errorDetail so a getMatchGroups success/failure can never clobber (or be
+  // clobbered by) the unrelated getMatchInfo effect's own error state.
+  const [mapErrorDetail, setMapErrorDetail] = useState<string | null>(null)
   const [triedBrowserLocation, setTriedBrowserLocation] =
     useState<boolean>(false)
 
@@ -170,6 +183,41 @@ function MatchingPage({
     }
   }, [currentUserInput.values, locationParams, matchPages])
 
+  // Separate from the paginated getMatchInfo effect above (and deliberately not keyed on
+  // matchPages) so that changing the list's page never triggers a refetch of the full groups.
+  useEffect(() => {
+    let ignore = false
+
+    const matchInput = currentUserInput.values
+
+    const locationForApi = locationParams
+      ? {
+          lat: locationParams.lat,
+          lon: locationParams.lon,
+          range: locationParams.range,
+          unit: locationParams.unit,
+        }
+      : undefined
+
+    getMatchGroups(matchInput, locationForApi)
+      .then((groups) => {
+        if (ignore) return
+
+        setAllMatchGroups(groups)
+        setMapErrorDetail(null)
+      })
+      .catch((e: Error) => {
+        if (ignore) return
+
+        console.error(e)
+        setMapErrorDetail(e.message)
+      })
+
+    return () => {
+      ignore = true
+    }
+  }, [currentUserInput.values, locationParams])
+
   useEffect(() => {
     setMarkedFields(
       markRelevantMatchFields({
@@ -248,15 +296,9 @@ function MatchingPage({
     }
   }
 
-  const patientValuesByFieldName = Object.fromEntries(
-    config.fields.flatMap((field) => {
-      const value = currentUserInput.values[field.id]
-      const names = [field.name, field.label].filter(
-        (name): name is string => typeof name === 'string' && name !== ''
-      )
-
-      return names.map((name) => [name, value])
-    })
+  const patientValuesByFieldName = getPatientDisplayValuesByFieldName(
+    config.fields,
+    currentUserInput.values
   )
 
   function createMatchInput(name?: string) {
@@ -471,6 +513,8 @@ function MatchingPage({
             <MatchResult
               matchDetails={matchDetails}
               matchGroups={matchGroups}
+              allMatchGroups={allMatchGroups}
+              mapErrorDetail={mapErrorDetail}
               studies={studies}
               matchCounts={matchCounts}
               pageSize={MATCH_PAGE_SIZE}
@@ -611,6 +655,8 @@ function MatchingPage({
               <MatchResult
                 matchDetails={matchDetails}
                 matchGroups={matchGroups}
+                allMatchGroups={allMatchGroups}
+                mapErrorDetail={mapErrorDetail}
                 studies={studies}
                 matchCounts={matchCounts}
                 pageSize={MATCH_PAGE_SIZE}
