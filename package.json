@@ -20,7 +20,7 @@
     "react-ga4": "^2.1.0",
     "react-leaflet": "^3.2.5",
     "react-multi-select-component": "^4.3.4",
-    "react-router-dom": "^6.11.1",
+    "react-router-dom": "^6.30.6",
     "react-scripts": "^5.0.1",
     "react-tabs": "^4.3.0",
     "react-tooltip": "^4.4.3",
