@@ -8,6 +8,7 @@ import {
 import Layout from './Layout'
 import AboutPage from './pages/AboutPage'
 import MatchingPage from './pages/MatchingPage'
+import EnhancedMatchingPage from './pages/EnhancedMatchingPage'
 import LandingPage from './pages/LandingPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
@@ -71,6 +72,8 @@ function App() {
                 <Navigate to="/register" replace />
               ) : auth.hasDocsToBeReviewed ? (
                 <Navigate to="/document-review" replace />
+              ) : process.env.REACT_APP_ENHANCED_UI === 'true' ? (
+                <EnhancedMatchingPage {...gearboxData} />
               ) : (
                 <MatchingPage {...gearboxData} />
               )
