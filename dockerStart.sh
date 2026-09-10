@@ -6,7 +6,6 @@ set -eu
 
 cat > /usr/share/nginx/html/runtime-config.js <<EOF
 window.RUNTIME_CONFIG = {
-  GEOAPIFY_API_KEY: "${GEOAPIFY_API_KEY:-}",
   DEPLOY_PRODUCTION_DATA_URL: "${DEPLOY_PRODUCTION_DATA_URL:-}",
   REFRESH_PRODUCTION_DATA_URL: "${REFRESH_PRODUCTION_DATA_URL:-}"
 };
