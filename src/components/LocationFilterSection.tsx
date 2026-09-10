@@ -35,13 +35,10 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
     null
   )
 
-  const isAddressSearchEnabled = Boolean(
-    window.RUNTIME_CONFIG?.GEOAPIFY_API_KEY
-  )
   useEffect(() => {
     let cancelled = false
 
-    if (!isAddressSearchEnabled || filter.mode !== 'address') {
+    if (filter.mode !== 'address') {
       setAddressSuggestions([])
       setAddressSearchError(null)
       setIsSearchingAddress(false)
@@ -100,23 +97,7 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
       window.clearTimeout(timeout)
       controller.abort()
     }
-  }, [
-    isAddressSearchEnabled,
-    filter.mode,
-    filter.address,
-    filter.lat,
-    filter.lon,
-  ])
-
-  useEffect(() => {
-    if (!isAddressSearchEnabled && filter.mode === 'address') {
-      onChange({
-        ...filter,
-        mode: 'coordinates',
-        address: '',
-      })
-    }
-  }, [isAddressSearchEnabled, filter, onChange])
+  }, [filter.mode, filter.address, filter.lat, filter.lon])
 
   function parseGoogleMapsLatLon(value: string) {
     const trimmed = value.trim()
@@ -226,29 +207,17 @@ export const LocationFilterSection: React.FC<LocationFilterSectionProps> = ({
             <span>Use coordinates</span>
           </label>
 
-          <label
-            className={`flex items-center gap-1 ${
-              isAddressSearchEnabled
-                ? 'cursor-pointer'
-                : 'cursor-not-allowed text-gray-400'
-            }`}
-          >
+          <label className="flex items-center gap-1 cursor-pointer">
             <input
               type="radio"
               name="locationMode"
               value="address"
               checked={filter.mode === 'address'}
               onChange={() => changeMode('address')}
-              disabled={!isAddressSearchEnabled}
             />
             <span>Use address</span>
           </label>
         </div>
-        {!isAddressSearchEnabled && (
-          <p className="mt-1 text-[0.7rem] text-gray-500">
-            Address search is unavailable because Geoapify is not configured.
-          </p>
-        )}
       </div>
 
       {filter.mode === 'coordinates' ? (
