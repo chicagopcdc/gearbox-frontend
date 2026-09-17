@@ -22,6 +22,7 @@ import EnhancedMatchForm from '../components/enhanced/EnhancedMatchForm'
 import SelectedValuesBar from '../components/enhanced/SelectedValuesBar'
 import ResultsPanel from '../components/enhanced/ResultsPanel'
 import type { CategorySummary } from '../components/enhanced/types'
+import { clearShowIfField } from '../utils'
 
 function EnhancedMatchingPage({
   action,
@@ -127,7 +128,9 @@ function EnhancedMatchingPage({
   function handleClearField(id: number) {
     const newValues = { ...session.currentUserInput.values }
     delete newValues[id]
-    session.updateMatchInput(newValues)
+
+    const cleanedValues = clearShowIfField(config, newValues)
+    session.updateMatchInput(cleanedValues)
   }
 
   function toggleFormOptions() {
