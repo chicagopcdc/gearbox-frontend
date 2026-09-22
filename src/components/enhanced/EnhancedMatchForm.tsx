@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import DropdownSection from '../DropdownSection'
 import FieldWrapper from '../FieldWrapper'
 import Field from '../Inputs/Field'
@@ -12,8 +12,10 @@ import type { MatchFormProps } from '../MatchForm'
 import type { MatchFormValues, MatchFormFieldConfig } from '../../model'
 
 type EnhancedMatchFormProps = MatchFormProps & {
-  activeCategoryId: number | null
   onActiveCategoryChange: (id: number | null) => void
+  openCategoryId: number | null
+  onOpenCategoryChange: (id: number | null) => void
+  scrollRootRef: React.RefObject<HTMLDivElement>
   registerScrollTarget: (id: number) => (el: HTMLElement | null) => void
   highlightedFieldId: number | null
 }
@@ -26,8 +28,10 @@ function EnhancedMatchForm({
   setIsUpdating,
   importantQuestionsConfig, // eslint-disable-line @typescript-eslint/no-unused-vars
   locationFilterSection,
-  activeCategoryId,
   onActiveCategoryChange,
+  openCategoryId,
+  onOpenCategoryChange,
+  scrollRootRef,
   registerScrollTarget,
   highlightedFieldId,
 }: EnhancedMatchFormProps) {
@@ -38,7 +42,6 @@ function EnhancedMatchForm({
   const timeoutRef = useRef<NodeJS.Timeout | undefined>()
   const observerRef = useRef<IntersectionObserver | null>(null)
   const sectionHeaderRefs = useRef<Map<number, HTMLElement>>(new Map())
-  const suspendObserverRef = useRef(false)
 
   const handleChange =
     (fieldType: MatchFormFieldConfig['type']) =>
@@ -68,33 +71,41 @@ function EnhancedMatchForm({
     }
 
   useEffect(() => {
-    observerRef.current = new IntersectionObserver(
+    const root = scrollRootRef.current
+    if (!root) return
+
+    const observer = new IntersectionObserver(
       (entries) => {
-        if (suspendObserverRef.current) return
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const groupId = Number(entry.target.getAttribute('data-group-id'))
-            if (!isNaN(groupId)) {
-              onActiveCategoryChange(groupId)
-            }
+          if (!entry.isIntersecting) continue
+
+          const groupId = Number(entry.target.getAttribute('data-group-id'))
+          if (!Number.isNaN(groupId)) {
+            onActiveCategoryChange(groupId)
           }
         }
       },
-      { rootMargin: '-10% 0px -80% 0px', threshold: 0 }
+      {
+        root,
+        rootMargin: '-10% 0px -80% 0px',
+        threshold: 0,
+      }
     )
 
-    sectionHeaderRefs.current.forEach((el) => {
-      if (observerRef.current) {
-        observerRef.current.observe(el)
-      }
+    observerRef.current = observer
+
+    sectionHeaderRefs.current.forEach((element) => {
+      observer.observe(element)
     })
 
     return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect()
+      observer.disconnect()
+
+      if (observerRef.current === observer) {
+        observerRef.current = null
       }
     }
-  }, [onActiveCategoryChange])
+  }, [onActiveCategoryChange, scrollRootRef])
 
   const registerSectionHeader =
     (groupId: number) => (el: HTMLElement | null) => {
@@ -112,30 +123,13 @@ function EnhancedMatchForm({
       }
     }
 
-  const groupOpenState = useMemo(() => {
-    const state: Record<number, boolean> = {}
-    config.groups.forEach((group) => {
-      state[group.id] = group.id === activeCategoryId
-    })
-    return state
-  }, [activeCategoryId, config.groups])
-
   const handleToggle = (groupId: number) => (next: boolean) => {
-    suspendObserverRef.current = true
-    onActiveCategoryChange(next ? groupId : null)
-    setTimeout(() => {
-      suspendObserverRef.current = false
-    }, 500)
-  }
+    onOpenCategoryChange(next ? groupId : null)
 
-  useEffect(() => {
-    if (activeCategoryId !== null) {
-      suspendObserverRef.current = true
-      setTimeout(() => {
-        suspendObserverRef.current = false
-      }, 500)
+    if (next) {
+      onActiveCategoryChange(groupId)
     }
-  }, [activeCategoryId])
+  }
 
   return (
     <form ref={formEl}>
@@ -158,7 +152,7 @@ function EnhancedMatchForm({
             id={`category-${group.id}`}
             backgroundColor="bg-white"
             name={group.name || 'General'}
-            isOpen={groupOpenState[group.id]}
+            isOpen={openCategoryId === group.id}
             onToggle={handleToggle(group.id)}
           >
             {config.fields.map(

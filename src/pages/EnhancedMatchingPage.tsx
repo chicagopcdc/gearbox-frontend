@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   MoreHorizontal,
   RotateCcw,
@@ -42,8 +42,14 @@ function EnhancedMatchingPage({
 
   const [showFormOptions, setShowFormOptions] = useState(false)
   const [showModal, openModal, closeModal] = useModal()
+  const firstCategoryId = config.groups[0]?.id ?? null
+
   const [activeCategoryId, setActiveCategoryId] = useState<number | null>(
-    config.groups.length > 0 ? config.groups[0].id : null
+    firstCategoryId
+  )
+
+  const [openCategoryId, setOpenCategoryId] = useState<number | null>(
+    firstCategoryId
   )
   const [jumpBanner, setJumpBanner] = useState<string | null>(null)
   const [highlightedFieldId, setHighlightedFieldId] = useState<number | null>(
@@ -95,11 +101,21 @@ function EnhancedMatchingPage({
     session.isFilterActive,
   ])
 
+  useEffect(() => {
+    const firstId = config.groups[0]?.id ?? null
+    const contains = (id: number | null) =>
+      id !== null && config.groups.some((group) => group.id === id)
+
+    setActiveCategoryId((current) => (contains(current) ? current : firstId))
+    setOpenCategoryId((current) => (contains(current) ? current : firstId))
+  }, [config.groups])
+
   function handleSelectField(id: number) {
     const field = session.markedFields.find((f) => f.id === id)
     if (!field) return
 
     setActiveCategoryId(field.groupId)
+    setOpenCategoryId(field.groupId)
 
     setTimeout(() => {
       const scrollTarget = centerPanelRef.current?.querySelector(
@@ -161,6 +177,7 @@ function EnhancedMatchingPage({
 
   function handleSelectCategory(id: number) {
     setActiveCategoryId(id)
+    setOpenCategoryId(id)
     setTimeout(() => {
       const sectionHeader = centerPanelRef.current?.querySelector(
         `[data-group-id="${id}"]`
@@ -349,8 +366,10 @@ function EnhancedMatchingPage({
           setIsUpdating={session.setIsUpdating}
           importantQuestionsConfig={importantQuestionsConfig}
           locationFilterSection={locationFilterSection}
-          activeCategoryId={activeCategoryId}
           onActiveCategoryChange={setActiveCategoryId}
+          openCategoryId={openCategoryId}
+          onOpenCategoryChange={setOpenCategoryId}
+          scrollRootRef={centerPanelRef}
           registerScrollTarget={createScrollItemRef}
           highlightedFieldId={highlightedFieldId}
         />
