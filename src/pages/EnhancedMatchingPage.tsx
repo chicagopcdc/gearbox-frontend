@@ -18,11 +18,13 @@ import ThreePanelLayout from '../components/enhanced/ThreePanelLayout'
 import CategorySidebar from '../components/enhanced/CategorySidebar'
 import TypeaheadSearch from '../components/enhanced/TypeaheadSearch'
 import QuickSelect from '../components/enhanced/QuickSelect'
-import EnhancedMatchForm from '../components/enhanced/EnhancedMatchForm'
+import EnhancedMatchForm, {
+  type EnhancedMatchFormHandle,
+} from '../components/enhanced/EnhancedMatchForm'
 import SelectedValuesBar from '../components/enhanced/SelectedValuesBar'
 import ResultsPanel from '../components/enhanced/ResultsPanel'
 import type { CategorySummary } from '../components/enhanced/types'
-import { clearShowIfField } from '../utils'
+import { clearShowIfField, getDefaultValues } from '../utils'
 
 function EnhancedMatchingPage({
   action,
@@ -57,6 +59,8 @@ function EnhancedMatchingPage({
   )
 
   const centerPanelRef = React.useRef<HTMLDivElement>(null)
+
+  const formRef = React.useRef<EnhancedMatchFormHandle>(null)
 
   const searchableFields = useFieldSearchIndex(
     { groups: config.groups, fields: session.markedFields },
@@ -142,11 +146,23 @@ function EnhancedMatchingPage({
   }
 
   function handleClearField(id: number) {
-    const newValues = { ...session.currentUserInput.values }
+    const currentValues =
+      formRef.current?.getValues() ?? session.currentUserInput.values
+
+    const newValues = { ...currentValues }
     delete newValues[id]
 
     const cleanedValues = clearShowIfField(config, newValues)
+
+    formRef.current?.replaceValues(cleanedValues)
     session.updateMatchInput(cleanedValues)
+  }
+
+  function handleReset() {
+    const defaultValues = getDefaultValues(config)
+
+    formRef.current?.replaceValues(defaultValues)
+    session.handleReset()
   }
 
   function toggleFormOptions() {
@@ -208,7 +224,7 @@ function EnhancedMatchingPage({
         >
           <p className="text-sm">{session.errorDetail}</p>
           <button
-            onClick={session.handleReset}
+            onClick={handleReset}
             className="mt-2 underline decoration-red-400 hover:opacity-80"
           >
             Reset and start over
@@ -281,7 +297,7 @@ function EnhancedMatchingPage({
                       className="w-full p-2"
                       data-for="match-form-reset"
                       data-tip
-                      onClick={session.handleReset}
+                      onClick={handleReset}
                     >
                       <RotateCcw className="inline" size="1rem" />
                       <span className="mx-2">Reset form</span>
@@ -359,6 +375,7 @@ function EnhancedMatchingPage({
         />
 
         <EnhancedMatchForm
+          ref={formRef}
           config={{ groups: config.groups, fields: session.markedFields }}
           matchInput={session.currentUserInput.values}
           isFilterActive={session.isFilterActive}

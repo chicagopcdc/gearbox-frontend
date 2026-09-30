@@ -1,5 +1,11 @@
-import type React from 'react'
-import { useEffect, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useImperativeHandle,
+  useEffect,
+  useRef,
+  useState,
+  forwardRef,
+} from 'react'
 import DropdownSection from '../DropdownSection'
 import FieldWrapper from '../FieldWrapper'
 import Field from '../Inputs/Field'
@@ -20,21 +26,30 @@ type EnhancedMatchFormProps = MatchFormProps & {
   highlightedFieldId: number | null
 }
 
-function EnhancedMatchForm({
-  config,
-  matchInput,
-  isFilterActive,
-  updateMatchInput,
-  setIsUpdating,
-  importantQuestionsConfig, // eslint-disable-line @typescript-eslint/no-unused-vars
-  locationFilterSection,
-  onActiveCategoryChange,
-  openCategoryId,
-  onOpenCategoryChange,
-  scrollRootRef,
-  registerScrollTarget,
-  highlightedFieldId,
-}: EnhancedMatchFormProps) {
+export type EnhancedMatchFormHandle = {
+  cancelPendingUpdate: () => void
+  getValues: () => MatchFormValues
+  replaceValues: (values: MatchFormValues) => void
+}
+
+function EnhancedMatchForm(
+  {
+    config,
+    matchInput,
+    isFilterActive,
+    updateMatchInput,
+    setIsUpdating,
+    importantQuestionsConfig, // eslint-disable-line @typescript-eslint/no-unused-vars
+    locationFilterSection,
+    onActiveCategoryChange,
+    openCategoryId,
+    onOpenCategoryChange,
+    scrollRootRef,
+    registerScrollTarget,
+    highlightedFieldId,
+  }: EnhancedMatchFormProps,
+  ref: React.ForwardedRef<EnhancedMatchFormHandle>
+) {
   const [values, setValues] = useState(getDefaultValues(config))
   useEffect(() => setValues({ ...matchInput }), [matchInput])
 
@@ -42,6 +57,42 @@ function EnhancedMatchForm({
   const timeoutRef = useRef<NodeJS.Timeout | undefined>()
   const observerRef = useRef<IntersectionObserver | null>(null)
   const sectionHeaderRefs = useRef<Map<number, HTMLElement>>(new Map())
+
+  const cancelPendingUpdate = useCallback(() => {
+    if (timeoutRef.current !== undefined) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = undefined
+    }
+
+    setIsUpdating(false)
+  }, [setIsUpdating])
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      cancelPendingUpdate,
+
+      getValues() {
+        return { ...values }
+      },
+
+      replaceValues(nextValues) {
+        cancelPendingUpdate()
+        setValues({ ...nextValues })
+      },
+    }),
+    [cancelPendingUpdate, values]
+  )
+
+  useEffect(
+    () => () => {
+      if (timeoutRef.current !== undefined) {
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = undefined
+      }
+    },
+    []
+  )
 
   const handleChange =
     (fieldType: MatchFormFieldConfig['type']) =>
@@ -58,14 +109,14 @@ function EnhancedMatchForm({
       }
       setValues(newValues)
 
-      if (timeoutRef.current !== undefined) clearTimeout(timeoutRef.current)
+      cancelPendingUpdate()
 
       if (formEl?.current?.reportValidity()) {
         setIsUpdating(true)
         timeoutRef.current = setTimeout(() => {
+          timeoutRef.current = undefined
           updateMatchInput(clearShowIfField(config, newValues))
           setIsUpdating(false)
-          clearTimeout(timeoutRef.current)
         }, 1000)
       } else setIsUpdating(false)
     }
@@ -204,4 +255,4 @@ function EnhancedMatchForm({
   )
 }
 
-export default EnhancedMatchForm
+export default forwardRef(EnhancedMatchForm)
