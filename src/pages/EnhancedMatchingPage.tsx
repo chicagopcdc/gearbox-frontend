@@ -166,6 +166,16 @@ function EnhancedMatchingPage({
     session.handleReset()
   }
 
+  function handleLoadUserInput(e: React.ChangeEvent<HTMLSelectElement>) {
+    formRef.current?.cancelPendingUpdate()
+    session.loadUserInput(e)
+  }
+
+  function handleCreateMatchInput(name?: string) {
+    formRef.current?.cancelPendingUpdate()
+    session.createMatchInput(name)
+  }
+
   function toggleFormOptions() {
     setShowFormOptions((show) => !show)
   }
@@ -330,7 +340,7 @@ function EnhancedMatchingPage({
                 id="user-input-select"
                 className="flex-1 border border-solid border-black p-1"
                 value={session.currentUserInput.id ?? ''}
-                onChange={session.loadUserInput}
+                onChange={handleLoadUserInput}
               >
                 {session.allUserInput.map((input) => (
                   <option key={input.id} value={input.id}>
@@ -396,7 +406,7 @@ function EnhancedMatchingPage({
       {showModal && (
         <UserInputModal
           closeModal={closeModal}
-          createMatchInput={session.createMatchInput}
+          createMatchInput={handleCreateMatchInput}
         />
       )}
     </div>
