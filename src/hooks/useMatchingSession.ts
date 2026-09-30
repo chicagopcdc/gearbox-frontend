@@ -16,6 +16,7 @@ import {
   postUserInput,
 } from '../api/userInput'
 import { useLocationFilter } from './useLocationFilter'
+import { getPatientDisplayValuesByFieldName } from '../patientDisplayValues'
 
 const MATCH_PAGE_SIZE = 4
 
@@ -217,15 +218,9 @@ export function useMatchingSession({ action, state }: MatchingPageProps) {
     }
   }
 
-  const patientValuesByFieldName = Object.fromEntries(
-    config.fields.flatMap((field) => {
-      const value = currentUserInput.values[field.id]
-      const names = [field.name, field.label].filter(
-        (name): name is string => typeof name === 'string' && name !== ''
-      )
-
-      return names.map((name) => [name, value])
-    })
+  const patientValuesByFieldName = getPatientDisplayValuesByFieldName(
+    config.fields,
+    currentUserInput.values
   )
 
   function createMatchInput(name?: string) {
