@@ -72,6 +72,7 @@ function EnhancedMatchingPage({
     topOffset: 80,
     behavior: 'smooth',
     rootRef: centerPanelRef,
+    trackBackToTop: false,
   })
 
   const categories: CategorySummary[] = useMemo(() => {
