@@ -3,6 +3,7 @@ import Select from './Select'
 import TextField from './TextField'
 import Radio from './Radio'
 import MultiSelect from './MultiSelect'
+import Picklist from './Picklist'
 import { MatchFormFieldConfig, MatchFormFieldOption } from '../../model'
 
 type FieldConfig = {
@@ -37,6 +38,18 @@ function Field({
     case 'multiselect':
       return (
         <MultiSelect
+          {...{
+            options,
+            value,
+            onChange,
+            label: label as string,
+            ...attrs,
+          }}
+        />
+      )
+    case 'picklist':
+      return (
+        <Picklist
           {...{
             options,
             value,

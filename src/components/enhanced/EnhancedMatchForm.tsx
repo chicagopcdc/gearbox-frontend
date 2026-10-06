@@ -96,17 +96,35 @@ function EnhancedMatchForm(
 
   const handleChange =
     (fieldType: MatchFormFieldConfig['type']) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: {
+      target: {
+        name: string
+        value: string | number[]
+      }
+    }) => {
       if (fieldType === 'checkbox' || fieldType === 'multiselect') {
         return
       }
+
       const { name, value } = e.target
-      const isNumberValue = fieldType === 'select' || fieldType === 'radio'
-      const isEmptyValue = !value
+
+      let nextValue: string | number | number[] | undefined
+
+      if (fieldType === 'picklist') {
+        nextValue = Array.isArray(value) ? value : []
+      } else if (value === '') {
+        nextValue = undefined
+      } else if (fieldType === 'select' || fieldType === 'radio') {
+        nextValue = Number(value)
+      } else {
+        nextValue = value
+      }
+
       const newValues: MatchFormValues = {
         ...values,
-        [name]: isEmptyValue ? undefined : isNumberValue ? +value : value,
+        [name]: nextValue,
       }
+
       setValues(newValues)
 
       cancelPendingUpdate()

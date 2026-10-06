@@ -25,6 +25,14 @@ import { buildEligibilityCriteria } from './api/eligibilityCriteria'
 import { buildMatchConditions } from './api/matchConditions'
 import { buildStudies } from './api/studies'
 
+export const isMatchFormValueFilled = (value: unknown): boolean => {
+  return (
+    value !== undefined &&
+    value !== '' &&
+    (!Array.isArray(value) || value.length > 0)
+  )
+}
+
 export const getFieldOptionLabelMap = (fields: MatchFormFieldConfig[]) => {
   if (fields === undefined) return {}
 
@@ -49,7 +57,10 @@ const testCriterion = (
 ) => {
   switch (critOperator) {
     case 'eq':
-      return critValue === testValue
+      return Array.isArray(testValue)
+        ? testValue.includes(critValue)
+        : critValue === testValue
+
     case 'gt':
       return critValue < testValue
     case 'gte':
@@ -59,7 +70,10 @@ const testCriterion = (
     case 'lte':
       return critValue >= testValue
     case 'ne':
-      return critValue !== testValue
+      return Array.isArray(testValue)
+        ? !testValue.includes(critValue)
+        : critValue !== testValue
+
     case 'in':
       return critValue.includes(testValue)
   }
@@ -133,7 +147,7 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
 
   for (const { id, type, defaultValue } of fields)
     defaultValues[id] =
-      type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue
+      type === 'multiselect' || type === 'picklist' ? [] : defaultValue
 
   return defaultValues
 }
@@ -508,6 +522,7 @@ function getCriteriaBuilderFieldType(
     case 'radio':
     case 'select':
       return 'select'
+    case 'picklist':
     case 'multiselect':
     case 'checkbox':
       return 'multiselect'
@@ -526,6 +541,7 @@ function getCriteriaBuilderFieldOperator(
     case 'radio':
     case 'select':
       return ['select_equals', 'select_not_equals']
+    case 'picklist':
     case 'multiselect':
     case 'checkbox':
       return ['select_any_in']

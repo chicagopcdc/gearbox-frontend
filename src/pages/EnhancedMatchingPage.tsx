@@ -24,7 +24,11 @@ import EnhancedMatchForm, {
 import SelectedValuesBar from '../components/enhanced/SelectedValuesBar'
 import ResultsPanel from '../components/enhanced/ResultsPanel'
 import type { CategorySummary } from '../components/enhanced/types'
-import { clearShowIfField, getDefaultValues } from '../utils'
+import {
+  clearShowIfField,
+  getDefaultValues,
+  isMatchFormValueFilled,
+} from '../utils'
 
 function EnhancedMatchingPage({
   action,
@@ -86,10 +90,8 @@ function EnhancedMatchingPage({
         return !isHidden
       })
 
-      const filledFields = visibleFields.filter(
-        (field) =>
-          session.currentUserInput.values[field.id] !== undefined &&
-          session.currentUserInput.values[field.id] !== ''
+      const filledFields = visibleFields.filter((field) =>
+        isMatchFormValueFilled(session.currentUserInput.values[field.id])
       )
 
       return {
