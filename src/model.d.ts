@@ -92,6 +92,7 @@ export type MatchFormFieldConfig = {
     | 'radio'
     | 'multiselect'
     | 'select'
+    | 'picklist'
   name: string
   label?: string
   options?: MatchFormFieldOption[]
@@ -204,7 +205,10 @@ export type UserData = {
 
 export type UserInputApi = {
   id?: number
-  results: { id: string; value: string }[]
+  results: {
+    id: string | number
+    value: string | number
+  }[]
   name?: string | null
 }
 

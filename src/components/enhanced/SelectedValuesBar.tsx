@@ -1,4 +1,5 @@
-import { getFieldOptionLabelMap } from '../../utils'
+import { isMatchFormValueFilled } from '../../utils'
+import { getPatientDisplayValue } from '../../patientDisplayValues'
 import type { MatchFormFieldConfig, MatchFormValues } from '../../model'
 
 type SelectedValuesBarProps = {
@@ -12,10 +13,8 @@ function SelectedValuesBar({
   values,
   onClearField,
 }: SelectedValuesBarProps) {
-  const fieldOptionLabelMap = getFieldOptionLabelMap(fields)
-
-  const filledFields = fields.filter(
-    (field) => values[field.id] !== undefined && values[field.id] !== ''
+  const filledFields = fields.filter((field) =>
+    isMatchFormValueFilled(values[field.id])
   )
 
   if (filledFields.length === 0) {
@@ -41,15 +40,24 @@ function SelectedValuesBar({
           const fieldValue = values[field.id]
           const fieldLabel = field.label || field.name
 
+          const patientDisplayValue = getPatientDisplayValue(
+            fieldValue,
+            field.options
+          )
+
           let displayValue: string
-          if (
-            field.options &&
-            fieldOptionLabelMap[field.id] &&
-            fieldOptionLabelMap[field.id][fieldValue as number]
-          ) {
-            displayValue = fieldOptionLabelMap[field.id][fieldValue as number]
+
+          if (Array.isArray(patientDisplayValue)) {
+            const labels = patientDisplayValue.map(String)
+            const visibleLabels = labels.slice(0, 3)
+            const remainingCount = labels.length - visibleLabels.length
+
+            displayValue =
+              remainingCount > 0
+                ? `${visibleLabels.join(', ')} +${remainingCount} more`
+                : visibleLabels.join(', ')
           } else {
-            displayValue = String(fieldValue)
+            displayValue = String(patientDisplayValue)
           }
 
           return (

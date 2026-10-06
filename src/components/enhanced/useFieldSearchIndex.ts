@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import type { MatchFormConfig, MatchFormValues } from '../../model'
-import { getIsFieldShowing } from '../../utils'
+import { getIsFieldShowing, isMatchFormValueFilled } from '../../utils'
 import type { SearchableField } from './types'
 
 export function useFieldSearchIndex(
@@ -19,8 +19,7 @@ export function useFieldSearchIndex(
           field.showIf !== undefined &&
           !getIsFieldShowing(field.showIf, config, values)
 
-        const isFilled =
-          values[field.id] !== undefined && values[field.id] !== ''
+        const isFilled = isMatchFormValueFilled(values[field.id])
 
         let triggerFieldId: number | undefined
         let triggerFieldLabel: string | undefined

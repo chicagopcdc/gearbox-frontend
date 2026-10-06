@@ -116,14 +116,18 @@ function MatchingPage({
   } = useLocationFilter()
 
   useEffect(() => {
+    if (status !== 'not started' || config.fields.length === 0) {
+      return
+    }
+
     const fetchData = async () => {
       try {
         if (process.env.ENABLE_PHI) {
-          const allUserInput = await getAllUserInput()
+          const allUserInput = await getAllUserInput(config.fields)
           setAllUserInput(allUserInput)
           setShowAllUserInput(true)
         } else {
-          const latestUserInput = await getLatestUserInput()
+          const latestUserInput = await getLatestUserInput(config.fields)
           setCurrentUserInput(latestUserInput)
           setShowAllUserInput(false)
         }
@@ -131,8 +135,9 @@ function MatchingPage({
         console.error(e)
       }
     }
+
     fetchData()
-  }, [])
+  }, [status, config.fields])
 
   useEffect(() => {
     setMatchPages(INITIAL_MATCH_PAGES)
@@ -276,7 +281,12 @@ function MatchingPage({
       JSON.stringify(newMatchedInput) !==
       JSON.stringify(currentUserInput.values)
     ) {
-      postUserInput(newMatchedInput, currentUserInput.id, currentUserInput.name)
+      postUserInput(
+        newMatchedInput,
+        config.fields,
+        currentUserInput.id,
+        currentUserInput.name
+      )
         .then((res) => {
           setCurrentUserInput(res)
           setErrorDetail(null)
@@ -302,7 +312,7 @@ function MatchingPage({
   )
 
   function createMatchInput(name?: string) {
-    postUserInput({}, undefined, name).then((res) => {
+    postUserInput({}, config.fields, undefined, name).then((res) => {
       setCurrentUserInput(res)
       if (showAllUserInput) {
         setAllUserInput([...allUserInput, res])
