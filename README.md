@@ -15,6 +15,22 @@ Address autocomplete is served by `gearbox-middleware` at
 browser never receives the Geoapify API key, so no key is needed here for local
 development or in production. The key is configured on the middleware instead.
 
+### Enhanced matching UI (`REACT_APP_ENHANCED_UI`)
+
+The three-panel matching form with typeahead field search is toggled at
+runtime, not build time. Set the container env var `REACT_APP_ENHANCED_UI=true`
+and `dockerStart.sh` writes it into `runtime-config.js` as
+`window.RUNTIME_CONFIG.ENHANCED_UI`, which `App.tsx` and `Layout.tsx` read. Any
+value other than the string `true` (including unset) keeps the original form.
+Changing it only needs a container restart, not a rebuild, so one image can
+serve environments with different settings.
+
+- **Gen3 deployment:** add `"react_app_enhanced_ui": "true"` to the `global`
+  block of the manifest. `portal-deploy.yaml` in cloud-automation passes it to
+  the pod as `REACT_APP_ENHANCED_UI`.
+- **Local development (`npm start`):** `dockerStart.sh` is not used, so set
+  `ENHANCED_UI: 'true'` in `public/runtime-config.js` instead (don't commit it).
+
 ## Available Scripts
 
 In the project directory, you can run:
