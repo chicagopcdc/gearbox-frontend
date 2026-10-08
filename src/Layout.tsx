@@ -32,7 +32,7 @@ function Layout({
   const isLoginPage = location.pathname.toLowerCase() === '/login'
   const isLLSLandingPage = location.pathname.toLowerCase() === '/lls'
   const isHomeLandingPage = isHomePage && !isAuthenticated
-  const isEnhancedUI = process.env.REACT_APP_ENHANCED_UI === 'true'
+  const isEnhancedUI = window.RUNTIME_CONFIG?.ENHANCED_UI === 'true'
   const mainClassName =
     isHomeLandingPage || isLLSLandingPage || (isHomePage && isEnhancedUI)
       ? ''

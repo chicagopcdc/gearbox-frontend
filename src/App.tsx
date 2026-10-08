@@ -72,7 +72,7 @@ function App() {
                 <Navigate to="/register" replace />
               ) : auth.hasDocsToBeReviewed ? (
                 <Navigate to="/document-review" replace />
-              ) : process.env.REACT_APP_ENHANCED_UI === 'true' ? (
+              ) : window.RUNTIME_CONFIG?.ENHANCED_UI === 'true' ? (
                 <EnhancedMatchingPage {...gearboxData} />
               ) : (
                 <MatchingPage {...gearboxData} />
