@@ -15,6 +15,22 @@ Address autocomplete is served by `gearbox-middleware` at
 browser never receives the Geoapify API key, so no key is needed here for local
 development or in production. The key is configured on the middleware instead.
 
+### Production deployment endpoints (`DEPLOY_PRODUCTION_DATA_URL`, `REFRESH_PRODUCTION_DATA_URL`)
+
+The admin "deploy staged trials to production" action POSTs to these two
+endpoints in order: deploy first, then refresh. They are runtime settings: the
+container env vars of the same names are written into `runtime-config.js` by
+`dockerStart.sh` and read from `window.RUNTIME_CONFIG` in
+`src/api/productionDeployment.ts`. If either is empty, the action fails with
+"Production deployment endpoints are not configured."
+
+- **Gen3 deployment:** set `deploy_production_data_url` and
+  `refresh_production_data_url` in the `global` block of the manifest.
+  `portal-deploy.yaml` in cloud-automation passes them to the pod. Use paths
+  reachable from the portal's origin (e.g. relative paths through the gateway);
+  a URL on another domain would need CORS.
+- **Local development:** set them in `public/runtime-config.js`.
+
 ### Enhanced matching UI (`REACT_APP_ENHANCED_UI`)
 
 The three-panel matching form with typeahead field search is toggled at
