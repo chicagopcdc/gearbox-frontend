@@ -13,7 +13,7 @@ function LinkExternal({ className, children, to, onClick }: LinkExternalProps) {
     <a
       className={className}
       href={to}
-      target="blank"
+      target="_blank"
       rel="noreferrer"
       onClick={onClick}
     >
