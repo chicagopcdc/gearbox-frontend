@@ -57,6 +57,10 @@ export default function useAuth(): {
           )
         ),
       signout: () => {
+        if (timer.current !== undefined) {
+          window.clearInterval(timer.current)
+          timer.current = undefined
+        }
         localStorage.clear()
         setUserData(undefined)
         logout()
@@ -83,7 +87,10 @@ export default function useAuth(): {
       )
 
     return () => {
-      if (timer.current !== undefined) window.clearInterval(timer.current)
+      if (timer.current !== undefined) {
+        window.clearInterval(timer.current)
+        timer.current = undefined
+      }
     }
   }, [auth.isAuthenticated])
 
