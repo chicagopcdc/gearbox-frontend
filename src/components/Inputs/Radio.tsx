@@ -54,7 +54,9 @@ function Radio({
                 name={name}
                 type="radio"
                 value={option.value}
-                checked={value !== undefined && option.value === value}
+                {...(value !== undefined
+                  ? { checked: option.value === value }
+                  : { defaultChecked: false })}
                 onChange={
                   disabled ? undefined : () => handleChange(option.value)
                 }
