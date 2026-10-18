@@ -41,7 +41,7 @@ export default function useGearboxData(auth: ReturnType<typeof useAuth>) {
           setConfig(config)
           setCriteria(criteria)
           setStudies(studies)
-          setStatus('not started')
+          setStatus('success')
           setImportantQuestionsConfig(importantQuestionsConfig)
         }
       )
