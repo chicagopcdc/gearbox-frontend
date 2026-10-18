@@ -54,7 +54,7 @@ function DropdownSection({
               e.preventDefault()
               setOpen(false)
             }}
-            aria-label="Collapse"
+            aria-label="Collapse dropdown"
           >
             <ChevronUp color="#C00" />
           </button>
@@ -64,7 +64,7 @@ function DropdownSection({
               e.preventDefault()
               setOpen(true)
             }}
-            aria-label="Expand"
+            aria-label="Expand dropdown"
           >
             <ChevronDown />
           </button>
