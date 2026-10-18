@@ -133,7 +133,7 @@ export const getDefaultValues = ({ fields }: MatchFormConfig) => {
 
   for (const { id, type, defaultValue } of fields)
     defaultValues[id] =
-      type !== 'checkbox' && type === 'multiselect' ? [] : defaultValue
+      type === 'checkbox' || type === 'multiselect' ? [] : defaultValue
 
   return defaultValues
 }
