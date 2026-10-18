@@ -22,6 +22,13 @@ export function fetchGearbox(input: RequestInfo, init: RequestInit = {}) {
         logout()
       }
     }
+
+    if (!res.ok) {
+      throw new Error(
+        `Request failed: ${res.status} ${res.statusText} — ${typeof input === 'string' ? input : '(Request object)'}`
+      )
+    }
+
     return res
   })
 }
