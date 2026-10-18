@@ -17,7 +17,6 @@ type RegisterUserInput = Omit<RegisterInput, 'reviewStatus' | 'accessCde'>
 
 function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
   const [error, setError] = useState(null as Error | null)
-  if (error) throw error
 
   const userFieldsConfig: RegisterFormFieldConfig[] = [
     {
@@ -125,6 +124,7 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
   useEffect(() => () => setIsSubmitting(false), [])
   function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault()
+    setError(null)
 
     const user = { ...initialUser }
     const reviewStatus = { ...initialReviewStatus }
@@ -144,11 +144,22 @@ function RegisterForm({ docsToBeReviewed, onRegister }: RegisterFormProps) {
       reviewStatus,
       role: role === 'other' && roleOther !== undefined ? roleOther : role,
       ...rest,
-    }).catch(setError)
+    }).catch((err) => {
+      setError(err instanceof Error ? err : new Error(String(err)))
+      setIsSubmitting(false)
+    })
   }
 
   return (
     <form onSubmit={handleSubmit} onChange={handleUserChange}>
+      {error && (
+        <div
+          role="alert"
+          className="rounded bg-red-50 border border-red-200 text-red-700 p-4 mb-4"
+        >
+          Something went wrong: {error.message}. Please try again.
+        </div>
+      )}
       {userFieldsConfig.map(
         (fieldConfig) =>
           (fieldConfig.name !== 'roleOther' || showRoleOther) && (
